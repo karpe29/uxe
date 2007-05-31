@@ -60,7 +60,6 @@ namespace XeFramework.GameScreen
 
 			if (loadAllContent)
 			{
-				m_backgroundTexture = this.GameScreenManager.ContentManager.Load<Texture2D>(@"Content\Textures\Starfield\ultimate starfield");
 			}
 
 			m_spriteBatch = new SpriteBatch(this.GraphicsDevice);

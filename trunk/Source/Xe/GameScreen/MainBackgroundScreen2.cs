@@ -70,7 +70,7 @@ namespace XeFramework.GameScreen
 
 			myModel = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\MenuTunnel");
 
-			myTexture = GameScreenManager.ContentManager.Load<Texture2D>(@"Content\Textures\Starfield\ultimate starfield");
+			myTexture = GameScreenManager.ContentManager.Load<Texture2D>(@"Content\Textures\FireGrade");
 
 			myEffect = GameScreenManager.ContentManager.Load<Effect>(@"Content\Effects\vbomb");
 			myEffect.Parameters["GradeTex"].SetValue(myTexture);

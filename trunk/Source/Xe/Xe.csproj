@@ -497,56 +497,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Textures\Starfield\db.tga">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>db</Name>
-    </Content>
-    <Content Include="Content\Textures\Starfield\ultimate starfield.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield</Name>
-    </Content>
-    <Content Include="Content\Textures\Starfield\ultimate starfield_back.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_back</Name>
-    </Content>
-    <Content Include="Content\Textures\Starfield\ultimate starfield_bottom.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_bottom</Name>
-    </Content>
-    <Content Include="Content\Textures\Starfield\ultimate starfield_front.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_front</Name>
-    </Content>
-    <Content Include="Content\Textures\Starfield\ultimate starfield_left.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_left</Name>
-    </Content>
-    <Content Include="Content\Textures\Starfield\ultimate starfield_right.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_right</Name>
-    </Content>
-    <Content Include="Content\Textures\Starfield\ultimate starfield_top.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_top</Name>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Content\Skybox\bryce_back.jpg">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>TextureImporter</Importer>
@@ -582,12 +532,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>SpriteTextureProcessor</Processor>
       <Name>bryce_top</Name>
-    </Content>
-    <Content Include="Content\Textures\Starfield\ultimate starfield_effect.fx">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Name>ultimate starfield_effect</Name>
     </Content>
   </ItemGroup>
   <ItemGroup>
