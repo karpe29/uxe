@@ -274,7 +274,8 @@ namespace XeFramework.GUI
 
 			foreach (UIControl c in m_controls)
 			{
-				c.Update(gameTime);
+				if (c.Enabled)
+					c.Update(gameTime);
 			}
 		}
 
@@ -282,7 +283,8 @@ namespace XeFramework.GUI
 		{
 			foreach (UIControl c in m_controls)
 			{
-				c.Draw(gameTime);
+				if (c.Visible)
+					c.Draw(gameTime);
 			}
 
 			base.Draw(gameTime);

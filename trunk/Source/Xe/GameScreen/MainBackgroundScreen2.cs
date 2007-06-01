@@ -86,9 +86,9 @@ namespace XeFramework.GameScreen
 
 		#region IGameScreen Members
 
-		public override bool IsBlockingUpdate { get { return true; } }
+		public override bool IsBlockingUpdate { get { return false; } }
 
-		public override bool IsBlockingDraw { get { return true; } }
+		public override bool IsBlockingDraw { get { return false; } }
 
 		#endregion
 

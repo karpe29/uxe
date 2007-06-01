@@ -44,7 +44,7 @@ namespace XeFramework.GameScreen
 
 		virtual protected void Cleanup() { }
 
-		public void ExitScreen()
+		virtual public void ExitScreen()
 		{
 			if (TransitionOffTime <= TimeSpan.Zero)
 			{

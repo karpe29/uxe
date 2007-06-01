@@ -30,7 +30,7 @@ namespace XeFramework.GameScreen
 
 		private ContentManager m_contentManager; 
 
-		private Stack<IGameScreen> m_activeGameScreens = new Stack<IGameScreen>();
+		private List<IGameScreen> m_activeGameScreens = new List<IGameScreen>();
 
 		private List<IGameScreen> m_toDrawGameScreens = new List<IGameScreen>();
 		private List<IGameScreen> m_toUpdateGameScreens = new List<IGameScreen>();
@@ -105,14 +105,14 @@ namespace XeFramework.GameScreen
 		{
 			get
 			{
-				return m_activeGameScreens.Peek();
+				return m_activeGameScreens[m_activeGameScreens.Count-1];
 			}
 		}
 
 		#region Add/Remove
 		public bool AddGameScreen(IGameScreen gameScreen)
 		{
-			m_activeGameScreens.Push(gameScreen);
+			m_activeGameScreens.Add(gameScreen);
 
 			CurrentGameScreen.Initialize();
 
@@ -122,20 +122,27 @@ namespace XeFramework.GameScreen
 
 		// Remove Specified GameScreen if it is the current one
 		// Return it if removed, null otherwise
-		public IGameScreen RemoveCurrentGameScreen(Type type)
+		public bool RemoveCurrentGameScreen(Type type)
 		{
-			IGameScreen i = null;
-			if (m_activeGameScreens.Peek().GetType() == type)
-				i = m_activeGameScreens.Pop();
+			bool b = false;
+			if (CurrentGameScreen.GetType() == type)
+			{
+				b = m_activeGameScreens.Remove(CurrentGameScreen);
+			}
 
 			BuildGameScreenLists();
-			return i;
+			return b;
 		}
 
 		public void RemoveLeftGameScreen(Type type)
 		{
-			while (this.CurrentGameScreen.GetType() == type)
-				this.RemoveCurrentGameScreen(type);
+			List<IGameScreen> tmpList = new List<IGameScreen>(m_activeGameScreens);
+
+			foreach (IGameScreen thisGameScreen in tmpList)
+			{
+				if (thisGameScreen.GetType() == type)
+					m_activeGameScreens.Remove(thisGameScreen);
+			}
 		}
 
 		public void FadeBackBufferToBlack(int alpha)
@@ -162,13 +169,13 @@ namespace XeFramework.GameScreen
 
 			foreach (IGameScreen thisGameScreen in this.m_activeGameScreens)
 			{
-				if (!updateBlocked)
+				if (!updateBlocked && thisGameScreen.Enabled)
 					m_toUpdateGameScreens.Add(thisGameScreen);
 
 				if (thisGameScreen.IsBlockingUpdate)
 					updateBlocked = true;
 
-				if (!drawBlocked)
+				if (!drawBlocked && thisGameScreen.Visible)
 					m_toDrawGameScreens.Add(thisGameScreen);
 
 				if (thisGameScreen.IsBlockingDraw)
