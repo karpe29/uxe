@@ -86,10 +86,10 @@ namespace XeFramework.GameScreen
 			base.Update(gameTime);
 
 			m_delay += gameTime.ElapsedGameTime;
-			if (m_delay < TimeSpan.FromMilliseconds(500))
+			if (m_delay < TimeSpan.FromMilliseconds(250))
 				return;
 
-			if (m_delay > TimeSpan.FromMilliseconds(10000))
+			if (m_delay >= TimeSpan.FromMilliseconds(10000))
 				GameScreenManager.Game.Exit();
 
 			if (Keyboard.GetState().GetPressedKeys().Length > 0)

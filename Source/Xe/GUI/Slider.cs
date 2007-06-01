@@ -46,6 +46,10 @@ namespace XeFramework.GUI
 			{
 				float oldValue = m_value;
 
+				// little bug here if value <= min value
+				// value will be minvalue + step at the end (minor)
+				// and if minvalue != 0
+				
 				// Determine nearest value from Step
 				if (value >= MaxValue)
 					m_value = MaxValue;

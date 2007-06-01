@@ -7,6 +7,8 @@ using XeFramework.Graphics3D;
 using Microsoft.Xna.Framework;
 using XeFramework.XeGame.SpaceRace;
 using XeFramework.Objects3D;
+using Xe.Game.SpaceRace;
+using Xe.Game;
 
 namespace XeFramework.GameScreen
 {
@@ -33,25 +35,42 @@ namespace XeFramework.GameScreen
 
 		#endregion
 
-		SpriteBatch m_spriteBatch;
-		Texture2D m_backgroundTexture;
+		int m_playerCount;
+		float m_difficultyPercent;
 
-		Ship m_ship;
-		List<WormHole> m_wormHoles;
+		SpriteBatch m_spriteBatch;
+
+		List<Player> m_players;
+		Race m_race;
 
 		private SpaceRaceScreen(GameScreenManager gameScreenManager)
-			: this(gameScreenManager, 50)
+			: this(gameScreenManager, 50, 1)
 		{
 		}
 
-		public SpaceRaceScreen(GameScreenManager gameScreenManager, float difficultyPercent)
+		public SpaceRaceScreen(GameScreenManager gameScreenManager, float difficultyPercent, int playerCount)
 			: base(gameScreenManager, true)
 		{
+			m_difficultyPercent = difficultyPercent;
+			m_playerCount = playerCount;
+
+			m_players = new List<Player>(m_playerCount);
+
+			this.Enabled = false;
+			this.Visible = false;
+	
+			for (int i = 0; i< m_playerCount;i++)
+			{
+				m_players.Add(new Player());
+
+				ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager,i,this);
+				if (i + 1 != m_playerCount)
+					screen.Visible = screen.Enabled = false;
+			}
+
 			s = new SkyBox(gameScreenManager.Game, @"Content\Skybox\bryce");
 			s.ContentManager = gameScreenManager.ContentManager;
 			s.Initialize();
-
-			m_ship = new Ship(this.GameScreenManager);
 		}
 
 		protected override void LoadGraphicsContent(bool loadAllContent)
@@ -63,9 +82,6 @@ namespace XeFramework.GameScreen
 			}
 
 			m_spriteBatch = new SpriteBatch(this.GraphicsDevice);
-
-
-
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -74,10 +90,9 @@ namespace XeFramework.GameScreen
 
 			//RenderSpaceBackground();
 
-
 			s.Draw(gameTime);
 
-			m_ship.Draw(gameTime);
+			//m_ship.Draw(gameTime);
 		}
 
 		private void RenderSpaceBackground()
@@ -87,7 +102,7 @@ namespace XeFramework.GameScreen
 			//7 4 1
 			//8 5 2
 			//9 6 3
-
+			/*
 			int w = m_backgroundTexture.Width;
 			int h = m_backgroundTexture.Height;
 
@@ -117,16 +132,15 @@ namespace XeFramework.GameScreen
 			m_spriteBatch.Draw(m_backgroundTexture, -v9, Color.White);
 
 			m_spriteBatch.End();
+			*/
 			#endregion
-
-
 		}
 
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
 
-			
+			/*
 
 			m_ship.Update(gameTime);
 
@@ -136,6 +150,7 @@ namespace XeFramework.GameScreen
 			s.ProjectionMatrix = m_ship.ProjectionMatrix;
 
 			s.Update(gameTime);
+			 * */
 		}
 
 		public override bool IsBlockingUpdate

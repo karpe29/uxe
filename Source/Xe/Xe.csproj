@@ -76,6 +76,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
@@ -247,6 +248,10 @@
     <Compile Include="GameScreen\StatScreen.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>StatScreen</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\Player.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Player</Name>
     </Compile>
     <Compile Include="Game\XeGame.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -611,6 +616,20 @@
       <Processor>ModelProcessor</Processor>
       <Name>WormHole</Name>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\ShipSelectionScreen.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ShipSelectionScreen</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\CheckPoint.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>CheckPoint</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\Race.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Race</Name>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="3D\Physics\" />

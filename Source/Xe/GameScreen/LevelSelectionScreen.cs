@@ -6,21 +6,31 @@ using Microsoft.Xna.Framework;
 
 using XeFramework.GUI;
 using Microsoft.Xna.Framework.Input;
+using Xe.Game;
 
 namespace XeFramework.GameScreen
 {
 	class LevelSelectionScreen : IGameScreen
 	{
-		XeFramework.GUI.Button buttonBack;
-		XeFramework.GUI.Button buttonPlaySpaceRace;
-		XeFramework.GUI.Button buttonPlayTimeTime;
+		Button buttonBack;
+		Button buttonPlaySpaceRace;
+		Button buttonPlayTimeTime;
 
-		Slider levelSlider;
+		Slider sliderLevel;
+		Slider sliderPlayerCount;
 
 
 		public LevelSelectionScreen(GameScreenManager gameScreenManager)
-			: base(gameScreenManager, true)
+			: base(gameScreenManager, false)
 		{
+			// if we don't already have a backgroundScreen, create one
+			if (this.GameScreenManager.CurrentGameScreen.GetType() != MainMenuScreen.BackgroundScreenType)
+				if (MainMenuScreen.BackgroundScreenType.BaseType == typeof(IGameScreen))
+					Activator.CreateInstance(MainMenuScreen.BackgroundScreenType, this.GameScreenManager);
+
+			// add it to the list of GameScreens
+			this.GameScreenManager.AddGameScreen(this);
+
 			buttonBack = new Button(GameScreenManager.Game, GameScreenManager.GuiManager);
 			buttonBack.Text = "Back";
 			buttonBack.Width = 120;
@@ -48,40 +58,47 @@ namespace XeFramework.GameScreen
 			buttonPlayTimeTime.Click += new ClickHandler(buttonPlayTimeTime_Click);
 			GameScreenManager.GuiManager.AddControl(buttonPlayTimeTime);
 
-			levelSlider = new Slider(GameScreenManager.Game, GameScreenManager.GuiManager);
-			levelSlider.Width = (buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5;
-			levelSlider.Height = 30;
-			levelSlider.X = buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10);
-			levelSlider.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - levelSlider.Height / 2;
-			levelSlider.MinValue = 0;
-			levelSlider.MaxValue = 4;
-			levelSlider.Step = 1;
-			levelSlider.Value = 2;
-			levelSlider.ValueChanged += new ValueChangedHandler(levelSlider_ValueChanged);
-			GameScreenManager.GuiManager.AddControl(levelSlider);
-		}
+			sliderLevel = new Slider(GameScreenManager.Game, GameScreenManager.GuiManager);
+			sliderLevel.Width = (buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5;
+			sliderLevel.Height = 30;
+			sliderLevel.X = buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10);
+			sliderLevel.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderLevel.Height / 2;
+			sliderLevel.MinValue = 0;
+			sliderLevel.MaxValue = 3;
+			sliderLevel.Step = 1;
+			sliderLevel.Value = 2;
+			//sliderLevel.ValueChanged += new ValueChangedHandler(levelSlider_ValueChanged);
+			GameScreenManager.GuiManager.AddControl(sliderLevel);
 
-		void levelSlider_ValueChanged(object sender, float value)
-		{
-			//this.GameScreenManager.Game.Window.Title = value.ToString();
+			sliderPlayerCount = new Slider(GameScreenManager.Game, GameScreenManager.GuiManager);
+			sliderPlayerCount.Width = (buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5;
+			sliderPlayerCount.Height = 30;
+			sliderPlayerCount.X = buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10);
+			sliderPlayerCount.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 4 / 5 - sliderLevel.Height / 2;
+			sliderPlayerCount.MinValue = 0;
+			sliderPlayerCount.MaxValue = 3;
+			sliderPlayerCount.Step = 1;
+			sliderPlayerCount.Value = 0;
+			//sliderPlayerCount.ValueChanged += new ValueChangedHandler(levelPlayerCount_ValueChanged);
+			GameScreenManager.GuiManager.AddControl(sliderPlayerCount);
+
 		}
 
 		void buttonPlaySpaceRace_Click(object sender, XeFramework.Input.MouseEventArgs args)
 		{
 			// save difficulty level as levelSlider won't exists after Cleanup();
-			float levelPercent = levelSlider.ValuePercent;
-
+			float levelPercent = sliderLevel.ValuePercent;
+			int playerCount = (int)sliderPlayerCount.Value + 1;
+		
 			ExitScreen();
 
-			GameScreenManager.RemoveLeftGameScreen(MainMenuScreen.BackgroundScreenType);
-
-			SpaceRaceScreen g = new SpaceRaceScreen(GameScreenManager, levelPercent);
+			SpaceRaceScreen g = new SpaceRaceScreen(GameScreenManager, levelPercent, playerCount);
 		}
 
 		void buttonPlayTimeTime_Click(object sender, XeFramework.Input.MouseEventArgs args)
 		{
 			// save difficulty level as levelSlider won't exists after Cleanup();
-			float levelPercent = levelSlider.ValuePercent;
+			float levelPercent = sliderLevel.ValuePercent;
 
 			ExitScreen();
 
@@ -115,9 +132,13 @@ namespace XeFramework.GameScreen
 				buttonPlayTimeTime.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 3 / 4 - buttonPlayTimeTime.Width / 2;
 				buttonPlayTimeTime.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 4 / 5 - buttonPlayTimeTime.Height / 2;
 
-				levelSlider.Width = (buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5;
-				levelSlider.X = buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10);
-				levelSlider.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - levelSlider.Height / 2;
+				sliderLevel.Width = (buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5;
+				sliderLevel.X = buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10);
+				sliderLevel.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderLevel.Height / 2;
+
+				sliderPlayerCount.Width = (buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5;
+				sliderPlayerCount.X = buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10);
+				sliderPlayerCount.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 4 / 5 - sliderLevel.Height / 2;
 			}
 		}
 
@@ -134,8 +155,11 @@ namespace XeFramework.GameScreen
 			GameScreenManager.GuiManager.RemoveControl(buttonPlayTimeTime);
 			buttonPlayTimeTime.Dispose();
 
-			GameScreenManager.GuiManager.RemoveControl(levelSlider);
-			levelSlider.Dispose();
+			GameScreenManager.GuiManager.RemoveControl(sliderLevel);
+			sliderLevel.Dispose();
+
+			GameScreenManager.GuiManager.RemoveControl(sliderPlayerCount);
+			sliderPlayerCount.Dispose();
 		}
 
 
@@ -148,31 +172,11 @@ namespace XeFramework.GameScreen
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
-
-			Button s;
-
-			if (Keyboard.GetState().GetPressedKeys().Length > 0)
-			{
-				s = new Button(this.GameScreenManager.Game, this.GameScreenManager.GuiManager);
-				GameScreenManager.GuiManager.AddControl(s);
-			}
-
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
-			
-
-			if (m_isExiting)
-			{
-				int d = 255 - (int)TransitionOffTime.TotalMilliseconds / 10;
-				this.GameScreenManager.Game.Window.Title = TransitionOffTime.ToString() + " - " + d.ToString(); ;
-				GameScreenManager.FadeBackBufferToBlack(d);
-			}
-
-
 			base.Draw(gameTime);
-
 		}
 
 		#endregion
