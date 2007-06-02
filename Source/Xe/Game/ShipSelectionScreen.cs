@@ -68,7 +68,7 @@ namespace Xe.Game
 			sliderShip.MinValue = 0;
 			sliderShip.MaxValue = 3;
 			sliderShip.Step = 1;
-			sliderShip.Value = 2;
+			sliderShip.Value = 0;
 			sliderShip.ValueChanged += new ValueChangedHandler(sliderShip_ValueChanged);
 			GameScreenManager.GuiManager.AddControl(sliderShip);
 		}
@@ -172,8 +172,13 @@ namespace Xe.Game
 			if (!this.Visible)
 				return;
 
-			base.Draw(gameTime);
+			
+			/*
+			this.GraphicsDevice.RenderState.DepthBufferEnable = true;
+			this.GraphicsDevice.RenderState.CullMode = CullMode.None;
 
+			this.GraphicsDevice.RenderState.StencilEnable = false;
+			*/
 			//Copy any parent transforms
 			Matrix[] transforms = new Matrix[m_selectedModel.Bones.Count];
 			m_selectedModel.CopyAbsoluteBoneTransformsTo(transforms);
@@ -184,8 +189,8 @@ namespace Xe.Game
 				for (int j = 0; j < m_selectedModel.Meshes[i].Effects.Count; j++)
 				{
 					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).EnableDefaultLighting();
-					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).World = 
-						transforms[m_shipModels[0].Meshes[i].ParentBone.Index] * Matrix.CreateTranslation(dst,0,0);
+					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).World =
+						transforms[m_shipModels[0].Meshes[i].ParentBone.Index] * Matrix.CreateTranslation(dst, 0, 0);
 
 					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).View = this.ViewMatrix;
 					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).Projection = this.ProjectionMatrix;
@@ -193,7 +198,11 @@ namespace Xe.Game
 
 				m_selectedModel.Meshes[i].Draw();
 			}
-				
+			/*
+			this.GraphicsDevice.RenderState.StencilEnable = true;
+			this.GraphicsDevice.RenderState.CullMode = CullMode.CullClockwiseFace;*/
+
+			base.Draw(gameTime);
 		}
 
 		#endregion

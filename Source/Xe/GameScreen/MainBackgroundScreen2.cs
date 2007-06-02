@@ -31,6 +31,11 @@ namespace XeFramework.GameScreen
 
 		Random r = new Random();
 
+		SpriteBatch sb;
+
+		RenderTarget2D t;
+
+
 		public Matrix ViewMatrix
 		{
 			get
@@ -78,6 +83,13 @@ namespace XeFramework.GameScreen
 			foreach (EffectParameter p in myEffect.Parameters)
 				Console.WriteLine(p.Name);
 
+			sb = new SpriteBatch(this.GraphicsDevice);
+
+			t = new RenderTarget2D(this.GraphicsDevice,
+				this.GraphicsDevice.PresentationParameters.BackBufferWidth,
+				this.GraphicsDevice.PresentationParameters.BackBufferHeight, 1,
+				this.GraphicsDevice.PresentationParameters.BackBufferFormat);
+
 			//Aspect ratio to use for the projection matrix
 			aspectRatio = aspectRatio = (float)this.GraphicsDevice.PresentationParameters.BackBufferWidth / (float)this.GraphicsDevice.PresentationParameters.BackBufferHeight;
 
@@ -95,6 +107,9 @@ namespace XeFramework.GameScreen
 		public override void Draw(GameTime gameTime)
 		{
 			GameScreenManager.Stats.AddModelPolygonsCount(myModel);
+
+			
+			this.GraphicsDevice.SetRenderTarget(0, t);
 
 			this.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
 			this.GraphicsDevice.RenderState.TwoSidedStencilMode = true;
@@ -152,6 +167,22 @@ namespace XeFramework.GameScreen
 				}
 				myEffect.End();
 			}
+
+			this.GraphicsDevice.ResolveRenderTarget(0);
+
+			this.GraphicsDevice.SetRenderTarget(0, null);
+
+			//t.GetTexture().Save("C:\\test.jpg", ImageFileFormat.Bmp);
+
+			sb.Begin(SpriteBlendMode.None,
+							  SpriteSortMode.Immediate,
+							  SaveStateMode.None);
+
+			//sb.Draw(t.GetTexture(), new Rectangle(0,0,t.Width,t.Height), Color.White);
+
+			sb.Draw(t.GetTexture(), new Rectangle(400, 400, 200, 200), Color.White);
+
+			sb.End();
 
 			base.Draw(gameTime);
 		}
