@@ -214,7 +214,8 @@ namespace XeFramework.GameScreen
 		{
 			
 
-			for (int i = m_toDrawGameScreens.Count - 1; i >= 0; i--)
+			//for (int i = m_toDrawGameScreens.Count - 1; i >= 0; i--)
+			for (int i = 0; i < m_toDrawGameScreens.Count; i++)
 			{
 				m_toDrawGameScreens[i].Draw(gameTime);
 			}
