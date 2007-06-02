@@ -71,6 +71,8 @@ namespace Xe.Game
 			sliderShip.Value = 0;
 			sliderShip.ValueChanged += new ValueChangedHandler(sliderShip_ValueChanged);
 			GameScreenManager.GuiManager.AddControl(sliderShip);
+
+
 		}
 
 		void sliderShip_ValueChanged(object sender, float value)
@@ -172,13 +174,14 @@ namespace Xe.Game
 			if (!this.Visible)
 				return;
 
-			
-			/*
-			this.GraphicsDevice.RenderState.DepthBufferEnable = true;
-			this.GraphicsDevice.RenderState.CullMode = CullMode.None;
 
-			this.GraphicsDevice.RenderState.StencilEnable = false;
-			*/
+
+			// Don't use or write to the z buffer
+			this.GraphicsDevice.RenderState.DepthBufferEnable = true;
+			this.GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
+			// Disable alpha for the first pass
+			this.GraphicsDevice.RenderState.AlphaBlendEnable = true;
+			
 			//Copy any parent transforms
 			Matrix[] transforms = new Matrix[m_selectedModel.Bones.Count];
 			m_selectedModel.CopyAbsoluteBoneTransformsTo(transforms);

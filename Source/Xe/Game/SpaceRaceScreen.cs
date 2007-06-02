@@ -65,7 +65,7 @@ namespace XeFramework.GameScreen
 
 				ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager,i,this);
 				if (i + 1 != m_playerCount)
-					screen.Visible = screen.Enabled = false;
+					screen.Visible = false; //should be enabled as visible state of control is changed in Update()
 			}
 
 			s = new SkyBox(gameScreenManager.Game, @"Content\Skybox\bryce");
