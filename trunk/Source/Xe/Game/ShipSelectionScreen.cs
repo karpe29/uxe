@@ -20,6 +20,7 @@ namespace Xe.Game
 		int m_player;
 
 		Model[] m_shipModels = new Model[4];
+		Model m_selectedModel;
 
 		float dst = 2000;
 
@@ -70,12 +71,11 @@ namespace Xe.Game
 			sliderShip.Value = 2;
 			sliderShip.ValueChanged += new ValueChangedHandler(sliderShip_ValueChanged);
 			GameScreenManager.GuiManager.AddControl(sliderShip);
-
 		}
 
 		void sliderShip_ValueChanged(object sender, float value)
 		{
-			this.ViewMatrix = Matrix.CreateLookAt(new Vector3(0,1000,0), new Vector3(1500,0,0), Vector3.Up) * Matrix.CreateRotationY((int)value * MathHelper.PiOver2); 
+			m_selectedModel = m_shipModels[(int)value];
 		}
 
 		void buttonAccept_Click(object sender, XeFramework.Input.MouseEventArgs args)
@@ -87,7 +87,6 @@ namespace Xe.Game
 			if (GameScreenManager.CurrentGameScreen.GetType() == typeof(SpaceRaceScreen))
 				GameScreenManager.RemoveLeftGameScreen(MainMenuScreen.BackgroundScreenType);
 		}
-
 		
 
 		void buttonBack_Click(object sender, XeFramework.Input.MouseEventArgs args)
@@ -128,6 +127,11 @@ namespace Xe.Game
 			m_shipModels[1] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser2");
 			m_shipModels[2] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser3");
 			m_shipModels[3] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser4");
+
+			if (sliderShip != null)
+				m_selectedModel = m_shipModels[(int)sliderShip.Value];
+			else
+				m_selectedModel = m_shipModels[0];
 		}
 
 
@@ -170,85 +174,26 @@ namespace Xe.Game
 
 			base.Draw(gameTime);
 
-			
-
 			//Copy any parent transforms
-			Matrix[] transforms = new Matrix[m_shipModels[0].Bones.Count];
-			m_shipModels[0].CopyAbsoluteBoneTransformsTo(transforms);
+			Matrix[] transforms = new Matrix[m_selectedModel.Bones.Count];
+			m_selectedModel.CopyAbsoluteBoneTransformsTo(transforms);
 			//Draw the model, a model can have multiple meshes, so loop
-			for (int i = 0; i < m_shipModels[0].Meshes.Count; i++)
+			for (int i = 0; i < m_selectedModel.Meshes.Count; i++)
 			{
 				//This is where the mesh orientation is set, as well as our camera and projection
-				for (int j = 0; j < m_shipModels[0].Meshes[i].Effects.Count; j++)
+				for (int j = 0; j < m_selectedModel.Meshes[i].Effects.Count; j++)
 				{
-					(m_shipModels[0].Meshes[i].Effects[j] as BasicEffect).EnableDefaultLighting();
-					(m_shipModels[0].Meshes[i].Effects[j] as BasicEffect).World = 
+					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).EnableDefaultLighting();
+					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).World = 
 						transforms[m_shipModels[0].Meshes[i].ParentBone.Index] * Matrix.CreateTranslation(dst,0,0);
 
-					(m_shipModels[0].Meshes[i].Effects[j] as BasicEffect).View = this.ViewMatrix;
-					(m_shipModels[0].Meshes[i].Effects[j] as BasicEffect).Projection = this.ProjectionMatrix;
+					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).View = this.ViewMatrix;
+					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).Projection = this.ProjectionMatrix;
 				}
 
-				m_shipModels[0].Meshes[i].Draw();
+				m_selectedModel.Meshes[i].Draw();
 			}
-
-			//Copy any parent transforms
-			transforms = new Matrix[m_shipModels[1].Bones.Count];
-			m_shipModels[1].CopyAbsoluteBoneTransformsTo(transforms);
-
-			//Draw the model, a model can have multiple meshes, so loop
-			for (int i = 0; i < m_shipModels[1].Meshes.Count; i++)
-			{
-				//This is where the mesh orientation is set, as well as our camera and projection
-				for (int j = 0; j < m_shipModels[1].Meshes[i].Effects.Count; j++)
-				{
-					(m_shipModels[1].Meshes[i].Effects[j] as BasicEffect).EnableDefaultLighting();
-					(m_shipModels[1].Meshes[i].Effects[j] as BasicEffect).World = transforms[m_shipModels[1].Meshes[i].ParentBone.Index] * Matrix.CreateTranslation(0, 0, -dst);
-
-					(m_shipModels[1].Meshes[i].Effects[j] as BasicEffect).View = this.ViewMatrix;
-					(m_shipModels[1].Meshes[i].Effects[j] as BasicEffect).Projection = this.ProjectionMatrix;
-				}
-
-				m_shipModels[1].Meshes[i].Draw();
-			}
-
-			//Copy any parent transforms
-			transforms = new Matrix[m_shipModels[2].Bones.Count];
-			m_shipModels[2].CopyAbsoluteBoneTransformsTo(transforms);
-
-			//Draw the model, a model can have multiple meshes, so loop
-			for (int i = 0; i < m_shipModels[2].Meshes.Count; i++)
-			{
-				//This is where the mesh orientation is set, as well as our camera and projection
-				for (int j = 0; j < m_shipModels[2].Meshes[i].Effects.Count; j++)
-				{
-					(m_shipModels[2].Meshes[i].Effects[j] as BasicEffect).EnableDefaultLighting();
-					(m_shipModels[2].Meshes[i].Effects[j] as BasicEffect).World = transforms[m_shipModels[2].Meshes[i].ParentBone.Index] * Matrix.CreateTranslation(-dst, 0, 0);
-					(m_shipModels[2].Meshes[i].Effects[j] as BasicEffect).View = this.ViewMatrix;
-					(m_shipModels[2].Meshes[i].Effects[j] as BasicEffect).Projection = this.ProjectionMatrix;
-				}
-
-				m_shipModels[2].Meshes[i].Draw();
-			}
-
-			//Copy any parent transforms
-			transforms = new Matrix[m_shipModels[3].Bones.Count];
-			m_shipModels[3].CopyAbsoluteBoneTransformsTo(transforms);
-
-			//Draw the model, a model can have multiple meshes, so loop
-			for (int i = 0; i < m_shipModels[3].Meshes.Count; i++)
-			{
-				//This is where the mesh orientation is set, as well as our camera and projection
-				for (int j = 0; j < m_shipModels[3].Meshes[i].Effects.Count; j++)
-				{
-					(m_shipModels[3].Meshes[i].Effects[j] as BasicEffect).EnableDefaultLighting();
-					(m_shipModels[3].Meshes[i].Effects[j] as BasicEffect).World = transforms[m_shipModels[3].Meshes[i].ParentBone.Index] * Matrix.CreateTranslation(0, 0, dst);
-					(m_shipModels[3].Meshes[i].Effects[j] as BasicEffect).View = this.ViewMatrix;
-					(m_shipModels[3].Meshes[i].Effects[j] as BasicEffect).Projection = this.ProjectionMatrix;
-				}
-
-				m_shipModels[3].Meshes[i].Draw();
-			}
+				
 		}
 
 		#endregion
