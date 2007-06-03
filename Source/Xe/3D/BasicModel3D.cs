@@ -33,11 +33,14 @@ namespace XeFramework.Graphics3D
 		public BasicModel3D(GameScreenManager gameScreenManager)
 			: base(gameScreenManager.Game)
 		{
+			m_conManager = gameScreenManager.ContentManager;
 		}
 
 		public BasicModel3D(GameScreenManager gameScreenManager, string assetName)
 			: base(gameScreenManager.Game)
 		{
+			m_conManager = gameScreenManager.ContentManager;
+
 			this.AssetName = assetName;
 		}
 		#endregion
@@ -49,13 +52,17 @@ namespace XeFramework.Graphics3D
 
 			if (loadAllContent)
 			{
-				if (m_useAsset)
+				LoadAsset();
+			}
+		}
+
+		private void LoadAsset()
+		{
+			if (m_useAsset)
+			{
+				if (!String.IsNullOrEmpty(m_assetName))
 				{
-					m_conManager = new ContentManager(this.Game.Services);
-					if (!String.IsNullOrEmpty(m_assetName))
-					{
-						m_model = m_conManager.Load<Model>(m_assetName);
-					}
+					m_model = m_conManager.Load<Model>(m_assetName);
 				}
 			}
 		}
@@ -161,9 +168,11 @@ namespace XeFramework.Graphics3D
 			}
 			set
 			{
-				m_model = value;
-
-				m_useAsset = false;
+				if (value != m_model)
+				{
+					m_useAsset = false;
+					m_model = value;
+				}
 			}
 		}
 
@@ -175,9 +184,12 @@ namespace XeFramework.Graphics3D
 			}
 			set
 			{
-				m_assetName = value;
-
-				m_useAsset = true;
+				if (value != m_assetName)
+				{
+					m_useAsset = true;
+					m_assetName = value;
+					LoadAsset();
+				}
 			}
 		}
 		#endregion
