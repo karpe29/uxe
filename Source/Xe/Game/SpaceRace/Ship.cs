@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using XeFramework.Graphics3D;
 using XeFramework.Input;
 using XeFramework.Objects3D;
+using Xe._3D.Physics;
 
 namespace XeFramework.XeGame.SpaceRace
 {
@@ -19,7 +20,7 @@ namespace XeFramework.XeGame.SpaceRace
 
 	}
 
-	class Ship : DrawableGameComponent
+	class Ship : IPhysicableObject
 	{
 		SpaceRaceScreen m_gameScreen;
 
@@ -70,10 +71,11 @@ namespace XeFramework.XeGame.SpaceRace
 			return MathHelper.SmoothStep(0, f, duration.Ticks / totalDuration.Ticks);
 		}
 
-		public Ship(GameScreenManager gameScreenManager)
+		public Ship(GameScreenManager gameScreenManager, Model model)
 			: base(gameScreenManager.Game)
 		{
 			m_gameScreen = gameScreenManager.CurrentGameScreen as SpaceRaceScreen;
+			m_model = model;
 
 			/*
 			m_camera = new Camera(this.Game);
@@ -93,7 +95,7 @@ namespace XeFramework.XeGame.SpaceRace
 
 			if (loadAllContent)
 			{
-				m_model = m_gameScreen.GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser1");
+				//m_model = m_gameScreen.GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser1");
 			}
 
 			float AspectRatio = (float)Game.Window.ClientBounds.Width / (float)Game.Window.ClientBounds.Height;
@@ -196,7 +198,7 @@ namespace XeFramework.XeGame.SpaceRace
 
 		public override void Draw(GameTime gameTime)
 		{
-			this.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
+			/*this.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
 			this.GraphicsDevice.RenderState.TwoSidedStencilMode = true;
 
 			this.GraphicsDevice.RenderState.DepthBufferEnable = true;
@@ -206,7 +208,7 @@ namespace XeFramework.XeGame.SpaceRace
 
 			this.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
 			this.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
-
+			*/
 
 
 			//Copy any parent transforms

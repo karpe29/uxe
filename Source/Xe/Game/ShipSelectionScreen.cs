@@ -5,6 +5,7 @@ using XeFramework.GUI;
 using XeFramework.GameScreen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using XeFramework.XeGame.SpaceRace;
 
 namespace Xe.Game
 {
@@ -19,8 +20,10 @@ namespace Xe.Game
 		SpaceRaceScreen m_spaceRaceScreen;
 		int m_player;
 
-		Model[] m_shipModels = new Model[4];
-		Model m_selectedModel;
+		Ship[] m_ships = new Ship[4];
+		Ship m_selectedShip;
+		//Model[] m_shipModels = new Model[4];
+		//Model m_selectedModel;
 
 		float dst = 2000;
 
@@ -77,7 +80,8 @@ namespace Xe.Game
 
 		void sliderShip_ValueChanged(object sender, float value)
 		{
-			m_selectedModel = m_shipModels[(int)value];
+			m_selectedShip = m_ships[(int)value];
+			//m_selectedModel = m_shipModels[(int)value];
 		}
 
 		void buttonAccept_Click(object sender, XeFramework.Input.MouseEventArgs args)
@@ -125,15 +129,26 @@ namespace Xe.Game
 				sliderShip.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderShip.Height / 2;
 			}
 
+			m_ships[0] = new Ship(GameScreenManager, GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser1"));
+			m_ships[1] = new Ship(GameScreenManager, GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser2"));
+			m_ships[2] = new Ship(GameScreenManager, GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser3"));
+			m_ships[3] = new Ship(GameScreenManager, GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser4"));
+			/*
 			m_shipModels[0] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser1");
 			m_shipModels[1] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser2");
 			m_shipModels[2] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser3");
 			m_shipModels[3] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser4");
-
+*/
 			if (sliderShip != null)
-				m_selectedModel = m_shipModels[(int)sliderShip.Value];
+			{
+				m_selectedShip = m_ships[(int)sliderShip.Value];
+				//m_selectedModel = m_shipModels[(int)sliderShip.Value];
+			}
 			else
-				m_selectedModel = m_shipModels[0];
+			{
+				m_selectedShip = m_ships[0];
+				//m_selectedModel = m_shipModels[0];
+			}
 		}
 
 
@@ -163,7 +178,6 @@ namespace Xe.Game
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
-
 			buttonAccept.Visible = this.Visible;
 			buttonBack.Visible = this.Visible;
 			sliderShip.Visible = this.Visible;
@@ -183,6 +197,9 @@ namespace Xe.Game
 			this.GraphicsDevice.RenderState.AlphaBlendEnable = true;
 			
 			//Copy any parent transforms
+
+			m_selectedShip.Draw(gameTime);
+			/*
 			Matrix[] transforms = new Matrix[m_selectedModel.Bones.Count];
 			m_selectedModel.CopyAbsoluteBoneTransformsTo(transforms);
 			//Draw the model, a model can have multiple meshes, so loop
@@ -200,6 +217,7 @@ namespace Xe.Game
 				}
 
 				m_selectedModel.Meshes[i].Draw();
+				
 			}
 			/*
 			this.GraphicsDevice.RenderState.StencilEnable = true;

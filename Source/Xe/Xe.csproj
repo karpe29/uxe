@@ -618,6 +618,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="3D\Physics\IPhysicableObject.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IPhysicableObject</Name>
+    </Compile>
     <Compile Include="Game\ShipSelectionScreen.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ShipSelectionScreen</Name>
@@ -630,9 +634,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Race</Name>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="3D\Physics\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA\Game Studio Express\v1.0\Microsoft.Xna.ContentPipeline.targets" />
