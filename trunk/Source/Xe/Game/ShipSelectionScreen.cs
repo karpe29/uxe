@@ -21,6 +21,7 @@ namespace Xe.Game
 		SpaceRaceScreen m_spaceRaceScreen;
 
 		int m_player;
+		float angle = 0f;
 
 		string[] m_ships = { @"Content\Models\StarChaser1", @"Content\Models\StarChaser2", @"Content\Models\StarChaser3", @"Content\Models\StarChaser4" };
 
@@ -169,10 +170,13 @@ namespace Xe.Game
 		{
 			
 			base.Update(gameTime);
-
+			
 			buttonAccept.Visible = this.Visible;
 			buttonBack.Visible = this.Visible;
 			sliderShip.Visible = this.Visible;
+			angle += (float)gameTime.ElapsedGameTime.Milliseconds/1000f;
+			m_model.World = Matrix.CreateRotationY(angle)*Matrix.CreateTranslation(dst, 0, 0);
+
     	}
 
 		public override void Draw(GameTime gameTime)
@@ -182,7 +186,6 @@ namespace Xe.Game
 
 			m_model.View = this.ViewMatrix;
 			m_model.Projection = this.ProjectionMatrix;
-			m_model.World = Matrix.CreateTranslation(dst, 0, 0);
 
 			m_model.Draw(gameTime);
 
