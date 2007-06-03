@@ -80,8 +80,13 @@ namespace Xe._3D.Physics
 		public override void Update(GameTime gameTime)
 		{
 			// TODO: Add your update code here
-			int milliseconds = (gameTime.ElapsedGameTime).Milliseconds;
-			m_rotationSpeed += m_rotationAcceleration * milliseconds;
+			float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds)/1000f;
+
+			m_rotationSpeed += m_rotationAcceleration * seconds;
+			m_rotationPosition += m_rotationSpeed * seconds + m_rotationAcceleration * seconds * seconds / 2;
+
+			m_linearSpeed += m_linearAcceleration * seconds;
+			m_linearPosition += m_linearSpeed * seconds + m_linearAcceleration * seconds * seconds / 2;
 
 			base.Update(gameTime);
 		}

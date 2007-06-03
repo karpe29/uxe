@@ -128,11 +128,11 @@ namespace Xe.Game
 				sliderShip.X = buttonBack.X + buttonBack.Width + ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 1 / 10);
 				sliderShip.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderShip.Height / 2;
 			}
-
-			m_ships[0] = new Ship(GameScreenManager, GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser1"));
-			m_ships[1] = new Ship(GameScreenManager, GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser2"));
-			m_ships[2] = new Ship(GameScreenManager, GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser3"));
-			m_ships[3] = new Ship(GameScreenManager, GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser4"));
+			for (int i=0;i<4;i++)
+			{
+			m_ships[i] = new Ship(GameScreenManager, GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser"+(i+1)));
+			m_ships[i].rotationSpeed = new Vector3(0f, 0.1f, 0f);
+			}
 			/*
 			m_shipModels[0] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser1");
 			m_shipModels[1] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser2");
@@ -177,6 +177,7 @@ namespace Xe.Game
 
 		public override void Update(GameTime gameTime)
 		{
+			m_selectedShip.Update(gameTime);
 			base.Update(gameTime);
 			buttonAccept.Visible = this.Visible;
 			buttonBack.Visible = this.Visible;
