@@ -92,7 +92,7 @@ namespace XeFramework.XeGame.SpaceRace
 		protected override void LoadGraphicsContent(bool loadAllContent)
 		{
 			base.LoadGraphicsContent(loadAllContent);
-
+			/*
 			if (loadAllContent)
 			{
 				//m_model = m_gameScreen.GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser1");
@@ -100,6 +100,7 @@ namespace XeFramework.XeGame.SpaceRace
 
 			float AspectRatio = (float)Game.Window.ClientBounds.Width / (float)Game.Window.ClientBounds.Height;
 			ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), AspectRatio, 1.0f, 200000.0f);
+			 * */
 		}
 
 		void UpdateCameraFirstPerson()
@@ -145,7 +146,10 @@ namespace XeFramework.XeGame.SpaceRace
 
 		public override void Update(GameTime gameTime)
 		{
-			m = Matrix.Identity;
+
+			base.Update(gameTime);
+
+			/*m = Matrix.Identity;
 
 			base.Update(gameTime);
 
@@ -192,7 +196,7 @@ namespace XeFramework.XeGame.SpaceRace
 
 
 			UpdateCameraThirdPerson();
-				
+				*/
 		}
 			
 
