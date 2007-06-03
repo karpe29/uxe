@@ -6,6 +6,7 @@ using XeFramework.GameScreen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XeFramework.XeGame.SpaceRace;
+using XeFramework.Graphics3D;
 
 namespace Xe.Game
 {
@@ -18,14 +19,14 @@ namespace Xe.Game
 		Slider sliderShip;
 
 		SpaceRaceScreen m_spaceRaceScreen;
+
 		int m_player;
 
-		Ship[] m_ships = new Ship[4];
-		Ship m_selectedShip;
-		//Model[] m_shipModels = new Model[4];
-		//Model m_selectedModel;
+		string[] m_ships = { @"Content\Models\StarChaser1", @"Content\Models\StarChaser2", @"Content\Models\StarChaser3", @"Content\Models\StarChaser4" };
 
 		float dst = 2000;
+
+		BasicModel3D m_model;
 
 		private Matrix ViewMatrix = Matrix.CreateLookAt(new Vector3(0,1000,0), new Vector3(1500,0,0), Vector3.Up);
 		private Matrix ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1.0f, 1, 10000);
@@ -75,13 +76,12 @@ namespace Xe.Game
 			sliderShip.ValueChanged += new ValueChangedHandler(sliderShip_ValueChanged);
 			GameScreenManager.GuiManager.AddControl(sliderShip);
 
-
+			m_model = new BasicModel3D(this.GameScreenManager, m_ships[(int)sliderShip.Value]);
 		}
 
 		void sliderShip_ValueChanged(object sender, float value)
 		{
-			m_selectedShip = m_ships[(int)value];
-			//m_selectedModel = m_shipModels[(int)value];
+			m_model.AssetName = m_ships[(int)value];
 		}
 
 		void buttonAccept_Click(object sender, XeFramework.Input.MouseEventArgs args)
@@ -128,27 +128,17 @@ namespace Xe.Game
 				sliderShip.X = buttonBack.X + buttonBack.Width + ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 1 / 10);
 				sliderShip.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderShip.Height / 2;
 			}
-			for (int i=0;i<4;i++)
-			{
-			m_ships[i] = new Ship(GameScreenManager, GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser"+(i+1)));
-			m_ships[i].rotationSpeed = new Vector3(0f, 0.1f, 0f);
-			}
-			/*
-			m_shipModels[0] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser1");
-			m_shipModels[1] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser2");
-			m_shipModels[2] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser3");
-			m_shipModels[3] = GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser4");
-*/
-			if (sliderShip != null)
-			{
-				m_selectedShip = m_ships[(int)sliderShip.Value];
-				//m_selectedModel = m_shipModels[(int)sliderShip.Value];
-			}
-			else
-			{
-				m_selectedShip = m_ships[0];
-				//m_selectedModel = m_shipModels[0];
-			}
+					
+			//if (sliderShip != null)
+			//{
+			//    m_selectedShip = m_ships[(int)sliderShip.Value];
+			//    //m_selectedModel = m_shipModels[(int)sliderShip.Value];
+			//}
+			//else
+			//{
+			//    m_selectedShip = m_ships[0];
+			//    //m_selectedModel = m_shipModels[0];
+			//}
 		}
 
 
@@ -177,8 +167,9 @@ namespace Xe.Game
 
 		public override void Update(GameTime gameTime)
 		{
-			m_selectedShip.Update(gameTime);
+			
 			base.Update(gameTime);
+
 			buttonAccept.Visible = this.Visible;
 			buttonBack.Visible = this.Visible;
 			sliderShip.Visible = this.Visible;
@@ -189,42 +180,13 @@ namespace Xe.Game
 			if (!this.Visible)
 				return;
 
+			m_model.View = this.ViewMatrix;
+			m_model.Projection = this.ProjectionMatrix;
+			m_model.World = Matrix.CreateTranslation(dst, 0, 0);
 
-
-			// Don't use or write to the z buffer
-			this.GraphicsDevice.RenderState.DepthBufferEnable = true;
-			this.GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
-			// Disable alpha for the first pass
-			this.GraphicsDevice.RenderState.AlphaBlendEnable = true;
-			
-			//Copy any parent transforms
-
-			/*
-			Matrix[] transforms = new Matrix[m_selectedModel.Bones.Count];
-			m_selectedModel.CopyAbsoluteBoneTransformsTo(transforms);
-			//Draw the model, a model can have multiple meshes, so loop
-			for (int i = 0; i < m_selectedModel.Meshes.Count; i++)
-			{
-				//This is where the mesh orientation is set, as well as our camera and projection
-				for (int j = 0; j < m_selectedModel.Meshes[i].Effects.Count; j++)
-				{
-					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).EnableDefaultLighting();
-					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).World =
-						transforms[m_shipModels[0].Meshes[i].ParentBone.Index] * Matrix.CreateTranslation(dst, 0, 0);
-
-					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).View = this.ViewMatrix;
-					(m_selectedModel.Meshes[i].Effects[j] as BasicEffect).Projection = this.ProjectionMatrix;
-				}
-
-				m_selectedModel.Meshes[i].Draw();
-				
-			}
-			/*
-			this.GraphicsDevice.RenderState.StencilEnable = true;
-			this.GraphicsDevice.RenderState.CullMode = CullMode.CullClockwiseFace;*/
+			m_model.Draw(gameTime);
 
 			base.Draw(gameTime);
-			m_selectedShip.Draw(gameTime);
 		}
 
 		#endregion
