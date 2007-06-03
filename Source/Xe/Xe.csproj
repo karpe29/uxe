@@ -618,6 +618,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="3D\BasicModel3D.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>BasicModel3D</Name>
+    </Compile>
     <Compile Include="3D\Physics\IPhysicableObject.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IPhysicableObject</Name>
