@@ -199,7 +199,6 @@ namespace Xe.Game
 			
 			//Copy any parent transforms
 
-			m_selectedShip.Draw(gameTime);
 			/*
 			Matrix[] transforms = new Matrix[m_selectedModel.Bones.Count];
 			m_selectedModel.CopyAbsoluteBoneTransformsTo(transforms);
@@ -225,6 +224,7 @@ namespace Xe.Game
 			this.GraphicsDevice.RenderState.CullMode = CullMode.CullClockwiseFace;*/
 
 			base.Draw(gameTime);
+			m_selectedShip.Draw(gameTime);
 		}
 
 		#endregion
