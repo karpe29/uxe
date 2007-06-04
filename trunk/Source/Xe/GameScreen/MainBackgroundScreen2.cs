@@ -167,30 +167,30 @@ namespace XeFramework.GameScreen
 				}
 				myEffect.End();
 			}
-
+			
 			this.GraphicsDevice.ResolveRenderTarget(0);
 
 			this.GraphicsDevice.SetRenderTarget(0, null);
 
 
 			// Don't use or write to the z buffer
-			this.GraphicsDevice.RenderState.DepthBufferEnable = false;
-			this.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
+			//this.GraphicsDevice.RenderState.DepthBufferEnable = false;
+			//this.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
 			// Disable alpha for the first pass
-			this.GraphicsDevice.RenderState.AlphaBlendEnable = false;
+			//this.GraphicsDevice.RenderState.AlphaBlendEnable = false;
 
 			//t.GetTexture().Save("C:\\test.jpg", ImageFileFormat.Bmp);
-
+			
 			sb.Begin(SpriteBlendMode.AlphaBlend,
 							  SpriteSortMode.Immediate,
-							  SaveStateMode.None);
+							  SaveStateMode.SaveState);
 
 			sb.Draw(t.GetTexture(), new Rectangle(0,0,t.Width,t.Height), Color.White);
 
 			//sb.Draw(t.GetTexture(), new Rectangle(300, 300, 200, 200), Color.White);
 
 			sb.End();
-
+			
 			base.Draw(gameTime);
 		}
 

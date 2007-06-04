@@ -40,7 +40,7 @@ namespace Xe.Game
 
 			labelPlayer = new Label(GameScreenManager.Game, GameScreenManager.GuiManager);
 			labelPlayer.TextAlign = TextAlignment.Center;
-			labelPlayer.Text = "Player " + (m_player +1).ToString() + " Ship";
+			labelPlayer.Text = "Player " + m_player.ToString() + " Ship";
 			labelPlayer.Width = 120;
 			labelPlayer.Height = 30;
 			labelPlayer.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - labelPlayer.Width / 2;
@@ -170,10 +170,12 @@ namespace Xe.Game
 		{
 			
 			base.Update(gameTime);
-			
+
+			labelPlayer.Visible = this.Visible;
 			buttonAccept.Visible = this.Visible;
 			buttonBack.Visible = this.Visible;
 			sliderShip.Visible = this.Visible;
+
 			angle += (float)gameTime.ElapsedGameTime.Milliseconds/1000f;
 			m_model.World = Matrix.CreateRotationY(angle)*Matrix.CreateTranslation(dst, 0, 0);
 
@@ -183,6 +185,9 @@ namespace Xe.Game
 		{
 			if (!this.Visible)
 				return;
+
+			
+
 
 			m_model.View = this.ViewMatrix;
 			m_model.Projection = this.ProjectionMatrix;
