@@ -97,8 +97,6 @@ namespace XeFramework.Graphics3D
 
 		public override void Draw(GameTime gameTime)
 		{
-			base.Draw(gameTime);
-
 			try
 			{
 				if (m_model != null)
@@ -109,6 +107,8 @@ namespace XeFramework.Graphics3D
 				if (m_reporter != null)
 					m_reporter.BroadcastError(this, e.Message, e);
 			}
+			
+			base.Draw(gameTime);
 		}
 
 		protected virtual void DrawModel(GameTime gameTime)

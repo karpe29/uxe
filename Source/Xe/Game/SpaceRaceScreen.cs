@@ -58,14 +58,14 @@ namespace XeFramework.GameScreen
 
 			this.Enabled = false;
 			this.Visible = false;
-	
-			for (int i = 0; i< m_playerCount;i++)
+
+			for (int i = m_playerCount; i > 0; i--)
 			{
 				m_players.Add(new Player());
 
-				ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager,i,this);
-				
-				if (i != 0)
+				ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager, i, this);
+
+				if (i != 1)
 					screen.Visible = false; //should be .Enabled as visible state of control is changed in Update()
 			}
 
