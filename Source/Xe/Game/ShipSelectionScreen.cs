@@ -177,6 +177,7 @@ namespace Xe.Game
 			sliderShip.Visible = this.Visible;
 
 			angle += (float)gameTime.ElapsedGameTime.Milliseconds/1000f;
+			angle %= MathHelper.TwoPi;
 			m_model.World = Matrix.CreateRotationY(angle)*Matrix.CreateTranslation(dst, 0, 0);
 
     	}
