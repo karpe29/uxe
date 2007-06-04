@@ -14,11 +14,26 @@ namespace XeFramework.XeGame.SpaceRace
 {
 	class ShipType
 	{
-		string m_modelFilename;
-		Quaternion m_initialRotation;
-		float m_initialSize;
+		string m_model;
+		float m_handling;
+		float m_acceleration;
+		float m_maxSpeed;
+		float m_resistance;
+		float m_gravityFactor;
 
+		public ShipType(string model, float handling, float powerAccel, float maxSpeed, float resistance, float gFactor)
+		{
+
+		}
+		/*
+		ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f), 
+								new ShipType(@"Content\Models\StarChaser2", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f), 
+								new ShipType(@"Content\Models\StarChaser3", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f), 
+								new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f) };
+		*/
 	}
+
+	 
 
 	class Ship : IPhysicableObject
 	{

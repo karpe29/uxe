@@ -87,7 +87,10 @@ namespace Xe.Game
 
 		void buttonAccept_Click(object sender, XeFramework.Input.MouseEventArgs args)
 		{
+
 			ExitScreen();
+
+
 
 			this.GameScreenManager.CurrentGameScreen.Visible = true;
 
