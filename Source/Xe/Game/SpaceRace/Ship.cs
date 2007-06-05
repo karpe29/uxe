@@ -169,9 +169,14 @@ namespace XeFramework.XeGame.SpaceRace
 			this.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
 			this.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
 			*/
+			m_model.World = Matrix.Identity;
+			m_model.View=Matrix.CreateLookAt(new Vector3(5000f, 500f, 5000f), new Vector3(0f, 0f, 0f), new Vector3(0, 1f, 0));
+			m_model.Projection= Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(4/3), 1.0f,10000.0f);
+
 
 			if (m_model != null)
 				m_model.Draw(gameTime);
+				
 
 			base.Draw(gameTime);
 		}

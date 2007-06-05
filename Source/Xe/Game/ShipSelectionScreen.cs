@@ -93,6 +93,7 @@ namespace Xe.Game
 
 
 			this.GameScreenManager.CurrentGameScreen.Visible = true;
+			this.GameScreenManager.CurrentGameScreen.Enabled = true;
 
 			if (GameScreenManager.CurrentGameScreen.GetType() == typeof(SpaceRaceScreen))
 				GameScreenManager.RemoveLeftGameScreen(MainMenuScreen.BackgroundScreenType);

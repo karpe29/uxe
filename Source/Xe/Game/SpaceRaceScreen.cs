@@ -61,7 +61,7 @@ namespace XeFramework.GameScreen
 
 			for (int i = m_playerCount; i > 0; i--)
 			{
-				m_players.Add(new Player());
+				m_players.Add(new Player(new Ship(gameScreenManager,ShipType.Types[3])));
 
 				ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager, i, this);
 
@@ -88,12 +88,11 @@ namespace XeFramework.GameScreen
 		public override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
-
+			m_players[0].Ship.Draw(gameTime);
 			//RenderSpaceBackground();
 
 			s.Draw(gameTime);
 
-			//m_ship.Draw(gameTime);
 		}
 
 		private void RenderSpaceBackground()
@@ -143,7 +142,6 @@ namespace XeFramework.GameScreen
 
 			/*
 
-			m_ship.Update(gameTime);
 
 			s.CameraPosition = m_ship.Position;
 			s.CameraDirection = m_ship.Position - m_ship.transformedReference;
