@@ -8,10 +8,20 @@ namespace Xe.Game.SpaceRace
 {
 	class Player
 	{
-		Ship m_ship;
 
-		ChaseCamera m_camera;
+		private Ship m_ship;
 
+		private ChaseCamera m_camera;
+
+		public Player(Ship Ship)
+		{
+			m_ship=Ship;
+		}
+
+		public Ship Ship
+		{
+			get { return m_ship; }
+		}
 
 	}
 }
