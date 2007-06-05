@@ -623,6 +623,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>BasicModel3D</Name>
     </Compile>
+    <Compile Include="3D\ChaseCamera.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ChaseCamera</Name>
+    </Compile>
     <Compile Include="3D\Physics\IPhysicableObject.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IPhysicableObject</Name>
@@ -638,6 +642,10 @@
     <Compile Include="Game\SpaceRace\Race.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Race</Name>
+    </Compile>
+    <Compile Include="Tools\XeHelper.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>XeHelper</Name>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
