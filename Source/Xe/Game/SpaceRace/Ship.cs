@@ -21,85 +21,54 @@ namespace XeFramework.XeGame.SpaceRace
 		float m_resistance;
 		float m_gravityFactor;
 
-		public ShipType(string model, float handling, float powerAccel, float maxSpeed, float resistance, float gFactor)
-		{
+		#region properties
 
+		public string Model { get { return m_model; } }
+		public float Handling { get { return m_handling; } }
+		public float Acceleration { get { return m_acceleration; } }
+		public float MaxSpeed { get { return m_maxSpeed; } }
+		public float Resistance { get { return m_resistance; } }
+		public float GravityFactor { get { return m_gravityFactor; } }
+
+		#endregion
+
+		public ShipType(string model, float handling, float acceleration, float maxSpeed, float resistance, float gFactor)
+		{
+			m_model = model;
+			m_handling = handling;
+			m_acceleration = acceleration;
+			m_maxSpeed = maxSpeed;
+			m_resistance = resistance;
+			m_gravityFactor = gFactor;
 		}
-		/*
-		ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f), 
-								new ShipType(@"Content\Models\StarChaser2", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f), 
-								new ShipType(@"Content\Models\StarChaser3", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f), 
-								new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f) };
-		*/
+		
+		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f), 
+											new ShipType(@"Content\Models\StarChaser2", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f), 
+											new ShipType(@"Content\Models\StarChaser3", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f), 
+											new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f) };
 	}
 
-	 
-
+	
+	/// <summary>
+	/// Take care of rendering and managing the ship
+	/// </summary>
 	class Ship : IPhysicableObject
 	{
 		SpaceRaceScreen m_gameScreen;
 
-		Matrix m = Matrix.Identity;
+		ShipType m_type;
 
-		Model m_model;
+		BasicModel3D m_model;
 
-		//Camera m_camera;
-		//CameraInput m_input;
+		public BasicModel3D Model { get { return m_model; } }
+		
+		
 
-		private Vector3 m_position; // only z and x are used.
-
-		public Vector3 transformedReference;
-
-		public Vector3 Position
-		{
-			get { return m_position; }
-			set { m_position = value; }
-		}
-
-		Vector3 m_direction;
-
-		public Quaternion m_rotation = Quaternion.Identity;
-
-		float m_xRotation = 0, m_yRotation = 0, m_zRotation = 0;
-
-		float m_baseSpeed = 10;
-		float m_baseRotation = 0.001f;
-
-		public Matrix ViewMatrix;
-		public Matrix ProjectionMatrix;
-
-		/// <summary>
-		/// Return interpolated value based on two TimeSpan
-		/// </summary>
-		/// <param name="f">The max value</param>
-		/// <param name="duration">The current duration</param>
-		/// <param name="totalDuration">The total desired effect duration</param>
-		/// <returns>A value between 0 and f</returns>
-		public float GetInterpolatedValue(float f, TimeSpan duration, TimeSpan totalDuration)
-		{
-			if (duration <= TimeSpan.Zero)
-				return 0;
-
-			if (duration >= totalDuration)
-				return f;
-
-			return MathHelper.SmoothStep(0, f, duration.Ticks / totalDuration.Ticks);
-		}
-
-		public Ship(GameScreenManager gameScreenManager, Model model)
+		public Ship(GameScreenManager gameScreenManager, ShipType type)
 			: base(gameScreenManager.Game)
 		{
 			m_gameScreen = gameScreenManager.CurrentGameScreen as SpaceRaceScreen;
-			m_model = model;
-
-			/*
-			m_camera = new Camera(this.Game);
-			m_camera.CreateCamera(new Vector3(5000, 5000, 5000), MathHelper.PiOver4, 1.0f, 1.0f, 1000000.0f);
-			this.Game.Components.Add(m_camera);
-
-			m_input = new CameraInput(this.Game, m_camera);
-			this.Game.Components.Add(m_input);
-			*/
+			m_type = type;
 
 			this.Initialize();
 		}
@@ -107,47 +76,18 @@ namespace XeFramework.XeGame.SpaceRace
 		protected override void LoadGraphicsContent(bool loadAllContent)
 		{
 			base.LoadGraphicsContent(loadAllContent);
-			/*
+			
 			if (loadAllContent)
 			{
-				//m_model = m_gameScreen.GameScreenManager.ContentManager.Load<Model>(@"Content\Models\StarChaser1");
+				m_model = new BasicModel3D(m_gameScreen.GameScreenManager, m_type.Model);
 			}
-
-			float AspectRatio = (float)Game.Window.ClientBounds.Width / (float)Game.Window.ClientBounds.Height;
-			ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), AspectRatio, 1.0f, 200000.0f);
-			 * */
 		}
 
-		void UpdateCameraFirstPerson()
-		{
-			/*
-			Matrix rotationMatrix = Matrix.CreateRotationY(avatarYaw);
-
-			// Transform the head offset so the camera is positioned properly relative to the avatar.
-			Vector3 headOffset = Vector3.Transform(avatarHeadOffset, rotationMatrix);
-
-			// Calculate the camera's current position.
-			Vector3 cameraPosition = avatarPosition + headOffset;
-
-			// Create a vector pointing the direction the camera is facing.
-			Vector3 transformedReference = Vector3.Transform(cameraReference, rotationMatrix);
-
-			// Calculate the position the camera is looking at.
-			Vector3 cameraLookat = transformedReference + cameraPosition;
-
-			// Set up the view matrix and projection matrix.
-
-			view = Matrix.CreateLookAt(cameraPosition, cameraLookat, new Vector3(0.0f, 1.0f, 0.0f));
-
-			Viewport viewport = graphics.GraphicsDevice.Viewport;
-			float aspectRatio = (float)viewport.Width / (float)viewport.Height;
-
-			proj = Matrix.CreatePerspectiveFieldOfView(viewAngle, aspectRatio, nearClip, farClip);
-			*/
-		}
 
 		void UpdateCameraThirdPerson()
 		{
+			/// NO MORE USED
+			/*
 			Vector3 thirdPersonReference = new Vector3(0, 2000, 2000);
 			thirdPersonReference = Vector3.Transform(thirdPersonReference, Matrix.CreateFromQuaternion(m_rotation));
 			thirdPersonReference = Vector3.Transform(thirdPersonReference, Matrix.CreateTranslation(m_position));
@@ -157,6 +97,7 @@ namespace XeFramework.XeGame.SpaceRace
 			//cameraUp = Vector3.Transform(cameraUp, Matrix.CreateTranslation(m_position));
 
 			ViewMatrix = Matrix.CreateLookAt(thirdPersonReference, m_position , cameraUp);
+			 * */
 		}
 
 		public override void Update(GameTime gameTime)
@@ -229,26 +170,8 @@ namespace XeFramework.XeGame.SpaceRace
 			this.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
 			*/
 
-
-			//Copy any parent transforms
-			Matrix[] transforms = new Matrix[m_model.Bones.Count];
-			m_model.CopyAbsoluteBoneTransformsTo(transforms);
-
-			//Draw the model, a model can have multiple meshes, so loop
-			for (int i = 0; i < m_model.Meshes.Count; i++)
-			{
-				//This is where the mesh orientation is set, as well as our camera and projection
-				for (int j = 0; j < m_model.Meshes[i].Effects.Count; j++)
-				{
-					(m_model.Meshes[i].Effects[j] as BasicEffect).EnableDefaultLighting();
-					(m_model.Meshes[i].Effects[j] as BasicEffect).World = transforms[m_model.Meshes[i].ParentBone.Index] * Matrix.CreateScale(1) *Matrix.CreateFromQuaternion(m_rotation) * Matrix.CreateTranslation(m_position);
-
-					(m_model.Meshes[i].Effects[j] as BasicEffect).View = this.ViewMatrix;
-					(m_model.Meshes[i].Effects[j] as BasicEffect).Projection = this.ProjectionMatrix;
-				}
-
-				m_model.Meshes[i].Draw();
-			}
+			if (m_model != null)
+				m_model.Draw(gameTime);
 
 			base.Draw(gameTime);
 		}
