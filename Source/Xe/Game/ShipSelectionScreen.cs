@@ -17,13 +17,9 @@ namespace Xe.Game
 		Label labelPlayer;
 
 		Slider sliderShip;
+		SpaceRaceInitDatas m_datas;
 
-		SpaceRaceScreen m_spaceRaceScreen;
-
-		int m_player;
 		float angle = 0f;
-
-		string[] m_ships = { @"Content\Models\StarChaser1", @"Content\Models\StarChaser2", @"Content\Models\StarChaser3", @"Content\Models\StarChaser4" };
 
 		float dst = 2000;
 
@@ -32,15 +28,14 @@ namespace Xe.Game
 		private Matrix ViewMatrix = Matrix.CreateLookAt(new Vector3(0,1000,0), new Vector3(1500,0,0), Vector3.Up);
 		private Matrix ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1.0f, 1, 10000);
 		
-		public ShipSelectionScreen(GameScreenManager gameScreenManager, int player, SpaceRaceScreen spaceRaceScreen)
+		public ShipSelectionScreen(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
 			: base(gameScreenManager, true)
 		{
-			m_spaceRaceScreen = spaceRaceScreen;
-			m_player = player;
+			m_datas = datas;
 
 			labelPlayer = new Label(GameScreenManager.Game, GameScreenManager.GuiManager);
 			labelPlayer.TextAlign = TextAlignment.Center;
-			labelPlayer.Text = "Player " + m_player.ToString() + " Ship";
+			labelPlayer.Text = "Player " + (m_datas.currentPlayerNumber+1).ToString() + " Ship";
 			labelPlayer.Width = 120;
 			labelPlayer.Height = 30;
 			labelPlayer.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - labelPlayer.Width / 2;
@@ -71,18 +66,18 @@ namespace Xe.Game
 			sliderShip.X = buttonBack.X + buttonBack.Width + ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 1 / 10);
 			sliderShip.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderShip.Height / 2;
 			sliderShip.MinValue = 0;
-			sliderShip.MaxValue = 3;
+			sliderShip.MaxValue = ShipType.Types.Length-1;
 			sliderShip.Step = 1;
 			sliderShip.Value = 0;
 			sliderShip.ValueChanged += new ValueChangedHandler(sliderShip_ValueChanged);
 			GameScreenManager.GuiManager.AddControl(sliderShip);
 
-			m_model = new BasicModel3D(this.GameScreenManager, m_ships[(int)sliderShip.Value]);
+			m_model = new BasicModel3D(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value].ModelAsset);
 		}
 
 		void sliderShip_ValueChanged(object sender, float value)
 		{
-			m_model.AssetName = m_ships[(int)value];
+			m_model.AssetName = ShipType.Types[(int)value].ModelAsset;
 		}
 
 		void buttonAccept_Click(object sender, XeFramework.Input.MouseEventArgs args)
@@ -90,13 +85,18 @@ namespace Xe.Game
 
 			ExitScreen();
 
+			m_datas.shipTypes.Add(ShipType.Types[(int)sliderShip.Value]);
 
-
-			this.GameScreenManager.CurrentGameScreen.Visible = true;
-			this.GameScreenManager.CurrentGameScreen.Enabled = true;
-
-			if (GameScreenManager.CurrentGameScreen.GetType() == typeof(SpaceRaceScreen))
+			// dernier joueur ?
+			if (m_datas.currentPlayerNumber++ < m_datas.totalPlayerCount )
+			{// non
+				ShipSelectionScreen s = new ShipSelectionScreen(this.GameScreenManager, m_datas);
+			}
+			else
+			{// oui -> lancement du jeu :)
 				GameScreenManager.RemoveLeftGameScreen(MainMenuScreen.BackgroundScreenType);
+				SpaceRaceScreen s = new SpaceRaceScreen(this.GameScreenManager, m_datas);
+			}
 		}
 		
 
@@ -105,8 +105,6 @@ namespace Xe.Game
 			ExitScreen();
 
 			this.GameScreenManager.RemoveLeftGameScreen(this.GetType());
-			
-			this.GameScreenManager.RemoveLeftGameScreen(typeof(SpaceRaceScreen));
 
 			LevelSelectionScreen l = new LevelSelectionScreen(this.GameScreenManager);
 		}
@@ -174,11 +172,6 @@ namespace Xe.Game
 		{
 			
 			base.Update(gameTime);
-
-			labelPlayer.Visible = this.Visible;
-			buttonAccept.Visible = this.Visible;
-			buttonBack.Visible = this.Visible;
-			sliderShip.Visible = this.Visible;
 
 			angle += (float)gameTime.ElapsedGameTime.Milliseconds/1000f;
 			angle %= MathHelper.TwoPi;
