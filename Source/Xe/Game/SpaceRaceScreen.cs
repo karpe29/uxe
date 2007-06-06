@@ -14,26 +14,9 @@ namespace XeFramework.GameScreen
 {
 	class SpaceRaceScreen : IGameScreen
 	{
-		#region Matrices
-
-		//float AspectRatio = (float)GameScreenManager.Game.Window.ClientBounds.Width / (float)GameScreenManager.Game.Window.ClientBounds.Height;
-
-
-
-
-		public Matrix ProjectionMatrix;
-		//Matrix.CreateOrthographic(20000, 20000, 1, 25000);
-		//Matrix.CreatePerspective(f, f, 1, 100000);
-		//Matrix.CreatePerspectiveOffCenter(-f, f, -f, f, 1, 1000000);
-		//Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), AspectRatio, 1.0f, 100000.0f);
-
-		public Matrix ViewMatrix =
-			//Matrix.CreateLookAt(new Vector3(0, 20000, 0), Vector3.Zero, Vector3.Forward);
-		Matrix.CreateLookAt(new Vector3(5000, 5000, 5000), Vector3.Zero, Vector3.Up);
-
 		SkyBox s;
 
-		#endregion
+		SpaceRaceInitDatas m_datas;
 
 		int m_playerCount;
 		float m_difficultyPercent;
@@ -43,30 +26,16 @@ namespace XeFramework.GameScreen
 		List<Player> m_players;
 		Race m_race;
 
-		private SpaceRaceScreen(GameScreenManager gameScreenManager)
-			: this(gameScreenManager, 50, 1)
-		{
-		}
-
-		public SpaceRaceScreen(GameScreenManager gameScreenManager, float difficultyPercent, int playerCount)
+		public SpaceRaceScreen(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
 			: base(gameScreenManager, true)
 		{
-			m_difficultyPercent = difficultyPercent;
-			m_playerCount = playerCount;
+			m_datas = datas;
 
-			m_players = new List<Player>(m_playerCount);
+			m_players = new List<Player>(m_datas.totalPlayerCount+1);
 
-			this.Enabled = false;
-			this.Visible = false;
-
-			for (int i = m_playerCount; i > 0; i--)
+			for(int i = 0; i< m_datas.totalPlayerCount +1; i++)
 			{
-				m_players.Add(new Player(gameScreenManager,new Ship(gameScreenManager,ShipType.Types[3])));
-
-				ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager, i, this);
-
-				if (i != 1)
-					screen.Visible = false; //should be .Enabled as visible state of control is changed in Update()
+				m_players.Add(new Player(gameScreenManager, new Ship(gameScreenManager, m_datas.shipTypes[i])));
 			}
 
 			s = new SkyBox(gameScreenManager.Game, @"Content\Skybox\bryce");
@@ -89,7 +58,6 @@ namespace XeFramework.GameScreen
 		{
 			base.Draw(gameTime);
 			m_players[0].Ship.Draw(gameTime);
-			//RenderSpaceBackground();
 
 			s.Draw(gameTime);
 
@@ -139,18 +107,24 @@ namespace XeFramework.GameScreen
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
+
 			m_players[0].Ship.Update(gameTime);
 
-			/*
 
+			// Definir les matrices / position du vaisseau ici pour la skybox, et voila :)
 
-			s.CameraPosition = m_ship.Position;
-			s.CameraDirection = m_ship.Position - m_ship.transformedReference;
-			s.ViewMatrix = m_ship.ViewMatrix;
-			s.ProjectionMatrix = m_ship.ProjectionMatrix;
+			// pour voir ce que t'as fait
+			//m_model.World = Matrix.CreateRotationZ(rotationPosition.Z) * Matrix.CreateRotationX(rotationPosition.X) * Matrix.CreateRotationY(rotationPosition.Y);
+			//m_model.View = Matrix.CreateLookAt(new Vector3(0, 4000, 0), new Vector3(0, 0, 0), new Vector3(1, 0, 0));
+			//m_model.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(4 / 3), 1, 10000);
 
-			s.Update(gameTime);
-			 * */
+			//s.CameraPosition = m_players[0].Ship.linearPosition -
+			//s.CameraDirection = m_ship.Position - m_ship.transformedReference;
+			//s.ViewMatrix = m_ship.ViewMatrix;
+			//s.ProjectionMatrix = m_ship.ProjectionMatrix;
+
+			//s.Update(gameTime);
+			
 		}
 
 		public override bool IsBlockingUpdate
