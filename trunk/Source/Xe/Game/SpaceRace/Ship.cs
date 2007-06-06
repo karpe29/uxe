@@ -69,7 +69,8 @@ namespace XeFramework.XeGame.SpaceRace
 		{
 			m_gameScreen = gameScreenManager.CurrentGameScreen as SpaceRaceScreen;
 			m_type = type;
-
+			//rotationAcceleration = new Vector3(1, 0, 0);	
+			rotationSpeed = new Vector3(0.2f, 1, 10);
 			this.Initialize();
 		}
 
@@ -103,7 +104,18 @@ namespace XeFramework.XeGame.SpaceRace
 		public override void Update(GameTime gameTime)
 		{
 
+			/*if (rotationSpeed.Y > 10) rotationAcceleration = new Vector3(0f, -2f, 0f);
+			if (rotationSpeed.Y < 0) { 
+				rotationAcceleration = new Vector3(0f, 2f, 0f);
+				rotationSpeed = new Vector3(0f, 0f, 0f);
+			}*/
+
+
 			base.Update(gameTime);
+
+			m_model.World = Matrix.CreateRotationZ(rotationPosition.Z) * Matrix.CreateRotationX(rotationPosition.X) * Matrix.CreateRotationY(rotationPosition.Y);
+			m_model.View = Matrix.CreateLookAt(new Vector3(0, 4000,0 ), new Vector3(0, 0, 0), new Vector3(1, 0, 0));
+			m_model.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(4 / 3), 1, 10000);
 
 			/*m = Matrix.Identity;
 
@@ -169,9 +181,6 @@ namespace XeFramework.XeGame.SpaceRace
 			this.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
 			this.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
 			*/
-			m_model.World = Matrix.Identity;
-			m_model.View=Matrix.CreateLookAt(new Vector3(5000f, 500f, 5000f), new Vector3(0f, 0f, 0f), new Vector3(0, 1f, 0));
-			m_model.Projection= Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(4/3), 1.0f,10000.0f);
 
 
 			if (m_model != null)

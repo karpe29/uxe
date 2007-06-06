@@ -81,7 +81,7 @@ namespace Xe._3D.Physics
 		{
 			// TODO: Add your update code here
 			float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds)/1000f;
-			
+
 			m_rotationSpeed += m_rotationAcceleration * seconds;
 			m_rotationPosition += m_rotationSpeed * seconds + m_rotationAcceleration * seconds * seconds / 2;
 
