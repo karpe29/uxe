@@ -61,7 +61,7 @@ namespace XeFramework.GameScreen
 
 			for (int i = m_playerCount; i > 0; i--)
 			{
-				m_players.Add(new Player(new Ship(gameScreenManager,ShipType.Types[3])));
+				m_players.Add(new Player(gameScreenManager,new Ship(gameScreenManager,ShipType.Types[3])));
 
 				ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager, i, this);
 
@@ -139,6 +139,7 @@ namespace XeFramework.GameScreen
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
+			m_players[0].Ship.Update(gameTime);
 
 			/*
 
