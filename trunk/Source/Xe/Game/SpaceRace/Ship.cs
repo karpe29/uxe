@@ -23,7 +23,7 @@ namespace XeFramework.XeGame.SpaceRace
 
 		#region properties
 
-		public string Model { get { return m_model; } }
+		public string ModelAsset { get { return m_model; } }
 		public float Handling { get { return m_handling; } }
 		public float Acceleration { get { return m_acceleration; } }
 		public float MaxSpeed { get { return m_maxSpeed; } }
@@ -80,7 +80,7 @@ namespace XeFramework.XeGame.SpaceRace
 			
 			if (loadAllContent)
 			{
-				m_model = new BasicModel3D(m_gameScreen.GameScreenManager, m_type.Model);
+				m_model = new BasicModel3D(m_gameScreen.GameScreenManager, m_type.ModelAsset);
 			}
 		}
 
@@ -182,7 +182,7 @@ namespace XeFramework.XeGame.SpaceRace
 			this.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
 			*/
 
-
+			// update world matrix here fonction of IPhysical object data
 			if (m_model != null)
 				m_model.Draw(gameTime);
 				
