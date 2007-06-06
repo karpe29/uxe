@@ -87,12 +87,13 @@ namespace XeFramework.GameScreen
 		void buttonPlaySpaceRace_Click(object sender, XeFramework.Input.MouseEventArgs args)
 		{
 			// save difficulty level as levelSlider won't exists after Cleanup();
-			float levelPercent = sliderLevel.ValuePercent;
-			int playerCount = (int)sliderPlayerCount.Value + 1;
+			SpaceRaceInitDatas datas = new SpaceRaceInitDatas();
+			datas.difficultyPercent = sliderLevel.ValuePercent;
+			datas.totalPlayerCount = (int)sliderPlayerCount.Value;
 		
 			ExitScreen();
 
-			SpaceRaceScreen g = new SpaceRaceScreen(GameScreenManager, levelPercent, playerCount);
+			ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager, datas);
 		}
 
 		void buttonPlayTimeTime_Click(object sender, XeFramework.Input.MouseEventArgs args)

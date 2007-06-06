@@ -635,6 +635,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ShipSelectionScreen</Name>
     </Compile>
+    <Compile Include="Game\SpaceRaceInitDatas.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SpaceRaceInitDatas</Name>
+    </Compile>
     <Compile Include="Game\SpaceRace\CheckPoint.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>CheckPoint</Name>
