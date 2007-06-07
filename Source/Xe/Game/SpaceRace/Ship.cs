@@ -65,12 +65,12 @@ namespace XeFramework.XeGame.SpaceRace
 		
 
 		public Ship(GameScreenManager gameScreenManager, ShipType type)
-			: base(gameScreenManager.Game)
+			: base(gameScreenManager.Game,new PhysicalType(type.Handling,type.Acceleration,type.MaxSpeed, type.Resistance, type.GravityFactor))
 		{
 			m_gameScreen = gameScreenManager.CurrentGameScreen as SpaceRaceScreen;
 			m_type = type;
 			//rotationAcceleration = new Vector3(1, 0, 0);	
-			rotationSpeed = new Vector3(0.2f, 1, 10);
+			rotationSpeed = new Vector3(0, 0, 0);
 			this.Initialize();
 		}
 
@@ -109,13 +109,14 @@ namespace XeFramework.XeGame.SpaceRace
 				rotationAcceleration = new Vector3(0f, 2f, 0f);
 				rotationSpeed = new Vector3(0f, 0f, 0f);
 			}*/
-
-
+			
 			base.Update(gameTime);
 
-			m_model.World = Matrix.CreateRotationZ(rotationPosition.Z) * Matrix.CreateRotationX(rotationPosition.X) * Matrix.CreateRotationY(rotationPosition.Y);
-			m_model.View = Matrix.CreateLookAt(new Vector3(0, 4000,0 ), new Vector3(0, 0, 0), new Vector3(1, 0, 0));
-			m_model.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(4 / 3), 1, 10000);
+
+
+			m_model.World = Matrix.CreateRotationZ(rotationPosition.Z) * Matrix.CreateRotationX(rotationPosition.X) * Matrix.CreateRotationY(rotationPosition.Y)*Matrix.CreateTranslation(linearPosition);
+			m_model.View = Matrix.CreateLookAt(new Vector3(200, 100, 200), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+			m_model.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(1), 1, 10000);
 
 			/*m = Matrix.Identity;
 
