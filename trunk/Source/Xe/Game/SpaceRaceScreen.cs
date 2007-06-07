@@ -21,6 +21,7 @@ namespace XeFramework.GameScreen
 		int m_playerCount;
 		float m_difficultyPercent;
 
+		BasicModel3D earth;
 		SpriteBatch m_spriteBatch;
 
 		List<Player> m_players;
@@ -29,6 +30,7 @@ namespace XeFramework.GameScreen
 		public SpaceRaceScreen(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
 			: base(gameScreenManager, true)
 		{
+			earth = new BasicModel3D(gameScreenManager, @"Content\Models\Earth");
 			m_datas = datas;
 
 			m_players = new List<Player>(m_datas.totalPlayerCount+1);
@@ -56,10 +58,11 @@ namespace XeFramework.GameScreen
 
 		public override void Draw(GameTime gameTime)
 		{
-			base.Draw(gameTime);
-			m_players[0].Ship.Draw(gameTime);
-
+			//earth.Draw(gameTime);
 			s.Draw(gameTime);
+			m_players[0].Draw(gameTime);
+			base.Draw(gameTime);
+
 
 		}
 
@@ -108,22 +111,23 @@ namespace XeFramework.GameScreen
 		{
 			base.Update(gameTime);
 
-			m_players[0].Ship.Update(gameTime);
+
+			m_players[0].Update(gameTime);
 
 
 			// Definir les matrices / position du vaisseau ici pour la skybox, et voila :)
 
-			// pour voir ce que t'as fait
+			 //pour voir ce que t'as fait
 			//m_model.World = Matrix.CreateRotationZ(rotationPosition.Z) * Matrix.CreateRotationX(rotationPosition.X) * Matrix.CreateRotationY(rotationPosition.Y);
 			//m_model.View = Matrix.CreateLookAt(new Vector3(0, 4000, 0), new Vector3(0, 0, 0), new Vector3(1, 0, 0));
 			//m_model.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(4 / 3), 1, 10000);
 
-			//s.CameraPosition = m_players[0].Ship.linearPosition -
-			//s.CameraDirection = m_ship.Position - m_ship.transformedReference;
-			//s.ViewMatrix = m_ship.ViewMatrix;
-			//s.ProjectionMatrix = m_ship.ProjectionMatrix;
+			s.CameraPosition = new Vector3(0, 4000, 0);
+			s.CameraDirection = new Vector3(0, 0, 0);
+			s.ViewMatrix = Matrix.CreateLookAt(new Vector3(200, 100, 200), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+			s.ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(1), 1, 100000);
 
-			//s.Update(gameTime);
+			s.Update(gameTime);
 			
 		}
 
