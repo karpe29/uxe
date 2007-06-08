@@ -652,14 +652,6 @@
       <Name>XeHelper</Name>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Models\Earth.FBX">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <Name>Earth</Name>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA\Game Studio Express\v1.0\Microsoft.Xna.ContentPipeline.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA\Game Studio Express\v1.0\Microsoft.Xna.Common.targets" />

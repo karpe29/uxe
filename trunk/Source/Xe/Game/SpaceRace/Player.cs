@@ -33,11 +33,12 @@ namespace Xe.Game.SpaceRace
 
 			if (touche.IsKeyDown(Keys.Up))
 			{
+				m_ship.linearSpeed = new Vector3(0, 0, 10);
 				
 			}
 			if (touche.IsKeyDown(Keys.Down))
 			{
-				m_ship.linearAcceleration = new Vector3(0, 0, -100);
+				m_ship.linearSpeed = new Vector3(0, 0, -10);
 			}
 
 
