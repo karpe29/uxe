@@ -21,7 +21,6 @@ namespace XeFramework.GameScreen
 		int m_playerCount;
 		float m_difficultyPercent;
 
-		BasicModel3D earth;
 		SpriteBatch m_spriteBatch;
 
 		List<Player> m_players;
@@ -30,7 +29,6 @@ namespace XeFramework.GameScreen
 		public SpaceRaceScreen(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
 			: base(gameScreenManager, true)
 		{
-			earth = new BasicModel3D(gameScreenManager, @"Content\Models\Earth");
 			m_datas = datas;
 
 			m_players = new List<Player>(m_datas.totalPlayerCount+1);
@@ -58,8 +56,7 @@ namespace XeFramework.GameScreen
 
 		public override void Draw(GameTime gameTime)
 		{
-			//earth.Draw(gameTime);
-			s.Draw(gameTime);
+			//s.Draw(gameTime);
 			m_players[0].Draw(gameTime);
 			base.Draw(gameTime);
 
