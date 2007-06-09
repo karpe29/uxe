@@ -23,7 +23,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace XeFramework.Graphics2D
+namespace Xe.Graphics2D
 {
     public static class Font2D
     {

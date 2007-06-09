@@ -9,13 +9,14 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using System.Collections;
 
-using XeFramework.GUI;
-using XeFramework.Input;
-using XeFramework;
+using Xe.GUI;
+using Xe.Input;
+using Xe;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Xe.Tools;
 
-namespace XeFramework.GameScreen
+namespace Xe.GameScreen
 {
 	public class GameScreenManager : DrawableGameComponent
 	{

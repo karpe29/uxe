@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 
-namespace XeFramework.GameScreen
+namespace Xe.GameScreen
 {
 	class IntroScreen : IGameScreen
 	{

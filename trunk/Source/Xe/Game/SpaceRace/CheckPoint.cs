@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace Xe.Game.SpaceRace
+namespace Xe.SpaceRace
 {
 	class CheckPoint
 	{

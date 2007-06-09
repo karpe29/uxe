@@ -1,15 +1,9 @@
-using System;
 
-//modified by loulou
-
-using XeFramework.XeGame;
 
 namespace Xe
 {
 	static class Program
 	{
-		
-		
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>

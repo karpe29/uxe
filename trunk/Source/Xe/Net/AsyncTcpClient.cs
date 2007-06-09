@@ -16,12 +16,12 @@ using System.Text;
 using System.Net.Sockets;
 using System.Collections.Generic;
 
-using XeFramework;
+using Xe;
 
 using Microsoft.Xna.Framework;
 #endregion
 
-namespace XeFramework.Net
+namespace Xe.Net
 {
     public partial class AsyncTcpClient : Microsoft.Xna.Framework.GameComponent
     {

@@ -11,9 +11,9 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace XeFramework
+namespace Xe.Tools
 {
-	public class XeConfigXml
+	public class ConfigXml
 	{
 		#region Load/Save code
 		/// <summary>

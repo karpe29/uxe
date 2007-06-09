@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace XeFramework.Graphics3D
+namespace Xe.Graphics3D
 {
     public partial class RenderGroup : Microsoft.Xna.Framework.DrawableGameComponent
     {

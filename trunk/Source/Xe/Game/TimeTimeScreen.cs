@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xe.GameScreen;
 
-namespace XeFramework.GameScreen
+namespace Xe.TimeTime
 {
 	class TimeTimeScreen : IGameScreen
 	{

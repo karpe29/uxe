@@ -4,7 +4,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 
-namespace XeFramework.GameScreen
+namespace Xe.GameScreen
 {
 	class PauseScreen : IGameScreen
 	{

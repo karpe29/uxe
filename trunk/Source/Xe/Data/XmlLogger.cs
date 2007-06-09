@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 #endregion
 
-namespace XeFramework.Data
+namespace Xe.Data
 {
     public delegate void BeforeClosingHandler();
 

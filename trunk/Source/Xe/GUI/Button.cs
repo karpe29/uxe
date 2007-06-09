@@ -20,8 +20,8 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Collections.Generic;
 
-using XeFramework;
-using XeFramework.Input;
+using Xe;
+using Xe.Input;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -30,7 +30,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 #endregion
 
-namespace XeFramework.GUI
+namespace Xe.GUI
 {
     public partial class Button : UIControl
     {

@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace XeFramework
+namespace Xe
 {
     public class Globals
     {

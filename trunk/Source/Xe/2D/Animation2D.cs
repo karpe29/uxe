@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace XeFramework.Graphics2D
+namespace Xe.Graphics2D
 {
     public partial class Animation2D : Microsoft.Xna.Framework.DrawableGameComponent
     {

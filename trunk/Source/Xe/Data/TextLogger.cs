@@ -20,7 +20,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace XeFramework.Data
+namespace Xe.Data
 {
     public partial class TextLogger : Microsoft.Xna.Framework.GameComponent, IService, ITextLoggerService
     {

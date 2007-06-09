@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace XeFramework.Objects3D
+namespace Xe.Objects3D
 {
 	class SkyBox : DrawableGameComponent
 	{

@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace XeFramework
+namespace Xe
 {
     public partial class Reporter : Microsoft.Xna.Framework.GameComponent, IService, IReporterService
     {

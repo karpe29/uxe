@@ -9,9 +9,9 @@ using System.Net.Mail;
 #endif
 using Microsoft.SqlServer.MessageBox;
 
-namespace XeFramework
+namespace Xe.Tools
 {
-		public class XeExceptionTool
+		public class ExceptionTool
 		{
 			public static void ShowExceptionMessageBox(System.Exception e)
 			{

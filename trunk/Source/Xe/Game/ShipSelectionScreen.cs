@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using XeFramework.GUI;
-using XeFramework.GameScreen;
+using Xe.GUI;
+using Xe.GameScreen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using XeFramework.XeGame.SpaceRace;
-using XeFramework.Graphics3D;
+using Xe.Graphics3D;
 
-namespace Xe.Game
+namespace Xe.SpaceRace
 {
 	class ShipSelectionScreen : IGameScreen
 	{
@@ -83,7 +82,7 @@ namespace Xe.Game
 			m_model.AssetName = ShipType.Types[(int)value].ModelAsset;
 		}
 
-		void buttonAccept_Click(object sender, XeFramework.Input.MouseEventArgs args)
+		void buttonAccept_Click(object sender, Xe.Input.MouseEventArgs args)
 		{
 
 			ExitScreen();
@@ -103,7 +102,7 @@ namespace Xe.Game
 		}
 		
 
-		void buttonBack_Click(object sender, XeFramework.Input.MouseEventArgs args)
+		void buttonBack_Click(object sender, Xe.Input.MouseEventArgs args)
 		{
 			ExitScreen();
 

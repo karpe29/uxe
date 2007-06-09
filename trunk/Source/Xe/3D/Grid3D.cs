@@ -19,7 +19,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace XeFramework.Graphics3D
+namespace Xe.Graphics3D
 {
     public partial class Grid3D : Microsoft.Xna.Framework.DrawableGameComponent
     {

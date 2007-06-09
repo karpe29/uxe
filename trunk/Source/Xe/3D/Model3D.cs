@@ -17,14 +17,15 @@
 using System;
 using System.Collections.Generic;
 
-using XeFramework;
+using Xe;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Xe.Tools;
 #endregion
 
-namespace XeFramework.Graphics3D
+namespace Xe.Graphics3D
 {
     public class Model3D : DrawableGameComponent
     {

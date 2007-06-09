@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using XeFramework.GameScreen;
+using Xe.GameScreen;
 #endregion
 
-namespace Xe._3D.Physics
+namespace Xe.Physics
 {
 
 	public class PhysicalType
@@ -123,7 +123,7 @@ namespace Xe._3D.Physics
 	/// This is a game component that implements IUpdateable.
 	/// </summary>
 	/// 
-	public class IPhysicableObject : DrawableGameComponent
+	public class IPhysical3D : DrawableGameComponent
 	{
 		public static bool SpaceGravity = false;
 		private PhysicalType m_type;
@@ -131,7 +131,7 @@ namespace Xe._3D.Physics
 		private Vector3 m_linearAcceleration, m_linearSpeed, m_linearPosition, m_rotationAcceleration, m_rotationSpeed, m_rotationPosition;
 
 
-		public IPhysicableObject(Microsoft.Xna.Framework.Game game,PhysicalType type)
+		public IPhysical3D(Microsoft.Xna.Framework.Game game,PhysicalType type)
 			: base(game)
 		{
 			m_move = new MoveState();

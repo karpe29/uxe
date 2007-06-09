@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using XeFramework.GameScreen;
+using Xe.GameScreen;
 using Microsoft.Xna.Framework.Input;
-using XeFramework.Graphics3D;
-using XeFramework.Input;
-using XeFramework.Objects3D;
-using Xe._3D.Physics;
+using Xe.Graphics3D;
+using Xe.Input;
+using Xe.Objects3D;
+using Xe.Physics;
+using Xe.SpaceRace;
 
-namespace XeFramework.XeGame.SpaceRace
+
+namespace Xe.SpaceRace
 {
 	class ShipType : PhysicalType
 	{
@@ -39,7 +41,7 @@ namespace XeFramework.XeGame.SpaceRace
 	/// <summary>
 	/// Take care of rendering and managing the ship
 	/// </summary>
-	class Ship : IPhysicableObject
+	class Ship : IPhysical3D
 	{
 		SpaceRaceScreen m_gameScreen;
 

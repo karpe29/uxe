@@ -17,15 +17,15 @@
 using System;
 using System.Collections.Generic;
 
-using XeFramework;
-using XeFramework.Input;
-using XeFramework.Graphics3D;
+using Xe;
+using Xe.Input;
+using Xe.Graphics3D;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 #endregion
 
-namespace XeFramework.Input
+namespace Xe.Input
 {
     public partial class CameraInput : Microsoft.Xna.Framework.GameComponent
     {

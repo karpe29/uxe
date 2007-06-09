@@ -4,13 +4,13 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 
-using XeFramework.GUI;
+using Xe.GUI;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using XeFramework;
+using Xe;
 
-namespace XeFramework.GameScreen
+namespace Xe.GameScreen
 {
 	class MainBackgroundScreen : IGameScreen
 	{

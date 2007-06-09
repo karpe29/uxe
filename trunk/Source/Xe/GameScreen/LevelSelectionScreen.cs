@@ -4,11 +4,12 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 
-using XeFramework.GUI;
+using Xe.GUI;
 using Microsoft.Xna.Framework.Input;
-using Xe.Game;
+using Xe.SpaceRace;
+using Xe.TimeTime;
 
-namespace XeFramework.GameScreen
+namespace Xe.GameScreen
 {
 	class LevelSelectionScreen : IGameScreen
 	{
@@ -84,7 +85,7 @@ namespace XeFramework.GameScreen
 
 		}
 
-		void buttonPlaySpaceRace_Click(object sender, XeFramework.Input.MouseEventArgs args)
+		void buttonPlaySpaceRace_Click(object sender, Xe.Input.MouseEventArgs args)
 		{
 			// save difficulty level as levelSlider won't exists after Cleanup();
 			SpaceRaceInitDatas datas = new SpaceRaceInitDatas();
@@ -96,7 +97,7 @@ namespace XeFramework.GameScreen
 			ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager, datas);
 		}
 
-		void buttonPlayTimeTime_Click(object sender, XeFramework.Input.MouseEventArgs args)
+		void buttonPlayTimeTime_Click(object sender, Xe.Input.MouseEventArgs args)
 		{
 			// save difficulty level as levelSlider won't exists after Cleanup();
 			float levelPercent = sliderLevel.ValuePercent;
@@ -108,7 +109,7 @@ namespace XeFramework.GameScreen
 			TimeTimeScreen g = new TimeTimeScreen(GameScreenManager, levelPercent);
 		}
 
-		void buttonBack_Click(object sender, XeFramework.Input.MouseEventArgs args)
+		void buttonBack_Click(object sender, Xe.Input.MouseEventArgs args)
 		{
 			ExitScreen();
 

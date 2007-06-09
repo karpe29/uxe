@@ -18,7 +18,7 @@ using System.Net.Sockets;
 using System.Collections.Generic;
 #endregion
 
-namespace XeFramework.Net
+namespace Xe.Net
 {
     #region Server Only
     public delegate void ClientConnectedHandler(SocketPacket packet);

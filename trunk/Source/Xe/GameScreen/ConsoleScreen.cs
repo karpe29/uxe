@@ -5,19 +5,19 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-using XeFramework.Input;
+using Xe.Input;
 
-namespace XeFramework.GameScreen
+namespace Xe.GameScreen
 {
 	class ConsoleScreen : IGameScreen
 	{
-		private XeFramework.Input.Console m_console;
+		private Xe.Input.Console m_console;
 		private bool m_showConsole = false;
 
 		public ConsoleScreen(GameScreenManager gameScreenManager) 
 			: base(gameScreenManager, true)
 		{
-			m_console = new XeFramework.Input.Console(this.GameScreenManager.Game, this.GameScreenManager.ContentManager);
+			m_console = new Xe.Input.Console(this.GameScreenManager.Game, this.GameScreenManager.ContentManager);
 			
 			m_console.DrawOrder = 10000;
 
