@@ -19,13 +19,13 @@ namespace Xe.Game
 		Slider sliderShip;
 		SpaceRaceInitDatas m_datas;
 
-		float angle = 0f;
+		float angle = MathHelper.Pi;
 
 		float dst = 120;
 
 		BasicModel3D m_model;
 
-		private Matrix ViewMatrix ;
+		private Matrix ViewMatrix;
 		private Matrix ProjectionMatrix;
 		
 		public ShipSelectionScreen(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
