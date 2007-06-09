@@ -206,27 +206,27 @@ namespace Xe._3D.Physics
 
 			if (m_move.TurnRight)
 			{
-				if (m_rotationSpeed.Y > -10)
+				if (m_rotationSpeed.Y > -5)
 				{
 					m_rotationAcceleration.Y = -5;
 				}
 				else
 				{
 					m_rotationAcceleration.Y = 0;
-					m_rotationSpeed.Y = -10;
+					m_rotationSpeed.Y = -5;
 				}
 			}
 
 			if (m_move.TurnLeft)
 			{
-				if (m_rotationSpeed.Y < 10)
+				if (m_rotationSpeed.Y < 5)
 				{
 					m_rotationAcceleration.Y = 5;
 				}
 				else
 				{
 					m_rotationAcceleration.Y = 0;
-					m_rotationSpeed.Y = 10;
+					m_rotationSpeed.Y = 5;
 				}
 			}
 			if (!m_move.TurnRight && !m_move.TurnLeft)

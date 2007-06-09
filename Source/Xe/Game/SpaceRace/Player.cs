@@ -60,8 +60,9 @@ namespace Xe.Game.SpaceRace
 			}
 
 			m_ship.Update(gameTime);
-			
+
 			m_camera.ChasePosition = m_ship.linearPosition;
+			//m_camera.ChaseDirection = -m_ship.rotationPosition;
 			m_camera.Update(gameTime);
 
 
