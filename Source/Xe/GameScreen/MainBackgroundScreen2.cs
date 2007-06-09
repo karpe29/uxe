@@ -88,7 +88,9 @@ namespace XeFramework.GameScreen
 			t = new RenderTarget2D(this.GraphicsDevice,
 				this.GraphicsDevice.PresentationParameters.BackBufferWidth,
 				this.GraphicsDevice.PresentationParameters.BackBufferHeight, 1,
-				this.GraphicsDevice.PresentationParameters.BackBufferFormat);
+				this.GraphicsDevice.PresentationParameters.BackBufferFormat,
+				this.GraphicsDevice.DepthStencilBuffer.MultiSampleType,
+				this.GraphicsDevice.DepthStencilBuffer.MultiSampleQuality);
 
 			//Aspect ratio to use for the projection matrix
 			aspectRatio = aspectRatio = (float)this.GraphicsDevice.PresentationParameters.BackBufferWidth / (float)this.GraphicsDevice.PresentationParameters.BackBufferHeight;
@@ -109,7 +111,7 @@ namespace XeFramework.GameScreen
 			GameScreenManager.Stats.AddModelPolygonsCount(myModel);
 
 			
-			this.GraphicsDevice.SetRenderTarget(0, t);
+			
 
 			this.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
 			this.GraphicsDevice.RenderState.TwoSidedStencilMode = true;
@@ -120,6 +122,8 @@ namespace XeFramework.GameScreen
 
 			this.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
 			this.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
+
+			this.GraphicsDevice.SetRenderTarget(0, t);
 
 			//Copy any parent transforms
 			Matrix[] transforms = new Matrix[myModel.Bones.Count];

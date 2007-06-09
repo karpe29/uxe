@@ -14,11 +14,18 @@ namespace Xe.Game.SpaceRace
 
 		private Ship m_ship;
 
-		private ChaseCamera m_camera;
+		public ChaseCamera m_camera;
 
-		public Player(GameScreenManager gameScreenManager,Ship Ship):base(gameScreenManager.Game)
+		public Player(GameScreenManager gameScreenManager, ShipType type)
+			: base(gameScreenManager.Game)
 		{
-			m_ship=Ship;
+			m_ship = new Ship(gameScreenManager, type);
+
+			m_camera = new ChaseCamera();
+			m_camera.DesiredPositionOffset = new Vector3(0, 200, 200);
+			m_camera.ChasePosition = m_ship.linearPosition;
+			m_camera.ChaseDirection = Vector3.Forward;
+			m_camera.Up = Vector3.Up;
 		}
 
 		public Ship Ship
@@ -41,14 +48,20 @@ namespace Xe.Game.SpaceRace
 				m_ship.linearSpeed = new Vector3(0, 0, -10);
 			}
 
-
-
 			m_ship.Update(gameTime);
+			
+			m_camera.ChasePosition = m_ship.linearPosition;
+			m_camera.Update(gameTime);
+
+
 		}
 		public override void Draw(GameTime gameTime)
 		{
+			m_ship.Model.View = m_camera.View;
+			m_ship.Model.Projection = m_camera.Projection;
 
 			m_ship.Draw(gameTime);
+
 			base.Draw(gameTime);
 		}
 

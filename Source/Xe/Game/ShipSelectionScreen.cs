@@ -21,12 +21,12 @@ namespace Xe.Game
 
 		float angle = 0f;
 
-		float dst = 2000;
+		float dst = 120;
 
 		BasicModel3D m_model;
 
-		private Matrix ViewMatrix = Matrix.CreateLookAt(new Vector3(0,1000,0), new Vector3(1500,0,0), Vector3.Up);
-		private Matrix ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1.0f, 1, 10000);
+		private Matrix ViewMatrix ;
+		private Matrix ProjectionMatrix;
 		
 		public ShipSelectionScreen(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
 			: base(gameScreenManager, true)
@@ -73,6 +73,9 @@ namespace Xe.Game
 			GameScreenManager.GuiManager.AddControl(sliderShip);
 
 			m_model = new BasicModel3D(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value].ModelAsset);
+			
+			ViewMatrix = Matrix.CreateLookAt(new Vector3(0,dst*0.5f,0), new Vector3(dst,0,0), Vector3.Up);
+			ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1.0f, 1, dst * 2.0f);
 		}
 
 		void sliderShip_ValueChanged(object sender, float value)
@@ -184,7 +187,7 @@ namespace Xe.Game
 			if (!this.Visible)
 				return;
 
-			
+			this.GameScreenManager.Stats.AddModelPolygonsCount(m_model.Model);
 
 
 			m_model.View = this.ViewMatrix;
