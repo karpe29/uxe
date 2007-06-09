@@ -206,7 +206,7 @@ namespace XeFramework.Graphics3D
             get { return farPlaneDistance; }
             set { farPlaneDistance = value; }
         }
-        private float farPlaneDistance = 10000.0f;
+        private float farPlaneDistance = 1000000.0f;
 
         #endregion
 
