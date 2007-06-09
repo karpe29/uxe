@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Text;
 
 using Microsoft.Xna.Framework;
-using XeFramework.GameScreen;
+using Xe.GameScreen;
 using Microsoft.Xna.Framework.Content;
 
-using XeFramework;
-using XeFramework.Graphics2D;
-using XeFramework.GUI;
-using XeFramework.Input;
+using Xe;
+using Xe.Graphics2D;
+using Xe.GUI;
+using Xe.Input;
 
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace XeFramework.XeGame
+namespace Xe
 {
 	public class XeGame : Microsoft.Xna.Framework.Game
 	{
 		#region Variables
 
 		private GUIManager m_guiManager;
-		private XeFramework.Input.Ebi m_ebi;
+		private Xe.Input.Ebi m_ebi;
 
 		private ContentManager m_contentManager;
 		

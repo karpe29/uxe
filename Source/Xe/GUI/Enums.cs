@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace XeFramework.GUI
+namespace Xe.GUI
 {
     public enum Dock
     {

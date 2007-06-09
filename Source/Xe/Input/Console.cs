@@ -18,7 +18,7 @@ using System.Xml;
 using System.Reflection;
 using System.Collections.Generic;
 
-using XeFramework.Graphics2D;
+using Xe.Graphics2D;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -26,7 +26,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 #endregion
 
-namespace XeFramework.Input
+namespace Xe.Input
 {
     public partial class Console : Microsoft.Xna.Framework.DrawableGameComponent, IService, IConsoleService
     {

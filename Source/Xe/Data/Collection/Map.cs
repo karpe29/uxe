@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 #endregion
 
-namespace XeFramework.Data.Collections
+namespace Xe.Data.Collections
 {
     public class Map<T> : IDisposable
     {

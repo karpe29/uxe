@@ -4,7 +4,7 @@ using System.Text;
 
 using System.IO;
 
-namespace XeFramework
+namespace Xe.Tools
 {
 	public enum Verbosity
 	{
@@ -15,14 +15,14 @@ namespace XeFramework
 		Debug = 4		// Debug Detailed Output (4)
 	}
 
-	public class XeLogFile
+	public class LogFile
 	{
 		Verbosity m_logOption;
 		int m_maxSize;
 
 		XeFile m_file;
 
-		public XeLogFile(string filepath, Verbosity options, int maxSize)
+		public LogFile(string filepath, Verbosity options, int maxSize)
 		{
 			m_logOption = options;
 			m_maxSize = maxSize;

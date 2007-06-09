@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace XeFramework.Data
+namespace Xe.Data
 {
     public static class XmlLoader
     {

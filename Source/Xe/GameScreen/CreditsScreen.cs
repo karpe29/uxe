@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using XeFramework.GUI;
+using Xe.GUI;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 
-namespace XeFramework.GameScreen
+namespace Xe.GameScreen
 {
 	class CreditsScreen : IGameScreen
 	{

@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 
-using XeFramework;
+using Xe;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using XeFramework.GameScreen;
+using Xe.GameScreen;
+using Xe.Tools;
 #endregion
 
-namespace XeFramework.Graphics3D
+namespace Xe.Graphics3D
 {
 	public class BasicModel3D : DrawableGameComponent
 	{
@@ -167,6 +168,10 @@ namespace XeFramework.Graphics3D
 
 		public Matrix World
 		{
+			get
+			{
+				return m_world;
+			}
 			set
 			{
 				m_world = value;

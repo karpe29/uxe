@@ -14,8 +14,8 @@ using System;
 using System.Reflection;
 using System.Collections.Generic;
 
-using XeFramework;
-using XeFramework.Graphics2D;
+using Xe;
+using Xe.Graphics2D;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -23,7 +23,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 #endregion
 
-namespace XeFramework
+namespace Xe.Tools
 {
     public partial class Stats : Microsoft.Xna.Framework.DrawableGameComponent
     {

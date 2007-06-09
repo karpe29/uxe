@@ -5,9 +5,9 @@ using System.Text;
 using System.Collections;
 using System.IO;
 
-namespace XeFramework
+namespace Xe.Tools
 {
-	public class XeIniFile : Hashtable
+	public class IniFile : Hashtable
 	{
 		/// <summary>
 		/// Indexeur qui renvoie la valeur associé à une clef dans le fichier de configuration
@@ -24,7 +24,7 @@ namespace XeFramework
 		}
 	}
 
-	public class XeConfigFile : XeIniFile
+	public class ConfigFile : IniFile
 	{
 		XeFile m_file = null;
 
@@ -33,7 +33,7 @@ namespace XeFramework
 		/// </summary>
 		/// <param name="path">Chemin où se trouve le fichier</param>
 		/// <param name="filename">Nom du fichier a charger</param>
-		public XeConfigFile(string filepath)
+		public ConfigFile(string filepath)
 		{
 			this.LoadConfig(filepath);
 		}        

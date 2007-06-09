@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
-using XeFramework.Input;
-using XeFramework.Graphics3D;
+using Xe.Input;
+using Xe.Graphics3D;
 using Microsoft.Xna.Framework;
-using XeFramework.XeGame.SpaceRace;
-using XeFramework.Objects3D;
-using Xe.Game.SpaceRace;
-using Xe.Game;
+using Xe.Objects3D;
+using Xe.GameScreen;
 
-namespace XeFramework.GameScreen
+
+namespace Xe.SpaceRace
 {
 	class SpaceRaceScreen : IGameScreen
 	{
@@ -122,7 +121,7 @@ namespace XeFramework.GameScreen
 			//m_model.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(4 / 3), 1, 10000);
 
 			
-			s.CameraPosition = m_players[0].m_camera.DesiredPositionOffset;
+			s.CameraPosition = m_players[0].m_camera.Position;
 			s.CameraDirection = m_players[0].m_camera.LookAtOffset;
 			s.ViewMatrix = m_players[0].m_camera.View;
 			s.ProjectionMatrix = m_players[0].m_camera.Projection;

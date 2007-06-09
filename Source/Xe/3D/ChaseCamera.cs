@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 #endregion
 
-namespace XeFramework.Graphics3D
+namespace Xe.Graphics3D
 {
     public class ChaseCamera
     {

@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace XeFramework
+namespace Xe
 {
     public class Manager : GameComponent, IManagerService, IService
     {

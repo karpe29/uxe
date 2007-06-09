@@ -4,7 +4,7 @@ using System.Text;
 
 using System.IO;
 
-namespace XeFramework
+namespace Xe.Tools
 {
 	public class XeFile
 	{

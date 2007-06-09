@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace XeFramework
+namespace Xe.Graphics2D
 {
 	/// <summary>
 	/// Bitmap font class for XNA

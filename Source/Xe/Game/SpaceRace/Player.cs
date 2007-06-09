@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using XeFramework.XeGame.SpaceRace;
-using XeFramework.Graphics3D;
+using Xe.SpaceRace;
+using Xe.Graphics3D;
 using Microsoft.Xna.Framework;
-using XeFramework.GameScreen;
+using Xe.GameScreen;
 using Microsoft.Xna.Framework.Input;
 
-namespace Xe.Game.SpaceRace
+namespace Xe.SpaceRace
 {
 
 
@@ -24,10 +24,14 @@ namespace Xe.Game.SpaceRace
 			m_ship = new Ship(gameScreenManager, type);
 
 			m_camera = new ChaseCamera();
+			m_camera.Stiffness = 20000;
+			m_camera.Mass = 10;
+			m_camera.Damping = 1200;
 			m_camera.DesiredPositionOffset = new Vector3(200, 100, 0);
 			m_camera.ChasePosition = m_ship.linearPosition;
 			m_camera.ChaseDirection = Vector3.Forward;
 			m_camera.Up = Vector3.Up;
+			m_camera.Reset();
 		}
 
 		public Ship Ship
@@ -62,7 +66,7 @@ namespace Xe.Game.SpaceRace
 			m_ship.Update(gameTime);
 
 			m_camera.ChasePosition = m_ship.linearPosition;
-			//m_camera.ChaseDirection = -m_ship.rotationPosition;
+			m_camera.ChaseDirection = Vector3.Transform(Vector3.Forward,m_ship.Model.World);
 			m_camera.Update(gameTime);
 
 

@@ -4,7 +4,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 
-namespace XeFramework.XeGame.SpaceRace
+namespace Xe.SpaceRace
 {
 	enum WormHoleType
 	{

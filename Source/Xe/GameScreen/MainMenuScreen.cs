@@ -4,19 +4,19 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 
-using XeFramework.GUI;
+using Xe.GUI;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using XeFramework;
+using Xe;
 
-namespace XeFramework.GameScreen
+namespace Xe.GameScreen
 {
 	class MainMenuScreen : IGameScreen
 	{
-		XeFramework.GUI.Button buttonNewGame;
-		XeFramework.GUI.Button buttonOptions;
-		XeFramework.GUI.Button buttonQuit;
+		Xe.GUI.Button buttonNewGame;
+		Xe.GUI.Button buttonOptions;
+		Xe.GUI.Button buttonQuit;
 
 		public static Type BackgroundScreenType = typeof(MainBackgroundScreen2);
 
@@ -59,21 +59,21 @@ namespace XeFramework.GameScreen
 			GameScreenManager.GuiManager.AddControl(buttonQuit);
 		}
 
-		void buttonOptions_Click(object sender, XeFramework.Input.MouseEventArgs args)
+		void buttonOptions_Click(object sender, Xe.Input.MouseEventArgs args)
 		{
 			ExitScreen();
 
 			OptionScreen o = new OptionScreen(GameScreenManager);
 		}
 
-		void buttonQuit_Click(object sender, XeFramework.Input.MouseEventArgs args)
+		void buttonQuit_Click(object sender, Xe.Input.MouseEventArgs args)
 		{
 			ExitScreen();
 
 			CreditsScreen c = new CreditsScreen(GameScreenManager);
 		}
 
-		void buttonNewGame_Click(object sender, XeFramework.Input.MouseEventArgs args)
+		void buttonNewGame_Click(object sender, Xe.Input.MouseEventArgs args)
 		{
 			ExitScreen();
 

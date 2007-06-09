@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace Xe.Tools
 {
-	static class XeHelper
+	static class Helper
 	{
 		/// <summary>
 		/// Return interpolated value based on two TimeSpan

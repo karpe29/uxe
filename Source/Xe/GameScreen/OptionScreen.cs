@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-using XeFramework.GUI;
+using Xe.GUI;
 
-namespace XeFramework.GameScreen
+namespace Xe.GameScreen
 {
 	class OptionScreen : IGameScreen
 	{
-		XeFramework.GUI.Button buttonBack;
+		Xe.GUI.Button buttonBack;
 
 		public OptionScreen(GameScreenManager gameScreenManager)
 			: base(gameScreenManager, true)
@@ -23,7 +23,7 @@ namespace XeFramework.GameScreen
 			GameScreenManager.GuiManager.AddControl(buttonBack);
 		}
 
-		void buttonBack_Click(object sender, XeFramework.Input.MouseEventArgs args)
+		void buttonBack_Click(object sender, Xe.Input.MouseEventArgs args)
 		{
 			ExitScreen();
 

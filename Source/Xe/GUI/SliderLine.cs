@@ -7,20 +7,20 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Collections.Generic;
 
-using XeFramework;
-using XeFramework.Data;
-using XeFramework.Graphics2D;
-using XeFramework.GUI;
+using Xe;
+using Xe.Data;
+using Xe.Graphics2D;
+using Xe.GUI;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
-using XeFramework.Input;
+using Xe.Input;
 #endregion
 
-namespace XeFramework.GUI
+namespace Xe.GUI
 {
 	public class SliderLine : UIControl
 	{

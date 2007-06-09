@@ -15,13 +15,13 @@
 using System;
 using System.Collections.Generic;
 
-using XeFramework;
+using Xe;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace XeFramework.Graphics2D
+namespace Xe.Graphics2D
 {
     public partial class SpriteManager : Microsoft.Xna.Framework.DrawableGameComponent
     {

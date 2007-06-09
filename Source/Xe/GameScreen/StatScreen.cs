@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using XeFramework;
-using XeFramework.Input;
+using Xe;
+using Xe.Input;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using Xe.Tools;
 
-namespace XeFramework.GameScreen
+namespace Xe.GameScreen
 {
 	class StatScreen : IGameScreen
 	{
