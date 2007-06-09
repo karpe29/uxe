@@ -36,6 +36,89 @@ namespace Xe._3D.Physics
 		}
 	}
 
+	public class MoveState
+	{
+		bool m_forward, m_brake, m_turnLeft, m_turnRight, m_up, m_down;
+
+		public MoveState()
+		{
+			Reset();
+		}
+
+		public void Reset()
+		{
+			m_forward = m_brake = m_turnLeft = m_turnRight = m_up = m_down=false;
+		}
+
+		public bool Forward
+		{
+			get { return m_forward; }
+			set
+			{
+				if (value && m_brake)
+				{
+					m_forward = m_brake = false;
+				}
+				else
+				{
+					m_forward = value;
+				}
+			}
+		}
+
+		public bool Brake
+		{
+			get { return m_brake; }
+			set
+			{
+				if (value && m_forward)
+				{
+					m_forward = m_brake = false;
+				}
+				else
+				{
+					m_brake = value;
+				}
+			}
+		}
+
+		public bool TurnLeft
+		{
+			get { return m_turnLeft; }
+			set
+			{
+				if (value && m_turnRight)
+				{
+					m_turnLeft = m_turnRight = false;
+				}
+				else
+				{
+					m_turnLeft = value;
+				}
+			}
+		}
+
+		public bool TurnRight
+		{
+			get { return m_turnRight; }
+			set
+			{
+				if (value && m_turnLeft)
+				{
+					m_turnLeft = m_turnRight = false;
+				}
+				else
+				{
+					m_turnRight = value;
+				}
+			}
+		}
+
+
+
+	}
+
+
 	/// <summary>
 	/// This is a game component that implements IUpdateable.
 	/// </summary>
@@ -44,18 +127,23 @@ namespace Xe._3D.Physics
 	{
 		public static bool SpaceGravity = false;
 		private PhysicalType m_type;
+		private MoveState m_move;
 		private Vector3 m_linearAcceleration, m_linearSpeed, m_linearPosition, m_rotationAcceleration, m_rotationSpeed, m_rotationPosition;
 
 
 		public IPhysicableObject(Microsoft.Xna.Framework.Game game,PhysicalType type)
 			: base(game)
 		{
+			m_move = new MoveState();
 			m_type = type;
 			// TODO: Construct any child components here
 		}
 
+		public MoveState MoveState
+		{
+			get { return m_move; }
+		}
 		
-
 
 		public Vector3 linearAcceleration
 		{
@@ -115,6 +203,40 @@ namespace Xe._3D.Physics
 		{
 			// TODO: Add your update code here
 			float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds)/1000f;
+
+			if (m_move.TurnRight)
+			{
+				if (m_rotationSpeed.Y > -10)
+				{
+					m_rotationAcceleration.Y = -5;
+				}
+				else
+				{
+					m_rotationAcceleration.Y = 0;
+					m_rotationSpeed.Y = -10;
+				}
+			}
+
+			if (m_move.TurnLeft)
+			{
+				if (m_rotationSpeed.Y < 10)
+				{
+					m_rotationAcceleration.Y = 5;
+				}
+				else
+				{
+					m_rotationAcceleration.Y = 0;
+					m_rotationSpeed.Y = 10;
+				}
+			}
+			if (!m_move.TurnRight && !m_move.TurnLeft)
+			{
+				if (m_rotationSpeed.Y != 0)
+				{
+					m_rotationAcceleration.Y = -Math.Sign(m_rotationSpeed.Y) * 10;
+				}
+			}
+
 
 			m_rotationSpeed += m_rotationAcceleration * seconds;
 			m_rotationPosition += m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);

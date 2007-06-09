@@ -34,6 +34,7 @@ namespace XeFramework.XeGame.SpaceRace
 											new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f) };
 	}
 
+
 	
 	/// <summary>
 	/// Take care of rendering and managing the ship

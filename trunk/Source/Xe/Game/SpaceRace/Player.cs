@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Xe.Game.SpaceRace
 {
+
+
 	class Player : DrawableGameComponent
 	{
 
@@ -37,15 +39,24 @@ namespace Xe.Game.SpaceRace
 		{
 			base.Update(gameTime);
 			KeyboardState touche = Keyboard.GetState();
+			m_ship.MoveState.Reset();
 
 			if (touche.IsKeyDown(Keys.Up))
 			{
-				m_ship.linearSpeed = new Vector3(0, 0, 10);
-				
+				m_ship.MoveState.Forward = true;
 			}
 			if (touche.IsKeyDown(Keys.Down))
 			{
-				m_ship.linearSpeed = new Vector3(0, 0, -10);
+				m_ship.MoveState.Brake = true;
+			}
+
+			if (touche.IsKeyDown(Keys.Left))
+			{
+				m_ship.MoveState.TurnLeft = true;
+			}
+			if (touche.IsKeyDown(Keys.Right))
+			{
+				m_ship.MoveState.TurnRight = true;
 			}
 
 			m_ship.Update(gameTime);
