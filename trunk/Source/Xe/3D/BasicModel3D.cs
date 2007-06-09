@@ -113,6 +113,19 @@ namespace XeFramework.Graphics3D
 
 		protected virtual void DrawModel(GameTime gameTime)
 		{
+			/*
+			this.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
+			this.GraphicsDevice.RenderState.TwoSidedStencilMode = true;
+
+			this.GraphicsDevice.RenderState.DepthBufferEnable = true;
+			this.GraphicsDevice.RenderState.AlphaBlendEnable = false;
+			this.GraphicsDevice.RenderState.AlphaTestEnable = false;
+			this.GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
+
+			this.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
+			this.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
+			
+			*/
 			//Copy any parent transforms
 			Matrix[] transforms = new Matrix[m_model.Bones.Count];
 			m_model.CopyAbsoluteBoneTransformsTo(transforms);

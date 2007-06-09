@@ -12,34 +12,20 @@ using Xe._3D.Physics;
 
 namespace XeFramework.XeGame.SpaceRace
 {
-	class ShipType
+	class ShipType : PhysicalType
 	{
 		string m_model;
-		float m_handling;
-		float m_acceleration;
-		float m_maxSpeed;
-		float m_resistance;
-		float m_gravityFactor;
 
 		#region properties
 
 		public string ModelAsset { get { return m_model; } }
-		public float Handling { get { return m_handling; } }
-		public float Acceleration { get { return m_acceleration; } }
-		public float MaxSpeed { get { return m_maxSpeed; } }
-		public float Resistance { get { return m_resistance; } }
-		public float GravityFactor { get { return m_gravityFactor; } }
 
 		#endregion
 
 		public ShipType(string model, float handling, float acceleration, float maxSpeed, float resistance, float gFactor)
+			:base (handling,acceleration,maxSpeed,resistance,gFactor)
 		{
 			m_model = model;
-			m_handling = handling;
-			m_acceleration = acceleration;
-			m_maxSpeed = maxSpeed;
-			m_resistance = resistance;
-			m_gravityFactor = gFactor;
 		}
 		
 		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f), 
@@ -115,21 +101,8 @@ namespace XeFramework.XeGame.SpaceRace
 
 
 			m_model.World = Matrix.CreateRotationZ(rotationPosition.Z) * Matrix.CreateRotationX(rotationPosition.X) * Matrix.CreateRotationY(rotationPosition.Y)*Matrix.CreateTranslation(linearPosition);
-			m_model.View = Matrix.CreateLookAt(new Vector3(200, 100, 200), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-			m_model.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(1), 1, 10000);
-
-			/*m = Matrix.Identity;
-
-			base.Update(gameTime);
-
-			m_gameScreen.GameScreenManager.Stats.AddModelPolygonsCount(m_model);
 			
-			GamePadState g1 = GamePad.GetState(PlayerIndex.One);
-			GamePadState g2 = GamePad.GetState(PlayerIndex.Two);
-			GamePadState g3 = GamePad.GetState(PlayerIndex.Three);
-			GamePadState g4 = GamePad.GetState(PlayerIndex.Four);
-
-		
+			/*	
 
 			m_yRotation = 0;
 			if (g1.DPad.Left == ButtonState.Pressed||g1.ThumbSticks.Left.X < 0)
@@ -171,17 +144,7 @@ namespace XeFramework.XeGame.SpaceRace
 
 		public override void Draw(GameTime gameTime)
 		{
-			/*this.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
-			this.GraphicsDevice.RenderState.TwoSidedStencilMode = true;
-
-			this.GraphicsDevice.RenderState.DepthBufferEnable = true;
-			this.GraphicsDevice.RenderState.AlphaBlendEnable = false;
-			this.GraphicsDevice.RenderState.AlphaTestEnable = false;
-			this.GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
-
-			this.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
-			this.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
-			*/
+			
 
 			// update world matrix here fonction of IPhysical object data
 			if (m_model != null)

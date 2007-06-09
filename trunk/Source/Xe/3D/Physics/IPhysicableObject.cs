@@ -117,10 +117,10 @@ namespace Xe._3D.Physics
 			float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds)/1000f;
 
 			m_rotationSpeed += m_rotationAcceleration * seconds;
-			m_rotationPosition += m_rotationSpeed * seconds + m_rotationAcceleration * seconds * seconds / 2;
+			m_rotationPosition += m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
 
 			m_linearSpeed += m_linearAcceleration * seconds;
-			m_linearPosition += m_linearSpeed * seconds + m_linearAcceleration * seconds * seconds / 2;
+			m_linearPosition += m_linearSpeed * seconds + m_linearAcceleration * (float)(Math.Pow(seconds, 2) / 2);
 
 			base.Update(gameTime);
 		}

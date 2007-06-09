@@ -35,7 +35,7 @@ namespace XeFramework.GameScreen
 
 			for(int i = 0; i< m_datas.totalPlayerCount +1; i++)
 			{
-				m_players.Add(new Player(gameScreenManager, new Ship(gameScreenManager, m_datas.shipTypes[i])));
+				m_players.Add(new Player(gameScreenManager, m_datas.shipTypes[i]));
 			}
 
 			s = new SkyBox(gameScreenManager.Game, @"Content\Skybox\bryce");
@@ -56,8 +56,10 @@ namespace XeFramework.GameScreen
 
 		public override void Draw(GameTime gameTime)
 		{
-			//s.Draw(gameTime);
+			s.Draw(gameTime);
+
 			m_players[0].Draw(gameTime);
+
 			base.Draw(gameTime);
 
 
@@ -119,10 +121,11 @@ namespace XeFramework.GameScreen
 			//m_model.View = Matrix.CreateLookAt(new Vector3(0, 4000, 0), new Vector3(0, 0, 0), new Vector3(1, 0, 0));
 			//m_model.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(4 / 3), 1, 10000);
 
-			s.CameraPosition = new Vector3(0, 4000, 0);
-			s.CameraDirection = new Vector3(0, 0, 0);
-			s.ViewMatrix = Matrix.CreateLookAt(new Vector3(200, 100, 200), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-			s.ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(1), 1, 100000);
+			
+			s.CameraPosition = m_players[0].m_camera.Position;
+			s.CameraDirection = m_players[0].m_camera.LookAt;
+			s.ViewMatrix = m_players[0].m_camera.View;
+			s.ProjectionMatrix = m_players[0].m_camera.Projection;
 
 			s.Update(gameTime);
 			
