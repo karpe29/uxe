@@ -122,8 +122,8 @@ namespace XeFramework.GameScreen
 			//m_model.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(4 / 3), 1, 10000);
 
 			
-			s.CameraPosition = m_players[0].m_camera.Position;
-			s.CameraDirection = m_players[0].m_camera.LookAt;
+			s.CameraPosition = m_players[0].m_camera.DesiredPositionOffset;
+			s.CameraDirection = m_players[0].m_camera.LookAtOffset;
 			s.ViewMatrix = m_players[0].m_camera.View;
 			s.ProjectionMatrix = m_players[0].m_camera.Projection;
 

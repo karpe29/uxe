@@ -22,7 +22,7 @@ namespace Xe.Game.SpaceRace
 			m_ship = new Ship(gameScreenManager, type);
 
 			m_camera = new ChaseCamera();
-			m_camera.DesiredPositionOffset = new Vector3(0, 200, 200);
+			m_camera.DesiredPositionOffset = new Vector3(200, 100, 0);
 			m_camera.ChasePosition = m_ship.linearPosition;
 			m_camera.ChaseDirection = Vector3.Forward;
 			m_camera.Up = Vector3.Up;
