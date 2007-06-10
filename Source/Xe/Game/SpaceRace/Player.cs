@@ -27,9 +27,9 @@ namespace Xe.SpaceRace
 			m_ship = new Ship(gameScreenManager, type);
 
 			m_camera = new ChaseCamera();
-			m_camera.Stiffness = 20000;
-			m_camera.Mass = 10;
-			m_camera.Damping = 1200;
+			//m_camera.Stiffness = 1800; // default 1800
+			//m_camera.Mass = 50; // default 50
+			//m_camera.Damping = 600; // default 600
 			m_camera.DesiredPositionOffset = new Vector3(0, 100, 200);
 			m_camera.ChasePosition = m_ship.linearPosition;
 			m_camera.ChaseDirection = Vector3.Forward;
@@ -45,6 +45,7 @@ namespace Xe.SpaceRace
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
+
 			KeyboardState touche = Keyboard.GetState();
 			m_ship.MoveState.Reset();
 
@@ -98,6 +99,7 @@ namespace Xe.SpaceRace
 			this.m_gameScreenManager.Stats.AddDebugString("Cam pos : " + Helper.Vector3ToString3f(m_camera.Position));
 			this.m_gameScreenManager.Stats.AddDebugString("cam chase pos : " + Helper.Vector3ToString3f(m_camera.ChasePosition));
 			
+			m_camera.Reset();
 			m_camera.Reset();
 
 
