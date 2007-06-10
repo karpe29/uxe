@@ -103,7 +103,7 @@ namespace Xe.SpaceRace
 
 
 
-			m_model.World = Matrix.CreateRotationZ(rotationPosition.Z) * Matrix.CreateRotationX(rotationPosition.X) * Matrix.CreateRotationY(rotationPosition.Y)*Matrix.CreateTranslation(linearPosition);
+			m_model.World = orientation*Matrix.CreateTranslation(linearPosition);
 			
 			/*	
 
