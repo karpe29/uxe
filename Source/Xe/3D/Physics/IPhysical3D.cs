@@ -154,7 +154,7 @@ namespace Xe.Physics
 		private PhysicalType m_type;
 		private MoveState m_move;
 		private Vector3 m_linearAcceleration, m_linearSpeed, m_linearPosition, m_rotationAcceleration, m_rotationSpeed, m_rotationPosition,m_direction,m_up;
-		private Matrix m_orientation;
+		private Matrix m_orientation=Matrix.Identity;
 		public IPhysical3D(Microsoft.Xna.Framework.Game game,PhysicalType type)
 			: base(game)
 		{
@@ -365,8 +365,8 @@ namespace Xe.Physics
 
 
 			rotationSpeed += m_rotationAcceleration * seconds;
-			rotationPosition += m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
-			orientation = Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z);
+			rotationPosition = m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
+			orientation = Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z)*orientation;
 
 			if (m_move.Forward)
 			{
