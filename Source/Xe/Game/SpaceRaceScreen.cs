@@ -127,7 +127,7 @@ namespace Xe.SpaceRace
 
 			
 			s.CameraPosition = m_players[0].m_camera.Position;
-			s.CameraDirection = m_players[0].m_camera.LookAtOffset;
+			s.CameraDirection = m_players[0].m_camera.LookAt;
 			s.ViewMatrix = m_players[0].m_camera.View;
 			s.ProjectionMatrix = m_players[0].m_camera.Projection;
 
