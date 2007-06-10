@@ -80,8 +80,9 @@ namespace Xe.GameScreen
 			myEffect = GameScreenManager.ContentManager.Load<Effect>(@"Content\Effects\vbomb");
 			myEffect.Parameters["GradeTex"].SetValue(myTexture);
 			myEffect.Parameters["Speed"].SetValue(0.3f);
-			foreach (EffectParameter p in myEffect.Parameters)
-				Console.WriteLine(p.Name);
+			
+			//foreach (EffectParameter p in myEffect.Parameters)
+			//	Console.WriteLine(p.Name);
 
 			sb = new SpriteBatch(this.GraphicsDevice);
 

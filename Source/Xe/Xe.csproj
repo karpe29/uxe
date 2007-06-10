@@ -599,6 +599,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ShipSelectionScreen</Name>
     </Compile>
+    <Compile Include="Game\SpaceRaceHudScreen.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SpaceRaceHudScreen</Name>
+    </Compile>
     <Compile Include="Game\SpaceRaceInitDatas.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SpaceRaceInitDatas</Name>
