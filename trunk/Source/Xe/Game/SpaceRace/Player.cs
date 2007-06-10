@@ -6,6 +6,7 @@ using Xe.Graphics3D;
 using Microsoft.Xna.Framework;
 using Xe.GameScreen;
 using Microsoft.Xna.Framework.Input;
+using Xe.Tools;
 
 namespace Xe.SpaceRace
 {
@@ -74,13 +75,13 @@ namespace Xe.SpaceRace
 			//this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChasePosition.ToString());
 			//this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChaseDirection.ToString());
 			this.m_gameScreenManager.Stats.AddDebugString("");
-			this.m_gameScreenManager.Stats.AddDebugString("rot pos : " + m_ship.rotationPosition.ToString());
-			this.m_gameScreenManager.Stats.AddDebugString("rot speed : " + m_ship.rotationSpeed.ToString());
-			this.m_gameScreenManager.Stats.AddDebugString("rot acc : " + m_ship.rotationAcceleration.ToString());
+			this.m_gameScreenManager.Stats.AddDebugString("rot pos : " + Helper.Vector3ToString3f(m_ship.rotationPosition));
+			this.m_gameScreenManager.Stats.AddDebugString("rot speed : " + Helper.Vector3ToString3f(m_ship.rotationSpeed));
+			this.m_gameScreenManager.Stats.AddDebugString("rot acc : " + Helper.Vector3ToString3f(m_ship.rotationAcceleration));
 			this.m_gameScreenManager.Stats.AddDebugString("");
-			this.m_gameScreenManager.Stats.AddDebugString("lin pos : " + m_ship.linearPosition.ToString());
-			this.m_gameScreenManager.Stats.AddDebugString("lin speed : " + m_ship.linearSpeed.ToString());
-			this.m_gameScreenManager.Stats.AddDebugString("lin acc : " + m_ship.linearAcceleration.ToString());
+			this.m_gameScreenManager.Stats.AddDebugString("lin pos : " + Helper.Vector3ToString3f(m_ship.linearPosition));
+			this.m_gameScreenManager.Stats.AddDebugString("lin speed : " + Helper.Vector3ToString3f(m_ship.linearSpeed));
+			this.m_gameScreenManager.Stats.AddDebugString("lin acc : " + Helper.Vector3ToString3f(m_ship.linearAcceleration));
 			
 			m_camera.Update(gameTime);
 

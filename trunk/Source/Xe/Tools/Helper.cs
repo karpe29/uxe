@@ -24,5 +24,10 @@ namespace Xe.Tools
 
 			return MathHelper.SmoothStep(0, f, duration.Ticks / totalDuration.Ticks);
 		}
+
+		public static string Vector3ToString3f(Vector3 vector)
+		{
+			return "( "+Math.Round(vector.X,3)+" , "+ Math.Round(vector.Y,3)+" , "+Math.Round(vector.Z,3)+" )";		
+		}
 	}
 }
