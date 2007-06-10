@@ -19,7 +19,7 @@ namespace Xe.GameScreen
 			: base(gameScreenManager, true)
 		{
 			// end right now... TODO: not end in demo version
-			//End();
+			End();
 
 			this.Initialize();
 

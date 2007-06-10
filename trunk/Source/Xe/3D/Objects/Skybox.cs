@@ -50,7 +50,7 @@ namespace Xe.Objects3D
 			set
 			{
 				vCameraPosition = value;
-				worldMatrix = Matrix.CreateTranslation(vCameraPosition);
+				worldMatrix = Matrix.Identity; //Matrix.CreateTranslation(vCameraPosition);
 			}
 		}
 
@@ -202,32 +202,32 @@ namespace Xe.Objects3D
 
 
 			for (int x = 0; x < 6; x++)
-			{/*
+			{
 				float f = 0;
 				switch (x)
 				{
 					case 0: //back
-						f = Vector3.Dot(vCameraDirection, new Vector3(0, 0, 1));
+						f = Vector3.Dot(vCameraDirection, Vector3.Backward);
 						break;
 					case 1: //front
-						f = Vector3.Dot(vCameraDirection, new Vector3(0, 0, -1));
+						f = Vector3.Dot(vCameraDirection, Vector3.Forward);
 						break;
 					case 2: //bottom
-						f = Vector3.Dot(vCameraDirection, new Vector3(0, 1, 0));
+						f = Vector3.Dot(vCameraDirection, Vector3.Down);
 						break;
 					case 3: //top
-						f = Vector3.Dot(vCameraDirection, new Vector3(0, -1, 0));
+						f = Vector3.Dot(vCameraDirection, Vector3.Up);
 						break;
 					case 4: //left
-						f = Vector3.Dot(vCameraDirection, new Vector3(1, 0, 0));
+						f = Vector3.Dot(vCameraDirection, Vector3.Left);
 						break;
 					case 5: //right
-						f = Vector3.Dot(vCameraDirection, new Vector3(-1, 0, 0));
+						f = Vector3.Dot(vCameraDirection, Vector3.Right);
 						break;
 				}
 
 				if (f <= 0)
-				*/{
+				{
 					IGraphicsDeviceService graphicsService = (IGraphicsDeviceService)Game.Services.GetService(typeof(IGraphicsDeviceService));
 
 					GraphicsDevice device = graphicsService.GraphicsDevice;
