@@ -58,7 +58,7 @@ namespace Xe.Physics
 			{
 				if (value && m_brake)
 				{
-					m_forward = m_brake = false;
+					m_forward = false;
 				}
 				else
 				{
@@ -70,17 +70,7 @@ namespace Xe.Physics
 		public bool Brake
 		{
 			get { return m_brake; }
-			set
-			{
-				if (value && m_forward)
-				{
-					m_forward = m_brake = false;
-				}
-				else
-				{
-					m_brake = value;
-				}
-			}
+			set {m_brake = value; }
 		}
 
 		public bool TurnLeft
@@ -212,7 +202,14 @@ namespace Xe.Physics
 			{
 				if (m_rotationSpeed.Y > -5)
 				{
-					m_rotationAcceleration.Y = -5;
+					if (m_rotationSpeed.Y > 0)
+					{
+						m_rotationAcceleration.Y = -15;
+					}
+					else
+					{
+						m_rotationAcceleration.Y = -5;
+					}
 				}
 				else
 				{
@@ -225,7 +222,14 @@ namespace Xe.Physics
 			{
 				if (m_rotationSpeed.Y < 5)
 				{
-					m_rotationAcceleration.Y = 5;
+					if (m_rotationSpeed.Y < 0)
+					{
+						m_rotationAcceleration.Y = 15;
+					}
+					else
+					{
+						m_rotationAcceleration.Y = 5;
+					}
 				}
 				else
 				{
@@ -255,16 +259,51 @@ namespace Xe.Physics
 			rotationPosition += rotationSpeed * seconds + rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
 
 
-						if (m_move.Forward)
+			if (m_move.Forward)
 			{
-				if (m_linearSpeed.Length() < 100)
+				if (m_linearSpeed.Z > -10)
 				{
-					m_linearAcceleration = Vector3.Transform(Vector3.Forward, Matrix.CreateFromYawPitchRoll(m_rotationPosition.X, m_rotationPosition.Y, m_rotationPosition.Z));
+					m_linearAcceleration.Z = -10;
 				}
+				else
+				{
+					m_linearAcceleration.Z = 0;
+					m_linearSpeed.Z = -10;
+
+				}
+
+			}
+
+			if (m_move.Brake)
+			{
+				if (m_linearSpeed.Z < 0)
+				{
+					m_linearAcceleration.Z = 20;
+				}
+				else
+				{
+					m_linearAcceleration.Z = 0;
+					m_linearSpeed.Z = 0;
+				}
+
+			}
+
+			if (!m_move.Forward && !m_move.Brake)
+			{
+				if (m_linearSpeed.Z < 0)
+				{
+					m_linearAcceleration.Z = 5;
+				}
+				else
+				{
+					m_linearAcceleration.Z = 0;
+					m_linearSpeed.Z = 0;
+				}
+
 			}
 
 			linearSpeed += linearAcceleration * seconds;
-			linearPosition += linearSpeed * seconds + linearAcceleration * (float)(Math.Pow(seconds, 2) / 2);
+			linearPosition += Vector3.Transform(linearSpeed * seconds + linearAcceleration * (float)(Math.Pow(seconds, 2) / 2),Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z));
 			
 			
 			
