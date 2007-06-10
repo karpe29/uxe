@@ -516,7 +516,7 @@ namespace Xe.GUI
             if (!this.Enabled)
                 Update(gameTime);
 
-            m_spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+            m_spriteBatch.Begin(SpriteBlendMode.AlphaBlend,SpriteSortMode.Immediate,SaveStateMode.SaveState);
             if (m_state == UIState.Out)
             {
                 foreach (QuadBase _rect in m_outRects)

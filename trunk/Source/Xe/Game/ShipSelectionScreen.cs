@@ -18,9 +18,9 @@ namespace Xe.SpaceRace
 		Slider sliderShip;
 		SpaceRaceInitDatas m_datas;
 
-		float angle = MathHelper.Pi;
+		float angle = 0;
 
-		float dst = 120;
+		float viewDistance = 120;
 
 		BasicModel3D m_model;
 
@@ -73,8 +73,8 @@ namespace Xe.SpaceRace
 
 			m_model = new BasicModel3D(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value].ModelAsset);
 			
-			ViewMatrix = Matrix.CreateLookAt(new Vector3(0,dst*0.5f,0), new Vector3(dst,0,0), Vector3.Up);
-			ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1.0f, 1, dst * 2.0f);
+			ViewMatrix = Matrix.CreateLookAt(new Vector3(0,viewDistance*0.5f,-viewDistance*0.5f), new Vector3(0,0,0), Vector3.Up);
+			ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1.0f, 1, viewDistance * 2.0f);
 		}
 
 		void sliderShip_ValueChanged(object sender, float value)
@@ -177,7 +177,7 @@ namespace Xe.SpaceRace
 
 			angle += (float)gameTime.ElapsedGameTime.Milliseconds/1000f;
 			angle %= MathHelper.TwoPi;
-			m_model.World = Matrix.CreateRotationY(angle)*Matrix.CreateTranslation(dst, 0, 0);
+			m_model.World = Matrix.CreateRotationY(angle);
 
     	}
 
