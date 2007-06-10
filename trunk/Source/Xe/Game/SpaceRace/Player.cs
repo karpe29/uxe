@@ -70,10 +70,18 @@ namespace Xe.SpaceRace
 			m_camera.ChasePosition = m_ship.linearPosition;
 			m_camera.ChaseDirection = Vector3.Transform(Vector3.Forward,m_ship.Model.World);
 
-			this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChasePosition.ToString());
-			this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChaseDirection.ToString());
+			//this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChasePosition.ToString());
+			//this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChaseDirection.ToString());
+			this.m_gameScreenManager.Stats.AddDebugString("");
+			this.m_gameScreenManager.Stats.AddDebugString("rot pos : " + m_ship.rotationPosition.ToString());
+			this.m_gameScreenManager.Stats.AddDebugString("rot speed : " + m_ship.rotationSpeed.ToString());
+			this.m_gameScreenManager.Stats.AddDebugString("rot acc : " + m_ship.rotationAcceleration.ToString());
+			this.m_gameScreenManager.Stats.AddDebugString("");
+			this.m_gameScreenManager.Stats.AddDebugString("lin pos : " + m_ship.linearPosition.ToString());
+			this.m_gameScreenManager.Stats.AddDebugString("lin speed : " + m_ship.linearSpeed.ToString());
+			this.m_gameScreenManager.Stats.AddDebugString("lin acc : " + m_ship.linearAcceleration.ToString());
 			
-			m_camera.Update(gameTime);
+			m_camera.Reset();
 
 
 		}
