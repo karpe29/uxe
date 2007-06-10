@@ -30,7 +30,7 @@ namespace Xe.SpaceRace
 			m_camera.Stiffness = 20000;
 			m_camera.Mass = 10;
 			m_camera.Damping = 1200;
-			m_camera.DesiredPositionOffset = new Vector3(200, 100, 0);
+			m_camera.DesiredPositionOffset = new Vector3(0, 100, 200);
 			m_camera.ChasePosition = m_ship.linearPosition;
 			m_camera.ChaseDirection = Vector3.Forward;
 			m_camera.Up = Vector3.Up;
@@ -93,8 +93,12 @@ namespace Xe.SpaceRace
 			this.m_gameScreenManager.Stats.AddDebugString("lin acc : " + Helper.Vector3ToString3f(m_ship.linearAcceleration));
 			this.m_gameScreenManager.Stats.AddDebugString("");
 			this.m_gameScreenManager.Stats.AddDebugString("Direction : " + Helper.Vector3ToString3f(m_ship.direction));
+			this.m_gameScreenManager.Stats.AddDebugString("Up : " + Helper.Vector3ToString3f(m_ship.up));
+			this.m_gameScreenManager.Stats.AddDebugString("");
+			this.m_gameScreenManager.Stats.AddDebugString("Cam pos : " + Helper.Vector3ToString3f(m_camera.Position));
+			this.m_gameScreenManager.Stats.AddDebugString("cam chase pos : " + Helper.Vector3ToString3f(m_camera.ChasePosition));
 			
-			//m_camera.Update(gameTime);
+			m_camera.Reset();
 
 
 		}
