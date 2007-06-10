@@ -28,6 +28,11 @@ namespace Xe.SpaceRace
 		public SpaceRaceScreen(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
 			: base(gameScreenManager, true)
 		{
+
+			// disable EBI
+			//Ebi e = (Ebi)Game.Services.GetService(typeof(IEbiService));
+			//e.Enabled = false;
+
 			m_datas = datas;
 
 			m_players = new List<Player>(m_datas.totalPlayerCount+1);

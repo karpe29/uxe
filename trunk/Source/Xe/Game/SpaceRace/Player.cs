@@ -13,7 +13,7 @@ namespace Xe.SpaceRace
 
 	class Player : DrawableGameComponent
 	{
-
+		GameScreenManager m_gameScreenManager;
 		private Ship m_ship;
 
 		public ChaseCamera m_camera;
@@ -21,6 +21,8 @@ namespace Xe.SpaceRace
 		public Player(GameScreenManager gameScreenManager, ShipType type)
 			: base(gameScreenManager.Game)
 		{
+			m_gameScreenManager = gameScreenManager;
+
 			m_ship = new Ship(gameScreenManager, type);
 
 			m_camera = new ChaseCamera();
@@ -67,6 +69,10 @@ namespace Xe.SpaceRace
 
 			m_camera.ChasePosition = m_ship.linearPosition;
 			m_camera.ChaseDirection = Vector3.Transform(Vector3.Forward,m_ship.Model.World);
+
+			this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChasePosition.ToString());
+			this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChaseDirection.ToString());
+			
 			m_camera.Update(gameTime);
 
 
