@@ -68,7 +68,8 @@ namespace Xe.SpaceRace
 			m_ship.Update(gameTime);
 
 			m_camera.ChasePosition = m_ship.linearPosition;
-			m_camera.ChaseDirection = Vector3.Transform(Vector3.Forward,m_ship.Model.World);
+			m_camera.ChaseDirection = m_ship.direction;
+			m_camera.Up = m_ship.up;
 
 			//this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChasePosition.ToString());
 			//this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChaseDirection.ToString());
@@ -81,7 +82,7 @@ namespace Xe.SpaceRace
 			this.m_gameScreenManager.Stats.AddDebugString("lin speed : " + m_ship.linearSpeed.ToString());
 			this.m_gameScreenManager.Stats.AddDebugString("lin acc : " + m_ship.linearAcceleration.ToString());
 			
-			m_camera.Reset();
+			m_camera.Update(gameTime);
 
 
 		}
