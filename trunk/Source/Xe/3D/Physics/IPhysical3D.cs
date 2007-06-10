@@ -119,8 +119,8 @@ namespace Xe.Physics
 		public static bool SpaceGravity = false;
 		private PhysicalType m_type;
 		private MoveState m_move;
-		private Vector3 m_linearAcceleration, m_linearSpeed, m_linearPosition, m_rotationAcceleration, m_rotationSpeed, m_rotationPosition;
-
+		private Vector3 m_linearAcceleration, m_linearSpeed, m_linearPosition, m_rotationAcceleration, m_rotationSpeed, m_rotationPosition,m_direction,m_up;
+		private Matrix m_orientation;
 		public IPhysical3D(Microsoft.Xna.Framework.Game game,PhysicalType type)
 			: base(game)
 		{
@@ -145,6 +145,27 @@ namespace Xe.Physics
 		{
 			get { return m_linearSpeed; }
 			set { m_linearSpeed = value; }
+		}
+
+		public Vector3 direction
+		{
+			get { return m_direction; }
+		}
+
+		public Vector3 up
+		{
+			get { return m_up; }
+		}
+
+		public Matrix orientation
+		{
+			get { return m_orientation; }
+			set
+			{
+				m_orientation = value;
+				m_direction = Vector3.Transform(Vector3.Forward, m_orientation);
+				m_up = Vector3.Transform(Vector3.Up, m_orientation);
+			}
 		}
 
 		public Vector3 linearPosition
@@ -255,9 +276,9 @@ namespace Xe.Physics
 
 
 
-			rotationSpeed += rotationAcceleration * seconds;
-			rotationPosition += rotationSpeed * seconds + rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
-
+			rotationSpeed += m_rotationAcceleration * seconds;
+			rotationPosition += m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
+			orientation = Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z);
 
 			if (m_move.Forward)
 			{
@@ -302,8 +323,8 @@ namespace Xe.Physics
 
 			}
 
-			linearSpeed += linearAcceleration * seconds;
-			linearPosition += Vector3.Transform(linearSpeed * seconds + linearAcceleration * (float)(Math.Pow(seconds, 2) / 2),Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z));
+			linearSpeed += m_linearAcceleration * seconds;
+			linearPosition += Vector3.Transform(m_linearSpeed * seconds + m_linearAcceleration * (float)(Math.Pow(seconds, 2) / 2), orientation);
 			
 			
 			
