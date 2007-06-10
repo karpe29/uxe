@@ -50,11 +50,11 @@ namespace Xe.SpaceRace
 
 			if (touche.IsKeyDown(Keys.Up))
 			{
-				m_ship.MoveState.Forward = true;
+				m_ship.MoveState.Down = true;
 			}
 			if (touche.IsKeyDown(Keys.Down))
 			{
-				m_ship.MoveState.Brake = true;
+				m_ship.MoveState.Up = true;
 			}
 
 			if (touche.IsKeyDown(Keys.Left))
@@ -64,6 +64,15 @@ namespace Xe.SpaceRace
 			if (touche.IsKeyDown(Keys.Right))
 			{
 				m_ship.MoveState.TurnRight = true;
+			}
+
+			if (touche.IsKeyDown(Keys.Space))
+			{
+				m_ship.MoveState.Forward = true;
+			}
+			if (touche.IsKeyDown(Keys.RightAlt))
+			{
+				m_ship.MoveState.Brake = true;
 			}
 
 			m_ship.Update(gameTime);
@@ -82,8 +91,10 @@ namespace Xe.SpaceRace
 			this.m_gameScreenManager.Stats.AddDebugString("lin pos : " + Helper.Vector3ToString3f(m_ship.linearPosition));
 			this.m_gameScreenManager.Stats.AddDebugString("lin speed : " + Helper.Vector3ToString3f(m_ship.linearSpeed));
 			this.m_gameScreenManager.Stats.AddDebugString("lin acc : " + Helper.Vector3ToString3f(m_ship.linearAcceleration));
+			this.m_gameScreenManager.Stats.AddDebugString("");
+			this.m_gameScreenManager.Stats.AddDebugString("Direction : " + Helper.Vector3ToString3f(m_ship.direction));
 			
-			m_camera.Update(gameTime);
+			//m_camera.Update(gameTime);
 
 
 		}

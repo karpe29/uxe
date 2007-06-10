@@ -204,7 +204,8 @@ namespace Xe.Objects3D
 			for (int x = 0; x < 6; x++)
 			{
 				float f = 0;
-				switch (x)
+				
+				/*switch (x)
 				{
 					case 0: //back
 						f = Vector3.Dot(vCameraDirection, Vector3.Backward);
@@ -227,6 +228,7 @@ namespace Xe.Objects3D
 				}
 
 				if (f <= 0)
+				 */
 				{
 					IGraphicsDeviceService graphicsService = (IGraphicsDeviceService)Game.Services.GetService(typeof(IGraphicsDeviceService));
 

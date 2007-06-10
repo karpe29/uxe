@@ -106,6 +106,40 @@ namespace Xe.Physics
 		}
 
 
+		public bool Up
+		{
+			get { return m_up; }
+			set
+			{
+				if (value && m_down)
+				{
+					m_up = m_down = false;
+				}
+				else
+				{
+					m_up = value;
+				}
+			}
+		}
+
+
+		public bool Down
+		{
+			get { return m_down; }
+			set
+			{
+				if (value && m_up)
+				{
+					m_up = m_down = false;
+				}
+				else
+				{
+					m_down = value;
+				}
+			}
+		}
+
+
 
 	}
 
@@ -274,6 +308,60 @@ namespace Xe.Physics
 				}
 			}
 
+			if (m_move.Down)
+			{
+				if (m_rotationSpeed.X > -5)
+				{
+					if (m_rotationSpeed.X > 0)
+					{
+						m_rotationAcceleration.X = -15;
+					}
+					else
+					{
+						m_rotationAcceleration.X = -5;
+					}
+				}
+				else
+				{
+					m_rotationAcceleration.X = 0;
+					m_rotationSpeed.X = -5;
+				}
+			}
+
+			if (m_move.Up)
+			{
+				if (m_rotationSpeed.X < 5)
+				{
+					if (m_rotationSpeed.X < 0)
+					{
+						m_rotationAcceleration.X = 15;
+					}
+					else
+					{
+						m_rotationAcceleration.X = 5;
+					}
+				}
+				else
+				{
+					m_rotationAcceleration.X = 0;
+					m_rotationSpeed.X = 5;
+				}
+			}
+			if (!m_move.Up && !m_move.Down)
+			{
+				if (m_rotationSpeed.X != 0)
+				{
+					if (Math.Abs(m_rotationSpeed.X) < 0.01)
+					{
+						m_rotationAcceleration.X = 0;
+						m_rotationSpeed.X = 0;
+					}
+					else
+					{
+						m_rotationAcceleration.X = -Math.Sign(m_rotationSpeed.X) * 10;
+					}
+				}
+			}
 
 
 			rotationSpeed += m_rotationAcceleration * seconds;
@@ -282,14 +370,14 @@ namespace Xe.Physics
 
 			if (m_move.Forward)
 			{
-				if (m_linearSpeed.Z > -1000)
+				if (m_linearSpeed.Z > -100)
 				{
 					m_linearAcceleration.Z = -100;
 				}
 				else
 				{
 					m_linearAcceleration.Z = 0;
-					m_linearSpeed.Z = -1000;
+					m_linearSpeed.Z = -100;
 
 				}
 
