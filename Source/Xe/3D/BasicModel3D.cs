@@ -130,7 +130,6 @@ namespace Xe.Graphics3D
 			//Copy any parent transforms
 			Matrix[] transforms = new Matrix[m_model.Bones.Count];
 			m_model.CopyAbsoluteBoneTransformsTo(transforms);
-
 			//Draw the model, a model can have multiple meshes, so loop
 			for (int i = 0; i < m_model.Meshes.Count; i++)
 			{

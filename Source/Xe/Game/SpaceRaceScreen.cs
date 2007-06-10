@@ -63,7 +63,7 @@ namespace Xe.SpaceRace
 			s.Draw(gameTime);
 
 			m_players[0].Draw(gameTime);
-
+			
 			base.Draw(gameTime);
 
 

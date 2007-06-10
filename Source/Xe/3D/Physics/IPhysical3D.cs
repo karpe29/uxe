@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Xe.GameScreen;
+using Xe.Tools;
 #endregion
 
 namespace Xe.Physics
@@ -130,7 +131,6 @@ namespace Xe.Physics
 		private MoveState m_move;
 		private Vector3 m_linearAcceleration, m_linearSpeed, m_linearPosition, m_rotationAcceleration, m_rotationSpeed, m_rotationPosition;
 
-
 		public IPhysical3D(Microsoft.Xna.Framework.Game game,PhysicalType type)
 			: base(game)
 		{
@@ -178,7 +178,11 @@ namespace Xe.Physics
 		public Vector3 rotationPosition
 		{
 			get { return m_rotationPosition; }
-			set { m_rotationPosition = value; }
+			set {
+				m_rotationPosition.X = value.X % MathHelper.TwoPi;
+				m_rotationPosition.Y = value.Y % MathHelper.TwoPi;
+				m_rotationPosition.Z = value.Z % MathHelper.TwoPi;
+			}
 		}
 
 
@@ -233,17 +237,37 @@ namespace Xe.Physics
 			{
 				if (m_rotationSpeed.Y != 0)
 				{
-					m_rotationAcceleration.Y = -Math.Sign(m_rotationSpeed.Y) * 10;
+					if (Math.Abs(m_rotationSpeed.Y) < 0.01)
+					{
+						m_rotationAcceleration.Y = 0;
+						m_rotationSpeed.Y = 0;
+					}
+					else
+					{
+						m_rotationAcceleration.Y = -Math.Sign(m_rotationSpeed.Y) * 10;
+					}
 				}
 			}
 
 
-			m_rotationSpeed += m_rotationAcceleration * seconds;
-			m_rotationPosition += m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
 
-			m_linearSpeed += m_linearAcceleration * seconds;
-			m_linearPosition += m_linearSpeed * seconds + m_linearAcceleration * (float)(Math.Pow(seconds, 2) / 2);
+			rotationSpeed += rotationAcceleration * seconds;
+			rotationPosition += rotationSpeed * seconds + rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
 
+
+						if (m_move.Forward)
+			{
+				if (m_linearSpeed.Length() < 100)
+				{
+					m_linearAcceleration = Vector3.Transform(Vector3.Forward, Matrix.CreateFromYawPitchRoll(m_rotationPosition.X, m_rotationPosition.Y, m_rotationPosition.Z));
+				}
+			}
+
+			linearSpeed += linearAcceleration * seconds;
+			linearPosition += linearSpeed * seconds + linearAcceleration * (float)(Math.Pow(seconds, 2) / 2);
+			
+			
+			
 			base.Update(gameTime);
 		}
 	}
