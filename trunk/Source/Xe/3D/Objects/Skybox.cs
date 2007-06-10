@@ -50,7 +50,7 @@ namespace Xe.Objects3D
 			set
 			{
 				vCameraPosition = value;
-				worldMatrix = Matrix.Identity; //Matrix.CreateTranslation(vCameraPosition);
+				worldMatrix = Matrix.CreateTranslation(vCameraPosition);
 			}
 		}
 

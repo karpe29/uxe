@@ -282,14 +282,14 @@ namespace Xe.Physics
 
 			if (m_move.Forward)
 			{
-				if (m_linearSpeed.Z > -10)
+				if (m_linearSpeed.Z > -1000)
 				{
-					m_linearAcceleration.Z = -10;
+					m_linearAcceleration.Z = -100;
 				}
 				else
 				{
 					m_linearAcceleration.Z = 0;
-					m_linearSpeed.Z = -10;
+					m_linearSpeed.Z = -1000;
 
 				}
 
@@ -299,7 +299,7 @@ namespace Xe.Physics
 			{
 				if (m_linearSpeed.Z < 0)
 				{
-					m_linearAcceleration.Z = 20;
+					m_linearAcceleration.Z = 200;
 				}
 				else
 				{
@@ -313,7 +313,7 @@ namespace Xe.Physics
 			{
 				if (m_linearSpeed.Z < 0)
 				{
-					m_linearAcceleration.Z = 5;
+					m_linearAcceleration.Z = 50;
 				}
 				else
 				{
