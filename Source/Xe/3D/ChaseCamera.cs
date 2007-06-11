@@ -11,12 +11,41 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Xe.Physics;
 #endregion
 
 namespace Xe.Graphics3D
 {
     public class ChaseCamera
     {
+
+		private IPhysical3D m_target;
+		private Vector3 m_camPositionOffset,m_camPosition,m_camTargetPosition,m_camUp,m_camDirection;
+
+		public ChaseCamera(IPhysical3D target,Vector3 camPositionOffset)
+		{
+			m_target = target;
+			m_camPositionOffset = camPositionOffset;
+			this.projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, 4 / 3, 1, 100000);
+
+		}
+
+		public Vector3 CamPosition
+		{
+			get { return m_camPosition; }
+		}
+
+		public Vector3 CamTargetPosition
+		{
+			get { return m_camTargetPosition; }
+		}
+
+		public Vector3 CamDirection
+		{
+			get { return m_camDirection; }
+		}
+
+		/*
         #region Chased object properties (set externally each frame)
 
         /// <summary>
@@ -209,7 +238,7 @@ namespace Xe.Graphics3D
         private float farPlaneDistance = 1000000.0f;
 
         #endregion
-
+		*/
         #region Matrix properties
 
         /// <summary>
@@ -232,7 +261,7 @@ namespace Xe.Graphics3D
 
         #endregion
 
-
+		/*
         #region Methods
 
         /// <summary>
@@ -282,7 +311,7 @@ namespace Xe.Graphics3D
 
             UpdateMatrices();
         }
-
+		*/
         /// <summary>
         /// Animates the camera from its current position towards the desired offset
         /// behind the chased object. The camera's animation is controlled by a simple
@@ -292,12 +321,16 @@ namespace Xe.Graphics3D
         {
             if (gameTime == null)
                 throw new ArgumentNullException("gameTime");
+			float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds) / 1000f;
+			m_camTargetPosition=m_target.linearPosition;
+			m_camPosition=m_camTargetPosition+Vector3.Transform(m_camPositionOffset, m_target.orientation);
+			m_camDirection = Vector3.Normalize(m_camTargetPosition - m_camPosition);
+			m_camUp=m_target.up;
+			this.view = Matrix.CreateLookAt(m_camPosition,m_camTargetPosition ,m_camUp );
 
-            UpdateWorldPositions();
-
-            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            // Calculate spring force
+			/*
+             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+           // Calculate spring force
             Vector3 stretch = position - desiredPosition;
             Vector3 force = -stiffness * stretch - damping * velocity;
 
@@ -308,9 +341,9 @@ namespace Xe.Graphics3D
             // Apply velocity
             position += velocity * elapsed;
 
-            UpdateMatrices();
-        }
+			 * */
+		}
 
-        #endregion
+       // #endregion
     }
 }

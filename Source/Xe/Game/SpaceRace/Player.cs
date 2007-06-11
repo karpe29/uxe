@@ -8,6 +8,7 @@ using Xe.GameScreen;
 using Microsoft.Xna.Framework.Input;
 using Xe.Tools;
 using Xe.Objects3D;
+using Xe.Physics;
 
 namespace Xe.SpaceRace
 {
@@ -30,15 +31,16 @@ namespace Xe.SpaceRace
 
 			m_ship = new Ship(gameScreenManager, type);
 
-			m_camera = new ChaseCamera();
-			m_camera.Stiffness = 6000; // default 1800
+			m_camera = new ChaseCamera((IPhysical3D) m_ship,new Vector3(0,100,200));
+
+			/*m_camera.Stiffness = 6000; // default 1800
 			m_camera.Mass = 10; // default 50
 			m_camera.Damping = 200; // default 600
 			m_camera.DesiredPositionOffset = new Vector3(0, 100, 200);
 			m_camera.ChasePosition = Vector3.Zero;
 			m_camera.ChaseDirection = Vector3.Forward;
 			m_camera.Up = Vector3.Up;
-			m_camera.Reset();
+			m_camera.Reset();*/
 
 			SpaceRaceHudScreen hud = new SpaceRaceHudScreen(gameScreenManager);
 
@@ -93,22 +95,22 @@ namespace Xe.SpaceRace
 			m_gameScreenManager.Stats.AddDebugString("ship pos:" + this.m_ship.linearPosition);
 			m_gameScreenManager.Stats.AddDebugString("ship dir:" + this.m_ship.direction);
 
-			m_camera.ChasePosition = m_ship.linearPosition;
-			m_camera.ChaseDirection = m_ship.direction;
-			m_camera.Up = m_ship.up;
+			//m_camera.ChasePosition = m_ship.linearPosition;
+			//m_camera.ChaseDirection = m_ship.direction;
+			//m_camera.Up = m_ship.up;
 
 			//m_camera.Reset();
 			m_camera.Update(gameTime);
 
-			m_gameScreenManager.Stats.AddDebugString("cam pos:" + this.m_camera.ChasePosition);
-			m_gameScreenManager.Stats.AddDebugString("cam dir:" + this.m_camera.ChaseDirection);
+			//m_gameScreenManager.Stats.AddDebugString("cam pos:" + this.m_camera.ChasePosition);
+			//m_gameScreenManager.Stats.AddDebugString("cam dir:" + this.m_camera.ChaseDirection);
 
 			m_ship.Model.View = m_camera.View;
 			m_ship.Model.Projection = m_camera.Projection;
 
 
-			s.CameraPosition = m_camera.ChasePosition;
-			s.CameraDirection = m_camera.ChaseDirection;
+			s.CameraPosition = m_camera.CamPosition;
+			s.CameraDirection = m_camera.CamDirection;
 			s.ViewMatrix = m_camera.View;
 			s.ProjectionMatrix = m_camera.Projection;
 			
