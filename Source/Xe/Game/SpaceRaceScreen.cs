@@ -13,14 +13,7 @@ namespace Xe.SpaceRace
 {
 	class SpaceRaceScreen : IGameScreen
 	{
-		SkyBox s;
-
 		SpaceRaceInitDatas m_datas;
-
-		int m_playerCount;
-		float m_difficultyPercent;
-
-		SpriteBatch m_spriteBatch;
 
 		List<Player> m_players;
 		Race m_race;
@@ -28,7 +21,6 @@ namespace Xe.SpaceRace
 		public SpaceRaceScreen(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
 			: base(gameScreenManager, true)
 		{
-
 			// disable EBI
 			//Ebi e = (Ebi)Game.Services.GetService(typeof(IEbiService));
 			//e.Enabled = false;
@@ -41,10 +33,6 @@ namespace Xe.SpaceRace
 			{
 				m_players.Add(new Player(gameScreenManager, m_datas.shipTypes[i]));
 			}
-
-			s = new SkyBox(gameScreenManager.Game, @"Content\Skybox\bryce");
-			s.ContentManager = gameScreenManager.ContentManager;
-			s.Initialize();
 		}
 
 		protected override void LoadGraphicsContent(bool loadAllContent)
@@ -54,21 +42,16 @@ namespace Xe.SpaceRace
 			if (loadAllContent)
 			{
 			}
-
-			m_spriteBatch = new SpriteBatch(this.GraphicsDevice);
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
-			s.Draw(gameTime);
-
 			m_players[0].Draw(gameTime);
 			
 			base.Draw(gameTime);
-
-
 		}
 
+		
 		private void RenderSpaceBackground()
 		{
 			#region Sprite part (unused)
@@ -114,25 +97,7 @@ namespace Xe.SpaceRace
 		{
 			base.Update(gameTime);
 
-
 			m_players[0].Update(gameTime);
-
-
-			// Definir les matrices / position du vaisseau ici pour la skybox, et voila :)
-
-			 //pour voir ce que t'as fait
-			//m_model.World = Matrix.CreateRotationZ(rotationPosition.Z) * Matrix.CreateRotationX(rotationPosition.X) * Matrix.CreateRotationY(rotationPosition.Y);
-			//m_model.View = Matrix.CreateLookAt(new Vector3(0, 4000, 0), new Vector3(0, 0, 0), new Vector3(1, 0, 0));
-			//m_model.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)(4 / 3), 1, 10000);
-
-			
-			s.CameraPosition = m_players[0].m_camera.Position;
-			s.CameraDirection = m_players[0].m_camera.LookAt;
-			s.ViewMatrix = m_players[0].m_camera.View;
-			s.ProjectionMatrix = m_players[0].m_camera.Projection;
-
-			s.Update(gameTime);
-			
 		}
 
 		public override bool IsBlockingUpdate

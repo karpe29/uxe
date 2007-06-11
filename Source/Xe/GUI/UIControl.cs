@@ -558,10 +558,10 @@ namespace Xe.GUI
                 //Rectangle _rect = new Rectangle(m_absX + m_guiManager.CornerSize, m_absY + (int)(this.Height / 2) - (int)(m_font.LineHeight / 2), m_width - 5, m_height);
 				Rectangle _rect = new Rectangle(m_absX + m_guiManager.CornerSize, m_absY + m_guiManager.CornerSize, m_width - m_guiManager.CornerSize * 2, m_height - m_guiManager.CornerSize * 2);
 
-                int from = _rect.Width / m_fontWidth;
+                //int from = _rect.Width / m_fontWidth;
                 string toDraw = m_text;
-                if (m_text.Length > from)
-                    toDraw = m_text.Substring(m_text.Length - from);
+                //if (m_text.Length > from)
+                //    toDraw = m_text.Substring(m_text.Length - from);
 
 				DrawTextInABox(_rect, m_foreColor, toDraw);
                 #endregion
@@ -617,7 +617,7 @@ namespace Xe.GUI
 				}
 				catch (InvalidOperationException) { }
 #endif
-				str = str.Substring(nChars);
+				//str = str.Substring(nChars);
 				vAt.Y += m_font.LineSpacing;
 			}
 		}

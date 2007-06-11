@@ -376,7 +376,7 @@ namespace Xe.Physics
 			rotationPosition = m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
 			orientation = Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z)*orientation;
 
-			DrawOrientation = Matrix.CreateFromYawPitchRoll(0, 0, -m_rotationSpeed.Y * m_linearSpeed.Z/10000)*orientation;
+			DrawOrientation = Matrix.CreateFromYawPitchRoll(0, 0, -m_rotationSpeed.Y * m_linearSpeed.Z/8000)*orientation;
 
 			if (m_move.Forward)
 			{
