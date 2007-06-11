@@ -99,7 +99,7 @@ namespace Xe.SpaceRace
 			this.m_gameScreenManager.Stats.AddDebugString("Cam pos : " + Helper.Vector3ToString3f(m_camera.Position));
 			this.m_gameScreenManager.Stats.AddDebugString("cam chase pos : " + Helper.Vector3ToString3f(m_camera.ChasePosition));
 			
-			//m_camera.Reset();
+			m_camera.Reset();
 
 
 		}
