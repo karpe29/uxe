@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Xe.GameScreen;
 using Microsoft.Xna.Framework.Input;
 using Xe.Tools;
+using Xe.Objects3D;
 
 namespace Xe.SpaceRace
 {
@@ -19,6 +20,9 @@ namespace Xe.SpaceRace
 
 		public ChaseCamera m_camera;
 
+		SkyBox s;
+
+
 		public Player(GameScreenManager gameScreenManager, ShipType type)
 			: base(gameScreenManager.Game)
 		{
@@ -27,14 +31,20 @@ namespace Xe.SpaceRace
 			m_ship = new Ship(gameScreenManager, type);
 
 			m_camera = new ChaseCamera();
-			//m_camera.Stiffness = 1800; // default 1800
-			//m_camera.Mass = 50; // default 50
-			//m_camera.Damping = 600; // default 600
+			m_camera.Stiffness = 6000; // default 1800
+			m_camera.Mass = 10; // default 50
+			m_camera.Damping = 200; // default 600
 			m_camera.DesiredPositionOffset = new Vector3(0, 100, 200);
-			m_camera.ChasePosition = m_ship.linearPosition;
+			m_camera.ChasePosition = Vector3.Zero;
 			m_camera.ChaseDirection = Vector3.Forward;
 			m_camera.Up = Vector3.Up;
 			m_camera.Reset();
+
+			SpaceRaceHudScreen hud = new SpaceRaceHudScreen(gameScreenManager);
+
+			s = new SkyBox(gameScreenManager.Game, @"Content\Skybox\bryce");
+			s.ContentManager = gameScreenManager.ContentManager;
+			s.Initialize();
 		}
 
 		public Ship Ship
@@ -46,67 +56,67 @@ namespace Xe.SpaceRace
 		{
 			base.Update(gameTime);
 
+			GamePadState g = GamePad.GetState(PlayerIndex.One);
+
 			KeyboardState touche = Keyboard.GetState();
 			m_ship.MoveState.Reset();
 
-			if (touche.IsKeyDown(Keys.Up))
+			if (touche.IsKeyDown(Keys.Up) || g.ThumbSticks.Left.Y < 0)
 			{
 				m_ship.MoveState.Down = true;
 			}
-			if (touche.IsKeyDown(Keys.Down))
+			if (touche.IsKeyDown(Keys.Down) || g.ThumbSticks.Left.Y > 0)
 			{
 				m_ship.MoveState.Up = true;
 			}
 
-			if (touche.IsKeyDown(Keys.Left))
+			if (touche.IsKeyDown(Keys.Left) || g.ThumbSticks.Left.X < 0)
 			{
 				m_ship.MoveState.TurnLeft = true;
 			}
-			if (touche.IsKeyDown(Keys.Right))
+			if (touche.IsKeyDown(Keys.Right) || g.ThumbSticks.Left.X > 0)
 			{
 				m_ship.MoveState.TurnRight = true;
 			}
 
-			if (touche.IsKeyDown(Keys.Space))
+			if (touche.IsKeyDown(Keys.Space) || g.Triggers.Right > 0)
 			{
 				m_ship.MoveState.Forward = true;
 			}
-			if (touche.IsKeyDown(Keys.RightAlt))
+			if (touche.IsKeyDown(Keys.RightAlt) || g.Triggers.Left > 0)
 			{
 				m_ship.MoveState.Brake = true;
 			}
 
 			m_ship.Update(gameTime);
 
+			m_gameScreenManager.Stats.AddDebugString("ship pos:" + this.m_ship.linearPosition);
+			m_gameScreenManager.Stats.AddDebugString("ship dir:" + this.m_ship.direction);
+
 			m_camera.ChasePosition = m_ship.linearPosition;
 			m_camera.ChaseDirection = m_ship.direction;
 			m_camera.Up = m_ship.up;
 
-			//this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChasePosition.ToString());
-			//this.m_gameScreenManager.Stats.AddDebugString(m_camera.ChaseDirection.ToString());
-			this.m_gameScreenManager.Stats.AddDebugString("");
-			this.m_gameScreenManager.Stats.AddDebugString("rot pos : " + Helper.Vector3ToString3f(m_ship.rotationPosition));
-			this.m_gameScreenManager.Stats.AddDebugString("rot speed : " + Helper.Vector3ToString3f(m_ship.rotationSpeed));
-			this.m_gameScreenManager.Stats.AddDebugString("rot acc : " + Helper.Vector3ToString3f(m_ship.rotationAcceleration));
-			this.m_gameScreenManager.Stats.AddDebugString("");
-			this.m_gameScreenManager.Stats.AddDebugString("lin pos : " + Helper.Vector3ToString3f(m_ship.linearPosition));
-			this.m_gameScreenManager.Stats.AddDebugString("lin speed : " + Helper.Vector3ToString3f(m_ship.linearSpeed));
-			this.m_gameScreenManager.Stats.AddDebugString("lin acc : " + Helper.Vector3ToString3f(m_ship.linearAcceleration));
-			this.m_gameScreenManager.Stats.AddDebugString("");
-			this.m_gameScreenManager.Stats.AddDebugString("Direction : " + Helper.Vector3ToString3f(m_ship.direction));
-			this.m_gameScreenManager.Stats.AddDebugString("Up : " + Helper.Vector3ToString3f(m_ship.up));
-			this.m_gameScreenManager.Stats.AddDebugString("");
-			this.m_gameScreenManager.Stats.AddDebugString("Cam pos : " + Helper.Vector3ToString3f(m_camera.Position));
-			this.m_gameScreenManager.Stats.AddDebugString("cam chase pos : " + Helper.Vector3ToString3f(m_camera.ChasePosition));
+			//m_camera.Reset();
+			m_camera.Update(gameTime);
+
+			m_gameScreenManager.Stats.AddDebugString("cam pos:" + this.m_camera.ChasePosition);
+			m_gameScreenManager.Stats.AddDebugString("cam dir:" + this.m_camera.ChaseDirection);
+
+			m_ship.Model.View = m_camera.View;
+			m_ship.Model.Projection = m_camera.Projection;
+
+
+			s.CameraPosition = m_camera.ChasePosition;
+			s.CameraDirection = m_camera.ChaseDirection;
+			s.ViewMatrix = m_camera.View;
+			s.ProjectionMatrix = m_camera.Projection;
 			
-			m_camera.Reset();
-
-
+			s.Update(gameTime);
 		}
 		public override void Draw(GameTime gameTime)
 		{
-			m_ship.Model.View = m_camera.View;
-			m_ship.Model.Projection = m_camera.Projection;
+			s.Draw(gameTime);
 
 			m_ship.Draw(gameTime);
 
