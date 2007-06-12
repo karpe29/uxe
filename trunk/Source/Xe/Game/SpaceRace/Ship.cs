@@ -96,8 +96,14 @@ namespace Xe.SpaceRace
 			{
 				fireParticles.AddParticle(Vector3.Transform(reactor,orientation)+linearPosition, Vector3.Zero);
 			}
-			
+
+			foreach (Vector3 reactor in m_type.Reactors)
+			{
+				smokePlumeParticles.AddParticle(Vector3.Transform(reactor, orientation) + linearPosition, Vector3.Zero);
+			}
+
 			fireParticles.Update(gameTime);
+			smokePlumeParticles.Update(gameTime);
 		}
 			
 
@@ -107,9 +113,12 @@ namespace Xe.SpaceRace
 			if (m_model != null)
 				m_model.Draw(gameTime);
 
-			fireParticles.SetCamera(m_model.View, m_model.Projection);
-			fireParticles.Gravity = Vector3.Transform(new Vector3(0, 0, 50), m_model.World);
+			smokePlumeParticles.SetCamera(m_model.View, m_model.Projection);
+			smokePlumeParticles.Gravity = Vector3.Transform(new Vector3(0, 0, 200), orientation);
+			smokePlumeParticles.Draw(gameTime);
 
+			fireParticles.SetCamera(m_model.View, m_model.Projection);
+			fireParticles.Gravity = Vector3.Transform(new Vector3(0, 0, 200), orientation);
 			fireParticles.Draw(gameTime);
 				
 
