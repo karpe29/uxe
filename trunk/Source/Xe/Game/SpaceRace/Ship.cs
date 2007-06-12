@@ -38,7 +38,7 @@ namespace Xe.SpaceRace
 
 
 
-		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f,  new Vector3[] { new Vector3(20,0,100), new Vector3(-20,0,100) } ), 
+		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f,  new Vector3[] { new Vector3(8,0,30), new Vector3(-8,0,30) } ), 
 											new ShipType(@"Content\Models\StarChaser2", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ), 
 											new ShipType(@"Content\Models\StarChaser3", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ), 
 											new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ) };
@@ -94,7 +94,7 @@ namespace Xe.SpaceRace
 
 			foreach (Vector3 reactor in m_type.Reactors)
 			{
-				fireParticles.AddParticle(reactor, Vector3.Zero);
+				fireParticles.AddParticle(Vector3.Transform(reactor,orientation)+linearPosition, Vector3.Zero);
 			}
 			fireParticles.Update(gameTime);
 		}
