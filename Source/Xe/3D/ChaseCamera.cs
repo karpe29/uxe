@@ -26,8 +26,7 @@ namespace Xe.Graphics3D
 		{
 			m_target = target;
 			m_camPositionOffset = camPositionOffset;
-			this.projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, 4 / 3, 1, 100000);
-
+			this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
 		}
 
 		public Vector3 CamPosition
@@ -45,9 +44,9 @@ namespace Xe.Graphics3D
 			get { return m_camDirection; }
 		}
 
-		/*
+		
         #region Chased object properties (set externally each frame)
-
+/*
         /// <summary>
         /// Position of object being chased.
         /// </summary>
@@ -191,7 +190,7 @@ namespace Xe.Graphics3D
             get { return velocity; }
         }
         private Vector3 velocity;
-
+		*/
         #endregion
 
 
@@ -203,7 +202,11 @@ namespace Xe.Graphics3D
         public float AspectRatio
         {
             get { return aspectRatio; }
-            set { aspectRatio = value; }
+			set
+			{
+				aspectRatio = value;
+				this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
+			}
         }
         private float aspectRatio = 4.0f / 3.0f;
 
@@ -213,7 +216,11 @@ namespace Xe.Graphics3D
         public float FieldOfView
         {
             get { return fieldOfView; }
-            set { fieldOfView = value; }
+			set
+			{
+				fieldOfView = value;
+				this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
+			}
         }
         private float fieldOfView = MathHelper.ToRadians(45.0f);
 
@@ -223,7 +230,11 @@ namespace Xe.Graphics3D
         public float NearPlaneDistance
         {
             get { return nearPlaneDistance; }
-            set { nearPlaneDistance = value; }
+			set
+			{
+				nearPlaneDistance = value; 
+				this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
+			}
         }
         private float nearPlaneDistance = 1.0f;
 
@@ -233,12 +244,16 @@ namespace Xe.Graphics3D
         public float FarPlaneDistance
         {
             get { return farPlaneDistance; }
-            set { farPlaneDistance = value; }
+			set
+			{
+				farPlaneDistance = value;
+				this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
+			}
         }
         private float farPlaneDistance = 1000000.0f;
 
         #endregion
-		*/
+		
         #region Matrix properties
 
         /// <summary>
@@ -321,12 +336,15 @@ namespace Xe.Graphics3D
         {
             if (gameTime == null)
                 throw new ArgumentNullException("gameTime");
+
 			float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds) / 1000f;
+
 			m_camTargetPosition=m_target.linearPosition;
 			m_camPosition=m_camTargetPosition+Vector3.Transform(m_camPositionOffset, m_target.orientation);
 			m_camDirection = Vector3.Normalize(m_camTargetPosition - m_camPosition);
 			m_camUp=m_target.up;
-			this.view = Matrix.CreateLookAt(m_camPosition,m_camTargetPosition ,m_camUp );
+
+			this.view = Matrix.CreateLookAt(m_camPosition, m_camTargetPosition, m_camUp);
 
 			/*
              float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;

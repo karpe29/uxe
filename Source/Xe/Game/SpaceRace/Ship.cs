@@ -103,7 +103,7 @@ namespace Xe.SpaceRace
 
 
 
-			m_model.World = DrawOrientation*Matrix.CreateTranslation(linearPosition);
+			m_model.World = DrawOrientation *Matrix.CreateTranslation(linearPosition);
 			
 			/*	
 
