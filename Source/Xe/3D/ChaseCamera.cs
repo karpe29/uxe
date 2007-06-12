@@ -20,7 +20,7 @@ namespace Xe.Graphics3D
     {
 
 		private IPhysical3D m_target;
-		private Vector3 m_camPositionOffset,m_camPosition,m_camTargetPosition,m_camUp,m_camDirection;
+		private Vector3 m_camPositionOffset, m_camPosition, m_camDesiredPosition, m_camTargetPosition, m_camUp, m_camDirection;
 
 		public ChaseCamera(IPhysical3D target,Vector3 camPositionOffset)
 		{
@@ -340,10 +340,17 @@ namespace Xe.Graphics3D
 			float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds) / 1000f;
 
 			m_camTargetPosition=m_target.linearPosition;
-			m_camPosition=m_camTargetPosition+Vector3.Transform(m_camPositionOffset, m_target.orientation);
-			m_camDirection = Vector3.Normalize(m_camTargetPosition - m_camPosition);
-			m_camUp=m_target.up;
+			m_camDesiredPosition=m_camTargetPosition+Vector3.Transform(m_camPositionOffset, m_target.orientation);
 
+			if (m_camPosition != m_camDesiredPosition)
+			{
+				m_camPosition += (m_camDesiredPosition-m_camPosition) * seconds*5;
+			}
+
+
+			//m_camDirection = Vector3.Normalize(m_camTargetPosition - m_camPosition);
+			m_camUp=m_target.up;
+			
 			this.view = Matrix.CreateLookAt(m_camPosition, m_camTargetPosition, m_camUp);
 
 			/*
