@@ -96,7 +96,7 @@ namespace Xe.SpaceRace
 			{
 				fireParticles.AddParticle(Vector3.Transform(reactor,orientation)+linearPosition, Vector3.Zero);
 			}
-			//fireParticles.Gravity = -direction;
+			fireParticles.Gravity = -direction;
 			fireParticles.Update(gameTime);
 		}
 			
