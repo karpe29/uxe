@@ -43,6 +43,17 @@ namespace Xe.Particles3D
         EffectParameter effectProjectionParameter;
         EffectParameter effectViewportHeightParameter;
         EffectParameter effectTimeParameter;
+		EffectParameter effectGravityParameter;
+
+		public Vector3 Gravity
+		{
+			set
+			{
+				Stats m_stats = (Stats)Game.Services.GetService(typeof(Stats));
+				m_stats.AddDebugString("Gravity" + value.ToString());
+				effectGravityParameter.SetValue(value);
+			}
+		}
 
 
         // An array of particles, treated as a circular queue.
@@ -234,6 +245,7 @@ namespace Xe.Particles3D
             effectProjectionParameter = parameters["Projection"];
             effectViewportHeightParameter = parameters["ViewportHeight"];
             effectTimeParameter = parameters["CurrentTime"];
+			effectGravityParameter = parameters["Gravity"];
 
             // Set the values of parameters that do not change.
             parameters["Duration"].SetValue((float)settings.Duration.TotalSeconds);
@@ -519,14 +531,13 @@ namespace Xe.Particles3D
             effectProjectionParameter.SetValue(projection);
         }
 
-
         /// <summary>
         /// Adds a new particle to the system.
         /// </summary>
         public void AddParticle(Vector3 position, Vector3 velocity)
         {
 
-						Stats m_stats=(Stats)Game.Services.GetService(typeof(Stats));
+			Stats m_stats = (Stats)Game.Services.GetService(typeof(Stats));
 			m_stats.AddDebugString("Particle pos" +position.ToString());
 
             // Figure out where in the circular queue to allocate the new particle.
