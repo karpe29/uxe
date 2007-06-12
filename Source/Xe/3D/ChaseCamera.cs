@@ -11,7 +11,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Xe.Physics;
+using Xe.Physics3D;
 #endregion
 
 namespace Xe.Graphics3D

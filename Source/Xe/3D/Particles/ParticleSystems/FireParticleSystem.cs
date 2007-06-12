@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace Particle3DSample
+namespace Xe.Particles3D
 {
     /// <summary>
     /// Custom particle system for creating a flame effect.
@@ -28,7 +28,7 @@ namespace Particle3DSample
 
         protected override void InitializeSettings(ParticleSettings settings)
         {
-            settings.TextureName = "Content/fire";
+			settings.TextureName = @"Content\Particles\fire";
 
             settings.MaxParticles = 2400;
 

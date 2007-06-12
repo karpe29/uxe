@@ -12,7 +12,7 @@ using System;
 using Microsoft.Xna.Framework;
 #endregion
 
-namespace Particle3DSample
+namespace Xe.Particles3D
 {
     /// <summary>
     /// Helper for objects that want to leave particles behind them as they

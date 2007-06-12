@@ -6,7 +6,7 @@ using Xe.GameScreen;
 using Xe.Tools;
 #endregion
 
-namespace Xe.Physics
+namespace Xe.Physics3D
 {
 
 	public class PhysicalType
