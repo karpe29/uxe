@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using Xe.Tools;
 using Xe.Objects3D;
 using Xe.Physics;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Xe.SpaceRace
 {
@@ -120,6 +121,12 @@ namespace Xe.SpaceRace
 		public override void Draw(GameTime gameTime)
 		{
 			s.Draw(gameTime);
+
+
+			GraphicsDevice device = ((IGraphicsDeviceService)Game.Services.GetService(typeof(IGraphicsDeviceService))).GraphicsDevice;
+
+			device.RenderState.DepthBufferEnable = true;
+			device.RenderState.DepthBufferWriteEnable = true;
 
 			m_ship.Draw(gameTime);
 
