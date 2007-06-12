@@ -38,7 +38,7 @@ namespace Xe.SpaceRace
 
 
 
-		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ), 
+		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f,  new Vector3[] { new Vector3(20,0,100), new Vector3(-20,0,100) } ), 
 											new ShipType(@"Content\Models\StarChaser2", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ), 
 											new ShipType(@"Content\Models\StarChaser3", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ), 
 											new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ) };
@@ -92,8 +92,10 @@ namespace Xe.SpaceRace
 
 			m_model.World = DrawOrientation * Matrix.CreateTranslation(linearPosition);
 
-			fireParticles.AddParticle(m_type.Reactors[0], Vector3.Zero);
-
+			foreach (Vector3 reactor in m_type.Reactors)
+			{
+				fireParticles.AddParticle(reactor, Vector3.Zero);
+			}
 			fireParticles.Update(gameTime);
 		}
 			
@@ -104,7 +106,7 @@ namespace Xe.SpaceRace
 			if (m_model != null)
 				m_model.Draw(gameTime);
 
-
+			fireParticles.SetCamera(m_model.View, m_model.Projection);
 			fireParticles.Draw(gameTime);
 				
 

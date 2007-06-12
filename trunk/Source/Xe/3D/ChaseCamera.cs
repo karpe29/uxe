@@ -343,9 +343,9 @@ namespace Xe.Graphics3D
 			m_camDesiredTarget = m_target.linearPosition + Vector3.Transform(m_camTargetOffset, m_target.orientation);
 			m_camDesiredPosition = m_target.linearPosition + Vector3.Transform(m_camPositionOffset, m_target.orientation);
 
-			if (m_camPosition != m_camDesiredPosition)
+			if ( m_camPosition != m_camDesiredPosition)
 			{
-				m_camPosition += (m_camDesiredPosition - m_camPosition) * seconds * 10;
+				m_camPosition += (m_camDesiredPosition - m_camPosition) * seconds * 15;
 			}
 
 			/*if (m_camTarget != m_camDesiredTarget)

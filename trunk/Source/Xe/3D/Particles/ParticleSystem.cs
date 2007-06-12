@@ -12,6 +12,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Xe.Tools;
 #endregion
 
 namespace Xe.Particles3D
@@ -283,7 +284,6 @@ namespace Xe.Particles3D
                 throw new ArgumentNullException("gameTime");
 
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             RetireActiveParticles();
             FreeRetiredParticles();
 
@@ -525,6 +525,10 @@ namespace Xe.Particles3D
         /// </summary>
         public void AddParticle(Vector3 position, Vector3 velocity)
         {
+
+						Stats m_stats=(Stats)Game.Services.GetService(typeof(Stats));
+			m_stats.AddDebugString("Particle pos" +position.ToString());
+
             // Figure out where in the circular queue to allocate the new particle.
             int nextFreeParticle = firstFreeParticle + 1;
 

@@ -32,7 +32,7 @@ namespace Xe.SpaceRace
 
 			m_ship = new Ship(gameScreenManager, type);
 
-			m_camera = new ChaseCamera((IPhysical3D)m_ship, new Vector3(0, 50, 0), new Vector3(0, 100, 200));
+			m_camera = new ChaseCamera((IPhysical3D)m_ship, new Vector3(0, 40, 0), new Vector3(0, 120, 150));
 
 			/*m_camera.Stiffness = 6000; // default 1800
 			m_camera.Mass = 10; // default 50
