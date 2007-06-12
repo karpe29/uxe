@@ -16,24 +16,32 @@ namespace Xe.SpaceRace
 {
 	class ShipType : PhysicalType
 	{
-		string m_model;
+		string m_model = "";
+
+		List<Vector3> m_reactors = new List<Vector3>();
 
 		#region properties
 
 		public string ModelAsset { get { return m_model; } }
+		public List<Vector3> Reactors { get { return m_reactors; } }
 
 		#endregion
 
-		public ShipType(string model, float handling, float acceleration, float maxSpeed, float resistance, float gFactor)
+		public ShipType(string model, float handling, float acceleration, float maxSpeed, float resistance, float gFactor, Vector3 [] reactors)
 			:base (handling,acceleration,maxSpeed,resistance,gFactor)
 		{
 			m_model = model;
+
+			foreach (Vector3 v in reactors)
+				m_reactors.Add(v);
 		}
-		
-		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f), 
-											new ShipType(@"Content\Models\StarChaser2", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f), 
-											new ShipType(@"Content\Models\StarChaser3", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f), 
-											new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f) };
+
+
+
+		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ), 
+											new ShipType(@"Content\Models\StarChaser2", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ), 
+											new ShipType(@"Content\Models\StarChaser3", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ), 
+											new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ) };
 	}
 
 
