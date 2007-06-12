@@ -93,24 +93,11 @@ namespace Xe.SpaceRace
 
 			m_ship.Update(gameTime);
 
-			m_gameScreenManager.Stats.AddDebugString("ship pos:" + this.m_ship.linearPosition);
-			m_gameScreenManager.Stats.AddDebugString("ship dir:" + this.m_ship.direction);
-
-			//m_camera.ChasePosition = m_ship.linearPosition;
-			//m_camera.ChaseDirection = m_ship.direction;
-			//m_camera.Up = m_ship.up;
-
-			//m_camera.Reset();
 			m_camera.Update(gameTime);
-
-			//m_gameScreenManager.Stats.AddDebugString("cam pos:" + this.m_camera.ChasePosition);
-			//m_gameScreenManager.Stats.AddDebugString("cam dir:" + this.m_camera.ChaseDirection);
-
+			
 			m_ship.Model.View = m_camera.View;
 			m_ship.Model.Projection = m_camera.Projection;
-
-
-
+			
 			s.CameraPosition = m_ship.linearPosition;
 			s.CameraDirection = m_ship.direction;
 			s.ViewMatrix = m_camera.View;
