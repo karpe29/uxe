@@ -581,6 +581,24 @@
       <Processor>ModelProcessor</Processor>
       <Name>WormHole</Name>
     </Content>
+    <Content Include="Content\Particles\explosion.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>explosion</Name>
+    </Content>
+    <Content Include="Content\Particles\fire.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>fire</Name>
+    </Content>
+    <Content Include="Content\Particles\smoke.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>smoke</Name>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3D\BasicModel3D.cs">
@@ -590,6 +608,46 @@
     <Compile Include="3D\ChaseCamera.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ChaseCamera</Name>
+    </Compile>
+    <Compile Include="3D\Particles\ParticleEmitter.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ParticleEmitter</Name>
+    </Compile>
+    <Compile Include="3D\Particles\ParticleSettings.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ParticleSettings</Name>
+    </Compile>
+    <Compile Include="3D\Particles\ParticleSystem.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ParticleSystem</Name>
+    </Compile>
+    <Compile Include="3D\Particles\ParticleSystems\ExplosionParticleSystem.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ExplosionParticleSystem</Name>
+    </Compile>
+    <Compile Include="3D\Particles\ParticleSystems\ExplosionSmokeParticleSystem.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ExplosionSmokeParticleSystem</Name>
+    </Compile>
+    <Compile Include="3D\Particles\ParticleSystems\FireParticleSystem.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>FireParticleSystem</Name>
+    </Compile>
+    <Compile Include="3D\Particles\ParticleSystems\ProjectileTrailParticleSystem.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ProjectileTrailParticleSystem</Name>
+    </Compile>
+    <Compile Include="3D\Particles\ParticleSystems\SmokePlumeParticleSystem.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SmokePlumeParticleSystem</Name>
+    </Compile>
+    <Compile Include="3D\Particles\ParticleVertex.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ParticleVertex</Name>
+    </Compile>
+    <Compile Include="3D\Particles\Projectile.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Projectile</Name>
     </Compile>
     <Compile Include="3D\Physics\IPhysical3D.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -619,6 +677,14 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Helper</Name>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Particles\ParticleEffect.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>ParticleEffect</Name>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="2D\Objects\" />
