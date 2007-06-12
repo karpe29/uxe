@@ -151,6 +151,10 @@ namespace Xe.Graphics3D
 		#region Properties
 		public Matrix View
 		{
+			get
+			{
+				return m_view;
+			}
 			set
 			{
 				m_view = value;
@@ -159,6 +163,10 @@ namespace Xe.Graphics3D
 
 		public Matrix Projection
 		{
+			get
+			{
+				return m_projection;
+			}
 			set
 			{
 				m_projection = value;
