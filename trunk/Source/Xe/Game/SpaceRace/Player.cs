@@ -109,8 +109,9 @@ namespace Xe.SpaceRace
 			m_ship.Model.Projection = m_camera.Projection;
 
 
-			s.CameraPosition = m_camera.CamPosition;
-			s.CameraDirection = m_camera.CamDirection;
+
+			s.CameraPosition = m_ship.linearPosition;
+			s.CameraDirection = m_ship.direction;
 			s.ViewMatrix = m_camera.View;
 			s.ProjectionMatrix = m_camera.Projection;
 			

@@ -22,7 +22,7 @@ namespace Xe.Objects3D
 
 		Matrix viewMatrix;
 		Matrix projectionMatrix;
-		Matrix worldMatrix;
+		public Matrix worldMatrix;
 
 
 		ContentManager content;
@@ -198,7 +198,7 @@ namespace Xe.Objects3D
 
 			effect.Begin();
 			effect.Parameters["worldViewProjection"].SetValue(
-							 worldMatrix * Matrix.CreateScale(0.5f) * viewMatrix * projectionMatrix);
+							 worldMatrix /* Matrix.CreateScale(0.5f)*/ * viewMatrix * projectionMatrix);
 
 
 			for (int x = 0; x < 6; x++)
@@ -239,8 +239,8 @@ namespace Xe.Objects3D
 					device.Indices = indices;
 
 					effect.Parameters["baseTexture"].SetValue(textures[x]);
-					effect.Techniques[0].Passes[0].Begin();
 
+					effect.Techniques[0].Passes[0].Begin();
 					device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, x * 4, 4, x * 6, 2);
 					effect.Techniques[0].Passes[0].End();
 				}

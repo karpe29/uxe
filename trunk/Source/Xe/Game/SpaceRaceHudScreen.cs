@@ -14,7 +14,6 @@ namespace Xe.SpaceRace
 		public SpaceRaceHudScreen(GameScreenManager gameScreenManager)
 			: base(gameScreenManager, true)
 		{
-
 			labelLife = new Label(gameScreenManager.Game, gameScreenManager.GuiManager);
 			labelLife.Text = "|||||||||||||||||||||||||||||||||||||||||||||||||||||-";
 			labelLife.TextAlign = TextAlignment.Center;
