@@ -20,11 +20,12 @@ namespace Xe.Graphics3D
     {
 
 		private IPhysical3D m_target;
-		private Vector3 m_camPositionOffset, m_camPosition, m_camDesiredPosition, m_camDesiredTargetPosition, m_camTargetPosition, m_camUp, m_camDirection;
+		private Vector3 m_camPositionOffset, m_camPosition, m_camDesiredPosition, m_camTargetOffset, m_camTarget, m_camDesiredTarget, m_camUp, m_camDirection;
 
-		public ChaseCamera(IPhysical3D target,Vector3 camPositionOffset)
+		public ChaseCamera(IPhysical3D target, Vector3 camTargetOffset, Vector3 camPositionOffset)
 		{
 			m_target = target;
+			m_camTargetOffset = camTargetOffset;
 			m_camPositionOffset = camPositionOffset;
 			this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
 		}
@@ -36,7 +37,7 @@ namespace Xe.Graphics3D
 
 		public Vector3 CamTargetPosition
 		{
-			get { return m_camTargetPosition; }
+			get { return m_camTarget; }
 		}
 
 		public Vector3 CamDirection
@@ -339,24 +340,24 @@ namespace Xe.Graphics3D
 
 			float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds) / 1000f;
 
-			m_camDesiredTargetPosition=m_target.linearPosition;
-			m_camDesiredPosition=m_camTargetPosition+Vector3.Transform(m_camPositionOffset, m_target.orientation);
+			m_camDesiredTarget = m_target.linearPosition + Vector3.Transform(m_camTargetOffset, m_target.orientation);
+			m_camDesiredPosition = m_target.linearPosition + Vector3.Transform(m_camPositionOffset, m_target.orientation);
 
 			if (m_camPosition != m_camDesiredPosition)
 			{
 				m_camPosition += (m_camDesiredPosition - m_camPosition) * seconds * 10;
 			}
 
-			if (m_camTargetPosition != m_camDesiredTargetPosition)
+			/*if (m_camTarget != m_camDesiredTarget)
 			{
-				m_camTargetPosition += (m_camDesiredTargetPosition - m_camTargetPosition) * seconds * 5;
-			}
-
+				m_camTarget += (m_camDesiredTarget - m_camTarget) * seconds * 5;
+			}*/
+			m_camTarget = m_camDesiredTarget;
 
 			//m_camDirection = Vector3.Normalize(m_camTargetPosition - m_camPosition);
 			m_camUp=m_target.up;
 			
-			this.view = Matrix.CreateLookAt(m_camPosition, m_camTargetPosition, m_camUp);
+			this.view = Matrix.CreateLookAt(m_camPosition, m_camTarget, m_camUp);
 
 			/*
              float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
