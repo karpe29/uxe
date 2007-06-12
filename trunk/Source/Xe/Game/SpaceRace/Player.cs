@@ -8,7 +8,7 @@ using Xe.GameScreen;
 using Microsoft.Xna.Framework.Input;
 using Xe.Tools;
 using Xe.Objects3D;
-using Xe.Physics;
+using Xe.Physics3D;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Xe.SpaceRace

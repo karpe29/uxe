@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace Particle3DSample
+namespace Xe.Particles3D
 {
     /// <summary>
     /// Settings class describes all the tweakable options used

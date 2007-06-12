@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace Particle3DSample
+namespace Xe.Particles3D
 {
     /// <summary>
     /// The main component in charge of displaying particles.
@@ -216,7 +216,7 @@ namespace Particle3DSample
         /// </summary>
         void LoadParticleEffect()
         {
-            Effect effect = content.Load<Effect>("Content/ParticleEffect");
+            Effect effect = content.Load<Effect>(@"Content\Particles\ParticleEffect");
 
             // If we have several particle systems, the content manager will return
             // a single shared effect instance to them all. But we want to preconfigure

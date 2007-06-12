@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace Particle3DSample
+namespace Xe.Particles3D
 {
     /// <summary>
     /// Custom particle system for creating the fiery part of the explosions.
@@ -28,7 +28,7 @@ namespace Particle3DSample
 
         protected override void InitializeSettings(ParticleSettings settings)
         {
-            settings.TextureName = "Content/explosion";
+            settings.TextureName = @"Content\Particles\explosion";
 
             settings.MaxParticles = 100;
 
