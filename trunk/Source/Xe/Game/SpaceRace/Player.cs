@@ -18,17 +18,25 @@ namespace Xe.SpaceRace
 	class Player : DrawableGameComponent
 	{
 		GameScreenManager m_gameScreenManager;
+
+		SpaceRaceScreen m_raceScreen;
+
+		Race m_race;
+
 		private Ship m_ship;
 
-		public ChaseCamera m_camera;
+		ChaseCamera m_camera;
 
 		SkyBox s;
-
 
 		public Player(GameScreenManager gameScreenManager, ShipType type)
 			: base(gameScreenManager.Game)
 		{
 			m_gameScreenManager = gameScreenManager;
+
+			m_raceScreen = (SpaceRaceScreen)gameScreenManager.CurrentGameScreen;
+
+			m_race = m_raceScreen.Race;
 
 			m_ship = new Ship(gameScreenManager, type);
 
@@ -104,6 +112,10 @@ namespace Xe.SpaceRace
 			s.ProjectionMatrix = m_camera.Projection;
 			
 			s.Update(gameTime);
+
+			m_race.SetCamera(m_camera.View, m_camera.Projection);
+
+			m_race.Update(gameTime);
 		}
 		public override void Draw(GameTime gameTime)
 		{
@@ -112,10 +124,15 @@ namespace Xe.SpaceRace
 
 			GraphicsDevice device = ((IGraphicsDeviceService)Game.Services.GetService(typeof(IGraphicsDeviceService))).GraphicsDevice;
 
+			
+
 			device.RenderState.DepthBufferEnable = true;
 			device.RenderState.DepthBufferWriteEnable = true;
+			m_race.Draw(gameTime);
 
 			m_ship.Draw(gameTime);
+
+			
 
 			base.Draw(gameTime);
 		}

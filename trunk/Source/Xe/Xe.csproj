@@ -653,21 +653,39 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IPhysical3D</Name>
     </Compile>
-    <Compile Include="Game\ShipSelectionScreen.cs">
+    <Compile Include="Game\SpaceRace\ShipSelectionScreen.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ShipSelectionScreen</Name>
     </Compile>
-    <Compile Include="Game\SpaceRaceHudScreen.cs">
+    <Compile Include="Game\SpaceRace\SpaceRaceHudScreen.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SpaceRaceHudScreen</Name>
     </Compile>
-    <Compile Include="Game\SpaceRaceInitDatas.cs">
+    <Compile Include="Game\SpaceRace\SpaceRaceInitDatas.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SpaceRaceInitDatas</Name>
     </Compile>
+    <Compile Include="Game\SpaceRace\Asteroid.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Asteroid</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\AsteroidManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AsteroidManager</Name>
+    </Compile>
     <Compile Include="Game\SpaceRace\CheckPoint.cs">
+      <SubType>Code</SubType>
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>CheckPoint</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\Planet.cs">
+      <SubType>Code</SubType>
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Planet</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\PlanetManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>PlanetManager</Name>
     </Compile>
     <Compile Include="Game\SpaceRace\Race.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -684,6 +702,14 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Name>ParticleEffect</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Models\Mars.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Mars</Name>
     </Content>
   </ItemGroup>
   <ItemGroup>

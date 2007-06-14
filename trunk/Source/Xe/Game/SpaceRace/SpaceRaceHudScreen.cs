@@ -21,7 +21,7 @@ namespace Xe.SpaceRace
 			labelLife.Height = 30;
 			labelLife.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 3 / 4 - labelLife.Width / 2;
 			labelLife.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - labelLife.Height / 2;
-			GameScreenManager.GuiManager.AddControl(labelLife);
+			//GameScreenManager.GuiManager.AddControl(labelLife);
 		}
 
 		public override void Update(GameTime gameTime)

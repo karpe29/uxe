@@ -21,7 +21,7 @@ namespace Xe.Graphics3D
 
 		private Matrix m_view;
 		private Matrix m_projection;
-		private Matrix m_world;
+		private Matrix m_world = Matrix.Identity;
 
 		private string m_assetName;
 		private bool m_useAsset = false;

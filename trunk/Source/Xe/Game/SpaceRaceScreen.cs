@@ -16,7 +16,13 @@ namespace Xe.SpaceRace
 		SpaceRaceInitDatas m_datas;
 
 		List<Player> m_players;
+		
 		Race m_race;
+
+		public Race Race
+		{
+			get { return m_race; }
+		}
 
 		public SpaceRaceScreen(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
 			: base(gameScreenManager, true)
@@ -27,11 +33,13 @@ namespace Xe.SpaceRace
 
 			m_datas = datas;
 
-			m_players = new List<Player>(m_datas.totalPlayerCount+1);
+			m_race = new Race(gameScreenManager, m_datas.DifficultyPercent);
 
-			for(int i = 0; i< m_datas.totalPlayerCount +1; i++)
+			m_players = new List<Player>(m_datas.TotalPlayerCount+1);
+
+			for(int i = 0; i< m_datas.TotalPlayerCount +1; i++)
 			{
-				m_players.Add(new Player(gameScreenManager, m_datas.shipTypes[i]));
+				m_players.Add(new Player(gameScreenManager, m_datas.ShipTypes[i]));
 			}
 		}
 
