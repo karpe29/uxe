@@ -34,7 +34,7 @@ namespace Xe.SpaceRace
 
 			labelPlayer = new Label(GameScreenManager.Game, GameScreenManager.GuiManager);
 			labelPlayer.TextAlign = TextAlignment.Center;
-			labelPlayer.Text = "Player " + (m_datas.currentPlayerNumber+1).ToString() + " Ship";
+			labelPlayer.Text = "Player " + (m_datas.CurrentPlayerNumber+1).ToString() + " Ship";
 			labelPlayer.Width = 120;
 			labelPlayer.Height = 30;
 			labelPlayer.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - labelPlayer.Width / 2;
@@ -87,10 +87,10 @@ namespace Xe.SpaceRace
 
 			ExitScreen();
 
-			m_datas.shipTypes.Add(ShipType.Types[(int)sliderShip.Value]);
+			m_datas.ShipTypes.Add(ShipType.Types[(int)sliderShip.Value]);
 
 			// dernier joueur ?
-			if (m_datas.currentPlayerNumber++ < m_datas.totalPlayerCount )
+			if (m_datas.CurrentPlayerNumber++ < m_datas.TotalPlayerCount )
 			{// non
 				ShipSelectionScreen s = new ShipSelectionScreen(this.GameScreenManager, m_datas);
 			}

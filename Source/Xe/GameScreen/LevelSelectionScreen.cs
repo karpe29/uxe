@@ -89,8 +89,8 @@ namespace Xe.GameScreen
 		{
 			// save difficulty level as levelSlider won't exists after Cleanup();
 			SpaceRaceInitDatas datas = new SpaceRaceInitDatas();
-			datas.difficultyPercent = sliderLevel.ValuePercent;
-			datas.totalPlayerCount = (int)sliderPlayerCount.Value;
+			datas.DifficultyPercent = sliderLevel.ValuePercent;
+			datas.TotalPlayerCount = (int)sliderPlayerCount.Value;
 		
 			ExitScreen();
 
