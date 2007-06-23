@@ -117,9 +117,10 @@ namespace Xe.SpaceRace
 
 			m_race.Update(gameTime);
 		}
+
 		public override void Draw(GameTime gameTime)
 		{
-			s.Draw(gameTime);
+			//s.Draw(gameTime);
 
 
 			GraphicsDevice device = ((IGraphicsDeviceService)Game.Services.GetService(typeof(IGraphicsDeviceService))).GraphicsDevice;
@@ -128,9 +129,10 @@ namespace Xe.SpaceRace
 
 			device.RenderState.DepthBufferEnable = true;
 			device.RenderState.DepthBufferWriteEnable = true;
+			
 			m_race.Draw(gameTime);
 
-			m_ship.Draw(gameTime);
+			//m_ship.Draw(gameTime);
 
 			
 

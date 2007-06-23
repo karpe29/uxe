@@ -9,6 +9,24 @@ namespace Xe.SpaceRace
 {
 	class PlanetType : PhysicalType
 	{
+		public enum Names
+		{
+			Earth,
+			Jupiter,
+			Jupiter2,
+			Mars,
+			Mercury,
+			Moon,
+			Neptune,
+			Pluto,
+			Saturn,
+			Sun,
+			Uranus,
+			Venus,
+			Phobos,
+			Deimos
+		};
+
 		string m_assetName;
 
 		public string AssetName { get { return m_assetName; } }
@@ -26,9 +44,9 @@ namespace Xe.SpaceRace
 		PlanetManager m_manager;
 		PlanetType m_type;
 
-		BasicModel3D m_model;
+		ParallaxModel3D m_model;
 
-		public BasicModel3D Model { get { return m_model; } }
+		public ParallaxModel3D Model { get { return m_model; } }
 
 
 		public Planet(PlanetManager manager, PlanetType type)
@@ -37,7 +55,7 @@ namespace Xe.SpaceRace
 			m_manager = manager;
 			m_type = type;
 
-			m_model = new BasicModel3D(manager.GameScreenManager, type.AssetName);
+			m_model = new ParallaxModel3D(manager.GameScreenManager, type.AssetName);
 		}
 
 		public override void Update(GameTime gameTime)
