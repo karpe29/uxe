@@ -609,6 +609,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ChaseCamera</Name>
     </Compile>
+    <Compile Include="3D\ParallaxModel3D.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ParallaxModel3D</Name>
+    </Compile>
     <Compile Include="3D\Particles\ParticleEmitter.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ParticleEmitter</Name>
@@ -705,11 +709,77 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Models\Mars.FBX">
+    <Content Include="Content\Skybox\ultimate starfield_back.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>ultimate starfield_back</Name>
+    </Content>
+    <Content Include="Content\Skybox\ultimate starfield_bottom.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>ultimate starfield_bottom</Name>
+    </Content>
+    <Content Include="Content\Skybox\ultimate starfield_front.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>ultimate starfield_front</Name>
+    </Content>
+    <Content Include="Content\Skybox\ultimate starfield_left.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>ultimate starfield_left</Name>
+    </Content>
+    <Content Include="Content\Skybox\ultimate starfield_right.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>ultimate starfield_right</Name>
+    </Content>
+    <Content Include="Content\Skybox\ultimate starfield_top.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>ultimate starfield_top</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Skybox\ultimate starfield_effect.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>ultimate starfield_effect</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Models\Test.FBX">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
-      <Name>Mars</Name>
+      <Name>Test</Name>
+    </Content>
+    <Content Include="Content\Textures\Asteroid1_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>Asteroid1_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Asteroid1_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>Asteroid1_map</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Effects\ParallaxMapping.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>ParallaxMapping</Name>
     </Content>
   </ItemGroup>
   <ItemGroup>

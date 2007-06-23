@@ -7,6 +7,14 @@ namespace Xe.SpaceRace
 {
 	class AsteroidType : PhysicalType
 	{
+		public enum Names
+		{
+			Asteroid1,
+			Asteroid2,
+			Asteroid3,
+			Asteroid4
+		};
+
 		string m_assetName;
 
 		public AsteroidType(string assetName, float acceleration, float maxSpeed, float resistance, float gFactor)
