@@ -41,7 +41,7 @@ namespace Xe.SpaceRace
 
 		public override void Draw(GameTime gameTime)
 		{
-			base.Draw(gameTime);
+			//base.Draw(gameTime);
 
 			m_planetManager.Draw(gameTime);
 		}

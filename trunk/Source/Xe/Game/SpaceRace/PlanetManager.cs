@@ -57,7 +57,7 @@ namespace Xe.SpaceRace
 
 		public void AddPlanet()
 		{
-			Planet p = new Planet(this, new PlanetType(@"Content\Models\Asteroid4",0,0,0,0));
+			Planet p = new Planet(this, new PlanetType(@"Content\Models\Test",0,0,0,0));
 
 			m_planets.Add(p);
 		}
