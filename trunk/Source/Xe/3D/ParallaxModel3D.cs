@@ -15,8 +15,6 @@ namespace Xe.Graphics3D
 {
 	public class ParallaxModel3D : DrawableGameComponent
 	{
-		bool mode_one = true;
-
 		#region Members
 		private Model m_model;
 		private Effect m_effect;
@@ -26,7 +24,7 @@ namespace Xe.Graphics3D
 
 		private Matrix m_view;
 		private Matrix m_projection;
-		private Matrix m_world = Matrix.CreateTranslation(0,0,-500);
+		private Matrix m_world = Matrix.CreateTranslation(0, 0, -500);
 
 		private string m_assetName;
 		private bool m_useAsset = false;
@@ -71,39 +69,26 @@ namespace Xe.Graphics3D
 				if (!String.IsNullOrEmpty(m_assetName))
 				{
 					m_model = m_conManager.Load<Model>(@"Content\Models\Asteroids\Asteroid1");
-					
 
-					m_mapTexture = m_conManager.Load<Texture2D>(@"Content\Textures\Asteroids\Asteroid1_map");
+
+					m_mapTexture = m_conManager.Load<Texture2D>(@"Content\Textures\Asteroids\Asteroid1_map~0");
 					m_bumpTexture = m_conManager.Load<Texture>(@"Content\Textures\Asteroids\Asteroid1_bump");
 
-					if (mode_one)
-					{
-						m_effect = m_conManager.Load<Effect>(@"Content\Effects\NormalMapping");
+					m_effect = m_conManager.Load<Effect>(@"Content\Effects\NormalMapping");
 
-						m_effect.Parameters["LightPosition"].SetValue(new Vector3(200, 0, 200));
-						m_effect.Parameters["Texture"].SetValue(m_mapTexture);
-						m_effect.Parameters["NormalMap"].SetValue(m_bumpTexture);
+					m_effect.Parameters["LightPosition"].SetValue(new Vector3(200, 0, 200));
+					m_effect.Parameters["Texture"].SetValue(m_mapTexture);
+					m_effect.Parameters["NormalMap"].SetValue(m_bumpTexture);
 
-						Vector4 lightColor = new Vector4(1, 1, 1, 1);
-						Vector4 ambientLightColor = new Vector4(.2f, .2f, .2f, 1);
-						float shininess = .3f;
-						float specularPower = 4.0f;
+					Vector4 lightColor = new Vector4(1, 1, 1, 1);
+					Vector4 ambientLightColor = new Vector4(.2f, .2f, .2f, 1);
+					float shininess = .3f;
+					float specularPower = 4.0f;
 
-						m_effect.Parameters["LightColor"].SetValue(lightColor);
-						m_effect.Parameters["AmbientLightColor"].SetValue(ambientLightColor);
-						m_effect.Parameters["Shininess"].SetValue(shininess);
-						m_effect.Parameters["SpecularPower"].SetValue(specularPower);
-					}
-					else
-					{
-						m_effect = m_conManager.Load<Effect>(@"Content\Effects\BumpMapping");
-
-						m_effect.Parameters["LayerMap0"].SetValue(m_mapTexture);
-						m_effect.Parameters["BumpMap0"].SetValue(m_bumpTexture);
-
-						m_effect.Parameters["LightPosition"].SetValue(new Vector3(200, 0, 200));
-						m_effect.Parameters["EyePosition"].SetValue(Vector3.Zero);
-					}
+					m_effect.Parameters["LightColor"].SetValue(lightColor);
+					m_effect.Parameters["AmbientLightColor"].SetValue(ambientLightColor);
+					m_effect.Parameters["Shininess"].SetValue(shininess);
+					m_effect.Parameters["SpecularPower"].SetValue(specularPower);
 
 					m_effect.CurrentTechnique = m_effect.Techniques[0];
 				}
@@ -185,19 +170,9 @@ namespace Xe.Graphics3D
 				//    (m_model.Meshes[i].Effects[j] as BasicEffect).Projection = this.m_projection;
 				//}
 
-				if (mode_one)
-				{
-					m_effect.Parameters["World"].SetValue(this.m_world);
-					m_effect.Parameters["View"].SetValue(this.m_view);
-					m_effect.Parameters["Projection"].SetValue(this.m_projection);
-				}
-				else
-				{
-					m_effect.Parameters["wvp"].SetValue(this.World * this.View * this.Projection);
-					m_effect.Parameters["world"].SetValue(this.World);
-				}
-				
-
+				m_effect.Parameters["World"].SetValue(this.m_world);
+				m_effect.Parameters["View"].SetValue(this.m_view);
+				m_effect.Parameters["Projection"].SetValue(this.m_projection);
 
 				m_effect.Begin();
 				foreach (EffectPass pass in m_effect.CurrentTechnique.Passes)
@@ -215,7 +190,7 @@ namespace Xe.Graphics3D
 					pass.End();
 				}
 				m_effect.End();
-				
+
 			}
 		}
 		#endregion
