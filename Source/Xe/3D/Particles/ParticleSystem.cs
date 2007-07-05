@@ -50,7 +50,7 @@ namespace Xe.Particles3D
 			set
 			{
 				Stats m_stats = (Stats)Game.Services.GetService(typeof(Stats));
-				m_stats.AddDebugString("Gravity" + value.ToString());
+				//m_stats.AddDebugString("Gravity" + value.ToString());
 				effectGravityParameter.SetValue(value);
 			}
 		}
@@ -538,7 +538,7 @@ namespace Xe.Particles3D
         {
 
 			Stats m_stats = (Stats)Game.Services.GetService(typeof(Stats));
-			m_stats.AddDebugString("Particle pos" +position.ToString());
+			//m_stats.AddDebugString("Particle pos" +position.ToString());
 
             // Figure out where in the circular queue to allocate the new particle.
             int nextFreeParticle = firstFreeParticle + 1;

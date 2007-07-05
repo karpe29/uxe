@@ -709,65 +709,41 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Skybox\ultimate starfield_back.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_back</Name>
-    </Content>
-    <Content Include="Content\Skybox\ultimate starfield_bottom.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_bottom</Name>
-    </Content>
-    <Content Include="Content\Skybox\ultimate starfield_front.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_front</Name>
-    </Content>
-    <Content Include="Content\Skybox\ultimate starfield_left.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_left</Name>
-    </Content>
-    <Content Include="Content\Skybox\ultimate starfield_right.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_right</Name>
-    </Content>
-    <Content Include="Content\Skybox\ultimate starfield_top.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>ultimate starfield_top</Name>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Skybox\ultimate starfield_effect.fx">
+    <Content Include="Content\Effects\ParallaxMapping.fx">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
-      <Name>ultimate starfield_effect</Name>
+      <Name>ParallaxMapping</Name>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Models\Test.FBX">
+    <Content Include="Content\Effects\BumpMapping.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>BumpMapping</Name>
+    </Content>
+    <Content Include="Content\Effects\NormalMapping.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>NormalMapping</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Models\Asteroids\Asteroid1.FBX">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
-      <Name>Test</Name>
+      <Name>Asteroid1</Name>
     </Content>
-    <Content Include="Content\Textures\Asteroid1_bump.jpg">
+    <Content Include="Content\Textures\Asteroids\Asteroid1_bump.jpg">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>TextureImporter</Importer>
       <Processor>SpriteTextureProcessor</Processor>
       <Name>Asteroid1_bump</Name>
     </Content>
-    <Content Include="Content\Textures\Asteroid1_map.jpg">
+    <Content Include="Content\Textures\Asteroids\Asteroid1_map.jpg">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>TextureImporter</Importer>
       <Processor>SpriteTextureProcessor</Processor>
@@ -775,11 +751,409 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Effects\ParallaxMapping.fx">
+    <Content Include="Content\Models\Asteroids\Asteroid2.FBX">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Name>ParallaxMapping</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Asteroid2</Name>
+    </Content>
+    <Content Include="Content\Models\Asteroids\Asteroid3.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Asteroid3</Name>
+    </Content>
+    <Content Include="Content\Models\Asteroids\Asteroid4.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Asteroid4</Name>
+    </Content>
+    <Content Include="Content\Models\Asteroids\SmallAsteroid1.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>SmallAsteroid1</Name>
+    </Content>
+    <Content Include="Content\Models\Asteroids\SmallAsteroid2.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>SmallAsteroid2</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Models\Planets\Deimos.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Deimos</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Earth.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Earth</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Jupiter.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Jupiter</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Jupiter2.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Jupiter2</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Mars.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Mars</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Mercury.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Mercury</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Moon.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Moon</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Neptune.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Neptune</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Phobos.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Phobos</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Pluto.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Pluto</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Saturn.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Saturn</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Uranus.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Uranus</Name>
+    </Content>
+    <Content Include="Content\Models\Planets\Venus.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Venus</Name>
+    </Content>
+    <Content Include="Content\Textures\2.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>2</Name>
+    </Content>
+    <Content Include="Content\Textures\3.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>3</Name>
+    </Content>
+    <Content Include="Content\Textures\Asteroids\Asteroid2_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>Asteroid2_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Asteroids\Asteroid2_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>Asteroid2_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Asteroids\Asteroid3_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>Asteroid3_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Asteroids\Asteroid3_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>Asteroid3_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Asteroids\Asteroid4_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>Asteroid4_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Asteroids\Asteroid4_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>Asteroid4_map</Name>
+    </Content>
+    <Content Include="Content\Textures\black.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>black</Name>
+    </Content>
+    <Content Include="Content\Textures\black1.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>black1</Name>
+    </Content>
+    <Content Include="Content\Textures\essai.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>essai</Name>
+    </Content>
+    <Content Include="Content\Textures\gray.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>gray</Name>
+    </Content>
+    <Content Include="Content\Textures\gray2.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>gray2</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\deimos_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>deimos_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\deimos_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>deimos_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\earth_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>earth_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\earth_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>earth_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\jupiter2_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>jupiter2_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\jupiter2_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>jupiter2_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\jupiter_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>jupiter_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\jupiter_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>jupiter_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\mars_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>mars_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\mars_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>mars_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\mercury_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>mercury_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\mercury_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>mercury_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\moon_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>moon_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\moon_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>moon_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\neptune_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>neptune_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\neptune_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>neptune_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\phobos_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>phobos_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\phobos_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>phobos_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\pluto_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>pluto_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\pluto_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>pluto_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\saturn_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>saturn_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\saturn_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>saturn_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\sun_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>sun_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\sun_map.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>sun_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\uranus_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>uranus_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\uranus_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>uranus_map</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\venus_bump.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>venus_bump</Name>
+    </Content>
+    <Content Include="Content\Textures\Planets\venus_map.jpg">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>venus_map</Name>
+    </Content>
+    <Content Include="Content\Textures\reacteur.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>reacteur</Name>
+    </Content>
+    <Content Include="Content\Textures\red.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>red</Name>
+    </Content>
+    <Content Include="Content\Textures\red_blac.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>red_blac</Name>
+    </Content>
+    <Content Include="Content\Textures\red_black.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>red_black</Name>
+    </Content>
+    <Content Include="Content\Textures\rgb.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>rgb</Name>
+    </Content>
+    <Content Include="Content\Textures\vitre.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>vitre</Name>
+    </Content>
+    <Content Include="Content\Textures\yelgray.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>yelgray</Name>
+    </Content>
+    <Content Include="Content\Textures\yellow.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>yellow</Name>
     </Content>
   </ItemGroup>
   <ItemGroup>

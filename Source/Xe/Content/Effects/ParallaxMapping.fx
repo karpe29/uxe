@@ -78,13 +78,13 @@ float4x4 ViewXf : View <string UIWidget="none";>;
 
 texture ColorTex : DIFFUSE <
 	string UIName = "Color Texture";
-    string ResourceName = "rockwall.jpg";
+    //string ResourceName = "rockwall.jpg";
     string ResourceType = "2D";
 >;
 
 texture ReliefTex : NORMAL <
 	string UIName = "Normal-Map Texture";
-    string ResourceName = "rockwall.tga";
+    //string ResourceName = "rockwall.tga";
     string ResourceType = "2D";
 >;
 
@@ -196,6 +196,7 @@ float4 normal_map(
 	finalcolor.w=1.0;
 
 	return finalcolor;
+    //return (1,1,1,1);
 }
 
 float4 parallax_map(
@@ -242,7 +243,7 @@ technique normal_mapping
 {
     pass p0 
     {
-    	CullMode = CW;
+    	//CullMode = CW;
 		VertexShader = compile vs_3_0 view_space();
 		PixelShader  = compile ps_3_0 normal_map(ColorSamp,ReliefSamp);
     }
@@ -252,7 +253,7 @@ technique parallax_mapping
 {
     pass p0 
     {
-    	CullMode = CW;
+    	//CullMode = CW;
 		VertexShader = compile vs_3_0 view_space();
 		PixelShader  = compile ps_3_0 parallax_map(ColorSamp,ReliefSamp);
     }
