@@ -42,15 +42,6 @@ namespace Xe.SpaceRace
 
 			m_camera = new ChaseCamera((IPhysical3D)m_ship, new Vector3(0, 40, 0), new Vector3(0, 120, 150));
 
-			/*m_camera.Stiffness = 6000; // default 1800
-			m_camera.Mass = 10; // default 50
-			m_camera.Damping = 200; // default 600
-			m_camera.DesiredPositionOffset = new Vector3(0, 100, 200);
-			m_camera.ChasePosition = Vector3.Zero;
-			m_camera.ChaseDirection = Vector3.Forward;
-			m_camera.Up = Vector3.Up;
-			m_camera.Reset();*/
-
 			SpaceRaceHudScreen hud = new SpaceRaceHudScreen(gameScreenManager);
 
 			s = new SkyBox(gameScreenManager.Game, @"Content\Skybox\bryce");
@@ -106,8 +97,8 @@ namespace Xe.SpaceRace
 			m_ship.Model.View = m_camera.View;
 			m_ship.Model.Projection = m_camera.Projection;
 			
-			s.CameraPosition = m_ship.linearPosition;
-			s.CameraDirection = m_ship.direction;
+			s.CameraPosition = m_ship.Position;
+			s.CameraDirection = m_ship.Direction;
 			s.ViewMatrix = m_camera.View;
 			s.ProjectionMatrix = m_camera.Projection;
 			

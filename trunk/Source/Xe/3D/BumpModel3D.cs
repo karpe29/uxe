@@ -13,7 +13,7 @@ using Xe.Tools;
 
 namespace Xe.Graphics3D
 {
-	public class ParallaxModel3D : DrawableGameComponent
+	public class BumpModel3D : DrawableGameComponent
 	{
 		#region Members
 		private Model m_model;
@@ -24,7 +24,7 @@ namespace Xe.Graphics3D
 
 		private Matrix m_view;
 		private Matrix m_projection;
-		private Matrix m_world = Matrix.CreateTranslation(0, 0, -500);
+		private Matrix m_world = Matrix.Identity;
 
 		private string m_assetName;
 		private bool m_useAsset = false;
@@ -34,13 +34,13 @@ namespace Xe.Graphics3D
 		#endregion
 
 		#region Constructors
-		private ParallaxModel3D(GameScreenManager gameScreenManager)
+		private BumpModel3D(GameScreenManager gameScreenManager)
 			: base(gameScreenManager.Game)
 		{
 			m_conManager = gameScreenManager.ContentManager;
 		}
 
-		public ParallaxModel3D(GameScreenManager gameScreenManager, string assetName)
+		public BumpModel3D(GameScreenManager gameScreenManager, string assetName)
 			: base(gameScreenManager.Game)
 		{
 			m_conManager = gameScreenManager.ContentManager;
@@ -68,11 +68,11 @@ namespace Xe.Graphics3D
 			{
 				if (!String.IsNullOrEmpty(m_assetName))
 				{
-					m_model = m_conManager.Load<Model>(@"Content\Models\Asteroids\Asteroid1");
+					m_model = m_conManager.Load<Model>(@"Content\Models\"+m_assetName);
 
 
-					m_mapTexture = m_conManager.Load<Texture2D>(@"Content\Textures\Asteroids\Asteroid1_map~0");
-					m_bumpTexture = m_conManager.Load<Texture>(@"Content\Textures\Asteroids\Asteroid1_bump");
+					m_mapTexture = m_conManager.Load<Texture2D>(@"Content\Textures\"+ m_assetName +"_map~0");
+					m_bumpTexture = m_conManager.Load<Texture>(@"Content\Textures\"+ m_assetName +"_bump");
 
 					m_effect = m_conManager.Load<Effect>(@"Content\Effects\NormalMapping");
 
@@ -157,27 +157,24 @@ namespace Xe.Graphics3D
 			//Copy any parent transforms
 			Matrix[] transforms = new Matrix[m_model.Bones.Count];
 			m_model.CopyAbsoluteBoneTransformsTo(transforms);
+			
+			m_effect.Begin();
+			m_effect.Parameters["View"].SetValue(this.m_view);
+			m_effect.Parameters["Projection"].SetValue(this.m_projection);
 
 			//Draw the model, a model can have multiple meshes, so loop
 			for (int i = 0; i < m_model.Meshes.Count; i++)
 			{
 				//This is where the mesh orientation is set, as well as our camera and projection
-				//for (int j = 0; j < m_model.Meshes[i].Effects.Count; j++)
-				//{
-				//    (m_model.Meshes[i].Effects[j] as BasicEffect).EnableDefaultLighting();
-				//    (m_model.Meshes[i].Effects[j] as BasicEffect).World = transforms[m_model.Meshes[i].ParentBone.Index] * this.m_world;
-				//    (m_model.Meshes[i].Effects[j] as BasicEffect).View = this.m_view;
-				//    (m_model.Meshes[i].Effects[j] as BasicEffect).Projection = this.m_projection;
-				//}
-
-				m_effect.Parameters["World"].SetValue(this.m_world);
-				m_effect.Parameters["View"].SetValue(this.m_view);
-				m_effect.Parameters["Projection"].SetValue(this.m_projection);
-
-				m_effect.Begin();
+				for (int j = 0; j < m_model.Meshes[i].Effects.Count; j++)
+				{
+				    m_effect.Parameters["World"].SetValue(transforms[m_model.Meshes[0].ParentBone.Index] * this.m_world);
+				}
+				
 				foreach (EffectPass pass in m_effect.CurrentTechnique.Passes)
 				{
 					pass.Begin();
+
 					//Draw the mesh, will use the effects set above.
 					foreach (ModelMeshPart part in m_model.Meshes[i].MeshParts)
 					{
@@ -186,12 +183,11 @@ namespace Xe.Graphics3D
 						this.GraphicsDevice.Indices = m_model.Meshes[i].IndexBuffer;
 						this.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.BaseVertex, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
 					}
-					//m_model.Meshes[i].Draw();
+
 					pass.End();
 				}
-				m_effect.End();
-
 			}
+			m_effect.End();
 		}
 		#endregion
 

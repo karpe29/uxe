@@ -16,18 +16,19 @@ using Xe.Physics3D;
 
 namespace Xe.Graphics3D
 {
-    public class ChaseCamera
-    {
+	public class ChaseCamera
+	{
+		public bool FixedCamera = false;
+		public int LagRatio = 25; // lower this to get a bigger amplitude when moving camera target
 
 		private IPhysical3D m_target;
-		private Vector3 m_camPositionOffset, 
-			m_camPosition, 
-			m_camDesiredPosition, 
-			m_camTargetOffset, 
-			m_camTarget, 
-			m_camDesiredTarget, 
-			m_camUp, 
-			m_camDirection;
+		private Vector3 m_camPositionOffset,
+			m_camPosition,
+			m_camDesiredPosition,
+			m_camTargetOffset,
+			m_camTarget,
+			m_camDesiredTarget,
+			m_camUp;
 
 		public ChaseCamera(IPhysical3D target, Vector3 camTargetOffset, Vector3 camPositionOffset)
 		{
@@ -47,124 +48,124 @@ namespace Xe.Graphics3D
 			get { return m_camTarget; }
 		}
 
-		public Vector3 CamDirection
+		#region Perspective properties
+
+		/// <summary>
+		/// Perspective aspect ratio. Default value should be overriden by application.
+		/// </summary>
+		public float AspectRatio
 		{
-			get { return m_camDirection; }
-		}
-
-
-        #region Perspective properties
-
-        /// <summary>
-        /// Perspective aspect ratio. Default value should be overriden by application.
-        /// </summary>
-        public float AspectRatio
-        {
-            get { return aspectRatio; }
+			get { return aspectRatio; }
 			set
 			{
 				aspectRatio = value;
 				this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
 			}
-        }
-        private float aspectRatio = 4.0f / 3.0f;
+		}
+		private float aspectRatio = 4.0f / 3.0f;
 
-        /// <summary>
-        /// Perspective field of view.
-        /// </summary>
-        public float FieldOfView
-        {
-            get { return fieldOfView; }
+		/// <summary>
+		/// Perspective field of view.
+		/// </summary>
+		public float FieldOfView
+		{
+			get { return fieldOfView; }
 			set
 			{
 				fieldOfView = value;
 				this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
 			}
-        }
-        private float fieldOfView = MathHelper.ToRadians(45.0f);
+		}
+		private float fieldOfView = MathHelper.ToRadians(45.0f);
 
-        /// <summary>
-        /// Distance to the near clipping plane.
-        /// </summary>
-        public float NearPlaneDistance
-        {
-            get { return nearPlaneDistance; }
+		/// <summary>
+		/// Distance to the near clipping plane.
+		/// </summary>
+		public float NearPlaneDistance
+		{
+			get { return nearPlaneDistance; }
 			set
 			{
-				nearPlaneDistance = value; 
+				nearPlaneDistance = value;
 				this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
 			}
-        }
-        private float nearPlaneDistance = 1.0f;
+		}
+		private float nearPlaneDistance = 1.0f;
 
-        /// <summary>
-        /// Distance to the far clipping plane.
-        /// </summary>
-        public float FarPlaneDistance
-        {
-            get { return farPlaneDistance; }
+		/// <summary>
+		/// Distance to the far clipping plane.
+		/// </summary>
+		public float FarPlaneDistance
+		{
+			get { return farPlaneDistance; }
 			set
 			{
 				farPlaneDistance = value;
 				this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
 			}
-        }
-        private float farPlaneDistance = 1000000.0f;
+		}
+		private float farPlaneDistance = 1000000.0f;
 
-        #endregion
-		
-        #region Matrix properties
+		#endregion
 
-        /// <summary>
-        /// View transform matrix.
-        /// </summary>
-        public Matrix View
-        {
-            get { return view; }
-        }
-        private Matrix view;
+		#region Matrix properties
 
-        /// <summary>
-        /// Projecton transform matrix.
-        /// </summary>
-        public Matrix Projection
-        {
-            get { return projection; }
-        }
-        private Matrix projection;
+		/// <summary>
+		/// View transform matrix.
+		/// </summary>
+		public Matrix View
+		{
+			get { return view; }
+		}
+		private Matrix view;
 
-        #endregion
-	
-        /// <summary>
-        /// Animates the camera from its current position towards the desired offset
-        /// behind the chased object. The camera's animation is controlled by a simple
-        /// physical spring attached to the camera and anchored to the desired position.
-        /// </summary>
-        public void Update(GameTime gameTime)
-        {
-            if (gameTime == null)
-                throw new ArgumentNullException("gameTime");
+		/// <summary>
+		/// Projecton transform matrix.
+		/// </summary>
+		public Matrix Projection
+		{
+			get { return projection; }
+		}
+		private Matrix projection;
+
+		#endregion
+
+		/// <summary>
+		/// Animates the camera from its current position towards the desired offset
+		/// behind the chased object. The camera's animation is controlled by a simple
+		/// physical spring attached to the camera and anchored to the desired position.
+		/// </summary>
+		public void Update(GameTime gameTime)
+		{
+			if (gameTime == null)
+				throw new ArgumentNullException("gameTime");
 
 			float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds) / 1000f;
 
-			m_camDesiredTarget = m_target.linearPosition + Vector3.Transform(m_camTargetOffset, m_target.orientation);
-			m_camDesiredPosition = m_target.linearPosition + Vector3.Transform(m_camPositionOffset, m_target.orientation);
+			m_camDesiredTarget = m_target.Position + Vector3.Transform(m_camTargetOffset, m_target.Orientation);
+			m_camDesiredPosition = m_target.Position + Vector3.Transform(m_camPositionOffset, m_target.Orientation);
 
-			if ( m_camPosition != m_camDesiredPosition)
+			if (FixedCamera)
 			{
-				m_camPosition += (m_camDesiredPosition - m_camPosition) * seconds * 15;
+				m_camPosition = m_camDesiredPosition;
 			}
+			else
+				if (m_camPosition != m_camDesiredPosition)
+				{
+					m_camPosition += (m_camDesiredPosition - m_camPosition) * seconds * LagRatio;
+				}
 
 			/*if (m_camTarget != m_camDesiredTarget)
 			{
 				m_camTarget += (m_camDesiredTarget - m_camTarget) * seconds * 5;
 			}*/
+
 			m_camTarget = m_camDesiredTarget;
 
 			//m_camDirection = Vector3.Normalize(m_camTargetPosition - m_camPosition);
-			m_camUp=m_target.up;
-			
+			m_camUp = m_target.Up;
+
 			this.view = Matrix.CreateLookAt(m_camPosition, m_camTarget, m_camUp);
 		}
-    }
+	}
 }

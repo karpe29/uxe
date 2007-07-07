@@ -610,9 +610,9 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ChaseCamera</Name>
     </Compile>
-    <Compile Include="3D\ParallaxModel3D.cs">
+    <Compile Include="3D\BumpModel3D.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>ParallaxModel3D</Name>
+      <Name>BumpModel3D</Name>
     </Compile>
     <Compile Include="3D\Particles\ParticleEmitter.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -662,6 +662,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ShipSelectionScreen</Name>
     </Compile>
+    <Compile Include="Game\SpaceRace\SolarSystem.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SolarSystem</Name>
+    </Compile>
     <Compile Include="Game\SpaceRace\SpaceRaceHudScreen.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SpaceRaceHudScreen</Name>
@@ -696,6 +700,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Race</Name>
     </Compile>
+    <Compile Include="Game\SpaceRace\Universe.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Universe</Name>
+    </Compile>
     <Compile Include="Tools\Helper.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Helper</Name>
@@ -710,20 +718,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Effects\ParallaxMapping.fx">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Name>ParallaxMapping</Name>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Effects\BumpMapping.fx">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Name>BumpMapping</Name>
-    </Content>
     <Content Include="Content\Effects\NormalMapping.fx">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>EffectImporter</Importer>
@@ -957,6 +951,14 @@
       <Importer>TextureImporter</Importer>
       <Processor>SpriteTextureProcessor</Processor>
       <Name>venus_bump</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Models\Planets\Sun.FBX">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Sun</Name>
     </Content>
   </ItemGroup>
   <ItemGroup>

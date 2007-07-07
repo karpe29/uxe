@@ -169,29 +169,29 @@ namespace Xe.Physics3D
 		}
 		
 
-		public Vector3 linearAcceleration
+		public Vector3 Acceleration
 		{
 			get { return m_linearAcceleration; }
 			set { m_linearAcceleration = value; }
 		}
 
-		public Vector3 linearSpeed
+		public Vector3 Speed
 		{
 			get { return m_linearSpeed; }
 			set { m_linearSpeed = value; }
 		}
 
-		public Vector3 direction
+		public Vector3 Direction
 		{
 			get { return m_direction; }
 		}
 
-		public Vector3 up
+		public Vector3 Up
 		{
 			get { return m_up; }
 		}
 
-		public Matrix orientation
+		public Matrix Orientation
 		{
 			get { return m_orientation; }
 			set
@@ -210,25 +210,25 @@ namespace Xe.Physics3D
 
 		}
 
-		public Vector3 linearPosition
+		public Vector3 Position
 		{
 			get { return m_linearPosition; }
 			set { m_linearPosition = value; }
 		}
 
-		public Vector3 rotationAcceleration
+		public Vector3 RotationAcceleration
 		{
 			get { return m_rotationAcceleration; }
 			set { m_rotationAcceleration = value; }
 		}
 
-		public Vector3 rotationSpeed
+		public Vector3 RotationSpeed
 		{
 			get { return m_rotationSpeed; }
 			set { m_rotationSpeed = value; }
 		}
 
-		public Vector3 rotationPosition
+		public Vector3 RotationPosition
 		{
 			get { return m_rotationPosition; }
 			set {
@@ -372,11 +372,11 @@ namespace Xe.Physics3D
 			}
 
 
-			rotationSpeed += m_rotationAcceleration * seconds;
-			rotationPosition = m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
-			orientation = Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z)*orientation;
+			RotationSpeed += m_rotationAcceleration * seconds;
+			RotationPosition = m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
+			Orientation = Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z)*Orientation;
 
-			DrawOrientation = Matrix.CreateFromYawPitchRoll(0, 0, -m_rotationSpeed.Y * m_linearSpeed.Z/8000)*orientation;
+			DrawOrientation = Matrix.CreateFromYawPitchRoll(0, 0, -m_rotationSpeed.Y * m_linearSpeed.Z/8000)*Orientation;
 
 			if (m_move.Forward)
 			{
@@ -421,8 +421,8 @@ namespace Xe.Physics3D
 
 			}
 
-			linearSpeed += m_linearAcceleration * seconds;
-			linearPosition += Vector3.Transform(m_linearSpeed * seconds + m_linearAcceleration * (float)(Math.Pow(seconds, 2) / 2), orientation);
+			Speed += m_linearAcceleration * seconds;
+			Position += Vector3.Transform(m_linearSpeed * seconds + m_linearAcceleration * (float)(Math.Pow(seconds, 2) / 2), Orientation);
 			
 			
 			
