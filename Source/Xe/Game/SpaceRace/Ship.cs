@@ -90,16 +90,16 @@ namespace Xe.SpaceRace
 		{
 			base.Update(gameTime);
 
-			m_model.World = DrawOrientation * Matrix.CreateTranslation(linearPosition);
+			m_model.World = DrawOrientation * Matrix.CreateTranslation(Position);
 
 			foreach (Vector3 reactor in m_type.Reactors)
 			{
-				fireParticles.AddParticle(Vector3.Transform(reactor,orientation)+linearPosition, Vector3.Zero);
+				fireParticles.AddParticle(Vector3.Transform(reactor,Orientation)+Position, Vector3.Zero);
 			}
 
 			foreach (Vector3 reactor in m_type.Reactors)
 			{
-				smokePlumeParticles.AddParticle(Vector3.Transform(reactor, orientation) + linearPosition, Vector3.Zero);
+				smokePlumeParticles.AddParticle(Vector3.Transform(reactor, Orientation) + Position, Vector3.Zero);
 			}
 
 			fireParticles.Update(gameTime);
@@ -114,11 +114,11 @@ namespace Xe.SpaceRace
 				m_model.Draw(gameTime);
 
 			smokePlumeParticles.SetCamera(m_model.View, m_model.Projection);
-			smokePlumeParticles.Gravity = Vector3.Transform(new Vector3(0, 0, 200), orientation);
+			smokePlumeParticles.Gravity = Vector3.Transform(new Vector3(0, 0, 200), Orientation);
 			smokePlumeParticles.Draw(gameTime);
 
 			fireParticles.SetCamera(m_model.View, m_model.Projection);
-			fireParticles.Gravity = Vector3.Transform(new Vector3(0, 0, 200), orientation);
+			fireParticles.Gravity = Vector3.Transform(new Vector3(0, 0, 200), Orientation);
 			fireParticles.Draw(gameTime);
 				
 
