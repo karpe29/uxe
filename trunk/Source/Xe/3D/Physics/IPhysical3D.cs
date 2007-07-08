@@ -151,7 +151,7 @@ namespace Xe.Physics3D
 	public class IPhysical3D : DrawableGameComponent
 	{
 		public static bool SpaceGravity = false;
-		private PhysicalType m_type;
+		protected PhysicalType m_type;
 		private MoveState m_move;
 		private Vector3 m_linearAcceleration, m_linearSpeed, m_linearPosition, m_rotationAcceleration, m_rotationSpeed, m_rotationPosition,m_direction,m_up;
 		private Matrix m_drawOrientation,m_orientation=Matrix.Identity;

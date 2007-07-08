@@ -101,14 +101,6 @@ namespace Xe.Graphics3D
 
 			if (unloadAllContent)
 			{
-				/*
-				if (m_conManager != null)
-				{
-					m_conManager.Unload();
-					m_conManager.Dispose();
-				}
-				m_conManager = null;
-				*/
 				if (m_model != null)
 					m_model = null;
 			}
