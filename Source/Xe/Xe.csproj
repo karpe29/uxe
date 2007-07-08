@@ -692,10 +692,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Planet</Name>
     </Compile>
-    <Compile Include="Game\SpaceRace\PlanetManager.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>PlanetManager</Name>
-    </Compile>
     <Compile Include="Game\SpaceRace\Race.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Race</Name>

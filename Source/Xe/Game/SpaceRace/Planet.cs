@@ -4,6 +4,7 @@ using System.Text;
 using Xe.Physics3D;
 using Microsoft.Xna.Framework;
 using Xe.Graphics3D;
+using Xe.GameScreen;
 
 namespace Xe.SpaceRace
 {
@@ -23,7 +24,8 @@ namespace Xe.SpaceRace
 			Uranus,
 			Venus,
 			Phobos,
-			Deimos
+			Deimos,
+			LASTUNUSED
 		};
 
 		string m_assetName;
@@ -40,35 +42,38 @@ namespace Xe.SpaceRace
 
 	class Planet : IPhysical3D
 	{
-		PlanetManager m_manager;
-		PlanetType m_type;
+		PlanetType m_planetType;
 
-		BumpModel3D m_model;
+		public float RotationSpeed = 1; // rpm around sun
+		public float distanceToSun = 0;
+
+		protected BumpModel3D m_model;
 
 		public BumpModel3D Model { get { return m_model; } }
 
-
-		public Planet(PlanetManager manager, PlanetType type)
-			: base (manager.GameScreenManager.Game, (PhysicalType)type)
+		// usefull for the sun override
+		protected Planet(GameScreenManager gameScreenManager, PhysicalType type)
+			: base(gameScreenManager.Game, type)
 		{
-			m_manager = manager;
 			m_type = type;
+		}
 
-			m_model = new BumpModel3D(manager.GameScreenManager, type.AssetName);
+		public Planet(GameScreenManager gameScreenManager, PlanetType type)
+			: base (gameScreenManager.Game, (PhysicalType)type)
+		{
+			m_type = (PhysicalType)type;
+			m_planetType = type;
+
+			m_model = new BumpModel3D(gameScreenManager, type.AssetName);
 		}
 
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
 
+			m_model.World = Matrix.CreateTranslation(this.Position);
+
 			m_model.Update(gameTime);
-
-			this.UpdatePositions(gameTime);
-		}
-
-		private void UpdatePositions(GameTime gameTime)
-		{
-			
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -77,57 +82,24 @@ namespace Xe.SpaceRace
 
 			base.Draw(gameTime);
 		}
-
-
-	}
-
-	class Sun : IPhysical3D
-	{
-		PlanetManager m_manager;
-
-		PhysicalType m_type;
-
-		BumpModel3D m_model;
-
-		public BumpModel3D Model { get { return m_model; } }
-
-
-		public Sun(PlanetManager manager, PhysicalType type)
-			: base(manager.GameScreenManager.Game, (PhysicalType)type)
-		{
-			m_manager = manager;
-			m_type = type;
-
-			m_model = new BumpModel3D(manager.GameScreenManager, @"Planets\Sun");
-		}
-
-		public override void Update(GameTime gameTime)
-		{
-			base.Update(gameTime);
-
-			m_model.Update(gameTime);
-
-			this.UpdatePositions(gameTime);
-		}
-
-		private void UpdatePositions(GameTime gameTime)
-		{
-
-		}
-
-		public override void Draw(GameTime gameTime)
-		{
-			m_model.Draw(gameTime);
-
-			base.Draw(gameTime);
-		}
-
-
 
 		public void SetCamera(Matrix view, Matrix projection)
 		{
 			m_model.View = view;
 			m_model.Projection = projection;
+
+			
 		}
+
+	}
+
+	class Sun : Planet
+	{
+		public Sun(GameScreenManager gameScreenManager, PhysicalType type)
+			: base(gameScreenManager, type)
+		{
+			m_model = new BumpModel3D(gameScreenManager, @"Planets\Sun");
+		}
+
 	}
 }

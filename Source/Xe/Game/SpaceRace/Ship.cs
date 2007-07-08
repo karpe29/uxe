@@ -51,7 +51,7 @@ namespace Xe.SpaceRace
 	{
 		SpaceRaceScreen m_gameScreen;
 
-		ShipType m_type;
+		ShipType m_shipType;
 
 		BasicModel3D m_model;
 
@@ -61,10 +61,10 @@ namespace Xe.SpaceRace
 		ParticleSystem fireParticles;
 
 		public Ship(GameScreenManager gameScreenManager, ShipType type)
-			: base(gameScreenManager.Game,new PhysicalType(type.Handling,type.Acceleration,type.MaxSpeed, type.Resistance, type.GravityFactor))
+			: base(gameScreenManager.Game, (PhysicalType)type)
 		{
 			m_gameScreen = gameScreenManager.CurrentGameScreen as SpaceRaceScreen;
-			m_type = type;
+			m_shipType = type;
 
 			fireParticles = new FireParticleSystem(gameScreenManager.Game, gameScreenManager.ContentManager);
 			fireParticles.Initialize();
@@ -81,7 +81,7 @@ namespace Xe.SpaceRace
 			
 			if (loadAllContent)
 			{
-				m_model = new BasicModel3D(m_gameScreen.GameScreenManager, m_type.ModelAsset);
+				m_model = new BasicModel3D(m_gameScreen.GameScreenManager, m_shipType.ModelAsset);
 			}
 		}
 
@@ -92,12 +92,12 @@ namespace Xe.SpaceRace
 
 			m_model.World = DrawOrientation * Matrix.CreateTranslation(Position);
 
-			foreach (Vector3 reactor in m_type.Reactors)
+			foreach (Vector3 reactor in m_shipType.Reactors)
 			{
 				fireParticles.AddParticle(Vector3.Transform(reactor,Orientation)+Position, Vector3.Zero);
 			}
 
-			foreach (Vector3 reactor in m_type.Reactors)
+			foreach (Vector3 reactor in m_shipType.Reactors)
 			{
 				smokePlumeParticles.AddParticle(Vector3.Transform(reactor, Orientation) + Position, Vector3.Zero);
 			}
