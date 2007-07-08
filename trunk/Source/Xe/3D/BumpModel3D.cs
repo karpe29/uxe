@@ -77,8 +77,7 @@ namespace Xe.Graphics3D
 					m_effect = m_conManager.Load<Effect>(@"Content\Effects\NormalMapping");
 
 					m_effect.Parameters["LightPosition"].SetValue(new Vector3(200, 0, 200));
-					m_effect.Parameters["Texture"].SetValue(m_mapTexture);
-					m_effect.Parameters["NormalMap"].SetValue(m_bumpTexture);
+					
 
 					Vector4 lightColor = new Vector4(1, 1, 1, 1);
 					Vector4 ambientLightColor = new Vector4(.2f, .2f, .2f, 1);
@@ -149,10 +148,14 @@ namespace Xe.Graphics3D
 			//Copy any parent transforms
 			Matrix[] transforms = new Matrix[m_model.Bones.Count];
 			m_model.CopyAbsoluteBoneTransformsTo(transforms);
-			
-			m_effect.Begin();
+
+			m_effect.Parameters["Texture"].SetValue(m_mapTexture);
+			m_effect.Parameters["NormalMap"].SetValue(m_bumpTexture);
+
 			m_effect.Parameters["View"].SetValue(this.m_view);
 			m_effect.Parameters["Projection"].SetValue(this.m_projection);
+
+			m_effect.Begin();
 
 			//Draw the model, a model can have multiple meshes, so loop
 			for (int i = 0; i < m_model.Meshes.Count; i++)
