@@ -15,6 +15,23 @@ namespace Xe.SpaceRace
 
 		List<Planet> m_planets;
 
+		private Matrix m_orientation = Matrix.Identity;
+
+		public Matrix Orientation
+		{
+			get { return m_orientation; }
+			set
+			{
+				if (value != m_orientation)
+				{
+					m_sun.Orientation = value;
+
+					for (int i = 0; i < m_planets.Count; i++)
+						m_planets[i].Orientation = value;
+				}
+			}
+		}
+
 		public Sun Sun
 		{
 			get { return m_sun; }
