@@ -45,7 +45,7 @@ namespace Xe.SpaceRace
 	{
 		PlanetType m_planetType;
 
-		public Vector3 AroundSunRotationVector = Vector3.Forward;
+		public Vector3 AroundSunRotationVector = Vector3.Up; // a bit buggy with a Vector3.Forward vector ;)
 		public float AroundSunRotationSpeed = MathHelper.Pi; // rpm around sun ( radians /sec)
 		public float AroundSunRotationOffset = 0;
 
@@ -53,7 +53,7 @@ namespace Xe.SpaceRace
 		public float SelfRotationSpeed = MathHelper.Pi; // (radians /sec)
 		public float SelfRotationOffset = 0;
 
-		public float distanceToSun = 0;
+		public float distanceToSun = 1000;
 
 		protected BumpModel3D m_model;
 
