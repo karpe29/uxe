@@ -33,6 +33,15 @@ namespace Xe.Graphics3D
 		protected Stats m_stats;
 		#endregion
 
+		public Vector3 LightPosition
+		{
+			set
+			{
+				if (m_effect != null)
+					m_effect.Parameters["LightPosition"].SetValue(value);
+			}
+		}
+
 		#region Constructors
 		private BumpModel3D(GameScreenManager gameScreenManager)
 			: base(gameScreenManager.Game)
@@ -76,12 +85,12 @@ namespace Xe.Graphics3D
 
 					m_effect = m_conManager.Load<Effect>(@"Content\Effects\NormalMapping");
 
-					m_effect.Parameters["LightPosition"].SetValue(new Vector3(200, 0, 200));
+					m_effect.Parameters["LightPosition"].SetValue(Vector3.Zero);
 					
 
 					Vector4 lightColor = new Vector4(1, 1, 1, 1);
 					Vector4 ambientLightColor = new Vector4(.2f, .2f, .2f, 1);
-					float shininess = .3f;
+					float shininess = 0.3f;
 					float specularPower = 4.0f;
 
 					m_effect.Parameters["LightColor"].SetValue(lightColor);

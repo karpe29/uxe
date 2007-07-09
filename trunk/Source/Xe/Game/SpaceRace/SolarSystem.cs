@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Xe.Physics3D;
 using Xe.GameScreen;
 using Microsoft.Xna.Framework.Graphics;
+using Xe.Tools;
 
 namespace Xe.SpaceRace
 {
@@ -14,11 +15,17 @@ namespace Xe.SpaceRace
 
 		List<Planet> m_planets;
 
+		public Sun Sun
+		{
+			get { return m_sun; }
+		}
+
 		public SolarSystem(GameScreenManager gameScreenManager, int planetCount)
 			: base(gameScreenManager.Game)
 		{
-			m_sun = new Sun(gameScreenManager, new PhysicalType(0,0,0,0,100));
-			m_sun.Position = new Vector3(0, 0, -2000);
+			m_sun = new Sun(gameScreenManager,this, new PhysicalType(0,0,0,0,100));
+			m_sun.Position = new Vector3(0, 0, -20000);
+
 
 			m_planets = new List<Planet>(planetCount);
 
@@ -28,10 +35,15 @@ namespace Xe.SpaceRace
 			{
 				PlanetType tmpPlanetType = new PlanetType((PlanetType.Names)r.Next(0, ((int)PlanetType.Names.LASTUNUSED) - 1), 0, 0, 0, 0);
 
-				m_planets.Add(new Planet(gameScreenManager, tmpPlanetType));
+				m_planets.Add(new Planet(gameScreenManager, this, tmpPlanetType));
 
-				m_planets[i].distanceToSun = r.Next(100, 1000) * 12;
-				m_planets[i].RotationSpeed = (float)r.Next(1000) / 1000.0f;
+				m_planets[i].distanceToSun = m_planets[i==0?0:i-1].distanceToSun + 1000 + Helper.Random(1000);
+
+				m_planets[i].SelfRotationSpeed = Helper.RandomFloat(0.03f, 0.3f);
+				m_planets[i].AroundSunRotationSpeed = Helper.RandomFloat(0.03f, 0.3f);
+
+				m_planets[i].SelfRotationOffset = Helper.RandomFloat(MathHelper.TwoPi);
+				m_planets[i].AroundSunRotationOffset = Helper.RandomFloat(MathHelper.TwoPi);
 			}
 		}
 
@@ -41,12 +53,7 @@ namespace Xe.SpaceRace
 
 			for (int i = 0; i < m_planets.Count; i++)
 			{
-				// calculate new position
-				Vector3 newPosition = Vector3.Transform(new Vector3(0, 0, -m_planets[i].distanceToSun), 
-					Matrix.CreateRotationY(m_planets[i].RotationSpeed * (float)gameTime.TotalGameTime.TotalSeconds));
-
-				m_planets[i].Position = m_sun.Position + newPosition;
-
+				
 				m_planets[i].Update(gameTime);
 			}
 

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace Xe.Tools
 {
-	static class Helper
+	public static class Helper
 	{
 		/// <summary>
 		/// Return interpolated value based on two TimeSpan
@@ -28,6 +28,33 @@ namespace Xe.Tools
 		public static string Vector3ToString3f(Vector3 vector)
 		{
 			return "( "+Math.Round(vector.X,3)+" , "+ Math.Round(vector.Y,3)+" , "+Math.Round(vector.Z,3)+" )";		
+		}
+
+		private static Random random = new Random((int)DateTime.Now.Ticks);
+
+		public static void NewSeed()
+		{
+			random = new Random((int)DateTime.Now.Ticks);
+		}
+
+		public static int Random(int MaxValue)
+		{
+			return Random(0, MaxValue);
+		}
+
+		public static int Random(int MinValue, int MaxValue)
+		{
+			return random.Next(MinValue, MaxValue);
+		}
+
+		public static float RandomFloat(float MaxValue)
+		{
+			return RandomFloat(0, MaxValue);
+		}
+
+		public static float RandomFloat(float MinValue, float MaxValue)
+		{
+			return (float)random.NextDouble() * (MaxValue - MinValue) + MinValue;
 		}
 	}
 }
