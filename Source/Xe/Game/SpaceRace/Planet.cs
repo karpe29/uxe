@@ -101,9 +101,20 @@ namespace Xe.SpaceRace
 		public Vector3 GetTopSunPosition()
 		{
 			Vector3 v = Vector3.Zero;
+			bool found = false;
 
-			//while (m_solarSystem != null && m_solarSystem.Sun != null)
-			//	v = m_solarSystem.Sun.GetTopSunPosition();
+			while (!found)
+			{
+				if (this.m_solarSystem == null) // ici on est le soleil de niveau 0
+				{
+					v = this.Position;
+					found = true;
+				}
+				else
+				{
+					v = this.m_solarSystem.Sun.GetTopSunPosition();
+				}
+			}
 
 			return v;
 		}

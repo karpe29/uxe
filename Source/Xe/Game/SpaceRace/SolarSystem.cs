@@ -57,11 +57,9 @@ namespace Xe.SpaceRace
 				float prevDistanceToSun = 0;
 
 				if (i > 0)
-				{
-					prevDistanceToSun = m_planets[i == 0 ? 0 : i - 1].Position.Z + Helper.Random(200,1000); ;
-				}
+					prevDistanceToSun = m_planets[i-1].Position.Z;
 
-				Vector3 startPosition=Vector3.Transform(new Vector3(0,0, prevDistanceToSun+ 1000 + Helper.Random(1000)),Matrix.CreateRotationY(Helper.RandomFloat(MathHelper.TwoPi)));
+				Vector3 startPosition=Vector3.Transform(new Vector3(0,0, prevDistanceToSun + 1000 + Helper.Random(1000)),Matrix.CreateRotationY(Helper.RandomFloat(MathHelper.TwoPi)));
 				Vector3 rotationSpeed=new Vector3(0,Helper.RandomFloat(0.03f, 0.3f),0);
 
 				Planet p = new Planet(gameScreenManager, tmpPlanetType, startPosition, rotationSpeed);
