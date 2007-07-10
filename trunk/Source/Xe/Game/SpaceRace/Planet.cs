@@ -92,7 +92,7 @@ namespace Xe.SpaceRace
 		public override void Draw(GameTime gameTime)
 		{
 			m_model.LightPosition = GetTopSunPosition();
-			
+
 			m_model.Draw(gameTime);
 
 			base.Draw(gameTime);
@@ -100,18 +100,13 @@ namespace Xe.SpaceRace
 
 		public Vector3 GetTopSunPosition()
 		{
-			bool found = false;
-
-			while (true)
+			if (this.m_solarSystem == null) // ici on est le soleil de niveau 0
 			{
-				if (this.m_solarSystem == null) // ici on est le soleil de niveau 0
-				{
-					return this.Position;
-				}
-				else
-				{
-					return this.m_solarSystem.Sun.GetTopSunPosition();
-				}
+				return this.Position;
+			}
+			else
+			{
+				return this.m_solarSystem.Sun.GetTopSunPosition();
 			}
 		}
 
