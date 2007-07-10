@@ -27,7 +27,6 @@ namespace Xe.SpaceRace
 			Venus,
 			Phobos,
 			Deimos,
-			LASTUNUSED
 		};
 
 		string m_assetName;
@@ -35,7 +34,7 @@ namespace Xe.SpaceRace
 		public string AssetName { get { return m_assetName; } }
 
 		public PlanetType(Names name, float acceleration, float maxSpeed, float resistance, float gFactor)
-			: base(0,acceleration,maxSpeed, resistance, gFactor)
+			: base(0, acceleration, maxSpeed, resistance, gFactor)
 		{
 			m_assetName = @"Planets\" + name.ToString();
 		}
@@ -48,28 +47,23 @@ namespace Xe.SpaceRace
 
 
 		protected BumpModel3D m_model;
-		private Vector3 m_startPosition,m_absolutePosition;
+		private Vector3 m_startPosition, m_absolutePosition;
 
 		private SolarSystem m_solarSystem;
 
+		public SolarSystem SolarSystem { set { m_solarSystem = value; } }
+
 		public BumpModel3D Model { get { return m_model; } }
 
-		// usefull for the sun override
-		/*protected Planet(GameScreenManager gameScreenManager, SolarSystem solarSystem, PhysicalType type)
-			: base(gameScreenManager.Game, type)
-		{
-			m_type = type;
-			m_solarSystem = solarSystem;
-		}*/
 
-		public Planet(GameScreenManager gameScreenManager, SolarSystem solarSystem, PlanetType type,Vector3 startPosition,Vector3 rotationSpeed)
-			: base (gameScreenManager.Game, (PhysicalType)type)
+
+		public Planet(GameScreenManager gameScreenManager, PlanetType type, Vector3 startPosition, Vector3 rotationSpeed)
+			: base(gameScreenManager.Game, (PhysicalType)type)
 		{
 			m_type = (PhysicalType)type;
 			m_planetType = type;
 			m_startPosition = startPosition;
 			RotationSpeed = rotationSpeed;
-			m_solarSystem = solarSystem;
 
 			m_model = new BumpModel3D(gameScreenManager, type.AssetName);
 		}
@@ -77,16 +71,18 @@ namespace Xe.SpaceRace
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
+
 			Position = Vector3.Transform(m_startPosition, Orientation);
+
 			if (m_solarSystem != null)
 			{
 				m_absolutePosition = m_solarSystem.Sun.Position + Position;
-			} 
-				else
-				{
-				m_absolutePosition=Position;
-				}
-			
+			}
+			else
+			{
+				m_absolutePosition = Position;
+			}
+
 			m_model.World = DrawOrientation * Matrix.CreateTranslation(m_absolutePosition);
 
 
@@ -95,13 +91,21 @@ namespace Xe.SpaceRace
 
 		public override void Draw(GameTime gameTime)
 		{
-			if (m_solarSystem != null)
-			{
-				m_model.LightPosition = m_solarSystem.Sun.Position;
-			}
+			m_model.LightPosition = GetTopSunPosition();
+			
 			m_model.Draw(gameTime);
 
 			base.Draw(gameTime);
+		}
+
+		public Vector3 GetTopSunPosition()
+		{
+			Vector3 v = Vector3.Zero;
+
+			//while (m_solarSystem != null && m_solarSystem.Sun != null)
+			//	v = m_solarSystem.Sun.GetTopSunPosition();
+
+			return v;
 		}
 
 		public void SetCamera(Matrix view, Matrix projection)
@@ -109,18 +113,8 @@ namespace Xe.SpaceRace
 			m_model.View = view;
 			m_model.Projection = projection;
 
-			
+
 		}
 
 	}
-
-	/*class Sun : Planet
-	{
-		public Sun(GameScreenManager gameScreenManager, SolarSystem solarSystem, PhysicalType type)
-			: base(gameScreenManager,solarSystem, type)
-		{
-			m_model = new BumpModel3D(gameScreenManager, @"Planets\Sun");
-		}
-
-	}*/
 }

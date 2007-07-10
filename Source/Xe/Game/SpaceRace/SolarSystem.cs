@@ -37,10 +37,15 @@ namespace Xe.SpaceRace
 			get { return m_sun; }
 		}
 
-		public SolarSystem(GameScreenManager gameScreenManager,Planet Sun, int planetCount)
+		public SolarSystem(GameScreenManager gameScreenManager,Planet Sun, int planetCount, int maxSubsystems)
 			: base(gameScreenManager.Game)
 		{
-			m_sun = Sun;
+			if (Sun == null)
+			{
+				this.m_sun = new Planet(gameScreenManager, new PlanetType(PlanetType.Names.Sun, 0, 0, 0, 0), Vector3.Zero, Vector3.Zero);
+			}
+			else
+				m_sun = Sun;
 
 			m_planets = new List<Planet>(planetCount);
 
@@ -48,23 +53,21 @@ namespace Xe.SpaceRace
 
 			for (int i = 0; i < m_planets.Capacity; i++)
 			{
-				PlanetType tmpPlanetType = new PlanetType((PlanetType.Names)Helper.Random(0, ((int)PlanetType.Names.LASTUNUSED) - 1), 0, 0, 0, 0);
+				PlanetType tmpPlanetType = new PlanetType((PlanetType.Names)Helper.Random(1, Enum.GetValues(typeof(PlanetType.Names)).Length), 0, 0, 0, 0);
 				float prevDistanceToSun = 0;
+
 				if (i > 0)
 				{
-					prevDistanceToSun = m_planets[i == 0 ? 0 : i - 1].Position.Z;
+					prevDistanceToSun = m_planets[i == 0 ? 0 : i - 1].Position.Z + Helper.Random(200,1000); ;
 				}
+
 				Vector3 startPosition=Vector3.Transform(new Vector3(0,0, prevDistanceToSun+ 1000 + Helper.Random(1000)),Matrix.CreateRotationY(Helper.RandomFloat(MathHelper.TwoPi)));
 				Vector3 rotationSpeed=new Vector3(0,Helper.RandomFloat(0.03f, 0.3f),0);
-				m_planets.Add(new Planet(gameScreenManager, this, tmpPlanetType,startPosition,rotationSpeed));
 
+				Planet p = new Planet(gameScreenManager, tmpPlanetType, startPosition, rotationSpeed);
+				p.SolarSystem = this;
 
-				/*m_planets[i].SelfRotationSpeed = Helper.RandomFloat(0.03f, 0.3f);
-				m_planets[i].AroundSunRotationSpeed = Helper.RandomFloat(0.03f, 0.3f);
-
-				m_planets[i].SelfRotationOffset = Helper.RandomFloat(MathHelper.TwoPi);
-				m_planets[i].AroundSunRotationOffset = Helper.RandomFloat(MathHelper.TwoPi);
-				 * */
+				m_planets.Add(p);
 			}
 		}
 
