@@ -15,15 +15,18 @@ namespace Xe.SpaceRace
 
 		public List<Planet> m_planets;
 
-		private Matrix m_orientation = Matrix.Identity;
+		private Matrix m_orientation = Matrix.Identity, m_decalage = Matrix.Identity;
 
 		public Matrix Orientation
 		{
 			get { return m_orientation; }
-			set
-			{
-				m_orientation = value;
-			}
+			set { m_orientation = value; }
+		}
+
+		public Matrix Decalage
+		{
+			get { return m_decalage; }
+			set { m_decalage = value; }
 		}
 
 		public Planet Sun
@@ -42,7 +45,6 @@ namespace Xe.SpaceRace
 			{
 				m_sun = Sun;
 			}
-			m_orientation = m_sun.Orientation;
 
 			m_planets = new List<Planet>(planetCount);
 
@@ -73,6 +75,7 @@ namespace Xe.SpaceRace
 		public override void Update(GameTime gameTime)
 		{
 			m_sun.Update(gameTime);
+			m_orientation = m_sun.Orientation*m_decalage;
 
 			for (int i = 0; i < m_planets.Count; i++)
 			{
