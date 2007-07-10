@@ -9,9 +9,9 @@ using Xe.Tools;
 
 namespace Xe.SpaceRace
 {
-	class SolarSystem : DrawableGameComponent
+	public class SolarSystem : DrawableGameComponent
 	{
-		Sun m_sun;
+		Planet m_sun;
 
 		List<Planet> m_planets;
 
@@ -32,17 +32,15 @@ namespace Xe.SpaceRace
 			}
 		}
 
-		public Sun Sun
+		public Planet Sun
 		{
 			get { return m_sun; }
 		}
 
-		public SolarSystem(GameScreenManager gameScreenManager, int planetCount)
+		public SolarSystem(GameScreenManager gameScreenManager,Planet Sun, int planetCount)
 			: base(gameScreenManager.Game)
 		{
-			m_sun = new Sun(gameScreenManager,this, new PhysicalType(0,0,0,0,100));
-			m_sun.Position = new Vector3(0, 0, -20000);
-
+			m_sun = Sun;
 
 			m_planets = new List<Planet>(planetCount);
 
@@ -50,17 +48,23 @@ namespace Xe.SpaceRace
 
 			for (int i = 0; i < m_planets.Capacity; i++)
 			{
-				PlanetType tmpPlanetType = new PlanetType((PlanetType.Names)r.Next(0, ((int)PlanetType.Names.LASTUNUSED) - 1), 0, 0, 0, 0);
+				PlanetType tmpPlanetType = new PlanetType((PlanetType.Names)Helper.Random(0, ((int)PlanetType.Names.LASTUNUSED) - 1), 0, 0, 0, 0);
+				float prevDistanceToSun = 0;
+				if (i > 0)
+				{
+					prevDistanceToSun = m_planets[i == 0 ? 0 : i - 1].Position.Z;
+				}
+				Vector3 startPosition=Vector3.Transform(new Vector3(0,0, prevDistanceToSun+ 1000 + Helper.Random(1000)),Matrix.CreateRotationY(Helper.RandomFloat(MathHelper.TwoPi)));
+				Vector3 rotationSpeed=new Vector3(0,Helper.RandomFloat(0.03f, 0.3f),0);
+				m_planets.Add(new Planet(gameScreenManager, this, tmpPlanetType,startPosition,rotationSpeed));
 
-				m_planets.Add(new Planet(gameScreenManager, this, tmpPlanetType));
 
-				m_planets[i].distanceToSun = m_planets[i==0?0:i-1].distanceToSun + 1000 + Helper.Random(1000);
-
-				m_planets[i].SelfRotationSpeed = Helper.RandomFloat(0.03f, 0.3f);
+				/*m_planets[i].SelfRotationSpeed = Helper.RandomFloat(0.03f, 0.3f);
 				m_planets[i].AroundSunRotationSpeed = Helper.RandomFloat(0.03f, 0.3f);
 
 				m_planets[i].SelfRotationOffset = Helper.RandomFloat(MathHelper.TwoPi);
 				m_planets[i].AroundSunRotationOffset = Helper.RandomFloat(MathHelper.TwoPi);
+				 * */
 			}
 		}
 

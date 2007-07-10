@@ -9,13 +9,16 @@ namespace Xe.SpaceRace
 	class Universe : DrawableGameComponent
 	{
 		SolarSystem m_solarSystem;
+		Planet m_sun;
 
 		AsteroidManager m_asteroidManager;
 
 		public Universe(GameScreenManager gameScreenManager)
 			: base (gameScreenManager.Game)
 		{
-			m_solarSystem = new SolarSystem(gameScreenManager, 9);
+			PlanetType tmpPlanetType = new PlanetType(PlanetType.Names.Sun, 0, 0, 0, 0);
+			m_sun = new Planet(gameScreenManager, null, tmpPlanetType, Vector3.Zero,Vector3.Zero);
+			m_solarSystem = new SolarSystem(gameScreenManager,m_sun, 9);
 
 		}
 

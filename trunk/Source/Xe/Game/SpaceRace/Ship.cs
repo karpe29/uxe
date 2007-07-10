@@ -47,7 +47,7 @@ namespace Xe.SpaceRace
 	/// <summary>
 	/// Take care of rendering and managing the ship
 	/// </summary>
-	class Ship : IPhysical3D
+	class Ship : IShipPhysical
 	{
 		SpaceRaceScreen m_gameScreen;
 
