@@ -13,7 +13,7 @@ namespace Xe.SpaceRace
 	{
 		Planet m_sun;
 
-		List<Planet> m_planets;
+		public List<Planet> m_planets;
 
 		private Matrix m_orientation = Matrix.Identity;
 
