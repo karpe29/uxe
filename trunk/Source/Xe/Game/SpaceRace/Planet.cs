@@ -100,23 +100,19 @@ namespace Xe.SpaceRace
 
 		public Vector3 GetTopSunPosition()
 		{
-			Vector3 v = Vector3.Zero;
 			bool found = false;
 
-			while (!found)
+			while (true)
 			{
 				if (this.m_solarSystem == null) // ici on est le soleil de niveau 0
 				{
-					v = this.Position;
-					found = true;
+					return this.Position;
 				}
 				else
 				{
-					v = this.m_solarSystem.Sun.GetTopSunPosition();
+					return this.m_solarSystem.Sun.GetTopSunPosition();
 				}
 			}
-
-			return v;
 		}
 
 		public void SetCamera(Matrix view, Matrix projection)
