@@ -658,6 +658,14 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IPhysical3D</Name>
     </Compile>
+    <Compile Include="3D\Physics\IPlanetPhysical.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IPlanetPhysical</Name>
+    </Compile>
+    <Compile Include="3D\Physics\IShipPhysical.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IShipPhysical</Name>
+    </Compile>
     <Compile Include="Game\SpaceRace\ShipSelectionScreen.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ShipSelectionScreen</Name>
