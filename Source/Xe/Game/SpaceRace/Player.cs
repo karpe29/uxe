@@ -39,6 +39,8 @@ namespace Xe.SpaceRace
 			m_race = m_raceScreen.Race;
 
 			m_ship = new Ship(gameScreenManager, type);
+			m_ship.Position = new Vector3(0, 10000, 0);
+			m_ship.Orientation = Matrix.CreateRotationX(-1.2f);
 
 			m_camera = new ChaseCamera((IPhysical3D)m_ship, new Vector3(0, 40, 0), new Vector3(0, 120, 150));
 
