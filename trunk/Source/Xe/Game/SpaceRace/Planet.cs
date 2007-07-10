@@ -41,15 +41,18 @@ namespace Xe.SpaceRace
 	}
 
 
-	public class Planet : IPlanetPhysical
+	public class Planet : IPhysical3D
 	{
 		PlanetType m_planetType;
 
 
 		protected BumpModel3D m_model;
-		private Vector3 m_startPosition, m_absolutePosition;
 
 		private SolarSystem m_solarSystem;
+
+
+		public float m_distanceToSun, m_rotationStart, m_aroundRotationSpeed,m_aroundRotation, m_selfRotationSpeed;
+		private Vector3 m_aroundRotationAxe, m_selfRotationAxe;
 
 		public SolarSystem SolarSystem { set { m_solarSystem = value; } }
 
@@ -57,13 +60,17 @@ namespace Xe.SpaceRace
 
 
 
-		public Planet(GameScreenManager gameScreenManager, PlanetType type, Vector3 startPosition, Vector3 rotationSpeed)
+		public Planet(GameScreenManager gameScreenManager, PlanetType type, float distanceToSun, float rotationStart, float rotationSpeed, Vector3 rotationAxe, float selfRotationSpeed, Vector3 selfRotationAxe)
 			: base(gameScreenManager.Game, (PhysicalType)type)
 		{
 			m_type = (PhysicalType)type;
 			m_planetType = type;
-			m_startPosition = startPosition;
-			RotationSpeed = rotationSpeed;
+			m_distanceToSun = distanceToSun;
+			m_rotationStart = rotationStart;
+			m_aroundRotationSpeed = rotationSpeed;
+			m_aroundRotationAxe = rotationAxe;
+			m_selfRotationSpeed = selfRotationSpeed;
+			m_selfRotationAxe = selfRotationAxe;
 
 			m_model = new BumpModel3D(gameScreenManager, type.AssetName);
 		}
@@ -72,19 +79,21 @@ namespace Xe.SpaceRace
 		{
 			base.Update(gameTime);
 
-			Position = Vector3.Transform(m_startPosition, Orientation);
+						float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds) / 1000f;
 
 			if (m_solarSystem != null) // top level sun
 			{
-				m_absolutePosition = m_solarSystem.Sun.Position + Position;
+				m_aroundRotation= (m_aroundRotation+m_aroundRotationSpeed*seconds)%MathHelper.TwoPi;
+				Position = Vector3.Transform(m_distanceToSun * Vector3.Forward, Matrix.CreateFromAxisAngle(m_aroundRotationAxe, m_rotationStart + m_aroundRotation));
 			}
-			else
+
+			Orientation = Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z) * Orientation;
+
+			m_model.World = DrawOrientation * Matrix.CreateTranslation(Position);
+			if (m_solarSystem != null) // top level sun
 			{
-				m_absolutePosition = Position;
+				m_model.World*= m_solarSystem.Orientation* Matrix.CreateTranslation(m_solarSystem.Sun.Position);
 			}
-
-			m_model.World = DrawOrientation * Matrix.CreateTranslation(m_absolutePosition);
-
 
 			m_model.Update(gameTime);
 		}
