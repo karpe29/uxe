@@ -57,7 +57,7 @@ namespace Xe.SpaceRace
 
 				float distanceToSun=prevDistanceToSun + 500 + Helper.Random(500);
 				float rotationStart = Helper.RandomFloat(0, MathHelper.TwoPi);
-				float rotationSpeed = Helper.RandomFloat(0.3f, 0.4f) / distanceToSun * 2000f;
+				float rotationSpeed = Helper.RandomFloat(0.3f, 0.4f) / (i+1f);
 				Vector3 rotationAxe = Vector3.Normalize(new Vector3(Helper.RandomFloat(-0.2f, 0.2f), 1, Helper.RandomFloat(-0.2f, 0.2f)));
 				float selfRotationSpeed = rotationSpeed/Helper.RandomFloat(0.2f, 0.4f);
 				Vector3 selfRotationAxe = Vector3.Normalize(new Vector3(Helper.RandomFloat(-1f, 1f), Helper.RandomFloat(-1f, 1f), Helper.RandomFloat(-1f, 1f)));
