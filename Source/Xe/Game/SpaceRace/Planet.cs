@@ -51,7 +51,7 @@ namespace Xe.SpaceRace
 		private SolarSystem m_solarSystem;
 
 
-		public float m_distanceToSun, m_rotationStart, m_aroundRotationSpeed,m_aroundRotation, m_selfRotationSpeed;
+		public float m_distanceToSun, m_rotationStart, m_aroundRotationSpeed,m_aroundRotation, m_selfRotationSpeed,m_selfRotation;
 		private Vector3 m_aroundRotationAxe, m_selfRotationAxe;
 
 		public SolarSystem SolarSystem { set { m_solarSystem = value; } }
@@ -86,8 +86,9 @@ namespace Xe.SpaceRace
 				m_aroundRotation= (m_aroundRotation+m_aroundRotationSpeed*seconds)%MathHelper.TwoPi;
 				Position = Vector3.Transform(m_distanceToSun * Vector3.Forward, Matrix.CreateFromAxisAngle(m_aroundRotationAxe, m_rotationStart + m_aroundRotation));
 			}
+			m_selfRotation = (m_selfRotation + m_selfRotationSpeed * seconds) % MathHelper.TwoPi;
 
-			Orientation = Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z) * Orientation;
+			Orientation = Matrix.CreateFromAxisAngle(m_selfRotationAxe,  m_selfRotation);
 
 			m_model.World = DrawOrientation * Matrix.CreateTranslation(Position);
 			if (m_solarSystem != null) // top level sun
