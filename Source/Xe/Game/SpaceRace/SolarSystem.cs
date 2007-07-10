@@ -37,7 +37,7 @@ namespace Xe.SpaceRace
 			get { return m_sun; }
 		}
 
-		public SolarSystem(GameScreenManager gameScreenManager,Planet Sun, int planetCount, int maxSubsystems)
+		public SolarSystem(GameScreenManager gameScreenManager,Planet Sun, int planetCount, int subLevelCount, int maxSubLevel)
 			: base(gameScreenManager.Game)
 		{
 			if (Sun == null)

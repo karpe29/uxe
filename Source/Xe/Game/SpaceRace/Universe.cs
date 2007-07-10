@@ -15,10 +15,9 @@ namespace Xe.SpaceRace
 		public Universe(GameScreenManager gameScreenManager)
 			: base (gameScreenManager.Game)
 		{
-			m_solarSystem = new SolarSystem(gameScreenManager,null, 5, 0);
+			m_solarSystem = new SolarSystem(gameScreenManager,null, 5, 0, 0);
 
-			m_ss2 = new SolarSystem(gameScreenManager, m_solarSystem.m_planets[3], 3, 0);
-
+			m_ss2 = new SolarSystem(gameScreenManager, m_solarSystem.m_planets[3], 3, 0, 0);
 		}
 
 		public void SetCamera(Matrix view, Matrix projection)
