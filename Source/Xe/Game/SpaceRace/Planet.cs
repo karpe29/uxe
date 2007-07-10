@@ -74,7 +74,7 @@ namespace Xe.SpaceRace
 
 			Position = Vector3.Transform(m_startPosition, Orientation);
 
-			if (m_solarSystem != null)
+			if (m_solarSystem != null) // top level sun
 			{
 				m_absolutePosition = m_solarSystem.Sun.Position + Position;
 			}
