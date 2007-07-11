@@ -254,7 +254,7 @@ namespace Xe.Physics3D
 
 			if (m_move.Forward)
 			{
-				if (m_linearSpeed.Z > -1000)
+				if (m_linearSpeed.Z > -1000 || true )
 				{
 					m_linearAcceleration.Z = -10000;  //*10
 				}
@@ -271,7 +271,7 @@ namespace Xe.Physics3D
 			{
 				if (m_linearSpeed.Z < 0)
 				{
-					m_linearAcceleration.Z = 2000;
+					m_linearAcceleration.Z = 20000;
 				}
 				else
 				{
@@ -285,7 +285,7 @@ namespace Xe.Physics3D
 			{
 				if (m_linearSpeed.Z < 0)
 				{
-					m_linearAcceleration.Z = 500;
+					m_linearAcceleration.Z = 5000;
 				}
 				else
 				{
