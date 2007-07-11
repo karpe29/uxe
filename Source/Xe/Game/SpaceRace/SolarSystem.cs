@@ -52,17 +52,22 @@ namespace Xe.SpaceRace
 
 			for (int i = 0; i < m_planets.Capacity; i++)
 			{
-				PlanetType tmpPlanetType = new PlanetType((PlanetType.Names)Helper.Random(1, Enum.GetValues(typeof(PlanetType.Names)).Length), 0, 0, 0, 0);
-				float prevDistanceToSun = 1000;
-				if (i > 0)
-					prevDistanceToSun = m_planets[i-1].m_distanceToSun;
+				// determine a random PlanetType.Names
+				PlanetType.Names n = (PlanetType.Names)Enum.GetValues(typeof(PlanetType.Names)).GetValue(Helper.Random(0, Enum.GetValues(typeof(PlanetType.Names)).Length-1));
 
-				float distanceToSun=prevDistanceToSun + 500 + Helper.Random(500);
+				PlanetType tmpPlanetType = new PlanetType(n, 0, 0, 0, 0);
+				float prevDistanceToSun = 0;
+				
+				if (i > 0)
+					prevDistanceToSun = m_planets[i-1].m_distanceToSun + (int)m_planets[i-1].m_planetType.Name;
+
+				float distanceToSun = prevDistanceToSun + 500 + Helper.Random(500);
+
 				float rotationStart = Helper.RandomFloat(0, MathHelper.TwoPi);
 				float rotationSpeed = Helper.RandomFloat(0.3f, 0.4f) / (i+1f);
-				Vector3 rotationAxe = Vector3.Normalize(new Vector3(Helper.RandomFloat(-0.2f, 0.2f), 1, Helper.RandomFloat(-0.2f, 0.2f)));
+				Vector3 rotationAxe = Vector3.Normalize(new Vector3(Helper.RandomFloat(-0.1f, 0.1f), 1, Helper.RandomFloat(-0.1f, 0.1f)));
 				float selfRotationSpeed = rotationSpeed/Helper.RandomFloat(0.2f, 0.4f);
-				Vector3 selfRotationAxe = Vector3.Normalize(new Vector3(Helper.RandomFloat(-1f, 1f), Helper.RandomFloat(-1f, 1f), Helper.RandomFloat(-1f, 1f)));
+				Vector3 selfRotationAxe = Vector3.Normalize(new Vector3(Helper.RandomFloat(-0.1f, 0.1f), 1, Helper.RandomFloat(-0.1f, 0.1f)));
 
 
 				Planet p = new Planet(gameScreenManager, tmpPlanetType,distanceToSun,rotationStart, rotationSpeed,rotationAxe,selfRotationSpeed,selfRotationAxe);

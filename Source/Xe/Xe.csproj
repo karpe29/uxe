@@ -686,9 +686,9 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Asteroid</Name>
     </Compile>
-    <Compile Include="Game\SpaceRace\AsteroidManager.cs">
+    <Compile Include="Game\SpaceRace\AsteroidField.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>AsteroidManager</Name>
+      <Name>AsteroidField</Name>
     </Compile>
     <Compile Include="Game\SpaceRace\CheckPoint.cs">
       <SubType>Code</SubType>

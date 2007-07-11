@@ -6,18 +6,24 @@ using Xe.GameScreen;
 
 namespace Xe.SpaceRace
 {
-	class AsteroidManager
+	class AsteroidField
 	{
 		GameScreenManager m_gameScreenManager;
 
-		public GameScreenManager GameScreenManager
-		{
-			get { return m_gameScreenManager; }
-		}
+		Planet m_planet;
 
-		public AsteroidManager(GameScreenManager manager)
+		List<Asteroid> m_asteroids;
+
+		public AsteroidField(GameScreenManager manager, Planet planet, int bigAsteroidCount, int smallAsteroidCount)
 		{
 			m_gameScreenManager = manager;
+
+			m_planet = planet;
+
+
+
+
+
 		}
 	}
 }

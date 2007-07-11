@@ -10,14 +10,14 @@ namespace Xe.SpaceRace
 	{
 		SolarSystem m_solarSystem,m_ss2;
 
-		AsteroidManager m_asteroidManager;
+		AsteroidField m_asteroidField;
 
 		public Universe(GameScreenManager gameScreenManager)
 			: base (gameScreenManager.Game)
 		{
-			m_solarSystem = new SolarSystem(gameScreenManager,null, 5, 0, 0);
-			m_solarSystem.Sun.Position = new Vector3(0, -1000, 0);
-			m_solarSystem.Decalage = Matrix.CreateRotationX(MathHelper.PiOver2);
+			m_solarSystem = new SolarSystem(gameScreenManager,null, 20, 0, 0);
+			m_solarSystem.Sun.Position = new Vector3(0, -2000000, 0);
+			//m_solarSystem.Decalage = Matrix.CreateRotationX(MathHelper.PiOver2);
 
 
 			m_ss2 = new SolarSystem(gameScreenManager, m_solarSystem.m_planets[3], 3, 0, 0);

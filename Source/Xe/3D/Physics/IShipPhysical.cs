@@ -256,12 +256,12 @@ namespace Xe.Physics3D
 			{
 				if (m_linearSpeed.Z > -1000)
 				{
-					m_linearAcceleration.Z = -1000;
+					m_linearAcceleration.Z = -10000;  //*10
 				}
 				else
 				{
 					m_linearAcceleration.Z = 0;
-					m_linearSpeed.Z = -1000;
+					m_linearSpeed.Z = -10000;  //*10
 
 				}
 
