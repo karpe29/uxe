@@ -13,23 +13,25 @@ namespace Xe.SpaceRace
 	{
 		public enum Names
 		{
-			Sun,
-			Earth,
-			Jupiter,
-			Jupiter2,
-			Mars,
-			Mercury,
-			Moon,
-			Neptune,
-			Pluto,
-			Saturn,
-			Uranus,
-			Venus,
-			Phobos,
-			Deimos,
+			Deimos	= 600,
+			Phobos	= 960,
+			Pluto	= 2306,
+			Mercury = 2439,
+			Mars	= 3402,
+			Moon	= 3474,
+			Venus	= 6051,
+			Earth	= 6378,
+			Neptune = 24961,
+			Uranus	= 25656,
+			Saturn	= 60268,
+			Jupiter = 71491,
+			Jupiter2 = 71492,
+			Sun		= 139200
 		};
 
 		string m_assetName;
+
+		public Names Name;
 
 		public string AssetName { get { return m_assetName; } }
 
@@ -37,13 +39,14 @@ namespace Xe.SpaceRace
 			: base(0, acceleration, maxSpeed, resistance, gFactor)
 		{
 			m_assetName = @"Planets\" + name.ToString();
+			name = name;
 		}
 	}
 
 
 	public class Planet : IPhysical3D
 	{
-		PlanetType m_planetType;
+		public PlanetType m_planetType;
 
 
 		protected BumpModel3D m_model;

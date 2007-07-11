@@ -104,7 +104,7 @@ namespace Xe.Graphics3D
 				this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
 			}
 		}
-		private float farPlaneDistance = 1000000.0f;
+		private float farPlaneDistance = 3000000.0f;
 
 		#endregion
 

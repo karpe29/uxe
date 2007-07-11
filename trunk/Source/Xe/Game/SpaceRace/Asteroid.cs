@@ -25,18 +25,18 @@ namespace Xe.SpaceRace
 	}
 
 
-	class Asteroid : IPhysical3D
+	class Asteroid // : IPhysical3D
 	{
-		AsteroidManager m_manager;
+		AsteroidField m_manager;
 		AsteroidType m_type;
-
-		public Asteroid(AsteroidManager manager, AsteroidType type)
-			: base(manager.GameScreenManager.Game, (PhysicalType)type)
+		
+		public Asteroid(AsteroidField manager, AsteroidType type)
+			//: base(manager.GameScreenManager.Game, (PhysicalType)type)
 		{
 			m_manager = manager;
 			m_type = type;
 		}
 
-
+		
 	}
 }
