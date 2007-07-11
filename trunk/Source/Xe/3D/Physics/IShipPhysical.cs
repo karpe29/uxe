@@ -115,6 +115,7 @@ namespace Xe.Physics3D
 	public class IShipPhysical : IPhysical3D
 	{
 		private MoveState m_move;
+		private static float m_maxSpeed = 100000;
 
 		public IShipPhysical(Microsoft.Xna.Framework.Game game, PhysicalType type) : base(game,type)
 		{
@@ -250,18 +251,18 @@ namespace Xe.Physics3D
 			RotationPosition = m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
 			Orientation = Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z) * Orientation;
 
-			DrawOrientation = Matrix.CreateFromYawPitchRoll(0, 0, -m_rotationSpeed.Y * m_linearSpeed.Z / 8000) * Orientation;
+			DrawOrientation = Matrix.CreateFromYawPitchRoll(0, 0, -m_rotationSpeed.Y * m_linearSpeed.Z / m_maxSpeed/8) * Orientation;
 
 			if (m_move.Forward)
 			{
-				if (m_linearSpeed.Z > -1000 || true )
+				if (m_linearSpeed.Z > -m_maxSpeed )
 				{
-					m_linearAcceleration.Z = -10000;  //*10
+					m_linearAcceleration.Z = -m_maxSpeed;
 				}
 				else
 				{
 					m_linearAcceleration.Z = 0;
-					m_linearSpeed.Z = -10000;  //*10
+					m_linearSpeed.Z = -m_maxSpeed;
 
 				}
 
@@ -271,7 +272,7 @@ namespace Xe.Physics3D
 			{
 				if (m_linearSpeed.Z < 0)
 				{
-					m_linearAcceleration.Z = 20000;
+					m_linearAcceleration.Z = 2 * m_maxSpeed;
 				}
 				else
 				{
@@ -285,7 +286,7 @@ namespace Xe.Physics3D
 			{
 				if (m_linearSpeed.Z < 0)
 				{
-					m_linearAcceleration.Z = 5000;
+					m_linearAcceleration.Z = m_maxSpeed/2;
 				}
 				else
 				{

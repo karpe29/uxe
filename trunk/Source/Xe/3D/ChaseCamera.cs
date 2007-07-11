@@ -19,7 +19,7 @@ namespace Xe.Graphics3D
 	public class ChaseCamera
 	{
 		public bool FixedCamera = false;
-		public int LagRatio = 25; // lower this to get a bigger amplitude when moving camera target
+		public float LagRatio = 0.25f; // lower this to get a bigger amplitude when moving camera target
 
 		private IPhysical3D m_target;
 		private Vector3 m_camPositionOffset,
