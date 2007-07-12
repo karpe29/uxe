@@ -30,9 +30,7 @@ namespace Xe.Graphics3D
 			m_camTargetOffset,
 			m_camTarget,
 			m_camDesiredTarget,
-			m_camUp,
-			m_linearAcceleration,
-			m_linearSpeed;
+			m_camUp;
 
 		private Xe.Tools.XeFile logFile = new Xe.Tools.XeFile("c:\\log.txt");
 
@@ -43,8 +41,7 @@ namespace Xe.Graphics3D
 
 			m_target = target;
 			m_camTargetOffset = camTargetOffset;
-			m_camPositionOffset = camPositionOffset;
-			m_camPosition =m_camDesiredPosition= m_camPositionOffset;
+			m_camPositionOffset=m_camPosition=m_camDesiredPosition = camPositionOffset;
 			this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
 		}
 
@@ -162,13 +159,25 @@ namespace Xe.Graphics3D
 				m_camPosition = m_camDesiredPosition;
 			}
 			else
-				if (m_camPosition != m_camDesiredPosition)
+			{
+				Vector3 diff = m_camDesiredPosition - m_camPosition;
+				float step=0, maxStep = diff.Length();
+
+				if (diff!=Vector3.Zero)
 				{
-					m_linearAcceleration = Vector3.Normalize(m_camDesiredPosition - m_camPosition) * IShipPhysical.m_maxSpeed ;
+					step = m_target.Speed.Length()*seconds;
+					if (step < maxStep)
+					{
+						m_camPosition += Vector3.Normalize(diff) * step;
+					}
+					else
+					{
+						m_camPosition = m_camDesiredPosition;
+					}
+
 				}
+			}
 			
-					m_linearSpeed += m_linearAcceleration * seconds;
-					m_camPosition += m_linearSpeed * seconds + m_linearAcceleration * (float)(Math.Pow(seconds, 2) / 2);
 
 
 					//logFile.WriteLine(seconds.ToString()+"\t"+  m_camPosition.Z.ToString() + "\t" + m_camDesiredPosition.Z.ToString());
