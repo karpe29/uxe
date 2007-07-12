@@ -10,13 +10,13 @@ namespace Xe.Tools
 	{
 		private string m_filename = "";
 		private FileMode m_fileMode = FileMode.OpenOrCreate; 
-		private FileAccess m_fileAccess = FileAccess.Read;
+		private FileAccess m_fileAccess = FileAccess.ReadWrite;
 		private FileShare m_fileShare = FileShare.None; 
 		private FileStream m_fileStream = null;			
 		private StreamWriter m_streamWriter = null;
 		private StreamReader m_streamReader = null;
 
-		private bool m_autoFlush = false;
+		private bool m_autoFlush = true;
 
 		public string FileName
 		{

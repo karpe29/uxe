@@ -49,10 +49,12 @@ namespace Xe.Physics3D
 		protected PhysicalType m_type;
 		protected Vector3 m_linearAcceleration, m_linearSpeed, m_linearPosition, m_rotationAcceleration, m_rotationSpeed, m_rotationPosition,m_direction,m_up;
 		protected Matrix m_drawOrientation,m_orientation=Matrix.Identity;
+		public Microsoft.Xna.Framework.Game m_game;
 
 		public IPhysical3D(Microsoft.Xna.Framework.Game game,PhysicalType type)
 			: base(game)
 		{
+			m_game = game;
 			m_type = type;
 			// TODO: Construct any child components here
 		}
