@@ -20,8 +20,8 @@ namespace Xe.Graphics3D
 	public class ChaseCamera
 	{
 		public bool FixedCamera = false;
+
 		public float LagRatio = 250f; // lower this to get a bigger amplitude when moving camera target
-		Stats m_stats;
 
 		private IPhysical3D m_target;
 		private Vector3 m_camPositionOffset,
@@ -30,18 +30,19 @@ namespace Xe.Graphics3D
 			m_camTargetOffset,
 			m_camTarget,
 			m_camDesiredTarget,
-			m_camUp;
+			m_camUp,
+			m_camLastDesiredPosition;
 
-		private Xe.Tools.XeFile logFile = new Xe.Tools.XeFile("c:\\log.txt");
+		private Stats m_stats ;
 
 
 		public ChaseCamera(IPhysical3D target, Vector3 camTargetOffset, Vector3 camPositionOffset)
 		{
-			m_stats = (Stats)target.m_game.Services.GetService(typeof(Stats));
-
+			 m_stats = (Stats)target.m_game.Services.GetService(typeof(Stats));
 			m_target = target;
 			m_camTargetOffset = camTargetOffset;
-			m_camPositionOffset=m_camPosition=m_camDesiredPosition = camPositionOffset;
+			m_camPositionOffset = camPositionOffset;
+			m_camLastDesiredPosition = m_camPositionOffset;
 			this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
 		}
 
@@ -147,9 +148,7 @@ namespace Xe.Graphics3D
 			if (gameTime == null)
 				throw new ArgumentNullException("gameTime");
 
-
-
-			float seconds = ((float)(gameTime.ElapsedGameTime.Milliseconds)) / 1000f;
+			float seconds = ((float)(gameTime.ElapsedGameTime).Ticks) / 10000000f;
 
 			m_camDesiredTarget = m_target.Position + Vector3.Transform(m_camTargetOffset, m_target.Orientation);
 			m_camDesiredPosition = m_target.Position + Vector3.Transform(m_camPositionOffset, m_target.Orientation);
@@ -160,33 +159,18 @@ namespace Xe.Graphics3D
 			}
 			else
 			{
-				Vector3 diff = m_camDesiredPosition - m_camPosition;
-				float step=0, maxStep = diff.Length();
+				Vector3 diff=(m_camDesiredPosition - m_camLastDesiredPosition);
+				float speed= diff.Length() / seconds;
+				Vector3 direction = Vector3.Normalize(m_camDesiredPosition - m_camPosition);
+				//m_camPosition +=  direction* speed*seconds;
 
-				if (diff!=Vector3.Zero)
-				{
-					step = m_target.Speed.Length()*seconds;
-					if (step < maxStep)
-					{
-						m_camPosition += Vector3.Normalize(diff) * step;
-					}
-					else
-					{
-						m_camPosition = m_camDesiredPosition;
-					}
+				m_camPosition += (m_camDesiredPosition - m_camPosition) * seconds * LagRatio/3;
 
-				}
+				m_stats.AddDebugString(speed.ToString());
+
 			}
+			m_camLastDesiredPosition = m_camDesiredPosition;
 			
-
-
-					//logFile.WriteLine(seconds.ToString()+"\t"+  m_camPosition.Z.ToString() + "\t" + m_camDesiredPosition.Z.ToString());
-				
-			m_stats.AddDebugString(Helper.Vector3ToString3f(m_camDesiredPosition));
-			m_stats.AddDebugString(Helper.Vector3ToString3f(m_camPosition));
-			m_stats.AddDebugString(Helper.Vector3ToString3f(m_camDesiredPosition - m_camPosition));
-
-
 			/*if (m_camTarget != m_camDesiredTarget)
 			{
 				m_camTarget += (m_camDesiredTarget - m_camTarget) * seconds * 5;
