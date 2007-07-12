@@ -82,7 +82,7 @@ namespace Xe.SpaceRace
 		{
 			base.Update(gameTime);
 
-						float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds) / 1000f;
+			float seconds = ((float)(gameTime.ElapsedGameTime).Ticks) / 10000000f;
 
 			if (m_solarSystem != null) // top level sun
 			{

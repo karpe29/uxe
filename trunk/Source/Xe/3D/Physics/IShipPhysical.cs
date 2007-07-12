@@ -134,7 +134,7 @@ namespace Xe.Physics3D
 			// TODO: Add your update code here
 			base.Update(gameTime);
 
-			float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds) / 1000f;
+			float seconds = ((float)(gameTime.ElapsedGameTime).Ticks) / 10000000f;
 
 			if (m_move.TurnRight)
 			{

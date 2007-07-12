@@ -175,7 +175,8 @@ namespace Xe.SpaceRace
 			
 			base.Update(gameTime);
 
-			angle += (float)gameTime.ElapsedGameTime.Milliseconds/1000f;
+			angle += ((float)(gameTime.ElapsedGameTime).Ticks) / 10000000f;
+
 			angle %= MathHelper.TwoPi;
 			m_model.World = Matrix.CreateRotationY(angle);
 

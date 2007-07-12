@@ -18,7 +18,7 @@ namespace Xe.Physics3D
 			// TODO: Add your update code here
 			base.Update(gameTime);
 
-			float seconds = ((float)(gameTime.ElapsedGameTime).Milliseconds) / 1000f;
+			float seconds = ((float)(gameTime.ElapsedGameTime).Ticks) / 10000000f;
 			RotationPosition = m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
 			Orientation = Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z) * Orientation;
 

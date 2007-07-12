@@ -40,14 +40,14 @@ namespace Xe
 
 			m_contentManager = new ContentManager(this.Services);
 
-			this.IsFixedTimeStep = false;
-			this.TargetElapsedTime = new TimeSpan(1);
+			this.IsFixedTimeStep = true;
+			this.TargetElapsedTime = TimeSpan.FromMilliseconds(10);
 			this.IsMouseVisible = true;
 
 			this.Window.Title = "Xe3D";
 			this.Window.AllowUserResizing = true;
 			
-			this.m_graphics.SynchronizeWithVerticalRetrace = false;
+			//this.m_graphics.SynchronizeWithVerticalRetrace = false;
 			this.m_graphics.PreferredBackBufferWidth = 1024;
 			this.m_graphics.PreferredBackBufferHeight = 768;
 			this.m_graphics.PreferMultiSampling = true;
