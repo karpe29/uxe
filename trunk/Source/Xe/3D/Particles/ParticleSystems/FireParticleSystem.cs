@@ -40,10 +40,10 @@ namespace Xe.Particles3D
             settings.MaxHorizontalVelocity = 0;
 
             settings.MinVerticalVelocity = 0;
-            settings.MaxVerticalVelocity = 15;
+            settings.MaxVerticalVelocity = 0;
 
             // Set gravity upside down, so the flames will 'fall' upward.
-            settings.Gravity = new Vector3(0, 0, 50);
+            settings.Gravity = new Vector3(0, 0, 0);
 
             settings.MinColor = new Color(255, 255, 255, 10);
             settings.MaxColor = new Color(255, 255, 255, 40);

@@ -32,12 +32,10 @@ namespace Xe.Graphics3D
 			m_camDesiredTarget,
 			m_camUp;
 
-		private Stats m_stats ;
 
 
 		public ChaseCamera(IShipPhysical target, Vector3 camTargetOffset, Vector3 camPositionOffset)
 		{
-			 m_stats = (Stats)target.m_game.Services.GetService(typeof(Stats));
 			m_target = target;
 			m_camTargetOffset = camTargetOffset;
 			m_camPositionOffset=m_camPosition = camPositionOffset;
@@ -159,10 +157,6 @@ namespace Xe.Graphics3D
 			{
 				decal = 50 * (float)(Math.Log((double)(-m_target.Speed.Z + IShipPhysical.m_maxSpeed / 10), 4) - Math.Log((double)(IShipPhysical.m_maxSpeed / 10), 4));
 				m_camPosition = m_camDesiredPosition - Vector3.Transform(Vector3.Forward, m_target.Orientation)*decal;
-				m_stats.AddDebugString(Helper.Vector3ToString3f(m_target.RotationSpeed));
-				m_stats.AddDebugString(Helper.Vector3ToString3f(m_target.Acceleration));
-				m_stats.AddDebugString(Helper.Vector3ToString3f(m_target.Speed));
-				m_stats.AddDebugString(seconds.ToString());
 			}
 			
 
