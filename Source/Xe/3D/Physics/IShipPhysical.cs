@@ -116,6 +116,7 @@ namespace Xe.Physics3D
 	{
 		private MoveState m_move;
 		public static float m_maxSpeed = 100000;
+		public static float m_handling = 1;
 
 		public IShipPhysical(Microsoft.Xna.Framework.Game game, PhysicalType type) : base(game,type)
 		{
@@ -138,41 +139,41 @@ namespace Xe.Physics3D
 
 			if (m_move.TurnRight)
 			{
-				if (m_rotationSpeed.Y > -5)
+				if (m_rotationSpeed.Y > -2*m_handling)
 				{
 					if (m_rotationSpeed.Y > 0)
 					{
-						m_rotationAcceleration.Y = -15;
+						m_rotationAcceleration.Y = -6 *m_handling;
 					}
 					else
 					{
-						m_rotationAcceleration.Y = -5;
+						m_rotationAcceleration.Y = -2  *m_handling;
 					}
 				}
 				else
 				{
 					m_rotationAcceleration.Y = 0;
-					m_rotationSpeed.Y = -5;
+					m_rotationSpeed.Y = -2 * m_handling;
 				}
 			}
 
 			if (m_move.TurnLeft)
 			{
-				if (m_rotationSpeed.Y < 5)
+				if (m_rotationSpeed.Y < 2 * m_handling)
 				{
 					if (m_rotationSpeed.Y < 0)
 					{
-						m_rotationAcceleration.Y = 15;
+						m_rotationAcceleration.Y = 6 * m_handling;
 					}
 					else
 					{
-						m_rotationAcceleration.Y = 5;
+						m_rotationAcceleration.Y = 2 * m_handling;
 					}
 				}
 				else
 				{
 					m_rotationAcceleration.Y = 0;
-					m_rotationSpeed.Y = 5;
+					m_rotationSpeed.Y = 2 * m_handling;
 				}
 			}
 			if (!m_move.TurnRight && !m_move.TurnLeft)
@@ -186,48 +187,48 @@ namespace Xe.Physics3D
 					}
 					else
 					{
-						m_rotationAcceleration.Y = -Math.Sign(m_rotationSpeed.Y) * 10;
+						m_rotationAcceleration.Y = -Math.Sign(m_rotationSpeed.Y) * 2 * m_handling;
 					}
 				}
 			}
 
 			if (m_move.Down)
 			{
-				if (m_rotationSpeed.X > -5)
+				if (m_rotationSpeed.X > -2 * m_handling)
 				{
 					if (m_rotationSpeed.X > 0)
 					{
-						m_rotationAcceleration.X = -15;
+						m_rotationAcceleration.X = -6 * m_handling;
 					}
 					else
 					{
-						m_rotationAcceleration.X = -5;
+						m_rotationAcceleration.X = -2 * m_handling;
 					}
 				}
 				else
 				{
 					m_rotationAcceleration.X = 0;
-					m_rotationSpeed.X = -5;
+					m_rotationSpeed.X = -2 * m_handling;
 				}
 			}
 
 			if (m_move.Up)
 			{
-				if (m_rotationSpeed.X < 5)
+				if (m_rotationSpeed.X < 2 * m_handling)
 				{
 					if (m_rotationSpeed.X < 0)
 					{
-						m_rotationAcceleration.X = 15;
+						m_rotationAcceleration.X = 6 * m_handling;
 					}
 					else
 					{
-						m_rotationAcceleration.X = 5;
+						m_rotationAcceleration.X = 2 * m_handling;
 					}
 				}
 				else
 				{
 					m_rotationAcceleration.X = 0;
-					m_rotationSpeed.X = 5;
+					m_rotationSpeed.X = 2 * m_handling;
 				}
 			}
 			if (!m_move.Up && !m_move.Down)
@@ -241,7 +242,7 @@ namespace Xe.Physics3D
 					}
 					else
 					{
-						m_rotationAcceleration.X = -Math.Sign(m_rotationSpeed.X) * 10;
+						m_rotationAcceleration.X = -Math.Sign(m_rotationSpeed.X) * 2 * m_handling;
 					}
 				}
 			}
@@ -251,7 +252,7 @@ namespace Xe.Physics3D
 			RotationPosition = m_rotationSpeed * seconds + m_rotationAcceleration * (float)(Math.Pow(seconds, 2) / 2);
 			Orientation = Matrix.CreateFromYawPitchRoll(m_rotationPosition.Y, m_rotationPosition.X, m_rotationPosition.Z) * Orientation;
 
-			DrawOrientation = Matrix.CreateFromYawPitchRoll(0, 0, -m_rotationSpeed.Y * m_linearSpeed.Z / m_maxSpeed/8) * Orientation;
+			DrawOrientation = Matrix.CreateFromYawPitchRoll(0, -m_rotationSpeed.X * m_linearSpeed.Z / m_maxSpeed / m_handling / 4, -m_rotationSpeed.Y * m_linearSpeed.Z / m_maxSpeed / m_handling / 3) * Orientation;
 
 			if (m_move.Forward)
 			{
