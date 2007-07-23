@@ -21,13 +21,11 @@ namespace Xe.Graphics3D
 	{
 		public bool FixedCamera = false;
 
-		public float LagRatio = 250f; // lower this to get a bigger amplitude when moving camera target
 
+		private float decal;
 		private IShipPhysical m_target;
 		private Vector3 m_camPositionOffset,
 			m_camPosition,
-			m_camSpeed,
-			m_camAcceleration,
 			m_camDesiredPosition,
 			m_camTargetOffset,
 			m_camTarget,
@@ -159,29 +157,12 @@ namespace Xe.Graphics3D
 			}
 			else
 			{
-				float decal = 50 * (float)(Math.Log((double)(-m_target.Speed.Z + IShipPhysical.m_maxSpeed / 10), 4) - Math.Log((double)(IShipPhysical.m_maxSpeed / 10), 4));
+				decal = 50 * (float)(Math.Log((double)(-m_target.Speed.Z + IShipPhysical.m_maxSpeed / 10), 4) - Math.Log((double)(IShipPhysical.m_maxSpeed / 10), 4));
 				m_camPosition = m_camDesiredPosition - Vector3.Transform(Vector3.Forward, m_target.Orientation)*decal;
-				//m_camPosition += (m_camDesiredPosition - m_camPosition) * seconds * LagRatio/3;
 				m_stats.AddDebugString(Helper.Vector3ToString3f(m_target.RotationSpeed));
-				m_stats.AddDebugString(m_target.Orientation.ToString());
-				/*if (m_target.MoveState.Forward)
-				{
-					m_camAcceleration.Z = -IShipPhysical.m_maxSpeed*0.95f;
-				}
-				else
-				{
-					m_camAcceleration.Z = 0;
-				}
-
-				m_camSpeed += m_camAcceleration * seconds;
-				m_camPosition += Vector3.Transform(m_camSpeed * seconds + m_camAcceleration * (float)(Math.Pow(seconds, 2) / 2), m_target.Orientation);
-				*/
+				m_stats.AddDebugString(seconds.ToString());
 			}
 			
-			/*if (m_camTarget != m_camDesiredTarget)
-			{
-				m_camTarget += (m_camDesiredTarget - m_camTarget) * seconds * 5;
-			}*/
 
 			m_camTarget = m_camDesiredTarget;
 
