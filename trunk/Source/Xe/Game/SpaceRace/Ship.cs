@@ -114,11 +114,11 @@ namespace Xe.SpaceRace
 				m_model.Draw(gameTime);
 
 			smokePlumeParticles.SetCamera(m_model.View, m_model.Projection);
-			smokePlumeParticles.Gravity = Vector3.Transform(new Vector3(0, 0, 200), Orientation);
+			smokePlumeParticles.Gravity = Vector3.Transform(new Vector3(0, 0, Speed.Z+ 200), Orientation);
 			smokePlumeParticles.Draw(gameTime);
 
 			fireParticles.SetCamera(m_model.View, m_model.Projection);
-			fireParticles.Gravity = Vector3.Transform(new Vector3(0, 0, 200), Orientation);
+			fireParticles.Gravity = Vector3.Transform(new Vector3(0, 0, Speed.Z + 200), Orientation);
 			fireParticles.Draw(gameTime);
 				
 
