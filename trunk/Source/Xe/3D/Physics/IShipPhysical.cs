@@ -179,7 +179,7 @@ namespace Xe.Physics3D
 			{
 				if (m_rotationSpeed.Y != 0)
 				{
-					if (Math.Abs(m_rotationSpeed.Y) < 0.01)
+					if (Math.Abs(m_rotationSpeed.Y) < 0.1)
 					{
 						m_rotationAcceleration.Y = 0;
 						m_rotationSpeed.Y = 0;
@@ -234,7 +234,7 @@ namespace Xe.Physics3D
 			{
 				if (m_rotationSpeed.X != 0)
 				{
-					if (Math.Abs(m_rotationSpeed.X) < 0.01)
+					if (Math.Abs(m_rotationSpeed.X) < 0.1)
 					{
 						m_rotationAcceleration.X = 0;
 						m_rotationSpeed.X = 0;
