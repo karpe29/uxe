@@ -160,6 +160,8 @@ namespace Xe.Graphics3D
 				decal = 50 * (float)(Math.Log((double)(-m_target.Speed.Z + IShipPhysical.m_maxSpeed / 10), 4) - Math.Log((double)(IShipPhysical.m_maxSpeed / 10), 4));
 				m_camPosition = m_camDesiredPosition - Vector3.Transform(Vector3.Forward, m_target.Orientation)*decal;
 				m_stats.AddDebugString(Helper.Vector3ToString3f(m_target.RotationSpeed));
+				m_stats.AddDebugString(Helper.Vector3ToString3f(m_target.Acceleration));
+				m_stats.AddDebugString(Helper.Vector3ToString3f(m_target.Speed));
 				m_stats.AddDebugString(seconds.ToString());
 			}
 			

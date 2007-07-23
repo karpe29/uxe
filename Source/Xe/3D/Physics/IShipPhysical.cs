@@ -116,7 +116,8 @@ namespace Xe.Physics3D
 	{
 		private MoveState m_move;
 		public static float m_maxSpeed = 100000;
-		public static float m_handling = 1;
+		public static float m_handling = 3;
+		public static float m_acc = 80000;
 
 		public IShipPhysical(Microsoft.Xna.Framework.Game game, PhysicalType type) : base(game,type)
 		{
@@ -143,7 +144,7 @@ namespace Xe.Physics3D
 				{
 					if (m_rotationSpeed.Y > 0)
 					{
-						m_rotationAcceleration.Y = -6 *m_handling;
+						m_rotationAcceleration.Y = -4 *m_handling;
 					}
 					else
 					{
@@ -163,7 +164,7 @@ namespace Xe.Physics3D
 				{
 					if (m_rotationSpeed.Y < 0)
 					{
-						m_rotationAcceleration.Y = 6 * m_handling;
+						m_rotationAcceleration.Y = 4 * m_handling;
 					}
 					else
 					{
@@ -180,7 +181,7 @@ namespace Xe.Physics3D
 			{
 				if (m_rotationSpeed.Y != 0)
 				{
-					if (Math.Abs(m_rotationSpeed.Y) < 0.1)
+					if (Math.Abs(m_rotationSpeed.Y) < m_handling/100)
 					{
 						m_rotationAcceleration.Y = 0;
 						m_rotationSpeed.Y = 0;
@@ -198,7 +199,7 @@ namespace Xe.Physics3D
 				{
 					if (m_rotationSpeed.X > 0)
 					{
-						m_rotationAcceleration.X = -6 * m_handling;
+						m_rotationAcceleration.X = -4 * m_handling;
 					}
 					else
 					{
@@ -218,7 +219,7 @@ namespace Xe.Physics3D
 				{
 					if (m_rotationSpeed.X < 0)
 					{
-						m_rotationAcceleration.X = 6 * m_handling;
+						m_rotationAcceleration.X = 4 * m_handling;
 					}
 					else
 					{
@@ -235,7 +236,7 @@ namespace Xe.Physics3D
 			{
 				if (m_rotationSpeed.X != 0)
 				{
-					if (Math.Abs(m_rotationSpeed.X) < 0.1)
+					if (Math.Abs(m_rotationSpeed.X) < m_handling/100)
 					{
 						m_rotationAcceleration.X = 0;
 						m_rotationSpeed.X = 0;
@@ -258,7 +259,7 @@ namespace Xe.Physics3D
 			{
 				if (m_linearSpeed.Z > -m_maxSpeed )
 				{
-					m_linearAcceleration.Z = -m_maxSpeed;
+					m_linearAcceleration.Z = -m_acc;
 				}
 				else
 				{
@@ -273,7 +274,7 @@ namespace Xe.Physics3D
 			{
 				if (m_linearSpeed.Z < 0)
 				{
-					m_linearAcceleration.Z = 2 * m_maxSpeed;
+					m_linearAcceleration.Z = 2 * m_acc;
 				}
 				else
 				{
@@ -287,7 +288,7 @@ namespace Xe.Physics3D
 			{
 				if (m_linearSpeed.Z < 0)
 				{
-					m_linearAcceleration.Z = m_maxSpeed/2;
+					m_linearAcceleration.Z = m_acc / 2;
 				}
 				else
 				{
