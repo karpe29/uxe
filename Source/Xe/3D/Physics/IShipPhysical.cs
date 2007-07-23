@@ -138,6 +138,7 @@ namespace Xe.Physics3D
 
 			float seconds = ((float)(gameTime.ElapsedGameTime).Ticks) / 10000000f;
 
+			
 			if (m_move.TurnRight)
 			{
 				if (m_rotationSpeed.Y > -2*m_handling)
