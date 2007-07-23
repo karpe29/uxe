@@ -23,26 +23,26 @@ namespace Xe.Graphics3D
 
 		public float LagRatio = 250f; // lower this to get a bigger amplitude when moving camera target
 
-		private IPhysical3D m_target;
+		private IShipPhysical m_target;
 		private Vector3 m_camPositionOffset,
 			m_camPosition,
+			m_camSpeed,
+			m_camAcceleration,
 			m_camDesiredPosition,
 			m_camTargetOffset,
 			m_camTarget,
 			m_camDesiredTarget,
-			m_camUp,
-			m_camLastDesiredPosition;
+			m_camUp;
 
 		private Stats m_stats ;
 
 
-		public ChaseCamera(IPhysical3D target, Vector3 camTargetOffset, Vector3 camPositionOffset)
+		public ChaseCamera(IShipPhysical target, Vector3 camTargetOffset, Vector3 camPositionOffset)
 		{
 			 m_stats = (Stats)target.m_game.Services.GetService(typeof(Stats));
 			m_target = target;
 			m_camTargetOffset = camTargetOffset;
-			m_camPositionOffset = camPositionOffset;
-			m_camLastDesiredPosition = m_camPositionOffset;
+			m_camPositionOffset=m_camPosition = camPositionOffset;
 			this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
 		}
 
@@ -159,17 +159,21 @@ namespace Xe.Graphics3D
 			}
 			else
 			{
-				Vector3 diff=(m_camDesiredPosition - m_camLastDesiredPosition);
-				float speed= diff.Length() / seconds;
-				Vector3 direction = Vector3.Normalize(m_camDesiredPosition - m_camPosition);
-				//m_camPosition +=  direction* speed*seconds;
+				float decal=10*(float)Math.Log((double)(-m_target.Speed.Z+IShipPhysical.m_maxSpeed/100),4);
+				m_camPosition = m_camDesiredPosition - decal * Vector3.Transform(Vector3.Forward, m_target.Orientation);
+				/*if (m_target.MoveState.Forward)
+				{
+					m_camAcceleration.Z = -IShipPhysical.m_maxSpeed*0.95f;
+				}
+				else
+				{
+					m_camAcceleration.Z = 0;
+				}
 
-				m_camPosition += (m_camDesiredPosition - m_camPosition) * seconds * LagRatio/3;
-
-				m_stats.AddDebugString(speed.ToString());
-
+				m_camSpeed += m_camAcceleration * seconds;
+				m_camPosition += Vector3.Transform(m_camSpeed * seconds + m_camAcceleration * (float)(Math.Pow(seconds, 2) / 2), m_target.Orientation);
+				*/
 			}
-			m_camLastDesiredPosition = m_camDesiredPosition;
 			
 			/*if (m_camTarget != m_camDesiredTarget)
 			{
