@@ -19,13 +19,14 @@ using System.Xml.Xsl;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
+using Xe.Tools;
 #endregion
 
-namespace Xe.Data
+namespace Xe.Tools
 {
     public delegate void BeforeClosingHandler();
 
-    public partial class XmlLogger : Microsoft.Xna.Framework.GameComponent, IXmlLoggerService, IService
+    public partial class XmlLogger : Microsoft.Xna.Framework.GameComponent, IXmlLoggerService, Xe.Tools.IService
     {
         #region Members
         protected XmlTextWriter m_xmlWriter;
@@ -38,7 +39,7 @@ namespace Xe.Data
 
         public event BeforeClosingHandler BeforeClosing;
 
-        protected IReporterService m_reporter;
+        protected Xe.Tools.IReporterService m_reporter;
         #endregion
 
         #region Constructor & Initialization

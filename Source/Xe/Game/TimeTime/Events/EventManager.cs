@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+#pragma warning disable 0169
+
 namespace Xe.TimeTime
 {
 	public enum Modifier
@@ -46,3 +48,5 @@ namespace Xe.TimeTime
 		}
 	}
 }
+
+#pragma warning restore 0169

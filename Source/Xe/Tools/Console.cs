@@ -24,9 +24,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Xe.Tools;
 #endregion
 
-namespace Xe.Input
+namespace Xe.Tools
 {
     public partial class Console : Microsoft.Xna.Framework.DrawableGameComponent, IService, IConsoleService
     {
@@ -56,7 +57,6 @@ namespace Xe.Input
         protected SpriteFont m_font;
         protected GraphicsDevice m_device;
         protected ContentManager m_conManager;
-        protected IManagerService m_manager;
 
         protected string m_prefix = "> ";
         protected string m_suffix = "_";
@@ -94,10 +94,6 @@ namespace Xe.Input
             m_device = ((IGraphicsDeviceService)this.Game.Services.GetService(typeof(IGraphicsDeviceService))).GraphicsDevice;
 
             m_reporter = (IReporterService)this.Game.Services.GetService(typeof(IReporterService));
-
-            m_manager = (IManagerService)this.Game.Services.GetService(typeof(IManagerService));
-            if (m_manager != null)
-                m_manager.AddService(this);
         }
         #endregion
 
@@ -216,7 +212,7 @@ namespace Xe.Input
 
                             break;
                         default:
-                            m_input += Globals.KeyToString(k.Key, k.Shift);
+                            m_input += Helper.KeyToString(k.Key, k.Shift);
                             break;
                     }
                 }

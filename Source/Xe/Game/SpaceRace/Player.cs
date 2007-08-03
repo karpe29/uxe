@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Xe.GameScreen;
 using Microsoft.Xna.Framework.Input;
 using Xe.Tools;
-using Xe.Objects3D;
 using Xe.Physics3D;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -47,7 +46,7 @@ namespace Xe.SpaceRace
 			SpaceRaceHudScreen hud = new SpaceRaceHudScreen(gameScreenManager);
 
 			s = new SkyBox(gameScreenManager.Game, @"Content\Skybox\bryce");
-			s.ContentManager = gameScreenManager.ContentManager;
+			s.ContentManager = XeGame.ContentManager;
 			s.Initialize();
 		}
 

@@ -9,39 +9,93 @@ using Microsoft.Xna.Framework.Content;
 using Xe;
 using Xe.Graphics2D;
 using Xe.GUI;
-using Xe.Input;
 
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Xe.Tools;
+using Xe.Graphics2D.PostProcessing;
 
 namespace Xe
 {
 	public class XeGame : Microsoft.Xna.Framework.Game
 	{
+		#region Static Variables
+
+		private static ContentManager s_contentManager;
+		
+		private static GameScreenManager s_gameScreenManager;
+
+		private static GraphicsDevice s_device;
+
+		#endregion	
+
+		#region Static Properties
+
+		public static ContentManager ContentManager
+		{
+			get { return s_contentManager; }
+		}
+
+		public static GUIManager GuiManager
+		{
+			get { return (GUIManager)ServiceHelper.Get<IGUIManagerService>(); }
+		}
+
+		public static Ebi Ebi
+		{
+			get { return (Ebi)ServiceHelper.Get<IEbiService>(); }
+		}
+
+		public static Stats Stats
+		{
+			get { return ServiceHelper.Get<Stats>(); }
+		}
+
+		public static GameScreenManager GameScreenManager
+		{
+			get { return s_gameScreenManager; }
+		}
+
+		public static GraphicsDevice Device
+		{
+			get { return s_device; }
+		}
+
+		#endregion
+
 		#region Variables
 
-		private GUIManager m_guiManager;
-		private Xe.Input.Ebi m_ebi;
+		PostProcess ppe;
 
-		private ContentManager m_contentManager;
-		
-		private GameScreenManager m_gameScreenManager;
+		protected GraphicsDeviceManager m_graphics;
 
 		private StatScreen m_statScreen;
 		private ConsoleScreen m_consoleScreen;
 		private IntroScreen m_introScreen;
 
-		protected GraphicsDeviceManager m_graphics;
-		#endregion	
+		private GUIManager m_guiManager;
+
+		private Ebi m_ebi;
+
+		#endregion 
+
+		#region Properties
+
+		#endregion
+
 
 		public XeGame()
 		{
+			ServiceHelper.Game = this;
+
 			m_graphics = new GraphicsDeviceManager(this);
 
-			m_contentManager = new ContentManager(this.Services);
+			
+
+			s_contentManager = new ContentManager(ServiceHelper.Services);
 
 			this.IsFixedTimeStep = false;
-			//this.TargetElapsedTime = TimeSpan.FromMilliseconds(10);
+			this.TargetElapsedTime = TimeSpan.FromMilliseconds(1);
 			this.IsMouseVisible = true;
 
 			this.Window.Title = "Xe3D";
@@ -54,29 +108,42 @@ namespace Xe
 			
 			m_ebi = new Ebi(this);
 			m_ebi.UpdateOrder = 0;
-			Components.Add(this.m_ebi);
+			Components.Add(m_ebi);
 
 			m_guiManager = new GUIManager(this);
 			m_guiManager.UpdateOrder = 1000;
 			m_guiManager.DrawOrder = 1000;
-			Components.Add(this.m_guiManager);
+			Components.Add(m_guiManager);
 
-			m_gameScreenManager = new GameScreenManager(this, m_contentManager);
-			m_gameScreenManager.UpdateOrder = 500;
-			m_gameScreenManager.DrawOrder = 500;
-			Components.Add(this.m_gameScreenManager);
+			s_gameScreenManager = new GameScreenManager(this);
+			s_gameScreenManager.UpdateOrder = 500;
+			s_gameScreenManager.DrawOrder = 500;
+			Components.Add(s_gameScreenManager);
 		}
-
+			
 		protected override void Initialize()
 		{
+			s_device = m_graphics.GraphicsDevice;
+
 			m_guiManager.LoadSettings(@"Content\XML\gui_Xe.xml");
 
-			m_statScreen = new StatScreen(m_gameScreenManager);
-			m_consoleScreen = new ConsoleScreen(m_gameScreenManager);
+			m_statScreen = new StatScreen(s_gameScreenManager);
 
-			m_introScreen = new IntroScreen(m_gameScreenManager);
+			m_consoleScreen = new ConsoleScreen(s_gameScreenManager);
+
+			m_introScreen = new IntroScreen(s_gameScreenManager);
 
 			base.Initialize();
+		}
+
+		protected override void LoadGraphicsContent(bool loadAllContent)
+		{
+			base.LoadGraphicsContent(loadAllContent);
+
+			if (loadAllContent)
+			{
+				ppe = new PostProcess(XeGame.Device);
+			}
 		}
 
 		
@@ -114,6 +181,29 @@ namespace Xe
 					}
 					this.m_graphics.ToggleFullScreen();
 				}
+		}
+
+		protected override void Draw(GameTime gameTime)
+		{
+			base.Draw(gameTime);
+
+			ppe.ResolveBackBuffer();
+
+			//ppe.BloomExtract.Threshold = 1.0f;
+			
+			ppe.ApplyBloomExtract();
+			ppe.ApplyRadialBlur();
+			ppe.ApplyGaussianBlurH();
+			ppe.ApplyGaussianBlurV();
+
+
+			ppe.ApplyToneMapping();
+
+			
+
+			ppe.CombineWithBackBuffer();
+
+			ppe.Present(null);
 		}
 	}
 }

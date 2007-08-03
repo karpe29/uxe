@@ -26,7 +26,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 #endregion
 
-namespace Xe.Input
+namespace Xe.Tools
 {
     #region Delegates
     public delegate void KeyDownHandler(object focus, KeyEventArgs k);

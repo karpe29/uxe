@@ -6,11 +6,9 @@ using Microsoft.Xna.Framework;
 using Xe.GameScreen;
 using Microsoft.Xna.Framework.Input;
 using Xe.Graphics3D;
-using Xe.Input;
-using Xe.Objects3D;
 using Xe.Physics3D;
 using Xe.SpaceRace;
-using Xe.Particles3D;
+using Xe.Graphics3D.Particles;
 using Xe.Tools;
 
 namespace Xe.SpaceRace
@@ -74,10 +72,10 @@ namespace Xe.SpaceRace
 			m_gameScreen = gameScreenManager.CurrentGameScreen as SpaceRaceScreen;
 			m_shipType = type;
 
-			fireParticles = new FireParticleSystem(gameScreenManager.Game, gameScreenManager.ContentManager);
+			fireParticles = new FireParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
 			fireParticles.Initialize();
 
-			smokePlumeParticles = new SmokePlumeParticleSystem(gameScreenManager.Game, gameScreenManager.ContentManager);
+			smokePlumeParticles = new SmokePlumeParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
 			smokePlumeParticles.Initialize();
 			
 			this.Initialize();
