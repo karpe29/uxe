@@ -20,17 +20,32 @@ using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Xe.Tools;
 #endregion
 
-namespace Xe
+namespace Xe.Tools
 {
+	#region IService Interface
+    public interface IService
+    {
+        /// <summary>
+        /// A unique ID.
+        /// </summary>
+        string ID { get; }
+
+        /// <summary>
+        /// Load settings via XML.
+        /// </summary>
+        /// <param name="node">The appropriate XmlNode.</param>
+        void LoadSettings(XmlNode node);
+    }
+    #endregion
+
     public partial class Reporter : Microsoft.Xna.Framework.GameComponent, IService, IReporterService
     {
         #region Members
         private ReportLevel m_reportLevel = ReportLevel.Errors | ReportLevel.FatalErrors | ReportLevel.Messages;
         private bool m_throwExceptions = false;
-
-        protected IManagerService m_manager;
 
         public event ErrorReportedHandler ErrorReported;
         public event WarningReportedHandler WarningReported;
@@ -44,11 +59,7 @@ namespace Xe
             if (game != null)
                 game.Services.AddService(typeof(IReporterService), this);
 
-            m_manager = (IManagerService)this.Game.Services.GetService(typeof(IManagerService));
-            if (m_manager != null)
-                m_manager.AddService(this);
-
-            AddHandlers();
+			AddHandlers();
         }
 
         ~Reporter()
@@ -61,9 +72,6 @@ namespace Xe
             base.Dispose(disposing);
 
             RemoveHandlers();
-
-            if (m_manager != null)
-                m_manager.RemoveService(this);
         }
         #endregion
 

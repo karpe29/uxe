@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
-using Xe.Input;
 using Xe.Graphics3D;
 using Microsoft.Xna.Framework;
-using Xe.Objects3D;
 using Xe.GameScreen;
 
 

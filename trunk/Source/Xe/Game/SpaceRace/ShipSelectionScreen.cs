@@ -6,6 +6,7 @@ using Xe.GameScreen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Xe.Graphics3D;
+using Xe.Tools;
 
 namespace Xe.SpaceRace
 {
@@ -32,34 +33,34 @@ namespace Xe.SpaceRace
 		{
 			m_datas = datas;
 
-			labelPlayer = new Label(GameScreenManager.Game, GameScreenManager.GuiManager);
+			labelPlayer = new Label(GameScreenManager.Game, XeGame.GuiManager);
 			labelPlayer.TextAlign = TextAlignment.Center;
 			labelPlayer.Text = "Player " + (m_datas.CurrentPlayerNumber+1).ToString() + " Ship";
 			labelPlayer.Width = 120;
 			labelPlayer.Height = 30;
 			labelPlayer.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - labelPlayer.Width / 2;
 			labelPlayer.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 1 / 4 - labelPlayer.Height / 2;
-			GameScreenManager.GuiManager.AddControl(labelPlayer);
+			XeGame.GuiManager.AddControl(labelPlayer);
 
-			buttonBack = new Button(GameScreenManager.Game, GameScreenManager.GuiManager);
+			buttonBack = new Button(GameScreenManager.Game, XeGame.GuiManager);
 			buttonBack.Text = "Back";
 			buttonBack.Width = 120;
 			buttonBack.Height = 30;
 			buttonBack.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - buttonBack.Width / 2;
 			buttonBack.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonBack.Height / 2;
 			buttonBack.Click += new ClickHandler(buttonBack_Click);
-			GameScreenManager.GuiManager.AddControl(buttonBack);
+			XeGame.GuiManager.AddControl(buttonBack);
 
-			buttonAccept = new Button(GameScreenManager.Game, GameScreenManager.GuiManager);
+			buttonAccept = new Button(GameScreenManager.Game, XeGame.GuiManager);
 			buttonAccept.Text = "Accept";
 			buttonAccept.Width = 120;
 			buttonAccept.Height = 30;
 			buttonAccept.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 3 / 4 - buttonAccept.Width / 2;
 			buttonAccept.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonAccept.Height / 2;
 			buttonAccept.Click += new ClickHandler(buttonAccept_Click);
-			GameScreenManager.GuiManager.AddControl(buttonAccept);
+			XeGame.GuiManager.AddControl(buttonAccept);
 
-			sliderShip = new Slider(GameScreenManager.Game, GameScreenManager.GuiManager);
+			sliderShip = new Slider(GameScreenManager.Game, XeGame.GuiManager);
 			sliderShip.Width = (buttonAccept.X - buttonBack.X - buttonBack.Width) * 4 / 5;
 			sliderShip.Height = 30;
 			sliderShip.X = buttonBack.X + buttonBack.Width + ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 1 / 10);
@@ -69,7 +70,7 @@ namespace Xe.SpaceRace
 			sliderShip.Step = 1;
 			sliderShip.Value = 0;
 			sliderShip.ValueChanged += new ValueChangedHandler(sliderShip_ValueChanged);
-			GameScreenManager.GuiManager.AddControl(sliderShip);
+			XeGame.GuiManager.AddControl(sliderShip);
 
 			m_model = new BasicModel3D(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value].ModelAsset);
 			
@@ -82,7 +83,7 @@ namespace Xe.SpaceRace
 			m_model.AssetName = ShipType.Types[(int)value].ModelAsset;
 		}
 
-		void buttonAccept_Click(object sender, Xe.Input.MouseEventArgs args)
+		void buttonAccept_Click(object sender, MouseEventArgs args)
 		{
 
 			ExitScreen();
@@ -102,7 +103,7 @@ namespace Xe.SpaceRace
 		}
 		
 
-		void buttonBack_Click(object sender, Xe.Input.MouseEventArgs args)
+		void buttonBack_Click(object sender, MouseEventArgs args)
 		{
 			ExitScreen();
 
@@ -150,16 +151,16 @@ namespace Xe.SpaceRace
 
 		protected override void Cleanup()
 		{
-			GameScreenManager.GuiManager.RemoveControl(labelPlayer);
+			XeGame.GuiManager.RemoveControl(labelPlayer);
 			labelPlayer.Dispose();
 
-			GameScreenManager.GuiManager.RemoveControl(buttonBack);
+			XeGame.GuiManager.RemoveControl(buttonBack);
 			buttonBack.Dispose();
 
-			GameScreenManager.GuiManager.RemoveControl(buttonAccept);
+			XeGame.GuiManager.RemoveControl(buttonAccept);
 			buttonAccept.Dispose();
 
-			GameScreenManager.GuiManager.RemoveControl(sliderShip);
+			XeGame.GuiManager.RemoveControl(sliderShip);
 			sliderShip.Dispose();
 		}
 
@@ -187,7 +188,7 @@ namespace Xe.SpaceRace
 			if (!this.Visible)
 				return;
 
-			this.GameScreenManager.Stats.AddModelPolygonsCount(m_model.Model);
+			XeGame.Stats.AddModelPolygonsCount(m_model.Model);
 
 
 			m_model.View = this.ViewMatrix;

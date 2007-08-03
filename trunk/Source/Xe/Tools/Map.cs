@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 #endregion
 
-namespace Xe.Data.Collections
+namespace Xe.Tools
 {
     public class Map<T> : IDisposable
     {
@@ -88,7 +88,7 @@ namespace Xe.Data.Collections
             {
                 foreach (MapItem _item in m_map)
                     if (_item.Index == index)
-                        throw new ObjectFoundException(_item);
+                        throw new InvalidOperationException("Object Already in list" + _item.ToString());
 
                 MapItem _temp = new MapItem();
                 _temp.ObjectRef = objectRef;
@@ -118,7 +118,7 @@ namespace Xe.Data.Collections
                     _temp = _item;
                 }
 
-                throw new ObjectNotFoundException(_temp);
+                throw new InvalidOperationException("Object Not found in list" + _temp.ToString());
             }
             catch
             {
@@ -262,7 +262,7 @@ namespace Xe.Data.Collections
             {
                 foreach (MapItem _item in m_map)
                     if (_item.Index.Equals(index))
-                        throw new ObjectFoundException(_item);
+                        throw new InvalidOperationException("Object Already in list" + _item.ToString());
 
                 MapItem _temp = new MapItem();
                 _temp.ObjectRef = objectRef;
@@ -298,7 +298,7 @@ namespace Xe.Data.Collections
                     _temp = _item;
                 }
 
-                throw new ObjectNotFoundException(_temp);
+				throw new InvalidOperationException("Object Not found in list" + _temp.ToString());
             }
             catch
             {

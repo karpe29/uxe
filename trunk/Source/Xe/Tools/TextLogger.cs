@@ -18,9 +18,10 @@ using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Xe.Tools;
 #endregion
 
-namespace Xe.Data
+namespace Xe.Tools
 {
     public partial class TextLogger : Microsoft.Xna.Framework.GameComponent, IService, ITextLoggerService
     {

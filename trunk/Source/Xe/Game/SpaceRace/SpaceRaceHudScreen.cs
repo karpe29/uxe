@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Xe.GameScreen;
+using Xe.Game.GameScreen;
 using Microsoft.Xna.Framework;
 using Xe.GUI;
 
@@ -14,7 +14,7 @@ namespace Xe.SpaceRace
 		public SpaceRaceHudScreen(GameScreenManager gameScreenManager)
 			: base(gameScreenManager, true)
 		{
-			labelLife = new Label(gameScreenManager.Game, gameScreenManager.GuiManager);
+			labelLife = new Label(gameScreenManager.Game, XeGame.GuiManager);
 			labelLife.Text = "|||||||||||||||||||||||||||||||||||||||||||||||||||||-";
 			labelLife.TextAlign = TextAlignment.Center;
 			labelLife.Width = 220;

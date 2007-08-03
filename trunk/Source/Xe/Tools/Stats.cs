@@ -21,6 +21,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Xe.Tools;
 #endregion
 
 namespace Xe.Tools
@@ -142,7 +143,7 @@ namespace Xe.Tools
                     if (msg.Msg.StartsWith("Color."))
                     {
                         string _color = msg.Msg.Substring(6);
-                        m_foreColor = Globals.StringToColor(_color);
+                        m_foreColor = Helper.StringToColor(_color);
                     }
                 }
             }

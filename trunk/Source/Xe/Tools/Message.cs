@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace Xe
+namespace Xe.Tools
 {
     public class Message
     {

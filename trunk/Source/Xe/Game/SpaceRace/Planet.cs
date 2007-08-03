@@ -39,7 +39,7 @@ namespace Xe.SpaceRace
 			: base(0, acceleration, maxSpeed, resistance, gFactor)
 		{
 			m_assetName = @"Planets\" + name.ToString();
-			name = name;
+			Name = name;
 		}
 	}
 
