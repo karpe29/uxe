@@ -602,10 +602,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>RenderGroup</Name>
     </Compile>
-    <Compile Include="Graphics\3D\RenderManager.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>RenderManager</Name>
-    </Compile>
     <Compile Include="Graphics\3D\SceneManager.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SceneManager</Name>

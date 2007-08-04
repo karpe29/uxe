@@ -82,7 +82,7 @@ namespace Xe.SpaceRace
 				m_ship.MoveState.TurnRight = true;
 			}
 
-			if (true || touche.IsKeyDown(Keys.Space) || g.Triggers.Right > 0)
+			if (touche.IsKeyDown(Keys.Space) || g.Triggers.Right > 0)
 			{
 				m_ship.MoveState.Forward = true;
 			}
