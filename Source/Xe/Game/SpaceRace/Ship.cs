@@ -130,14 +130,13 @@ namespace Xe.SpaceRace
 			if (m_model != null)
 				m_model.Draw(gameTime);
 
-			//smokePlumeParticles.SetCamera(m_model.View, m_model.Projection);
-			//smokePlumeParticles.Gravity = Vector3.Transform(new Vector3(0, 0, 0), Orientation);
-			//smokePlumeParticles.Draw(gameTime);
+			smokePlumeParticles.SetCamera(m_model.View, m_model.Projection);
+			//smokePlumeParticles.Gravity = Vector3.Transform(new Vector3(0, 0, -1), Orientation);
+			smokePlumeParticles.Draw(gameTime);
 
 			fireParticles.SetCamera(m_model.View, m_model.Projection);
 			fireParticles.Draw(gameTime);
-				
-
+			
 			base.Draw(gameTime);
 		}
 

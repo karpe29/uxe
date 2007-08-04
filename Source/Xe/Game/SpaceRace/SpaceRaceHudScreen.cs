@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Xe.Game.GameScreen;
+using Xe.GameScreen;
 using Microsoft.Xna.Framework;
 using Xe.GUI;
 

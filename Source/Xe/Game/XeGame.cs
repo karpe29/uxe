@@ -41,6 +41,11 @@ namespace Xe
 			get { return (GUIManager)ServiceHelper.Get<IGUIManagerService>(); }
 		}
 
+		public static Reporter Reporter
+		{
+			get { return (Reporter)ServiceHelper.Get<IReporterService>(); }
+		}
+
 		public static Ebi Ebi
 		{
 			get { return (Ebi)ServiceHelper.Get<IEbiService>(); }
@@ -74,6 +79,8 @@ namespace Xe
 		private IntroScreen m_introScreen;
 
 		private GUIManager m_guiManager;
+
+		private Reporter m_reporter;
 
 		private Ebi m_ebi;
 
@@ -114,6 +121,9 @@ namespace Xe
 			m_guiManager.UpdateOrder = 1000;
 			m_guiManager.DrawOrder = 1000;
 			Components.Add(m_guiManager);
+
+			m_reporter = new Reporter(this);
+			m_reporter.UpdateOrder = 0;
 
 			s_gameScreenManager = new GameScreenManager(this);
 			s_gameScreenManager.UpdateOrder = 500;
@@ -186,18 +196,20 @@ namespace Xe
 		protected override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
-
+			
 			ppe.ResolveBackBuffer();
 
 			//ppe.BloomExtract.Threshold = 1.0f;
 			
-			ppe.ApplyBloomExtract();
+			//ppe.ApplyBloomExtract();
+			ppe.RadialBlur.BlurStart = 1;
+			ppe.RadialBlur.BlurWidth = -0.2f;
 			ppe.ApplyRadialBlur();
-			ppe.ApplyGaussianBlurH();
-			ppe.ApplyGaussianBlurV();
+			//ppe.ApplyGaussianBlurH();
+			//ppe.ApplyGaussianBlurV();
 
 
-			ppe.ApplyToneMapping();
+			//ppe.ApplyToneMapping();
 
 			
 
