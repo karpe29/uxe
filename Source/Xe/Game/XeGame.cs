@@ -197,7 +197,7 @@ namespace Xe
 		{
 			base.Draw(gameTime);
 			
-			ppe.ResolveBackBuffer();
+			/*ppe.ResolveBackBuffer();
 
 			//ppe.BloomExtract.Threshold = 1.0f;
 			
@@ -215,7 +215,7 @@ namespace Xe
 
 			ppe.CombineWithBackBuffer();
 
-			ppe.Present(null);
+			ppe.Present(null);*/
 		}
 	}
 }

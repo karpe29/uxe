@@ -30,7 +30,7 @@ namespace Xe.Graphics3D.Particles
         {
 			settings.TextureName = @"Content\Particles\fire";
 
-            settings.MaxParticles = 2400;
+            settings.MaxParticles = 10;
 
             settings.Duration = TimeSpan.FromSeconds(1);
 
@@ -55,7 +55,7 @@ namespace Xe.Graphics3D.Particles
             settings.MaxEndSize = 40;
 
             // Use additive blending.
-            settings.SourceBlend = Blend.SourceAlpha;
+			settings.SourceBlend = Blend.One;
             settings.DestinationBlend = Blend.One;
         }
     }
