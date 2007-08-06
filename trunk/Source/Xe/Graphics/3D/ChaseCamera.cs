@@ -19,7 +19,7 @@ namespace Xe.Graphics3D
 {
 	public class ChaseCamera
 	{
-		public bool FixedCamera = false;
+		public bool FixedCamera = true;
 
 
 		private float decal;

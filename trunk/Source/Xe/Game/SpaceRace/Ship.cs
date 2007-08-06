@@ -99,17 +99,16 @@ namespace Xe.SpaceRace
 
 			m_model.World = DrawOrientation * Matrix.CreateTranslation(Position);
 
+			m_stats.AddDebugString(Helper.Vector3ToString3f(Speed));
 
 			foreach (Vector3 reactor in m_shipType.Reactors)
 			{
 				particlePos=Vector3.Transform(reactor, Orientation) ;
-				particleSpeed = Vector3.Transform(Vector3.Zero, Orientation);
-				particleGravity=Vector3.Transform(Vector3.Zero, Orientation);
+				particleSpeed = Vector3.Transform(0.5f*Speed, Orientation);
+				particleGravity = Vector3.Transform(m_reactorLength, Orientation);
 				fireParticles.AddParticle(particlePos + Position, particleSpeed);
 				fireParticles.Gravity = particleGravity;
-				m_stats.AddDebugString(Helper.Vector3ToString3f(particlePos));
 				m_stats.AddDebugString(Helper.Vector3ToString3f(particleSpeed));
-				m_stats.AddDebugString(Helper.Vector3ToString3f(particleGravity));
 
 			}
 

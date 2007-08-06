@@ -115,9 +115,9 @@ namespace Xe.Physics3D
 	public class IShipPhysical : IPhysical3D
 	{
 		private MoveState m_move;
-		public static float m_maxSpeed = 100000;
-		public static float m_handling = 3;
-		public static float m_acc = 80000;
+		public static float m_maxSpeed = 1000;
+		public static float m_handling = 1;
+		public static float m_acc = 800;
 
 		public IShipPhysical(Microsoft.Xna.Framework.Game game, PhysicalType type) : base(game,type)
 		{
