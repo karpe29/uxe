@@ -179,8 +179,8 @@ namespace Xe.Graphics3D
 
 			this.view = Matrix.CreateLookAt(m_camPosition, m_camTarget, m_camUp);
 
-			
-			this.viewParticles = Matrix.CreateLookAt(m_camPositionOffset, m_camTargetOffset, Vector3.Up);
+
+			this.viewParticles = Matrix.CreateLookAt(m_camPositionOffset - Vector3.Forward*decal, m_camTargetOffset, Vector3.Up);
 			this.viewParticles =  m_target.DrawOrientation * Matrix.Invert(m_target.Orientation)*this.viewParticles ;
 		}
 	}

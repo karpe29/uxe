@@ -59,7 +59,7 @@ namespace Xe.SpaceRace
 
 		public BasicModel3D Model { get { return m_model; } }
 
-		private Vector3 m_reactorLength = new Vector3(0, 0, 100),
+		private Vector3 m_reactorLength = new Vector3(0, 0, 50),
 			particlePos,particleSpeed,particleGravity;
 		private Stats m_stats;
 
@@ -109,8 +109,8 @@ namespace Xe.SpaceRace
 			foreach (Vector3 reactor in m_shipType.Reactors)
 			{
 				particlePos=reactor ;
-				particleSpeed = m_reactorLength;
-				particleGravity = Vector3.Zero;
+				particleSpeed = new Vector3(0, 0, 10)*(1-3*Speed.Z/m_maxSpeed);
+				particleGravity = new Vector3(0, 0, 5) * (1-3*Speed.Z / m_maxSpeed);
 				fireParticles.AddParticle(particlePos, particleSpeed);
 				fireParticles.Gravity = particleGravity;
 				m_stats.AddDebugString(Helper.Vector3ToString3f(particleSpeed));
