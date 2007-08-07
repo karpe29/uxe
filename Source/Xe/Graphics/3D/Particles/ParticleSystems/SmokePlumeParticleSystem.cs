@@ -33,7 +33,7 @@ namespace Xe.Graphics3D.Particles
 
             settings.MaxParticles = 2400;
 
-            settings.Duration = TimeSpan.FromSeconds(1);
+            settings.Duration = TimeSpan.FromSeconds(.5);
 
             settings.MinHorizontalVelocity = 0;
             settings.MaxHorizontalVelocity = 0;
@@ -42,7 +42,7 @@ namespace Xe.Graphics3D.Particles
             settings.MaxVerticalVelocity = 15;
 
             // Create a wind effect by tilting the gravity vector sideways.
-            settings.Gravity = new Vector3(0, 0, 50);
+            settings.Gravity = new Vector3(0, 0, 0);
 
             //settings.EndVelocity = 0.75f;
 
@@ -52,8 +52,8 @@ namespace Xe.Graphics3D.Particles
             settings.MinStartSize = 5;
             settings.MaxStartSize = 10;
 
-            settings.MinEndSize = 40;
-            settings.MaxEndSize = 80;
+            settings.MinEndSize = 25;
+            settings.MaxEndSize = 50;
         }
     }
 }
