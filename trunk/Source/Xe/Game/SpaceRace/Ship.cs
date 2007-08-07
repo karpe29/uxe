@@ -56,6 +56,8 @@ namespace Xe.SpaceRace
 		BasicModel3D m_model;
 
 		Player m_player;
+		float count = 0,
+			ratioParticles=6;
 
 		public BasicModel3D Model { get { return m_model; } }
 
@@ -105,24 +107,29 @@ namespace Xe.SpaceRace
 			m_model.World = DrawOrientation * Matrix.CreateTranslation(Position);
 
 			m_stats.AddDebugString(Helper.Vector3ToString3f(Speed));
-
-			foreach (Vector3 reactor in m_shipType.Reactors)
+			float inc=-ratioParticles * Speed.Z / m_maxSpeed;
+			count += 1+inc;
+			if (count > ratioParticles)
 			{
-				particlePos=reactor ;
-				particleSpeed = new Vector3(0, 0, 10)*(1-3*Speed.Z/m_maxSpeed);
-				particleGravity = new Vector3(0, 0, 5) * (1-3*Speed.Z / m_maxSpeed);
-				fireParticles.AddParticle(particlePos, particleSpeed);
-				fireParticles.Gravity = particleGravity;
-				m_stats.AddDebugString(Helper.Vector3ToString3f(particleSpeed));
 
+				foreach (Vector3 reactor in m_shipType.Reactors)
+				{
+					particlePos = reactor;
+					particleSpeed = new Vector3(0, 0, 8) * (2+inc);
+					particleGravity = new Vector3(0, 0, 4) * (2+inc);
+					fireParticles.AddParticle(particlePos, particleSpeed);
+					fireParticles.Gravity = particleGravity;
+					m_stats.AddDebugString(Helper.Vector3ToString3f(particleSpeed));
+
+				}
+
+
+				foreach (Vector3 reactor in m_shipType.Reactors)
+				{
+					//smokePlumeParticles.AddParticle(Vector3.Transform(reactor, Orientation) + Position, Vector3.Transform(Speed, Orientation));
+				}
+				count -= ratioParticles;
 			}
-
-
-			foreach (Vector3 reactor in m_shipType.Reactors)
-			{
-				//smokePlumeParticles.AddParticle(Vector3.Transform(reactor, Orientation) + Position, Vector3.Transform(Speed, Orientation));
-			}
-
 			fireParticles.Update(gameTime);
 			smokePlumeParticles.Update(gameTime);
 		}

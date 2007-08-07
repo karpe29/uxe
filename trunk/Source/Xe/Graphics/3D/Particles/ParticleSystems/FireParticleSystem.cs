@@ -33,7 +33,7 @@ namespace Xe.Graphics3D.Particles
 
             settings.MaxParticles = 2400;
 
-            settings.Duration = TimeSpan.FromSeconds(1);
+            settings.Duration = TimeSpan.FromSeconds(.5);
 
             settings.DurationRandomness = 1;
 
@@ -52,8 +52,8 @@ namespace Xe.Graphics3D.Particles
             settings.MinStartSize = 10;
             settings.MaxStartSize = 15;
 
-            settings.MinEndSize = 20;
-            settings.MaxEndSize = 25;
+            settings.MinEndSize = 15;
+            settings.MaxEndSize = 20;
 
             // Use additive blending.
             settings.SourceBlend = Blend.SourceAlpha;
