@@ -12,6 +12,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Xe.SpaceRace;
 #endregion
 
 namespace Xe.Graphics3D.Particles
@@ -21,8 +22,8 @@ namespace Xe.Graphics3D.Particles
     /// </summary>
     class SmokePlumeParticleSystem : ParticleSystem
     {
-        public SmokePlumeParticleSystem(Game game, ContentManager content)
-            : base(game, content)
+        public SmokePlumeParticleSystem(Game game, ContentManager content,Ship ship)
+            : base(game, content,ship)
         { }
 
 
