@@ -21,6 +21,11 @@ namespace Xe
 	{
 		#region Static Variables
 
+		public static readonly string FONT_GUI = "BatmanForeverAlternate";
+
+		public static readonly string FONT_DBG = "Perspective Sans";
+
+
 		private static ContentManager s_contentManager;
 		
 		private static GameScreenManager s_gameScreenManager;

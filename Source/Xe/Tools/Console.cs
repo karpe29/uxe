@@ -334,7 +334,7 @@ namespace Xe.Tools
 
             if (loadAllContent)
             {
-				m_font = m_conManager.Load<SpriteFont>(@"Content\Fonts\Comic");
+				m_font = m_conManager.Load<SpriteFont>(@"Content\Fonts\" + XeGame.FONT_DBG);
 
                 m_spriteBatch = new SpriteBatch(this.GraphicsDevice);
 

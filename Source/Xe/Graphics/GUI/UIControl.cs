@@ -143,7 +143,7 @@ namespace Xe.GUI
             {
                 m_spriteBatch = new SpriteBatch(this.GraphicsDevice);
 
-				m_font = this.m_guiManager.ContentManager.Load<SpriteFont>(@"Content\Fonts\Comic");
+				m_font = this.m_guiManager.ContentManager.Load<SpriteFont>(@"Content\Fonts\" + XeGame.FONT_GUI);
             }
         }
 
@@ -589,7 +589,8 @@ namespace Xe.GUI
 
 			while (str.Length != 0)
 			{
-				// stop drawing if there isn't room for this line
+				// stop drawing if there isn't vertical room for this line
+				// /!\ may not render some lines
 				if (vAt.Y + m_font.LineSpacing > r.Bottom)
 					return;
 

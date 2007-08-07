@@ -22,8 +22,8 @@ namespace Xe.Graphics3D.Particles
     /// </summary>
     class ExplosionParticleSystem : ParticleSystem
     {
-        public ExplosionParticleSystem(Game game, ContentManager content,Ship ship)
-            : base(game, content,ship)
+        public ExplosionParticleSystem(Game game, ContentManager content)
+            : base(game, content)
         { }
 
 
