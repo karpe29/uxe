@@ -111,12 +111,14 @@ namespace Xe.SpaceRace
 			count += 1+inc;
 			if (count > ratioParticles)
 			{
-
+				float orientY = -RotationSpeed.Y / m_handling /2;
+				float orientX = -RotationSpeed.X / m_handling /2;
+				Matrix orientParticles = Matrix.CreateFromYawPitchRoll(orientY, orientX, 0);
 				foreach (Vector3 reactor in m_shipType.Reactors)
 				{
 					particlePos = reactor;
-					particleSpeed = new Vector3(0, 0, 8) * (2+inc);
-					particleGravity = new Vector3(0, 0, 4) * (2+inc);
+					particleSpeed = new Vector3(0, 0, 8) * (2 + inc);
+					particleGravity = Vector3.Transform(new Vector3(0, 0, 4), orientParticles) * (2 + inc);
 					fireParticles.AddParticle(particlePos, particleSpeed);
 					fireParticles.Gravity = particleGravity;
 					m_stats.AddDebugString(Helper.Vector3ToString3f(particleSpeed));
