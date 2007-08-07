@@ -110,8 +110,8 @@ namespace Xe.SpaceRace
 			count += 1+inc;
 			if (count > ratioParticles)
 			{
-				float orientY = -RotationSpeed.Y / m_handling /2;
-				float orientX = -RotationSpeed.X / m_handling /2;
+				float orientY = 0;//-RotationSpeed.Y / m_handling /2;
+				float orientX = 0;// -RotationSpeed.X / m_handling / 2;
 				Matrix orientParticles = Matrix.CreateFromYawPitchRoll(orientY, orientX, 0);
 				foreach (Vector3 reactor in m_shipType.Reactors)
 				{
