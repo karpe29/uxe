@@ -125,6 +125,12 @@ namespace Xe.Graphics3D
 		}
 		private Matrix view;
 
+		public Matrix ViewParticles
+		{
+			get { return viewParticles; }
+		}
+		private Matrix viewParticles;
+
 		/// <summary>
 		/// Projecton transform matrix.
 		/// </summary>
@@ -172,6 +178,10 @@ namespace Xe.Graphics3D
 			m_camUp = m_target.Up;
 
 			this.view = Matrix.CreateLookAt(m_camPosition, m_camTarget, m_camUp);
+
+			
+			this.viewParticles = Matrix.CreateLookAt(m_camPositionOffset, m_camTargetOffset, Vector3.Up);
+			this.viewParticles =  m_target.DrawOrientation * Matrix.Invert(m_target.Orientation)*this.viewParticles ;
 		}
 	}
 }
