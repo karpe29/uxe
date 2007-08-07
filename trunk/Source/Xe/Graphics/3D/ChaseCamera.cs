@@ -165,10 +165,10 @@ namespace Xe.Graphics3D
 				decal = 50 * (float)(Math.Log((double)(-m_target.Speed.Z + IShipPhysical.m_maxSpeed / 10), 4) - Math.Log((double)(IShipPhysical.m_maxSpeed / 10), 4));
 				m_camPosition = m_camDesiredPosition - Vector3.Transform(Vector3.Forward, m_target.Orientation)*decal;
 				
-				XeGame.Stats.AddDebugString(Helper.Vector3ToString3f(m_target.RotationSpeed));
-				XeGame.Stats.AddDebugString(Helper.Vector3ToString3f(m_target.Acceleration));
-				XeGame.Stats.AddDebugString(Helper.Vector3ToString3f(m_target.Speed));
-				XeGame.Stats.AddDebugString(seconds.ToString());
+				XeGame.Stats.AddDebugString("Ship Rotation Speed : "+ Helper.Vector3ToString3f(m_target.RotationSpeed));
+				XeGame.Stats.AddDebugString("Ship Acceleration : " + Helper.Vector3ToString3f(m_target.Acceleration));
+				XeGame.Stats.AddDebugString("Ship Speed : " + Helper.Vector3ToString3f(m_target.Speed));
+				XeGame.Stats.AddDebugString("Milliseconds Elapsed : "+seconds*1000f);
 			}
 			
 

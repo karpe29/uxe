@@ -106,7 +106,6 @@ namespace Xe.SpaceRace
 
 			m_model.World = DrawOrientation * Matrix.CreateTranslation(Position);
 
-			m_stats.AddDebugString(Helper.Vector3ToString3f(Speed));
 			float inc=-ratioParticles * Speed.Z / m_maxSpeed;
 			count += 1+inc;
 			if (count > ratioParticles)
@@ -121,17 +120,16 @@ namespace Xe.SpaceRace
 					particleGravity = Vector3.Transform(new Vector3(0, 0, 4), orientParticles) * (2 + inc);
 					fireParticles.AddParticle(particlePos, particleSpeed);
 					fireParticles.Gravity = particleGravity;
-					m_stats.AddDebugString(Helper.Vector3ToString3f(particleSpeed));
+					smokePlumeParticles.AddParticle(particlePos, particleSpeed);
+					smokePlumeParticles.Gravity = particleGravity;
 
 				}
 
-
-				foreach (Vector3 reactor in m_shipType.Reactors)
-				{
-					//smokePlumeParticles.AddParticle(Vector3.Transform(reactor, Orientation) + Position, Vector3.Transform(Speed, Orientation));
-				}
 				count -= ratioParticles;
 			}
+			m_stats.AddDebugString("Particles Speed : " + Helper.Vector3ToString3f(particleSpeed));
+			m_stats.AddDebugString("Particles Gravity : " + Helper.Vector3ToString3f(particleGravity));
+
 			fireParticles.Update(gameTime);
 			smokePlumeParticles.Update(gameTime);
 		}
@@ -143,8 +141,7 @@ namespace Xe.SpaceRace
 			if (m_model != null)
 				m_model.Draw(gameTime);
 
-			smokePlumeParticles.SetCamera(m_model.View, m_model.Projection);
-			//smokePlumeParticles.Gravity = Vector3.Transform(new Vector3(0, 0, -1), Orientation);
+			smokePlumeParticles.SetCamera(m_player.m_camera.ViewParticles, m_model.Projection);
 			smokePlumeParticles.Draw(gameTime);
 
 			fireParticles.SetCamera( m_player.m_camera.ViewParticles,m_model.Projection);
