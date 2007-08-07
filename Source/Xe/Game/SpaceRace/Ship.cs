@@ -39,9 +39,9 @@ namespace Xe.SpaceRace
 
 
 		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f,  new Vector3[] { new Vector3(8,0,30), new Vector3(-8,0,30) } ), 
-											new ShipType(@"Content\Models\StarChaser2", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ), 
-											new ShipType(@"Content\Models\StarChaser3", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ), 
-											new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f,  new Vector3[] { new Vector3(0,0,0), new Vector3(100,100,100) } ) };
+											new ShipType(@"Content\Models\StarChaser2", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f,  new Vector3[] { new Vector3(3.25f,0.3f,42f), new Vector3(-3.25f,0.3f,42f), new Vector3(2f,-4.75f,42f),new Vector3(-2f,-4.75f,42f), new Vector3(6.5f,-3.75f,42f),new Vector3(-6.5f,-3.75f,42f) } ), 
+											new ShipType(@"Content\Models\StarChaser3", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f,  new Vector3[] { new Vector3(0,7.5f,38f),new Vector3(3f,9.5f,38f),new Vector3(-3f,9.5f,38f),new Vector3(2f,4.5f,38f), new Vector3(-2f,4.5f,38f) } ), 
+											new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f,  new Vector3[] { new Vector3(-3.75f,-3.25f,57f),new Vector3(3.75f,-3.25f,57f),new Vector3(-9.75f,-4.75f,56f), new Vector3(9.75f,-4.75f,56f) } ) };
 	}
 	
 	/// <summary>
@@ -110,8 +110,8 @@ namespace Xe.SpaceRace
 			count += 1+inc;
 			if (count > ratioParticles)
 			{
-				float orientY = 0;//-RotationSpeed.Y / m_handling /2;
-				float orientX = 0;// -RotationSpeed.X / m_handling / 2;
+				float orientY = -RotationSpeed.Y / m_handling /2;
+				float orientX =  -RotationSpeed.X / m_handling / 2;
 				Matrix orientParticles = Matrix.CreateFromYawPitchRoll(orientY, orientX, 0);
 				foreach (Vector3 reactor in m_shipType.Reactors)
 				{

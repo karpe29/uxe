@@ -52,8 +52,8 @@ namespace Xe.Graphics3D.Particles
             settings.MinStartSize = 10;
             settings.MaxStartSize = 15;
 
-            settings.MinEndSize = 15;
-            settings.MaxEndSize = 20;
+            settings.MinEndSize = 5;
+            settings.MaxEndSize = 10;
 
             // Use additive blending.
             settings.SourceBlend = Blend.SourceAlpha;
