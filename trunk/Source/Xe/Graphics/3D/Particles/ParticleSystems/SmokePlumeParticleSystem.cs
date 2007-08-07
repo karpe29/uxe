@@ -49,11 +49,11 @@ namespace Xe.Graphics3D.Particles
             settings.MinRotateSpeed = -1;
             settings.MaxRotateSpeed = 1;
 
-            settings.MinStartSize = 5;
-            settings.MaxStartSize = 10;
+            settings.MinStartSize = 10;
+            settings.MaxStartSize = 15;
 
-            settings.MinEndSize = 25;
-            settings.MaxEndSize = 50;
+            settings.MinEndSize = 20;
+            settings.MaxEndSize = 30;
         }
     }
 }
