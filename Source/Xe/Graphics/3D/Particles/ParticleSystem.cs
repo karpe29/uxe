@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Xe.Tools;
+using Xe.SpaceRace;
 #endregion
 
 namespace Xe.Graphics3D.Particles
@@ -57,7 +58,8 @@ namespace Xe.Graphics3D.Particles
 
 
         // An array of particles, treated as a circular queue.
-        ParticleVertex[] particles;
+        ParticleVertex[] particles,
+			particlesToDraw;
 
 
         // A vertex buffer holding our particles. This contains the same data as
@@ -163,13 +165,15 @@ namespace Xe.Graphics3D.Particles
 
         #region Initialization
 
+		private Ship m_ship;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        protected ParticleSystem(Game game, ContentManager content)
+        protected ParticleSystem(Game game, ContentManager content,Ship ship)
             : base(game)
         {
+			m_ship = ship;
             this.content = content;
         }
 
@@ -182,7 +186,7 @@ namespace Xe.Graphics3D.Particles
             InitializeSettings(settings);
 
             particles = new ParticleVertex[settings.MaxParticles];
-
+			particlesToDraw = particles;
             base.Initialize();
         }
 
@@ -397,6 +401,7 @@ namespace Xe.Graphics3D.Particles
                 // shader particle animation is keyed off this value.
                 effectTimeParameter.SetValue(currentTime);
 
+
                 // Set the particle vertex buffer and vertex declaration.
                 device.Vertices[0].SetSource(vertexBuffer, 0,
                                              ParticleVertex.SizeInBytes);
@@ -457,11 +462,26 @@ namespace Xe.Graphics3D.Particles
         {
             int stride = ParticleVertex.SizeInBytes;
 
+							//Code de loulou 
+
+				ParticleVertex particle;
+
+				for (int i = 0; i < particles.Length; i++)
+				{
+					particle = particles[i];
+					particle.Position = Vector3.Transform(particle.Position, m_ship.DrawOrientation) + m_ship.Position;
+					particle.Velocity = Vector3.Transform(particle.Velocity, m_ship.DrawOrientation);
+					particlesToDraw[i] = particle;
+				}
+
+				// fin du code de loulou
+
+
             if (firstNewParticle < firstFreeParticle)
             {
                 // If the new particles are all in one consecutive range,
                 // we can upload them all in a single call.
-                vertexBuffer.SetData(firstNewParticle * stride, particles,
+                vertexBuffer.SetData(firstNewParticle * stride, particlesToDraw,
                                      firstNewParticle,
                                      firstFreeParticle - firstNewParticle,
                                      stride, SetDataOptions.NoOverwrite);
@@ -470,14 +490,14 @@ namespace Xe.Graphics3D.Particles
             {
                 // If the new particle range wraps past the end of the queue
                 // back to the start, we must split them over two upload calls.
-                vertexBuffer.SetData(firstNewParticle * stride, particles,
+                vertexBuffer.SetData(firstNewParticle * stride, particlesToDraw,
                                      firstNewParticle,
                                      particles.Length - firstNewParticle,
                                      stride, SetDataOptions.NoOverwrite);
 
                 if (firstFreeParticle > 0)
                 {
-                    vertexBuffer.SetData(0, particles,
+                    vertexBuffer.SetData(0, particlesToDraw,
                                          0, firstFreeParticle,
                                          stride, SetDataOptions.NoOverwrite);
                 }

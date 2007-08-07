@@ -13,7 +13,7 @@ using Xe.Tools;
 
 namespace Xe.SpaceRace
 {
-	class ShipType : PhysicalType
+	public class ShipType : PhysicalType
 	{
 		string m_model = "";
 
@@ -47,7 +47,7 @@ namespace Xe.SpaceRace
 	/// <summary>
 	/// Take care of rendering and managing the ship
 	/// </summary>
-	class Ship : IShipPhysical
+	public class Ship : IShipPhysical
 	{
 		SpaceRaceScreen m_gameScreen;
 
@@ -72,10 +72,10 @@ namespace Xe.SpaceRace
 			m_gameScreen = gameScreenManager.CurrentGameScreen as SpaceRaceScreen;
 			m_shipType = type;
 
-			fireParticles = new FireParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
+			fireParticles = new FireParticleSystem(gameScreenManager.Game, XeGame.ContentManager,this);
 			fireParticles.Initialize();
 
-			smokePlumeParticles = new SmokePlumeParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
+			smokePlumeParticles = new SmokePlumeParticleSystem(gameScreenManager.Game, XeGame.ContentManager,this);
 			smokePlumeParticles.Initialize();
 			
 			this.Initialize();
@@ -103,10 +103,10 @@ namespace Xe.SpaceRace
 
 			foreach (Vector3 reactor in m_shipType.Reactors)
 			{
-				particlePos=Vector3.Transform(reactor, Orientation) ;
-				particleSpeed = Vector3.Transform(0.5f*Speed, Orientation);
-				particleGravity = Vector3.Transform(m_reactorLength, Orientation);
-				fireParticles.AddParticle(particlePos + Position, particleSpeed);
+				particlePos=reactor ;
+				particleSpeed = m_reactorLength;
+				particleGravity = Vector3.Zero;
+				fireParticles.AddParticle(particlePos, particleSpeed);
 				fireParticles.Gravity = particleGravity;
 				m_stats.AddDebugString(Helper.Vector3ToString3f(particleSpeed));
 
