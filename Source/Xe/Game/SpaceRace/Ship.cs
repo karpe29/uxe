@@ -55,7 +55,8 @@ namespace Xe.SpaceRace
 
 		BasicModel3D m_model;
 
-		bool pouet = true;
+		Player m_player;
+
 		public BasicModel3D Model { get { return m_model; } }
 
 		private Vector3 m_reactorLength = new Vector3(0, 0, 100),
@@ -65,9 +66,11 @@ namespace Xe.SpaceRace
 		ParticleSystem smokePlumeParticles;
 		ParticleSystem fireParticles;
 
-		public Ship(GameScreenManager gameScreenManager, ShipType type)
+		public Ship(GameScreenManager gameScreenManager, ShipType type,Player player)
 			: base(gameScreenManager.Game, (PhysicalType)type)
 		{
+			m_player = player;
+
 			m_stats = (Stats)gameScreenManager.Game.Services.GetService(typeof(Stats));
 
 			m_gameScreen = gameScreenManager.CurrentGameScreen as SpaceRaceScreen;
@@ -108,7 +111,7 @@ namespace Xe.SpaceRace
 				particlePos=reactor ;
 				particleSpeed = m_reactorLength;
 				particleGravity = Vector3.Zero;
-					fireParticles.AddParticle(particlePos, particleSpeed);
+				fireParticles.AddParticle(particlePos, particleSpeed);
 				fireParticles.Gravity = particleGravity;
 				m_stats.AddDebugString(Helper.Vector3ToString3f(particleSpeed));
 
@@ -135,8 +138,7 @@ namespace Xe.SpaceRace
 			//smokePlumeParticles.Gravity = Vector3.Transform(new Vector3(0, 0, -1), Orientation);
 			smokePlumeParticles.Draw(gameTime);
 
-			if (pouet) fireParticles.SetCamera(m_model.View, m_model.Projection);
-			pouet = false;
+			fireParticles.SetCamera( m_player.m_camera.ViewParticles,m_model.Projection);
 			fireParticles.Draw(gameTime);
 			
 			base.Draw(gameTime);
