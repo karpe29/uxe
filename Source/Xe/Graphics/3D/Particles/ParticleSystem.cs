@@ -463,7 +463,7 @@ namespace Xe.Graphics3D.Particles
             int stride = ParticleVertex.SizeInBytes;
 
 							//Code de loulou 
-
+			/*
 				ParticleVertex particle;
 
 				for (int i = 0; i < particles.Length; i++)
@@ -474,7 +474,7 @@ namespace Xe.Graphics3D.Particles
 					particlesToDraw[i] = particle;
 				}
 
-				// fin du code de loulou
+				// fin du code de loulou*/
 
 
             if (firstNewParticle < firstFreeParticle)

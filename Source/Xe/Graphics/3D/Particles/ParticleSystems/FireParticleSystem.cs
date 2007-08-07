@@ -33,7 +33,7 @@ namespace Xe.Graphics3D.Particles
 
             settings.MaxParticles = 2400;
 
-            settings.Duration = TimeSpan.FromSeconds(1);
+            settings.Duration = TimeSpan.FromSeconds(.5);
 
             settings.DurationRandomness = 1;
 
