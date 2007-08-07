@@ -218,12 +218,6 @@
       <Processor>EffectProcessor</Processor>
       <Name>vbomb</Name>
     </Content>
-    <Content Include="Content\Fonts\Comic.spritefont">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Name>Comic</Name>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Skybox\bryce_back.jpg">
@@ -453,14 +447,6 @@
     <Compile Include="Graphics\2D\Animation2D.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Animation2D</Name>
-    </Compile>
-    <Compile Include="Graphics\2D\BitmapFont.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>BitmapFont</Name>
-    </Compile>
-    <Compile Include="Graphics\2D\Font2D.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>Font2D</Name>
     </Compile>
     <Compile Include="Graphics\2D\PostProcess\BloomExtract.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -977,6 +963,54 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Name>Sun</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Fonts\BatmanForeverAlternate.spritefont">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>BatmanForeverAlternate</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Fonts\Control Freak.spritefont">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>Control Freak</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Fonts\Helsinki.spritefont">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>Helsinki</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Fonts\Kickflip BRK.spritefont">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>Kickflip BRK</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Fonts\Perspective Sans.spritefont">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>Perspective Sans</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Fonts\White Rabbit.spritefont">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>White Rabbit</Name>
     </Content>
   </ItemGroup>
   <ItemGroup>

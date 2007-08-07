@@ -22,8 +22,8 @@ namespace Xe.Graphics3D.Particles
     /// </summary>
     class ProjectileTrailParticleSystem : ParticleSystem
     {
-        public ProjectileTrailParticleSystem(Game game, ContentManager content,Ship ship)
-            : base(game, content,ship)
+        public ProjectileTrailParticleSystem(Game game, ContentManager content)
+            : base(game, content)
         { }
 
 

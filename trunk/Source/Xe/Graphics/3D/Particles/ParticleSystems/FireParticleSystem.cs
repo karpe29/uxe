@@ -22,8 +22,8 @@ namespace Xe.Graphics3D.Particles
     /// </summary>
     class FireParticleSystem : ParticleSystem
     {
-        public FireParticleSystem(Game game, ContentManager content,Ship ship)
-            : base(game, content,ship)
+        public FireParticleSystem(Game game, ContentManager content)
+            : base(game, content)
         { }
 
 
@@ -31,7 +31,7 @@ namespace Xe.Graphics3D.Particles
         {
 			settings.TextureName = @"Content\Particles\fire";
 
-            settings.MaxParticles = 2400;
+            settings.MaxParticles = 240000;
 
             settings.Duration = TimeSpan.FromSeconds(.5);
 

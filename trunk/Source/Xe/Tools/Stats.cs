@@ -106,7 +106,7 @@ namespace Xe.Tools
             base.LoadGraphicsContent(loadAllContent);
             if (loadAllContent)
             {
-				m_font = m_contentManager.Load<SpriteFont>(@"Content\Fonts\Comic");
+				m_font = m_contentManager.Load<SpriteFont>(@"Content\Fonts\" + XeGame.FONT_DBG);
             }
         }
 

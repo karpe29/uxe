@@ -165,15 +165,12 @@ namespace Xe.Graphics3D.Particles
 
         #region Initialization
 
-		private Ship m_ship;
-
         /// <summary>
         /// Constructor.
         /// </summary>
-        protected ParticleSystem(Game game, ContentManager content,Ship ship)
+        protected ParticleSystem(Game game, ContentManager content)
             : base(game)
         {
-			m_ship = ship;
             this.content = content;
         }
 
