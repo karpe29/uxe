@@ -37,13 +37,12 @@ namespace Xe.SpaceRace
 
 			m_race = m_raceScreen.Race;
 
-			m_ship = new Ship(gameScreenManager, type,this);
+			m_ship = new Ship(gameScreenManager, type);
 			//m_ship.Position = new Vector3(0, 10000, 0);
 			//m_ship.Orientation = Matrix.CreateRotationX(-1.2f);
 
 			m_camera = new ChaseCamera((IShipPhysical)m_ship, new Vector3(0, 40, 0), new Vector3(0, 120, 150));
 			//m_camera = new ChaseCamera((IShipPhysical)m_ship, new Vector3(0, 40, 50), new Vector3(0, 200, 100));
-
 			SpaceRaceHudScreen hud = new SpaceRaceHudScreen(gameScreenManager);
 
 			s = new SkyBox(gameScreenManager.Game, @"Content\Skybox\bryce");
@@ -127,7 +126,7 @@ namespace Xe.SpaceRace
 
 			device.RenderState.DepthBufferEnable = true;
 			device.RenderState.DepthBufferWriteEnable = true;
-
+			m_ship.setParticlesView(m_camera.ViewParticles);
 			m_ship.Draw(gameTime);
 
 			
