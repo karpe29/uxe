@@ -79,7 +79,7 @@ namespace Xe.SpaceRace
 
 		void sliderShip_ValueChanged(object sender, float value)
 		{
-			//m_model.AssetName = ShipType.Types[(int)value].ModelAsset;
+			m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
 		}
 
 		void buttonAccept_Click(object sender, MouseEventArgs args)
@@ -180,7 +180,9 @@ namespace Xe.SpaceRace
 			angle %= MathHelper.TwoPi;
 
 			m_ship.Update(gameTime);
-			ViewMatrix = Matrix.CreateLookAt(Vector3.Transform(new Vector3(0, 0, viewDistance), Matrix.CreateRotationY(angle)), new Vector3(0, 0, 0), Vector3.Up);
+			ViewMatrix = Matrix.CreateLookAt(Vector3.Transform(new Vector3(0, 50, 100), Matrix.CreateRotationY(angle)), new Vector3(0, 0, 0), Vector3.Up);
+			m_ship.Model.View = ViewMatrix;
+			m_ship.Model.Projection = ProjectionMatrix;
 
     	}
 
