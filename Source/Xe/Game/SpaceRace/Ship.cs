@@ -49,13 +49,12 @@ namespace Xe.SpaceRace
 	/// </summary>
 	public class Ship : IShipPhysical
 	{
-		SpaceRaceScreen m_gameScreen;
+		IGameScreen m_gameScreen;
 
 		ShipType m_shipType;
 
 		BasicModel3D m_model;
 
-		Player m_player;
 		float count = 0,
 			ratioParticles=6;
 
@@ -65,17 +64,22 @@ namespace Xe.SpaceRace
 			particlePos,particleSpeed,particleGravity;
 		private Stats m_stats;
 
+		private Matrix m_ParticlesView=Matrix.Identity;
+
+		public void setParticlesView(Matrix matrix)
+		{
+			m_ParticlesView = matrix;
+		}
+
 		ParticleSystem smokePlumeParticles;
 		ParticleSystem fireParticles;
 
-		public Ship(GameScreenManager gameScreenManager, ShipType type,Player player)
+		public Ship(GameScreenManager gameScreenManager, ShipType type)
 			: base(gameScreenManager.Game, (PhysicalType)type)
 		{
-			m_player = player;
-
 			m_stats = (Stats)gameScreenManager.Game.Services.GetService(typeof(Stats));
 
-			m_gameScreen = gameScreenManager.CurrentGameScreen as SpaceRaceScreen;
+			m_gameScreen = gameScreenManager.CurrentGameScreen ;
 			m_shipType = type;
 
 			fireParticles = new FireParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
@@ -141,10 +145,10 @@ namespace Xe.SpaceRace
 			if (m_model != null)
 				m_model.Draw(gameTime);
 
-			smokePlumeParticles.SetCamera(m_player.m_camera.ViewParticles, m_model.Projection);
+			smokePlumeParticles.SetCamera(m_ParticlesView, m_model.Projection);
 			smokePlumeParticles.Draw(gameTime);
 
-			fireParticles.SetCamera( m_player.m_camera.ViewParticles,m_model.Projection);
+			fireParticles.SetCamera( m_ParticlesView,m_model.Projection);
 			fireParticles.Draw(gameTime);
 			
 			base.Draw(gameTime);

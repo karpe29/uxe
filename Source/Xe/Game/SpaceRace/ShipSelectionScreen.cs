@@ -23,7 +23,7 @@ namespace Xe.SpaceRace
 
 		float viewDistance = 120;
 
-		BasicModel3D m_model;
+		Ship m_ship;
 
 		private Matrix ViewMatrix;
 		private Matrix ProjectionMatrix;
@@ -72,15 +72,14 @@ namespace Xe.SpaceRace
 			sliderShip.ValueChanged += new ValueChangedHandler(sliderShip_ValueChanged);
 			XeGame.GuiManager.AddControl(sliderShip);
 
-			m_model = new BasicModel3D(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value].ModelAsset);
+			m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
 			
-			ViewMatrix = Matrix.CreateLookAt(new Vector3(0,viewDistance*0.5f,-viewDistance*0.5f), new Vector3(0,0,0), Vector3.Up);
 			ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1.0f, 1, viewDistance * 2.0f);
 		}
 
 		void sliderShip_ValueChanged(object sender, float value)
 		{
-			m_model.AssetName = ShipType.Types[(int)value].ModelAsset;
+			//m_model.AssetName = ShipType.Types[(int)value].ModelAsset;
 		}
 
 		void buttonAccept_Click(object sender, MouseEventArgs args)
@@ -179,7 +178,9 @@ namespace Xe.SpaceRace
 			angle += ((float)(gameTime.ElapsedGameTime).Ticks) / 10000000f;
 
 			angle %= MathHelper.TwoPi;
-			m_model.World = Matrix.CreateRotationY(angle);
+
+			m_ship.Update(gameTime);
+			ViewMatrix = Matrix.CreateLookAt(Vector3.Transform(new Vector3(0, 0, viewDistance), Matrix.CreateRotationY(angle)), new Vector3(0, 0, 0), Vector3.Up);
 
     	}
 
@@ -188,15 +189,19 @@ namespace Xe.SpaceRace
 			if (!this.Visible)
 				return;
 
-			XeGame.Stats.AddModelPolygonsCount(m_model.Model);
+			/*XeGame.Stats.AddModelPolygonsCount(m_model.Model);
 
 
 			m_model.View = this.ViewMatrix;
 			m_model.Projection = this.ProjectionMatrix;
 
 			m_model.Draw(gameTime);
+			*/
 
+			m_ship.setParticlesView(ViewMatrix);
+			m_ship.Draw(gameTime);
 			base.Draw(gameTime);
+
 		}
 
 		#endregion
