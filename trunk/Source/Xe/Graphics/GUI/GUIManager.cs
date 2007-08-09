@@ -157,7 +157,7 @@ namespace Xe.GUI
         #region Loading Settings
         public void LoadSettings(XmlNode node)
         {
-            if (node.Name.Equals("Xna5D_GUI"))
+            if (node.Name.Equals("GUI"))
             {
                 foreach (XmlNode _child in node.ChildNodes)
                 {
@@ -490,7 +490,7 @@ namespace Xe.GUI
         {
             get
             {
-                return "Xna5D_GUIManager";
+                return "GUIManager";
             }
         }
 

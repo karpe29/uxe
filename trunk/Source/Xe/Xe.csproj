@@ -488,6 +488,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>PostProcess</Name>
     </Compile>
+    <Compile Include="Graphics\2D\PostProcess\PostProcessManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>PostProcessManager</Name>
+    </Compile>
     <Compile Include="Graphics\2D\PostProcess\RadialBlur.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>RadialBlur</Name>

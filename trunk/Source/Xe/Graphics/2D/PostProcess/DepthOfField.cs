@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Xe.Graphics2D.PostProcessing
+namespace Xe.Graphics2D.PostProcess
 {
     internal class DepthOfField
     {

@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace Xe.Graphics2D.PostProcessing
+namespace Xe.Graphics2D.PostProcess
 {
     public class GaussianBlur
     {

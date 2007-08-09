@@ -2,8 +2,8 @@
 	<xsl:template match="/">
 		<html>
 			<body style="background-color:#1D1D1D; color:#FFFFFF;font-family:Consolas,Courier New,Tahoma,Sans-Serif;">
-				<h1>Xna5D Log</h1>
-				<xsl:for-each select="Xna5D_Log/Message">
+				<h1>Log</h1>
+				<xsl:for-each select="Log/Message">
 					<table border="1" style="border-collapse:collapse;background-color:#3D3D3D;" bordercolor="#000000" cellspacing="0" width="500">
 						<th>
 							<strong>Message</strong>
@@ -36,7 +36,7 @@
 					<br/>
 				</xsl:for-each>
 
-				<xsl:for-each select="Xna5D_Log/Warning">
+				<xsl:for-each select="Log/Warning">
 					<table border="1" style="border-collapse:collapse;background-color:#3D3D3D;" bordercolor="#000000" cellspacing="0" width="500">
 						<th>
 							<strong style="color:#FF6600">Warning</strong>
@@ -69,7 +69,7 @@
 					<br/>
 				</xsl:for-each>
 
-				<xsl:for-each select="Xna5D_Log/Error">
+				<xsl:for-each select="Log/Error">
 					<table border="1" style="border-collapse:collapse;background-color:#3D3D3D;" bordercolor="#000000" cellspacing="0" width="500">
 						<th>
 							<strong style="color:#FF0000">Error</strong>

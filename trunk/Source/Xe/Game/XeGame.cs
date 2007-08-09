@@ -13,7 +13,7 @@ using Xe.GUI;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Xe.Tools;
-using Xe.Graphics2D.PostProcessing;
+using Xe.Graphics2D.PostProcess;
 
 namespace Xe
 {
@@ -31,6 +31,8 @@ namespace Xe
 		private static GameScreenManager s_gameScreenManager;
 
 		private static GraphicsDevice s_device;
+
+		private static PostProcessManager s_postProcessManager;
 
 		#endregion	
 
@@ -71,11 +73,16 @@ namespace Xe
 			get { return s_device; }
 		}
 
+		public static PostProcessManager PostProcessManager
+		{
+			get { return s_postProcessManager; }
+		}
+
 		#endregion
 
 		#region Variables
 
-		PostProcess ppe;
+		
 
 		protected GraphicsDeviceManager m_graphics;
 
@@ -157,7 +164,7 @@ namespace Xe
 
 			if (loadAllContent)
 			{
-				ppe = new PostProcess(XeGame.Device);
+				s_postProcessManager = new PostProcessManager();
 			}
 		}
 
@@ -201,26 +208,8 @@ namespace Xe
 		protected override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
-			
-			/*ppe.ResolveBackBuffer();
 
-			//ppe.BloomExtract.Threshold = 1.0f;
-			
-			//ppe.ApplyBloomExtract();
-			ppe.RadialBlur.BlurStart = 1;
-			ppe.RadialBlur.BlurWidth = -0.2f;
-			ppe.ApplyRadialBlur();
-			//ppe.ApplyGaussianBlurH();
-			//ppe.ApplyGaussianBlurV();
-
-
-			//ppe.ApplyToneMapping();
-
-			
-
-			ppe.CombineWithBackBuffer();
-
-			ppe.Present(null);*/
+			s_postProcessManager.ApplyPostProcess();
 		}
 	}
 }

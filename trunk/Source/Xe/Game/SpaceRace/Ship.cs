@@ -56,7 +56,7 @@ namespace Xe.SpaceRace
 		BasicModel3D m_model;
 
 		float count = 0,
-			ratioParticles=6;
+			ratioParticles=12;
 
 		public BasicModel3D Model { get { return m_model; } }
 
@@ -110,7 +110,7 @@ namespace Xe.SpaceRace
 
 			m_model.World = DrawOrientation * Matrix.CreateTranslation(Position);
 
-			float inc=-ratioParticles * Speed.Z / m_maxSpeed;
+			float inc= -ratioParticles * Speed.Z / m_maxSpeed;
 			count += 1+inc;
 			if (count > ratioParticles)
 			{
@@ -131,11 +131,14 @@ namespace Xe.SpaceRace
 
 				count -= ratioParticles;
 			}
-			m_stats.AddDebugString("Particles Speed : " + Helper.Vector3ToString3f(particleSpeed));
-			m_stats.AddDebugString("Particles Gravity : " + Helper.Vector3ToString3f(particleGravity));
 
 			fireParticles.Update(gameTime);
 			smokePlumeParticles.Update(gameTime);
+
+			if (Keyboard.GetState().IsKeyDown(Keys.N))
+				XeGame.PostProcessManager.EnableBlur = true;
+			else
+				XeGame.PostProcessManager.EnableBlur = false;
 		}
 			
 

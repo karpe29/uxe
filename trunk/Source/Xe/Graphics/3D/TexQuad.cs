@@ -17,7 +17,6 @@
 //using System;
 //using System.Collections.Generic;
 
-//using Xna5D;
 
 //using Microsoft.Xna.Framework;
 //using Microsoft.Xna.Framework.Graphics;
@@ -25,7 +24,7 @@
 //#endregion
 
 
-//namespace Xna5D.Graphics3D
+//namespace Xe.Graphics3D
 //{
 //    public partial class TexQuad : Microsoft.Xna.Framework.DrawableGameComponent
 //    {
