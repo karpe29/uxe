@@ -31,17 +31,20 @@ namespace Xe.Graphics3D.Particles
         {
 			settings.TextureName = @"Content\Particles\fire";
 
-            settings.MaxParticles = 100000;
+            settings.MaxParticles = 1000;
 
             settings.Duration = TimeSpan.FromSeconds(12);
 
             settings.DurationRandomness = 0f;
 
             settings.MinHorizontalVelocity = 0;
-            settings.MaxHorizontalVelocity = 0;
+            settings.MaxHorizontalVelocity = 5;
 
             settings.MinVerticalVelocity = 0;
-            settings.MaxVerticalVelocity = 0;
+            settings.MaxVerticalVelocity = 5;
+
+			settings.MinRotateSpeed = 0;
+			settings.MaxRotateSpeed = MathHelper.TwoPi;
 
             // Set gravity upside down, so the flames will 'fall' upward.
             settings.Gravity = new Vector3(0, 0, 0);
