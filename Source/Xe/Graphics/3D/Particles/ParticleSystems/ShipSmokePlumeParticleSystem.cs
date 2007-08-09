@@ -1,6 +1,6 @@
 #region File Description
 //-----------------------------------------------------------------------------
-// FireParticleSystem.cs
+// SmokePlumeParticleSystem.cs
 //
 // Microsoft XNA Community Game Platform
 // Copyright (C) Microsoft Corporation. All rights reserved.
@@ -18,46 +18,42 @@ using Xe.SpaceRace;
 namespace Xe.Graphics3D.Particles
 {
     /// <summary>
-    /// Custom particle system for creating a flame effect.
+    /// Custom particle system for creating a giant plume of long lasting smoke.
     /// </summary>
-    class FireParticleSystem : ParticleSystem
+    class ShipSmokePlumeParticleSystem : ParticleSystem
     {
-        public FireParticleSystem(Game game, ContentManager content)
+        public ShipSmokePlumeParticleSystem(Game game, ContentManager content)
             : base(game, content)
         { }
 
 
         protected override void InitializeSettings(ParticleSettings settings)
         {
-			settings.TextureName = @"Content\Particles\fire";
+			settings.TextureName = @"Content\Particles\smoke";
 
             settings.MaxParticles = 2400;
 
             settings.Duration = TimeSpan.FromSeconds(.5);
 
-            settings.DurationRandomness = 1;
-
             settings.MinHorizontalVelocity = 0;
-            settings.MaxHorizontalVelocity = 5;
+            settings.MaxHorizontalVelocity = 0;
 
             settings.MinVerticalVelocity = 0;
-            settings.MaxVerticalVelocity = 10;
+            settings.MaxVerticalVelocity = 15;
 
-            // Set gravity upside down, so the flames will 'fall' upward.
+            // Create a wind effect by tilting the gravity vector sideways.
             settings.Gravity = new Vector3(0, 0, 0);
 
-            settings.MinColor = new Color(255, 255, 255, 10);
-            settings.MaxColor = new Color(255, 255, 255, 40);
+            //settings.EndVelocity = 0.75f;
+
+            settings.MinRotateSpeed = -1;
+            settings.MaxRotateSpeed = 1;
 
             settings.MinStartSize = 10;
             settings.MaxStartSize = 15;
 
-            settings.MinEndSize = 5;
-            settings.MaxEndSize = 10;
-
-            // Use additive blending.
-            settings.SourceBlend = Blend.SourceAlpha;
-            settings.DestinationBlend = Blend.One;
+            settings.MinEndSize = 20;
+            settings.MaxEndSize = 30;
         }
     }
 }

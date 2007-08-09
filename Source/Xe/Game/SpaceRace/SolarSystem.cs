@@ -39,7 +39,7 @@ namespace Xe.SpaceRace
 		{
 			if (Sun == null)
 			{
-				this.m_sun = new Planet(gameScreenManager, new PlanetType(PlanetType.Names.Sun, 0, 0, 0, 0),0,0,0,Vector3.Zero,0,Vector3.Zero);
+				this.m_sun = new Planet(gameScreenManager, new PlanetType(PlanetType.Names.Sun, 0, 0, 0, 0),null,0,0,0,Vector3.Zero,0,Vector3.Zero);
 			}
 			else
 			{
@@ -48,7 +48,6 @@ namespace Xe.SpaceRace
 
 			m_planets = new List<Planet>(planetCount);
 
-			Random r = new Random();
 
 			for (int i = 0; i < m_planets.Capacity; i++)
 			{
@@ -77,8 +76,7 @@ namespace Xe.SpaceRace
 				Vector3 selfRotationAxe = Vector3.Normalize(new Vector3(Helper.RandomFloat(-0.1f, 0.1f), 1, Helper.RandomFloat(-0.1f, 0.1f)));
 
 
-				Planet p = new Planet(gameScreenManager, tmpPlanetType, distanceToSun, rotationStart, rotationSpeed, rotationAxe, selfRotationSpeed, selfRotationAxe);
-				p.SolarSystem = this;
+				Planet p = new Planet(gameScreenManager, tmpPlanetType,this, distanceToSun, rotationStart, rotationSpeed, rotationAxe, selfRotationSpeed, selfRotationAxe);
 
 				m_planets.Add(p);
 			}

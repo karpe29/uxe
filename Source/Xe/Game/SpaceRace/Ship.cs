@@ -82,11 +82,11 @@ namespace Xe.SpaceRace
 			m_gameScreen = gameScreenManager.CurrentGameScreen ;
 			m_shipType = type;
 
-			fireParticles = new FireParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
+			fireParticles = new ShipFireParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
 			fireParticles.Initialize();
 
 
-			smokePlumeParticles = new SmokePlumeParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
+			smokePlumeParticles = new ShipSmokePlumeParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
 			smokePlumeParticles.Initialize();
 			
 			this.Initialize();
