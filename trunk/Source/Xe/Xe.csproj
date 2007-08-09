@@ -520,6 +520,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Camera</Name>
     </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleSystems\SunFireParticleSystem.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SunFireParticleSystem</Name>
+    </Compile>
     <Compile Include="Tools\CameraInput.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>CameraInput</Name>
@@ -564,17 +568,17 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ExplosionSmokeParticleSystem</Name>
     </Compile>
-    <Compile Include="Graphics\3D\Particles\ParticleSystems\FireParticleSystem.cs">
+    <Compile Include="Graphics\3D\Particles\ParticleSystems\ShipFireParticleSystem.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>FireParticleSystem</Name>
+      <Name>ShipFireParticleSystem</Name>
     </Compile>
     <Compile Include="Graphics\3D\Particles\ParticleSystems\ProjectileTrailParticleSystem.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ProjectileTrailParticleSystem</Name>
     </Compile>
-    <Compile Include="Graphics\3D\Particles\ParticleSystems\SmokePlumeParticleSystem.cs">
+    <Compile Include="Graphics\3D\Particles\ParticleSystems\ShipSmokePlumeParticleSystem.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>SmokePlumeParticleSystem</Name>
+      <Name>ShipSmokePlumeParticleSystem</Name>
     </Compile>
     <Compile Include="Graphics\3D\Particles\ParticleVertex.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
