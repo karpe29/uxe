@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Xna5D_GUI>
+<GUI>
   <Texture>Content/Images/gui_Xe</Texture>
   <CornerSize>5</CornerSize>
   <GUI_Elements>
@@ -214,4 +214,4 @@
     </Element>
     
   </GUI_Elements>
-</Xna5D_GUI>
+</GUI>

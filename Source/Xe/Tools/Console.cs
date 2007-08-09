@@ -225,7 +225,7 @@ namespace Xe.Tools
         {
             get
             {
-                return "Xna5D_Console";
+                return "Console";
             }
         }
 

@@ -212,7 +212,7 @@ namespace Xe.Tools
         {
             get
             {
-                return "Xna5D_TextLogger";
+                return "TextLogger";
             }
         }
 

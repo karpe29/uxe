@@ -131,7 +131,7 @@ namespace Xe.Tools
             m_xmlWriter.Formatting = Formatting.Indented;
 
             m_xmlWriter.WriteStartDocument();
-            m_xmlWriter.WriteStartElement("Xna5D_Log");
+            m_xmlWriter.WriteStartElement("Log");
 
             m_isOpen = true;
 
@@ -334,7 +334,7 @@ namespace Xe.Tools
         {
             get
             {
-                return "Xna5D_XmlLogger";
+                return "XmlLogger";
             }
         }
 

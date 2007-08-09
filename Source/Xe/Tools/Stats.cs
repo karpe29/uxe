@@ -49,7 +49,7 @@ namespace Xe.Tools
         #endregion
 
         #region Frame Timing
-        protected int m_lastFrame;
+        protected float m_lastFrame;
         #endregion
 
 		#region Debug Strings
@@ -126,13 +126,15 @@ namespace Xe.Tools
 
 		public void AddDebugString(string s)
 		{
+#if DEBUG
 			m_debugStrings.Add(s);
+#endif
 		}
 
         #region Event Handlers
         void Reporter_NewMessage(Message msg)
         {
-            if (msg.Destination.Equals("Xna5D_Stats"))
+            if (msg.Destination.Equals("Stats"))
             {
                 if (msg.Msg.Equals("on"))
                     this.Visible = true;
@@ -190,7 +192,7 @@ namespace Xe.Tools
             }
             #endregion
 
-            m_lastFrame = gameTime.ElapsedRealTime.Milliseconds;
+            m_lastFrame = ((float)(gameTime.ElapsedGameTime).Ticks) / 10000f;
 
             base.Update(gameTime);
         }
@@ -202,7 +204,7 @@ namespace Xe.Tools
             if (m_font != null)
             {
                 string _fps = String.Format("FPS: {0}", m_fps.ToString());
-                string _frameTime = String.Format("Frame Time: {0}ms", m_lastFrame.ToString());
+                string _frameTime = String.Format("Frame Time: {0} ms", m_lastFrame.ToString("F").PadLeft(6));
                 string _mouseCoords = String.Format("Mouse Coords (x,y): ({0},{1})", Mouse.GetState().X, Mouse.GetState().Y);
                 string _polyCount = String.Format("Reported Drawn Polygons: {0}", m_polygonCount.ToString());
 				string _components = String.Format("Game.Components.Count: {0}", this.Game.Components.Count);

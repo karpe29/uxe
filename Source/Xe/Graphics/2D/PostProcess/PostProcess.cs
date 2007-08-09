@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Xe.Graphics2D.PostProcessing;
+using Xe.Graphics2D.PostProcess;
 
-namespace Xe.Graphics2D.PostProcessing
+namespace Xe.Graphics2D.PostProcess
 {
     /// <summary>
     /// Represents a class for GPU Post Processing from <br />www.mahdi-khodadadi.com

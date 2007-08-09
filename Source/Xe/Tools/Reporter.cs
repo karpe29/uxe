@@ -116,7 +116,7 @@ namespace Xe.Tools
         {
             get
             {
-                return "Xna5D_Reporter";
+                return "Reporter";
             }
         }
 
