@@ -111,21 +111,30 @@ namespace Xe.SpaceRace
 			}
 			else
 			{
-				for (int i = 0; i < 100;i++ ) // nombre de particules générées a chaque Update
+				for (int i = 0; i < 10;i++ ) // nombre de particules générées a chaque Update
 				{
 					// on calcule la position d'apparition de la particule sur le soleil via 2 angles
 					// angleH ==> longitude
 					// angleV ==> latitude
-					float angleH = Helper.RandomFloat(0, MathHelper.TwoPi);
-					float angleV = Helper.RandomFloat(0, MathHelper.Pi) - MathHelper.PiOver2;
+					//float angleH =Helper.RandomFloat(0, MathHelper.TwoPi);
+					//float angleV = Helper.RandomFloat(0, MathHelper.Pi) - MathHelper.PiOver2;
+
 
 					//System.Console.WriteLine(angleH + " " + angleV);
 					// on crée la matrice de rotation associée
-					particleOrient=Matrix.CreateFromYawPitchRoll(angleH,angleV,0);
+					//particleOrient=Matrix.CreateFromYawPitchRoll(angleH,angleV,0);
 					// qui nous permet de générer un vecteur correspondant a la position de la particule par rapport au centre du soleil
-					particlePos = Vector3.Transform(Vector3.Forward, particleOrient) * (float)m_planetType.Name;
+					float t = Helper.RandomFloat(0, MathHelper.TwoPi);
+					float z = Helper.RandomFloat(-1, 1);
+					float r = (float)Math.Sqrt(1.0 - z * z) * (float)m_planetType.Name;
+
+					particlePos = new Vector3(r * (float)Math.Cos(t), +r * (float)Math.Sin(t), z * (float)m_planetType.Name);
+
+					
+					
+					//particlePos = Vector3.Transform(Vector3.Forward, particleOrient) * (float)m_planetType.Name;
 					// on définit une vitesse colinéaire au vecteur Position comme ca la particule va "s'éloigner" du soleil
-					particleSpeed = Vector3.Zero;//particlePos/20;
+					particleSpeed =particlePos/50;
 					// on met la gravité a zero car la gravité affecte toutes les particules donc on peut pas s'en servir pour faire retomber les particules vers le soleil
 					particleGravity = Vector3.Zero;
 					fireParticles.AddParticle(Position + particlePos, particleSpeed);

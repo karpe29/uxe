@@ -41,7 +41,7 @@ namespace Xe.SpaceRace
 		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f,  new Vector3[] { new Vector3(8,0,30), new Vector3(-8,0,30) } ), 
 											new ShipType(@"Content\Models\StarChaser2", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f,  new Vector3[] { new Vector3(3.25f,0.3f,42f), new Vector3(-3.25f,0.3f,42f), new Vector3(2f,-4.75f,42f),new Vector3(-2f,-4.75f,42f), new Vector3(6.5f,-3.75f,42f),new Vector3(-6.5f,-3.75f,42f) } ), 
 											new ShipType(@"Content\Models\StarChaser3", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f,  new Vector3[] { new Vector3(0,7.5f,38f),new Vector3(3f,9.5f,38f),new Vector3(-3f,9.5f,38f),new Vector3(2f,4.5f,38f), new Vector3(-2f,4.5f,38f) } ), 
-											new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f,  new Vector3[] { new Vector3(-3.75f,-3.25f,57f),new Vector3(3.75f,-3.25f,57f),new Vector3(-9.75f,-4.75f,56f), new Vector3(9.75f,-4.75f,56f) } ) };
+											new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f,  new Vector3[] { new Vector3(-3.75f,-3.25f,58f),new Vector3(3.75f,-3.25f,58f),new Vector3(-9.75f,-4.75f,57f), new Vector3(9.75f,-4.75f,57f) } ) };
 	}
 	
 	/// <summary>
@@ -55,7 +55,7 @@ namespace Xe.SpaceRace
 
 		BasicModel3D m_model;
 
-		float count = 0,
+		public float count = 0,
 			ratioParticles=12;
 
 		public BasicModel3D Model { get { return m_model; } }
@@ -117,17 +117,18 @@ namespace Xe.SpaceRace
 				float orientY = -RotationSpeed.Y / m_handling /2;
 				float orientX =  -RotationSpeed.X / m_handling / 2;
 				Matrix orientParticles = Matrix.CreateFromYawPitchRoll(orientY, orientX, 0);
+				particleSpeed = new Vector3(0, 0, 8) * (2 + inc);
 				foreach (Vector3 reactor in m_shipType.Reactors)
 				{
 					particlePos = reactor;
-					particleSpeed = new Vector3(0, 0, 8) * (2 + inc);
-					particleGravity = Vector3.Transform(new Vector3(0, 0, 4), orientParticles) * (2 + inc);
 					fireParticles.AddParticle(particlePos, particleSpeed);
-					fireParticles.Gravity = particleGravity;
 					smokePlumeParticles.AddParticle(particlePos, particleSpeed);
-					smokePlumeParticles.Gravity = particleGravity;
-
 				}
+				particleGravity = Vector3.Transform(new Vector3(0, 0, 4), orientParticles) * (2 + inc);
+
+				fireParticles.Gravity = particleGravity;
+				smokePlumeParticles.Gravity = particleGravity;
+
 
 				count -= ratioParticles;
 			}

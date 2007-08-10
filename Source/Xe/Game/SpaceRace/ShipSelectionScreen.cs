@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Xe.Graphics3D;
 using Xe.Tools;
+using Xe.Physics3D;
 
 namespace Xe.SpaceRace
 {
@@ -73,13 +74,15 @@ namespace Xe.SpaceRace
 			XeGame.GuiManager.AddControl(sliderShip);
 
 			m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
-			
+			m_ship.ratioParticles = 2;
+
 			ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1.0f, 1, viewDistance * 2.0f);
 		}
 
 		void sliderShip_ValueChanged(object sender, float value)
 		{
 			m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
+			m_ship.ratioParticles = 2;
 		}
 
 		void buttonAccept_Click(object sender, MouseEventArgs args)
@@ -178,9 +181,8 @@ namespace Xe.SpaceRace
 			angle += ((float)(gameTime.ElapsedGameTime).Ticks) / 10000000f;
 
 			angle %= MathHelper.TwoPi;
-
 			m_ship.Update(gameTime);
-			ViewMatrix = Matrix.CreateLookAt(Vector3.Transform(new Vector3(0, 50, 100), Matrix.CreateRotationY(angle)), new Vector3(0, 0, 0), Vector3.Up);
+			ViewMatrix = Matrix.CreateLookAt( Vector3.Transform(new Vector3(0, 50, 100), Matrix.CreateRotationY(angle)), new Vector3(0, 0, 0), Vector3.Up);
 			m_ship.Model.View = ViewMatrix;
 			m_ship.Model.Projection = ProjectionMatrix;
 
