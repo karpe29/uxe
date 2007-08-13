@@ -441,7 +441,7 @@ namespace Xe.Tools
 		/// </summary>
 		/// <param name="vector">The vector containing values</param>
 		/// <returns>a string formatted : "( x , y , z )"</returns>
-		public static string Vector3ToString3f(Vector3 vector)
+		public static string Vector3ToString(Vector3 vector)
 		{
 			return "( "+Math.Round(vector.X,3)+" , "+ Math.Round(vector.Y,3)+" , "+Math.Round(vector.Z,3)+" )";		
 		}
@@ -496,6 +496,36 @@ namespace Xe.Tools
 		public static float RandomFloat(float MinValue, float MaxValue)
 		{
 			return (float)random.NextDouble() * (MaxValue - MinValue) + MinValue;
+		}
+
+		/// <summary>
+		/// Return a random Vector3 on a specified sphere perimeter.
+		/// </summary>
+		/// <param name="center"></param>
+		/// <param name="radius"></param>
+		/// <returns></returns>
+		public static Vector3 RandomVector3OnSphere(Vector3 center, float radius)
+		{
+			float t = RandomFloat(MathHelper.TwoPi);
+			float z = RandomFloat(-1.0f, 1.0f);
+			float r = (float)Math.Sqrt(1.0 - z * z) * radius;
+
+			return new Vector3(center.X + r * (float)Math.Cos(t), center.Y + r * (float)Math.Sin(t), center.Z + z * radius);
+		}
+
+		/// <summary>
+		/// Return a random Vector3 in a specified sphere.
+		/// </summary>
+		/// <param name="center"></param>
+		/// <param name="radius"></param>
+		/// <returns></returns>
+		public static Vector3 RandomVector3InSphere(Vector3 center, float radius)
+		{
+			float t = RandomFloat(MathHelper.TwoPi);
+			float z = RandomFloat(-1.0f, 1.0f);
+			float r = (float)Math.Sqrt(1.0 - z * z) * RandomFloat(radius);
+
+			return new Vector3(center.X + r * (float)Math.Cos(t), center.Y + r * (float)Math.Sin(t), center.Z + z * RandomFloat(radius));
 		}
 
 		/*private static void ShuffleList(ref List<object> l)

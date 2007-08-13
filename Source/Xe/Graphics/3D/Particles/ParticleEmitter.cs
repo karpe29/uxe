@@ -44,14 +44,13 @@ namespace Xe.Graphics3D.Particles
         Vector3 previousPosition;
         float timeLeftOver;
 
-        #endregion
+		#endregion
 
 
         /// <summary>
         /// Constructs a new particle emitter object.
         /// </summary>
-        public ParticleEmitter(ParticleSystem particleSystem,
-                               float particlesPerSecond, Vector3 initialPosition)
+        public ParticleEmitter(ParticleSystem particleSystem, float particlesPerSecond, Vector3 initialPosition)
         {
             this.particleSystem = particleSystem;
 
@@ -60,8 +59,7 @@ namespace Xe.Graphics3D.Particles
             previousPosition = initialPosition;
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Updates the emitter, creating the appropriate number of particles
         /// in the appropriate positions.
         /// </summary>
@@ -95,8 +93,8 @@ namespace Xe.Graphics3D.Particles
                     // evenly spaced particles regardless of the object speed, particle
                     // creation frequency, or game update rate.
                     float mu = currentTime / elapsedTime;
-
-                    Vector3 position = Vector3.Lerp(previousPosition, newPosition, mu);
+                    
+					Vector3 position = Vector3.Lerp(previousPosition, newPosition, mu);
 
                     // Create the particle.
                     particleSystem.AddParticle(position, velocity);

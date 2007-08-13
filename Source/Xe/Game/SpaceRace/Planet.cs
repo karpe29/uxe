@@ -53,7 +53,9 @@ namespace Xe.SpaceRace
 		protected BumpModel3D m_model;
 
 		private SolarSystem m_solarSystem;
+		
 		private ParticleSystem fireParticles;
+		private CustomParticleEmitter cpe;
 
 		public float m_distanceToSun, m_rotationStart, m_aroundRotationSpeed,m_aroundRotation, m_selfRotationSpeed,m_selfRotation;
 		private Vector3 m_aroundRotationAxe, m_selfRotationAxe, particlePos, particleSpeed, particleGravity;
@@ -85,6 +87,8 @@ namespace Xe.SpaceRace
 			{
 				fireParticles = new SunFireParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
 				fireParticles.Initialize();
+
+				cpe = new CustomParticleEmitter(fireParticles, 10, new CustomParticleEmitter.AddParticleDelegate(APD));
 			}
 
 		}
@@ -105,49 +109,39 @@ namespace Xe.SpaceRace
 			Orientation = Matrix.CreateFromAxisAngle(m_selfRotationAxe,  m_selfRotation);
 
 			m_model.World = DrawOrientation * Matrix.CreateTranslation(Position);
+
 			if (m_solarSystem != null) // top level sun
 			{
-				m_model.World*= m_solarSystem.Orientation* Matrix.CreateTranslation(m_solarSystem.Sun.Position);
+				m_model.World *= m_solarSystem.Orientation* Matrix.CreateTranslation(m_solarSystem.Sun.Position);
 			}
 			else
 			{
-				for (int i = 0; i < 10;i++ ) // nombre de particules générées a chaque Update
-				{
-					// on calcule la position d'apparition de la particule sur le soleil via 2 angles
-					// angleH ==> longitude
-					// angleV ==> latitude
-					//float angleH =Helper.RandomFloat(0, MathHelper.TwoPi);
-					//float angleV = Helper.RandomFloat(0, MathHelper.Pi) - MathHelper.PiOver2;
-
-
-					//System.Console.WriteLine(angleH + " " + angleV);
-					// on crée la matrice de rotation associée
-					//particleOrient=Matrix.CreateFromYawPitchRoll(angleH,angleV,0);
-					// qui nous permet de générer un vecteur correspondant a la position de la particule par rapport au centre du soleil
-					float t = Helper.RandomFloat(0, MathHelper.TwoPi);
-					float z = Helper.RandomFloat(-1, 1);
-					float r = (float)Math.Sqrt(1.0 - z * z) * (float)m_planetType.Name;
-
-					particlePos = new Vector3(r * (float)Math.Cos(t), +r * (float)Math.Sin(t), z * (float)m_planetType.Name);
-
-					
-					
-					//particlePos = Vector3.Transform(Vector3.Forward, particleOrient) * (float)m_planetType.Name;
-					// on définit une vitesse colinéaire au vecteur Position comme ca la particule va "s'éloigner" du soleil
-					particleSpeed =particlePos/50;
-					// on met la gravité a zero car la gravité affecte toutes les particules donc on peut pas s'en servir pour faire retomber les particules vers le soleil
-					particleGravity = Vector3.Zero;
-					fireParticles.AddParticle(Position + particlePos, particleSpeed);
-					fireParticles.Gravity = particleGravity;
-
-				}
-
+				cpe.Update(gameTime);
 
 				fireParticles.Update(gameTime);
-
 			}
 
 			m_model.Update(gameTime);
+		}
+
+		public void APD(ParticleSystem p)
+		{
+			for (int i = 0; i < 10; i++) // nombre de particules générées a chaque Update
+			{
+				if (i % 5 == 0)
+					particlePos = Helper.RandomVector3InSphere(Position, 100000);
+				else
+					particlePos = Helper.RandomVector3OnSphere(Position, 100000);
+
+				//System.Console.WriteLine(Helper.Vector3ToString(particlePos));
+				// on définit une vitesse colinéaire au vecteur Position comme ca la particule va "s'éloigner" du soleil
+				particleSpeed = Vector3.Zero;//particlePos/50;
+				// on met la gravité a zero car la gravité affecte toutes les particules donc on peut pas s'en servir pour faire retomber les particules vers le soleil
+				particleGravity = Vector3.Zero;
+				
+				p.AddParticle(particlePos, particleSpeed);
+				p.Gravity = particleGravity;
+			}
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -158,10 +152,11 @@ namespace Xe.SpaceRace
 				fireParticles.SetCamera(m_model.View, m_model.Projection);
 				fireParticles.Draw(gameTime);
 			}
-
-			m_model.LightPosition = GetTopSunPosition();
-
-			//m_model.Draw(gameTime);
+			else
+			{
+				m_model.LightPosition = GetTopSunPosition();
+				m_model.Draw(gameTime);
+			}
 
 			
 			base.Draw(gameTime);
