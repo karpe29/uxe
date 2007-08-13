@@ -528,6 +528,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>QuadBase</Name>
     </Compile>
+    <Compile Include="Graphics\2D\SafeArea.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SafeArea</Name>
+    </Compile>
     <Compile Include="Graphics\2D\Sprite.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Sprite</Name>
