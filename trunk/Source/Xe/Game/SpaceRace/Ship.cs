@@ -136,10 +136,35 @@ namespace Xe.SpaceRace
 			fireParticles.Update(gameTime);
 			smokePlumeParticles.Update(gameTime);
 
-			if (Keyboard.GetState().IsKeyDown(Keys.N))
-				XeGame.PostProcessManager.EnableBlur = true;
+
+			KeyboardState ks = Keyboard.GetState();
+
+			if (ks.IsKeyDown(Keys.A))
+				XeGame.PostProcessManager.EnableGaussianBlur = true;
 			else
-				XeGame.PostProcessManager.EnableBlur = false;
+				XeGame.PostProcessManager.EnableGaussianBlur = false;
+
+			if (ks.IsKeyDown(Keys.B))
+				XeGame.PostProcessManager.EnableBloom = true;
+			else
+				XeGame.PostProcessManager.EnableBloom = false;
+
+			if (ks.IsKeyDown(Keys.C))
+				XeGame.PostProcessManager.EnableColorInverse = true;
+			else
+				XeGame.PostProcessManager.EnableColorInverse = false;
+
+			if (ks.IsKeyDown(Keys.D))
+				XeGame.PostProcessManager.EnableRadialBlur = true;
+			else
+				XeGame.PostProcessManager.EnableRadialBlur = false;
+
+			if (ks.IsKeyDown(Keys.E))
+				XeGame.PostProcessManager.EnableToneMapping = true;
+			else
+				XeGame.PostProcessManager.EnableToneMapping = false;
+
+
 		}
 			
 

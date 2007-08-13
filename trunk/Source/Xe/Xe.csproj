@@ -444,6 +444,30 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Universe</Name>
     </Compile>
+    <Compile Include="Game\TimeTime\Events\Event.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Event</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\EventFilter.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>EventFilter</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\IEventFilter.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IEventFilter</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\IEventListener.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IEventListener</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\IEventManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IEventManager</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\ScheduledEventInfo.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ScheduledEventInfo</Name>
+    </Compile>
     <Compile Include="Graphics\2D\Animation2D.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Animation2D</Name>
@@ -523,6 +547,10 @@
     <Compile Include="Graphics\3D\Camera.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Camera</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\CustomParticleEmitter.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>CustomParticleEmitter</Name>
     </Compile>
     <Compile Include="Graphics\3D\Particles\ParticleSystems\SunFireParticleSystem.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
