@@ -14,20 +14,20 @@ namespace Xe.SpaceRace
 	{
 		public enum Names
 		{
-			Deimos	= 600,
-			Phobos	= 960,
-			Pluto	= 2306,
+			Deimos = 600,
+			Phobos = 960,
+			Pluto = 2306,
 			Mercury = 2439,
-			Mars	= 3402,
-			Moon	= 3474,
-			Venus	= 6051,
-			Earth	= 6378,
+			Mars = 3402,
+			Moon = 3474,
+			Venus = 6051,
+			Earth = 6378,
 			Neptune = 24961,
-			Uranus	= 25656,
-			Saturn	= 60268,
+			Uranus = 25656,
+			Saturn = 60268,
 			Jupiter = 71491,
 			Jupiter2 = 71492,
-			Sun		= 353640
+			Sun = 353640
 		};
 
 		string m_assetName;
@@ -53,11 +53,11 @@ namespace Xe.SpaceRace
 		protected BumpModel3D m_model;
 
 		private SolarSystem m_solarSystem;
-		
-		private ParticleSystem fireParticles;
-		private CustomParticleEmitter cpe;
 
-		public float m_distanceToSun, m_rotationStart, m_aroundRotationSpeed,m_aroundRotation, m_selfRotationSpeed,m_selfRotation;
+		private ParticleSystem m_fireParticles;
+		private CustomParticleEmitter m_customParticleEmitter;
+
+		public float m_distanceToSun, m_rotationStart, m_aroundRotationSpeed, m_aroundRotation, m_selfRotationSpeed, m_selfRotation;
 		private Vector3 m_aroundRotationAxe, m_selfRotationAxe, particlePos, particleSpeed, particleGravity;
 		private Matrix particleOrient;
 
@@ -68,7 +68,7 @@ namespace Xe.SpaceRace
 
 
 
-		public Planet(GameScreenManager gameScreenManager, PlanetType type,SolarSystem solarSystem, float distanceToSun, float rotationStart, float rotationSpeed, Vector3 rotationAxe, float selfRotationSpeed, Vector3 selfRotationAxe)
+		public Planet(GameScreenManager gameScreenManager, PlanetType type, SolarSystem solarSystem, float distanceToSun, float rotationStart, float rotationSpeed, Vector3 rotationAxe, float selfRotationSpeed, Vector3 selfRotationAxe)
 			: base(gameScreenManager.Game, (PhysicalType)type)
 		{
 			m_type = (PhysicalType)type;
@@ -85,10 +85,10 @@ namespace Xe.SpaceRace
 
 			if (this.m_solarSystem == null) // ici on est le soleil de niveau 0
 			{
-				fireParticles = new SunFireParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
-				fireParticles.Initialize();
+				m_fireParticles = new SunFireParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
+				m_fireParticles.Initialize();
 
-				cpe = new CustomParticleEmitter(fireParticles, 10, new CustomParticleEmitter.AddParticleDelegate(APD));
+				m_customParticleEmitter = new CustomParticleEmitter(m_fireParticles, 100, new CustomParticleEmitter.AddParticleDelegate(SunAddParticleDelegate));
 			}
 
 		}
@@ -101,47 +101,44 @@ namespace Xe.SpaceRace
 
 			if (m_solarSystem != null) // top level sun
 			{
-				m_aroundRotation= (m_aroundRotation+m_aroundRotationSpeed*seconds)%MathHelper.TwoPi;
+				m_aroundRotation = (m_aroundRotation + m_aroundRotationSpeed * seconds) % MathHelper.TwoPi;
 				Position = Vector3.Transform(m_distanceToSun * Vector3.Forward, Matrix.CreateFromAxisAngle(m_aroundRotationAxe, m_rotationStart + m_aroundRotation));
 			}
 			m_selfRotation = (m_selfRotation + m_selfRotationSpeed * seconds) % MathHelper.TwoPi;
 
-			Orientation = Matrix.CreateFromAxisAngle(m_selfRotationAxe,  m_selfRotation);
+			Orientation = Matrix.CreateFromAxisAngle(m_selfRotationAxe, m_selfRotation);
 
 			m_model.World = DrawOrientation * Matrix.CreateTranslation(Position);
 
 			if (m_solarSystem != null) // top level sun
 			{
-				m_model.World *= m_solarSystem.Orientation* Matrix.CreateTranslation(m_solarSystem.Sun.Position);
+				m_model.World *= m_solarSystem.Orientation * Matrix.CreateTranslation(m_solarSystem.Sun.Position);
 			}
 			else
 			{
-				cpe.Update(gameTime);
+				m_customParticleEmitter.Update(gameTime);
 
-				fireParticles.Update(gameTime);
+				m_fireParticles.Update(gameTime);
 			}
 
 			m_model.Update(gameTime);
 		}
 
-		public void APD(ParticleSystem p)
+		public void SunAddParticleDelegate(ParticleSystem p)
 		{
-			for (int i = 0; i < 10; i++) // nombre de particules générées a chaque Update
-			{
-				if (i % 5 == 0)
-					particlePos = Helper.RandomVector3InSphere(Position, 100000);
-				else
-					particlePos = Helper.RandomVector3OnSphere(Position, 100000);
+			if (Helper.RandomFloat(1) > 0.8f)
+				particlePos = Helper.RandomVector3InSphere(Position, 100000);
+			else
+				particlePos = Helper.RandomVector3OnSphere(Position, 100000);
 
-				//System.Console.WriteLine(Helper.Vector3ToString(particlePos));
-				// on définit une vitesse colinéaire au vecteur Position comme ca la particule va "s'éloigner" du soleil
-				particleSpeed = Vector3.Zero;//particlePos/50;
-				// on met la gravité a zero car la gravité affecte toutes les particules donc on peut pas s'en servir pour faire retomber les particules vers le soleil
-				particleGravity = Vector3.Zero;
-				
-				p.AddParticle(particlePos, particleSpeed);
-				p.Gravity = particleGravity;
-			}
+			//System.Console.WriteLine(Helper.Vector3ToString(particlePos));
+			// on définit une vitesse colinéaire au vecteur Position comme ca la particule va "s'éloigner" du soleil
+			particleSpeed = Vector3.Zero;//particlePos/50;
+			// on met la gravité a zero car la gravité affecte toutes les particules donc on peut pas s'en servir pour faire retomber les particules vers le soleil
+			particleGravity = Vector3.Zero;
+
+			p.AddParticle(particlePos, particleSpeed);
+			p.Gravity = particleGravity;
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -149,8 +146,8 @@ namespace Xe.SpaceRace
 			if (m_solarSystem == null) // top level sun
 			{
 				// On affecte la meme camera que pour le soleil
-				fireParticles.SetCamera(m_model.View, m_model.Projection);
-				fireParticles.Draw(gameTime);
+				m_fireParticles.SetCamera(m_model.View, m_model.Projection);
+				m_fireParticles.Draw(gameTime);
 			}
 			else
 			{
@@ -158,7 +155,7 @@ namespace Xe.SpaceRace
 				m_model.Draw(gameTime);
 			}
 
-			
+
 			base.Draw(gameTime);
 		}
 

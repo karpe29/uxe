@@ -15,7 +15,7 @@ namespace Xe.Graphics3D.Particles
 
 		public delegate void AddParticleDelegate(ParticleSystem p);
 
-		AddParticleDelegate d = null;
+		AddParticleDelegate m_delegate = null;
 
         #endregion
 
@@ -23,13 +23,13 @@ namespace Xe.Graphics3D.Particles
         /// <summary>
         /// Constructs a new particle emitter object.
         /// </summary>
-		public CustomParticleEmitter(ParticleSystem particleSystem, float particlesPerSecond, AddParticleDelegate pd)
+		public CustomParticleEmitter(ParticleSystem particleSystem, float particlesPerSecond, AddParticleDelegate addParticleDelegate)
         {
             this.particleSystem = particleSystem;
 
             timeBetweenParticles = 1.0f / particlesPerSecond;
-            
-			d = pd;
+
+			m_delegate = addParticleDelegate;
         }
 
 		/// <summary>
@@ -61,7 +61,7 @@ namespace Xe.Graphics3D.Particles
 
                     // Create the particle.
                     //particleSystem.AddParticle(position, velocity);
-					d(this.particleSystem);
+					m_delegate(this.particleSystem);
                 }
 
                 // Store any time we didn't use, so it can be part of the next update.

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace VirtualRealm.XNA.SafeAreaComponent
+namespace Xe.Graphics2D
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.

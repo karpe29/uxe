@@ -115,17 +115,16 @@ namespace Xe.SpaceRace
 			s.Draw(gameTime);
 
 
-			GraphicsDevice device = ((IGraphicsDeviceService)Game.Services.GetService(typeof(IGraphicsDeviceService))).GraphicsDevice;
-
-			
-
-			device.RenderState.DepthBufferEnable = true;
-			device.RenderState.DepthBufferWriteEnable = true;
+			XeGame.Device.RenderState.DepthBufferEnable = true;
+			XeGame.Device.RenderState.DepthBufferWriteEnable = true;
 			
 			m_race.Draw(gameTime);
 
-			device.RenderState.DepthBufferEnable = true;
-			device.RenderState.DepthBufferWriteEnable = true;
+			XeGame.Device.RenderState.AlphaSourceBlend = Blend.Zero;
+			XeGame.Device.RenderState.AlphaBlendEnable = false;
+			XeGame.Device.RenderState.DepthBufferEnable = true;
+			XeGame.Device.RenderState.DepthBufferWriteEnable = true;
+			
 			m_ship.setParticlesView(m_camera.ViewParticles);
 			m_ship.Draw(gameTime);
 
