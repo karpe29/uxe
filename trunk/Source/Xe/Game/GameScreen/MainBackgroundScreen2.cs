@@ -23,8 +23,8 @@ namespace Xe.GameScreen
 		float modelRotation = 0.0f;
 
 		//Position of the Camera in world space, for our view matrix
-		Vector3 cameraPosition = new Vector3(0, 0, 8690);
-		Vector3 cameraTagetPosition = new Vector3(0, 0, 0);
+		Vector3 cameraPosition = new Vector3(0, 0, 0);
+		Vector3 cameraTargetPosition = new Vector3(0, 0, -1);
 
 		private Matrix projectionMatrix;
 		private float aspectRatio;
@@ -41,7 +41,7 @@ namespace Xe.GameScreen
 			get
 			{
 				// pas optimal du tout !
-				return Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up) * Matrix.CreateRotationZ(modelRotation);
+				return Matrix.CreateLookAt(cameraPosition, cameraTargetPosition, Vector3.Up) * Matrix.CreateRotationZ(modelRotation);
 			}
 			/*set
 			{
@@ -203,7 +203,7 @@ namespace Xe.GameScreen
 		{
 			base.Update(gameTime);
 
-			//modelRotation += (float)gameTime.ElapsedGameTime.TotalMilliseconds * (MathHelper.ToRadians(0.02f) * r.Next(1, 2));
+			modelRotation += (float)gameTime.ElapsedGameTime.TotalMilliseconds * MathHelper.ToRadians(0.005f);
 
 			//float f = 0.002f;
 			/*

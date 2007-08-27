@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Xe.Graphics2D.PostProcess
 {
@@ -9,54 +10,39 @@ namespace Xe.Graphics2D.PostProcess
 	/// A simple layer over PostProcess engine
 	/// TODO : add properties to enable/disable/parametrize effects
 	/// </summary>
-	public class PostProcessManager
+	public class PostProcessManager : DrawableGameComponent
 	{
 		PostProcess m_postProcess;
 
-		public PostProcessManager()
+		public PostProcessManager(Game game)
+			:base (game)
 		{
+		}
+
+		protected override void LoadGraphicsContent(bool loadAllContent)
+		{
+			base.LoadGraphicsContent(loadAllContent);
+
 			m_postProcess = new PostProcess(XeGame.Device);
-			
 			m_postProcess.GaussianBlur.BloomScale = 1f;
 			m_postProcess.GaussianBlur.BlurAmount = 1.0f;
-
 		}
 		
 		/// <summary>
 		/// Apply Post Process effects depending on settings
 		/// </summary>
-		public void ApplyPostProcess()
+		public override void  Draw(GameTime gameTime)
 		{
-			if (!EnablePostProcess)
-				return;
+			if (!IsPostProcessActive)
+				//return;
 
 			m_postProcess.ResolveBackBuffer();
 
-			if (EnableToneMapping)
-			{
-				m_postProcess.ApplyToneMapping();
-			}
-
-			if (EnableColorInverse)
-			{
-				m_postProcess.ApplyColorInverse();
-			}
-
-			if (EnableMonochrome)
-			{
-				m_postProcess.ApplyMonochrome();
-			}
-
-
 			if (EnableBloom)
-			{
 				m_postProcess.ApplyBloomExtract();
-			}
 
 			if (EnableRadialBlur)
-			{
 				m_postProcess.ApplyRadialBlur();
-			}
 
 			if (EnableGaussianBlur)
 			{
@@ -64,21 +50,74 @@ namespace Xe.Graphics2D.PostProcess
 				m_postProcess.ApplyGaussianBlurV();
 			}
 
-			m_postProcess.CombineWithBackBuffer();
+			if (EnableColorInverse)
+				m_postProcess.ApplyColorInverse();
+
+
+			//m_postProcess.ApplyMonochrome();
+
+
+			m_postProcess.ToneMapping.DeFog = .2f;
+			m_postProcess.ToneMapping.Exposure = 1.0f;
+			m_postProcess.ToneMapping.Gamma = 1.0f;
+			if (Keyboard.GetState().IsKeyDown(Keys.N))
+			{
+				m_postProcess.ApplyColorInverse();
+
+				m_postProcess.CombineWithBackBuffer();
+			}
+			//m_postProcess.ApplyColorInverse();
+			
+			//m_postProcess.CombineWithBackBuffer();
+			//m_postProcess.CombineWithBackBuffer();
+			//m_postProcess.CombineWithBackBuffer();
+			//m_postProcess.CombineWithBackBuffer();
+
+			
+
+			if (IsColorVariationActive)
+			{
+				//m_postProcess.Present(null);
+
+				//m_postProcess.ResolveBackBuffer();
+
+				if (EnableMonochrome)
+					m_postProcess.ApplyMonochrome();
+
+				if (EnableToneMapping)
+					m_postProcess.ApplyToneMapping();
+
+				
+			}
 
 			m_postProcess.Present(null);
+
+			base.Draw(gameTime);
 		}
 
 		#region Properties
 
-		public bool EnablePostProcess
+		public bool IsPostProcessActive
 		{
-			get { return	EnableToneMapping ||
-							EnableMonochrome ||
-							EnableGaussianBlur ||
-							EnableColorInverse ||
-							EnableBloom ||
-							EnableRadialBlur; }
+			get
+			{
+				return EnableToneMapping ||
+						  EnableMonochrome ||
+						  EnableGaussianBlur ||
+						  EnableColorInverse ||
+						  EnableBloom ||
+						  EnableRadialBlur;
+			}
+		}
+
+		public bool IsColorVariationActive
+		{
+			get
+			{
+				return //EnableColorInverse ||
+						  EnableMonochrome ||
+						  EnableToneMapping;
+			}
 		}
 
 		public bool EnableColorInverse = false;
@@ -100,7 +139,7 @@ namespace Xe.Graphics2D.PostProcess
 			get { return m_postProcess.RadialBlur.BlurWidth; }
 		}
 
-		public Vector2 RadialBludCenter 
+		public Vector2 RadialBlurCenter 
 		{
 			set { m_postProcess.RadialBlur.Center = value; }
 			get { return m_postProcess.RadialBlur.Center; }

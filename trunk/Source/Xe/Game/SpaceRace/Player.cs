@@ -16,6 +16,8 @@ namespace Xe.SpaceRace
 
 	public class Player : DrawableGameComponent
 	{
+		PlayerIndex m_playerIndex;
+
 		GameScreenManager m_gameScreenManager;
 
 		SpaceRaceScreen m_raceScreen;
@@ -28,7 +30,7 @@ namespace Xe.SpaceRace
 
 		SkyBox s;
 
-		public Player(GameScreenManager gameScreenManager, ShipType type)
+		public Player(GameScreenManager gameScreenManager, ShipType type, PlayerIndex index)
 			: base(gameScreenManager.Game)
 		{
 			m_gameScreenManager = gameScreenManager;
@@ -36,6 +38,8 @@ namespace Xe.SpaceRace
 			m_raceScreen = (SpaceRaceScreen)gameScreenManager.CurrentGameScreen;
 
 			m_race = m_raceScreen.Race;
+
+			m_playerIndex = index;
 
 			m_ship = new Ship(gameScreenManager, type);
 			//m_ship.Position = new Vector3(0, 0, 0);
@@ -94,15 +98,15 @@ namespace Xe.SpaceRace
 			m_ship.Update(gameTime);
 
 			m_camera.Update(gameTime);
-			
+
 			m_ship.Model.View = m_camera.View;
 			m_ship.Model.Projection = m_camera.Projection;
-			
+
 			s.CameraPosition = m_ship.Position;
 			s.CameraDirection = m_ship.Direction;
 			s.ViewMatrix = m_camera.View;
 			s.ProjectionMatrix = m_camera.Projection;
-			
+
 			s.Update(gameTime);
 
 			m_race.SetCamera(m_camera.View, m_camera.Projection);
@@ -112,25 +116,171 @@ namespace Xe.SpaceRace
 
 		public override void Draw(GameTime gameTime)
 		{
+			SetupViewport();
+
+
+
 			s.Draw(gameTime);
 
 
 			XeGame.Device.RenderState.DepthBufferEnable = true;
 			XeGame.Device.RenderState.DepthBufferWriteEnable = true;
-			
+
 			m_race.Draw(gameTime);
 
 			XeGame.Device.RenderState.AlphaSourceBlend = Blend.Zero;
 			XeGame.Device.RenderState.AlphaBlendEnable = false;
 			XeGame.Device.RenderState.DepthBufferEnable = true;
 			XeGame.Device.RenderState.DepthBufferWriteEnable = true;
-			
+
 			m_ship.setParticlesView(m_camera.ViewParticles);
 			m_ship.Draw(gameTime);
 
-			
+
 
 			base.Draw(gameTime);
+		}
+
+		private void SetupViewport()
+		{
+			// 1 player
+			if (m_raceScreen.InitDatas.TotalPlayerCount == 0) 
+				return; // don't touch viewport, we're obviously the only player :)
+			
+			Viewport v = new Viewport();
+			v.X = 0;
+			v.Y = 0;
+			v.Width = XeGame.Device.PresentationParameters.BackBufferWidth;
+			v.Height = XeGame.Device.PresentationParameters.BackBufferHeight;
+
+			#region 2 players
+			if (m_raceScreen.InitDatas.TotalPlayerCount == 1) // 2 player
+			{
+				if (v.Height > v.Width) // si la hauteur > largeur, on coupe en 2 dans la hauteur
+				{
+					v.Height = v.Height / 2;
+
+					if (this.m_playerIndex == PlayerIndex.One)
+					{
+						v.Y = 0;
+					}
+
+					if (this.m_playerIndex == PlayerIndex.Two)
+					{
+						v.Y = v.Height;
+					}
+				}
+				else
+				{
+					v.Width = v.Width / 2;
+
+					if (this.m_playerIndex == PlayerIndex.One)
+					{
+						v.X = 0;
+					}
+					
+					if (this.m_playerIndex == PlayerIndex.Two)
+					{
+						v.X = v.Width;
+					}
+				}
+			}
+			#endregion
+
+			#region 3 players
+			if (m_raceScreen.InitDatas.TotalPlayerCount == 2) // 3 player
+			{
+				if (v.Height > v.Width) // si la hauteur > largeur, on coupe en 2 dans la hauteur
+				{
+					v.Height = v.Height / 3;
+
+					if (this.m_playerIndex == PlayerIndex.One)
+						v.Y = 0;
+
+					if (this.m_playerIndex == PlayerIndex.Two)
+						v.Y = v.Height;
+
+					if (this.m_playerIndex == PlayerIndex.Three)
+						v.Y = v.Height * 2;
+				}
+				else // cas standard (4/3, 16/9, 16/10)
+				{
+					v.Width = v.Width / 2;
+
+					if (this.m_playerIndex == PlayerIndex.One)
+					{
+						v.Y = 0;
+						v.X = 0;
+					}
+					
+					if (this.m_playerIndex == PlayerIndex.Two)
+					{
+						v.Height = v.Height / 2;
+						v.X = v.Width;
+					}
+
+					if (this.m_playerIndex == PlayerIndex.Three)
+					{
+						v.Height = v.Height / 2;
+						v.X = v.Width;
+						v.Y = v.Height;
+					}
+				}
+			}
+			#endregion
+
+			#region 4 players
+			if (m_raceScreen.InitDatas.TotalPlayerCount == 3) // 4 player
+			{
+				if (v.Height > v.Width) // si la hauteur > largeur, on coupe en 2 dans la hauteur
+				{
+					v.Height = v.Height / 4;
+
+					if (this.m_playerIndex == PlayerIndex.One)
+						v.Y = 0;
+
+					if (this.m_playerIndex == PlayerIndex.Two)
+						v.Y = v.Height;
+
+					if (this.m_playerIndex == PlayerIndex.Three)
+						v.Y = v.Height * 2;
+
+					if (this.m_playerIndex == PlayerIndex.Four)
+						v.Y = v.Height * 3;
+				}
+				else // cas standard (4/3, 16/9, 16/10)
+				{
+					v.Width = v.Width / 2;
+					v.Height = v.Height / 2;
+
+					if (this.m_playerIndex == PlayerIndex.One)
+					{
+						v.Y = 0;
+						v.X = 0;
+					}
+
+					if (this.m_playerIndex == PlayerIndex.Two)
+					{
+						v.Y = 0;
+						v.X = v.Width;
+					}
+
+					if (this.m_playerIndex == PlayerIndex.Three)
+					{
+						v.X = 0;
+						v.Y = v.Height;
+					}
+
+					if (this.m_playerIndex == PlayerIndex.Four)
+					{
+						v.X = v.Width;
+						v.Y = v.Height;
+					}
+				}
+			}
+			#endregion
+
+			XeGame.Device.Viewport = v;
 		}
 
 	}

@@ -115,7 +115,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Program</Name>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AssemblyInfo</Name>
+    </Compile>
     <Compile Include="Tools\ConfigXml.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ConfigXml</Name>
@@ -555,6 +558,10 @@
     <Compile Include="Graphics\3D\Particles\CustomParticleEmitter.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>CustomParticleEmitter</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleSystemManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ParticleSystemManager</Name>
     </Compile>
     <Compile Include="Graphics\3D\Particles\ParticleSystems\SunFireParticleSystem.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>

@@ -207,7 +207,6 @@ namespace Xe.Tools
                 string _frameTime = String.Format("Frame Time: {0} ms", m_lastFrame.ToString("F").PadLeft(6));
                 string _mouseCoords = String.Format("Mouse Coords (x,y): ({0},{1})", Mouse.GetState().X, Mouse.GetState().Y);
                 string _polyCount = String.Format("Reported Drawn Polygons: {0}", m_polygonCount.ToString());
-				string _components = String.Format("Game.Components.Count: {0}", this.Game.Components.Count);
 
                 m_polygonCount = 0;
 
@@ -228,12 +227,11 @@ namespace Xe.Tools
 				m_spriteBatch.DrawString(m_font, _size, new Vector2(5, m_font.LineSpacing * 2 + 5), m_foreColor);
 				m_spriteBatch.DrawString(m_font, _mouseCoords, new Vector2(5, m_font.LineSpacing * 3 + 5), m_foreColor);
 				m_spriteBatch.DrawString(m_font, _polyCount, new Vector2(5, m_font.LineSpacing * 4 + 5), m_foreColor);
-				m_spriteBatch.DrawString(m_font, _components, new Vector2(5, m_font.LineSpacing * 5 + 5), m_foreColor);
 
 				#region Debug Strings
 				if (m_debugStrings.Count > 0)
 				{
-					int i = 6;
+					int i = 5;
 					foreach (string s in m_debugStrings)
 					{
 						m_spriteBatch.DrawString(m_font, s, new Vector2(5, m_font.LineSpacing * i + 5), m_foreColor);

@@ -29,7 +29,7 @@ namespace Xe.GameScreen
 
 		void ebi_KeyDown(object focus, KeyEventArgs k)
 		{
-		    if (k.Key == Keys.F2)
+		    if (k.Key == Keys.F3)
 		    {
 				this.m_console.SetActive(!m_showConsole);
 				m_showConsole = !m_showConsole;
