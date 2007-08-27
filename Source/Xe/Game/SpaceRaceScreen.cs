@@ -22,6 +22,11 @@ namespace Xe.SpaceRace
 			get { return m_race; }
 		}
 
+		public SpaceRaceInitDatas InitDatas
+		{
+			get { return m_datas; }
+		}
+
 		public SpaceRaceScreen(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
 			: base(gameScreenManager, true)
 		{
@@ -35,9 +40,9 @@ namespace Xe.SpaceRace
 
 			m_players = new List<Player>(m_datas.TotalPlayerCount+1);
 
-			for(int i = 0; i< m_datas.TotalPlayerCount +1; i++)
+			for(int i = 0; i <= m_datas.TotalPlayerCount; i++)
 			{
-				m_players.Add(new Player(gameScreenManager, m_datas.ShipTypes[i]));
+				m_players.Add(new Player(gameScreenManager, m_datas.ShipTypes[i], (PlayerIndex)i));
 			}
 		}
 
@@ -52,7 +57,10 @@ namespace Xe.SpaceRace
 
 		public override void Draw(GameTime gameTime)
 		{
-			m_players[0].Draw(gameTime);
+			for (int i = 0; i <= m_datas.TotalPlayerCount; i++)
+			{
+				m_players[i].Draw(gameTime);
+			}
 			
 			base.Draw(gameTime);
 		}
@@ -103,7 +111,10 @@ namespace Xe.SpaceRace
 		{
 			base.Update(gameTime);
 
-			m_players[0].Update(gameTime);
+			for (int i = 0; i <= m_datas.TotalPlayerCount; i++)
+			{
+				m_players[i].Update(gameTime);
+			}
 		}
 
 		public override bool IsBlockingUpdate

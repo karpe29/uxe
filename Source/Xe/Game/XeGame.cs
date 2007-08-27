@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Xe.Tools;
 using Xe.Graphics2D.PostProcess;
+using System.Reflection;
 
 namespace Xe
 {
@@ -117,7 +118,7 @@ namespace Xe
 			this.TargetElapsedTime = TimeSpan.FromMilliseconds(1);
 			this.IsMouseVisible = true;
 
-			this.Window.Title = "Xe3D";
+			this.Window.Title = "Xe3D v" + Assembly.GetCallingAssembly().GetName().Version.ToString();
 			this.Window.AllowUserResizing = true;
 			
 			this.m_graphics.SynchronizeWithVerticalRetrace = false;
@@ -130,8 +131,8 @@ namespace Xe
 			Components.Add(m_ebi);
 
 			m_guiManager = new GUIManager(this);
-			m_guiManager.UpdateOrder = 1000;
-			m_guiManager.DrawOrder = 1000;
+			m_guiManager.UpdateOrder = 11*1000;
+			m_guiManager.DrawOrder = 11*1000;
 			Components.Add(m_guiManager);
 
 			m_reporter = new Reporter(this);
@@ -141,6 +142,11 @@ namespace Xe
 			s_gameScreenManager.UpdateOrder = 500;
 			s_gameScreenManager.DrawOrder = 500;
 			Components.Add(s_gameScreenManager);
+
+			s_postProcessManager = new PostProcessManager(this);
+			s_postProcessManager.UpdateOrder = 10*1000;
+			s_postProcessManager.DrawOrder = 10*1000;
+			Components.Add(s_postProcessManager);
 		}
 			
 		protected override void Initialize()
@@ -164,7 +170,6 @@ namespace Xe
 
 			if (loadAllContent)
 			{
-				s_postProcessManager = new PostProcessManager();
 			}
 		}
 
@@ -208,8 +213,6 @@ namespace Xe
 		protected override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
-
-			s_postProcessManager.ApplyPostProcess();
 		}
 	}
 }

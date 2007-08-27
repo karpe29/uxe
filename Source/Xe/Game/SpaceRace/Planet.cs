@@ -133,7 +133,7 @@ namespace Xe.SpaceRace
 
 			//System.Console.WriteLine(Helper.Vector3ToString(particlePos));
 			// on définit une vitesse colinéaire au vecteur Position comme ca la particule va "s'éloigner" du soleil
-			particleSpeed = Vector3.Zero;//particlePos/50;
+			particleSpeed = particlePos/50;
 			// on met la gravité a zero car la gravité affecte toutes les particules donc on peut pas s'en servir pour faire retomber les particules vers le soleil
 			particleGravity = Vector3.Zero;
 

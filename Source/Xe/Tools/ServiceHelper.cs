@@ -21,7 +21,7 @@ namespace Xe.Tools
 
 		public static Game Game
 		{
-			//get { return s_game; }
+			get { return s_game; }
 			set { s_game = value; }
 		}
 
