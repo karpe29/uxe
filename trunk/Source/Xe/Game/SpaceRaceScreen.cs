@@ -42,7 +42,7 @@ namespace Xe.SpaceRace
 
 			for(int i = 0; i <= m_datas.TotalPlayerCount; i++)
 			{
-				m_players.Add(new Player(gameScreenManager, m_datas.ShipTypes[i], (PlayerIndex)i));
+				m_players.Add(new Player(gameScreenManager, m_datas.ShipTypes[i], (PlayerIndex)i, m_datas.GamePadIndexes[i]));
 			}
 		}
 

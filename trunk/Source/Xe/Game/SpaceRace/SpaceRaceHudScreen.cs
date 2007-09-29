@@ -26,12 +26,12 @@ namespace Xe.SpaceRace
 
 		public override void Update(GameTime gameTime)
 		{
-			base.Update(gameTime);
+			//base.Update(gameTime);
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
-			base.Draw(gameTime);
+			//base.Draw(gameTime);
 		}
 
 

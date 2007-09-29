@@ -67,7 +67,7 @@ namespace Xe.Graphics3D
 				this.projection = Matrix.CreatePerspectiveFieldOfView(this.FieldOfView, this.AspectRatio, this.NearPlaneDistance, this.FarPlaneDistance);
 			}
 		}
-		private float aspectRatio = 2.0f / 3.0f;
+		private float aspectRatio = 4.0f / 3.0f;
 
 		/// <summary>
 		/// Perspective field of view.
