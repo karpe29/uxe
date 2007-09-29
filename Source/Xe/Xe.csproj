@@ -74,7 +74,7 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Scurvy.Media.Video, Version=0.1.0.0, Culture=neutral, processorArchitecture=x86" />
+    <Reference Include="Scurvy.Media.Video, Version=0.5.0.0, Culture=neutral, processorArchitecture=x86" />
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -727,6 +727,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Helper</Name>
     </Compile>
+    <Compile Include="Tools\InputHelper.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>InputHelper</Name>
+    </Compile>
     <Compile Include="Tools\Map.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Map</Name>
@@ -750,6 +754,10 @@
     <Compile Include="Tools\Tokenizer.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Tokenizer</Name>
+    </Compile>
+    <Compile Include="Tools\VectorRenderer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>VectorRenderer</Name>
     </Compile>
     <Compile Include="Tools\XmlLoader.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -1058,6 +1066,14 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Name>White Rabbit</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Effects\vectorLine.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>vectorLine</Name>
     </Content>
   </ItemGroup>
   <ItemGroup>

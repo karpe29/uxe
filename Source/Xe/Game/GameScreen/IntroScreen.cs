@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Xe.Tools;
 
 
 namespace Xe.GameScreen
@@ -19,12 +20,16 @@ namespace Xe.GameScreen
 			: base(gameScreenManager, true)
 		{
 			// end right now... TODO: not end in demo version
-			End();
+			//End();
 
 			this.Initialize();
 
+			VideoContentManager v = new VideoContentManager(ServiceHelper.Services);
+			
+
 			m_spriteBatch = new SpriteBatch(this.GraphicsDevice);
-			m_introVideo = XeGame.ContentManager.Load<Video>(@"Content\logo");
+
+			m_introVideo = v.Load<Video>(@"Content\logo");
 			m_introVideo.Loop = false;
 			m_introVideo.Play();
 		}
@@ -54,13 +59,17 @@ namespace Xe.GameScreen
 		public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
 		{
 			m_introVideo.Update();
-			
+
+			if (!m_introVideo.IsPlaying)
+				End();
+			/*
 			if (m_introVideo.CurrentIndex == 0 && started)
 				End();
 
 			if (m_introVideo.CurrentIndex == 0 && !started)
 				started = true;
-			
+			*/
+
 			if (Keyboard.GetState().GetPressedKeys().Length > 0)
 				End();
 
@@ -75,10 +84,12 @@ namespace Xe.GameScreen
 
 		public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
 		{
-			m_spriteBatch.Begin();
-			m_spriteBatch.Draw(m_introVideo.CurrentTexture, new Rectangle(0, 0, this.GraphicsDevice.PresentationParameters.BackBufferWidth, this.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
-			m_spriteBatch.End();
-
+			if (m_introVideo.IsPlaying)
+			{
+				m_spriteBatch.Begin();
+				m_spriteBatch.Draw(m_introVideo.CurrentTexture, new Rectangle(0, 0, this.GraphicsDevice.PresentationParameters.BackBufferWidth, this.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+				m_spriteBatch.End();
+			}
 			base.Draw(gameTime);
 		}
 	}

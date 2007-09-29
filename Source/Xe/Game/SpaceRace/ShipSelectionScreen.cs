@@ -28,15 +28,17 @@ namespace Xe.SpaceRace
 
 		private Matrix ViewMatrix;
 		private Matrix ProjectionMatrix;
-		
+
 		public ShipSelectionScreen(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
 			: base(gameScreenManager, true)
 		{
 			m_datas = datas;
 
+			DetermineNextPlayerIndex();
+
 			labelPlayer = new Label(GameScreenManager.Game, XeGame.GuiManager);
 			labelPlayer.TextAlign = TextAlignment.Center;
-			labelPlayer.Text = "Player " + (m_datas.CurrentPlayerNumber+1).ToString() + " Ship";
+			labelPlayer.Text = "Player " + (m_datas.CurrentPlayerNumber + 1).ToString() + " Ship";
 			labelPlayer.Width = 120;
 			labelPlayer.Height = 30;
 			labelPlayer.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - labelPlayer.Width / 2;
@@ -67,7 +69,7 @@ namespace Xe.SpaceRace
 			sliderShip.X = buttonBack.X + buttonBack.Width + ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 1 / 10);
 			sliderShip.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderShip.Height / 2;
 			sliderShip.MinValue = 0;
-			sliderShip.MaxValue = ShipType.Types.Length-1;
+			sliderShip.MaxValue = ShipType.Types.Length - 1;
 			sliderShip.Step = 1;
 			sliderShip.Value = 0;
 			sliderShip.ValueChanged += new ValueChangedHandler(sliderShip_ValueChanged);
@@ -79,6 +81,31 @@ namespace Xe.SpaceRace
 			ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1.0f, 1, viewDistance * 2.0f);
 		}
 
+		private void DetermineNextPlayerIndex()
+		{
+			m_datas.GamePadIndexes.Add(-1);
+
+			// seek for a non taken gamepad slot
+			for (int i = (int)PlayerIndex.Four /* max player index value*/; i >= 0 ; i--)
+			{
+				if (InputHelper.GamePad[i].IsConnected == false)
+				{
+					continue;
+				}
+				else
+				{
+					if (!m_datas.GamePadIndexes.Contains(i))
+						m_datas.GamePadIndexes[m_datas.CurrentPlayerNumber] = i;
+				}
+			}
+
+			// no free gamepad found, set it to gamepad 0;
+			// can be useful for testing with different ships
+			if (m_datas.GamePadIndexes[m_datas.CurrentPlayerNumber] == -1)
+				m_datas.GamePadIndexes[m_datas.CurrentPlayerNumber] = 0;
+
+		}
+
 		void sliderShip_ValueChanged(object sender, float value)
 		{
 			m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
@@ -87,13 +114,12 @@ namespace Xe.SpaceRace
 
 		void buttonAccept_Click(object sender, MouseEventArgs args)
 		{
-
 			ExitScreen();
 
 			m_datas.ShipTypes.Add(ShipType.Types[(int)sliderShip.Value]);
 
 			// dernier joueur ?
-			if (m_datas.CurrentPlayerNumber++ < m_datas.TotalPlayerCount )
+			if (m_datas.CurrentPlayerNumber++ < m_datas.TotalPlayerCount)
 			{// non
 				ShipSelectionScreen s = new ShipSelectionScreen(this.GameScreenManager, m_datas);
 			}
@@ -103,7 +129,7 @@ namespace Xe.SpaceRace
 				SpaceRaceScreen s = new SpaceRaceScreen(this.GameScreenManager, m_datas);
 			}
 		}
-		
+
 
 		void buttonBack_Click(object sender, MouseEventArgs args)
 		{
@@ -136,7 +162,7 @@ namespace Xe.SpaceRace
 				sliderShip.X = buttonBack.X + buttonBack.Width + ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 1 / 10);
 				sliderShip.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderShip.Height / 2;
 			}
-					
+
 			//if (sliderShip != null)
 			//{
 			//    m_selectedShip = m_ships[(int)sliderShip.Value];
@@ -175,18 +201,18 @@ namespace Xe.SpaceRace
 
 		public override void Update(GameTime gameTime)
 		{
-			
+
 			base.Update(gameTime);
 
 			angle += ((float)(gameTime.ElapsedGameTime).Ticks) / 10000000f;
 
 			angle %= MathHelper.TwoPi;
 			m_ship.Update(gameTime);
-			ViewMatrix = Matrix.CreateLookAt( Vector3.Transform(new Vector3(0, 50, 100), Matrix.CreateRotationY(angle)), new Vector3(0, 0, 0), Vector3.Up);
+			ViewMatrix = Matrix.CreateLookAt(Vector3.Transform(new Vector3(0, 50, 100), Matrix.CreateRotationY(angle)), new Vector3(0, 0, 0), Vector3.Up);
 			m_ship.Model.View = ViewMatrix;
 			m_ship.Model.Projection = ProjectionMatrix;
 
-    	}
+		}
 
 		public override void Draw(GameTime gameTime)
 		{

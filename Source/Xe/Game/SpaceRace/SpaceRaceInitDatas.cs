@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xe.Tools;
 
 namespace Xe.SpaceRace
 {
@@ -33,10 +34,6 @@ namespace Xe.SpaceRace
 			{
 				return m_totalPlayerCount;
 			}
-			set
-			{
-				m_totalPlayerCount = value;
-			}
 		}
 		
 
@@ -64,6 +61,25 @@ namespace Xe.SpaceRace
 		public List<ShipType> ShipTypes
 		{
 			get { return m_shipTypes; }
+		}
+
+		private List<int> m_gamePadIndexes;
+		/// <summary>
+		/// Store Gamepad indexes (player one can be controlled by gamepad #2 in some cases)
+		/// So i have to determine the lowest free gamepad index in ship selection.
+		/// </summary>
+		public List<int> GamePadIndexes
+		{
+			get { return m_gamePadIndexes; }
+		}
+
+
+		public SpaceRaceInitDatas(float difficulty, int playerCount)
+		{
+			m_difficultyPercent = difficulty;
+			m_totalPlayerCount = playerCount;
+
+			m_gamePadIndexes = new List<int>(playerCount);
 		}
 	}
 }

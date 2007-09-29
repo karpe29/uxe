@@ -89,9 +89,7 @@ namespace Xe.GameScreen
 		void buttonPlaySpaceRace_Click(object sender, MouseEventArgs args)
 		{
 			// save difficulty level as levelSlider won't exists after Cleanup();
-			SpaceRaceInitDatas datas = new SpaceRaceInitDatas();
-			datas.DifficultyPercent = sliderLevel.ValuePercent;
-			datas.TotalPlayerCount = (int)sliderPlayerCount.Value;
+			SpaceRaceInitDatas datas = new SpaceRaceInitDatas(sliderLevel.ValuePercent, (int)sliderPlayerCount.Value);
 		
 			ExitScreen();
 
@@ -100,6 +98,7 @@ namespace Xe.GameScreen
 
 		void buttonPlayTimeTime_Click(object sender, MouseEventArgs args)
 		{
+			/*
 			// save difficulty level as levelSlider won't exists after Cleanup();
 			float levelPercent = sliderLevel.ValuePercent;
 
@@ -108,6 +107,7 @@ namespace Xe.GameScreen
 			GameScreenManager.RemoveLeftGameScreen(MainMenuScreen.BackgroundScreenType);
 
 			TimeTimeScreen g = new TimeTimeScreen(GameScreenManager, levelPercent);
+			*/
 		}
 
 		void buttonBack_Click(object sender, MouseEventArgs args)

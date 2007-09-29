@@ -27,6 +27,7 @@ namespace Xe
 		public static readonly string FONT_DBG = "Perspective Sans";
 
 
+		
 		private static ContentManager s_contentManager;
 		
 		private static GameScreenManager s_gameScreenManager;
@@ -43,6 +44,12 @@ namespace Xe
 		{
 			get { return s_contentManager; }
 		}
+
+		public static InputHelper InputHelper
+		{
+			get { return (InputHelper)ServiceHelper.Get<InputHelper>(); }
+		}
+
 
 		public static GUIManager GuiManager
 		{
@@ -83,7 +90,7 @@ namespace Xe
 
 		#region Variables
 
-		
+		private InputHelper m_inputHelper;
 
 		protected GraphicsDeviceManager m_graphics;
 
@@ -99,9 +106,6 @@ namespace Xe
 
 		#endregion 
 
-		#region Properties
-
-		#endregion
 
 
 		public XeGame()
@@ -110,21 +114,23 @@ namespace Xe
 
 			m_graphics = new GraphicsDeviceManager(this);
 
-			
+			m_inputHelper = new InputHelper(this);
+			m_inputHelper.UpdateOrder = 0;
+			Components.Add(m_inputHelper);
 
 			s_contentManager = new ContentManager(ServiceHelper.Services);
 
-			this.IsFixedTimeStep = false;
-			this.TargetElapsedTime = TimeSpan.FromMilliseconds(1);
-			this.IsMouseVisible = true;
+			IsFixedTimeStep = false;
+			TargetElapsedTime = TimeSpan.FromMilliseconds(1);
+			IsMouseVisible = true;
 
-			this.Window.Title = "Xe3D v" + Assembly.GetCallingAssembly().GetName().Version.ToString();
-			this.Window.AllowUserResizing = true;
+			Window.Title = "Xe3D v" + Assembly.GetCallingAssembly().GetName().Version.ToString();
+			Window.AllowUserResizing = true;
 			
-			this.m_graphics.SynchronizeWithVerticalRetrace = false;
-			this.m_graphics.PreferredBackBufferWidth = 1024;
-			this.m_graphics.PreferredBackBufferHeight = 768;
-			this.m_graphics.PreferMultiSampling = true;
+			m_graphics.SynchronizeWithVerticalRetrace = false;
+			m_graphics.PreferredBackBufferWidth = 1024;
+			m_graphics.PreferredBackBufferHeight = 768;
+			m_graphics.PreferMultiSampling = true;
 			
 			m_ebi = new Ebi(this);
 			m_ebi.UpdateOrder = 0;

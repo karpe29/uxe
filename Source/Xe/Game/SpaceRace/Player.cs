@@ -16,7 +16,8 @@ namespace Xe.SpaceRace
 
 	public class Player : DrawableGameComponent
 	{
-		PlayerIndex m_playerIndex;
+		int m_gamePadIndex = 0;
+		PlayerIndex m_playerIndex = PlayerIndex.One;
 
 		GameScreenManager m_gameScreenManager;
 
@@ -30,7 +31,9 @@ namespace Xe.SpaceRace
 
 		SkyBox s;
 
-		public Player(GameScreenManager gameScreenManager, ShipType type, PlayerIndex index)
+		GamePadState m_gamePadState;
+
+		public Player(GameScreenManager gameScreenManager, ShipType type, PlayerIndex playerIndex, int gamePadIndex)
 			: base(gameScreenManager.Game)
 		{
 			m_gameScreenManager = gameScreenManager;
@@ -39,7 +42,8 @@ namespace Xe.SpaceRace
 
 			m_race = m_raceScreen.Race;
 
-			m_playerIndex = index;
+			m_playerIndex = playerIndex;
+			m_gamePadIndex = gamePadIndex;
 
 			m_ship = new Ship(gameScreenManager, type);
 			//m_ship.Position = new Vector3(0, 0, 0);
@@ -63,9 +67,11 @@ namespace Xe.SpaceRace
 		{
 			base.Update(gameTime);
 
-			GamePadState g = GamePad.GetState(PlayerIndex.One);
+
+			GamePadState g = InputHelper.GamePad[(int)this.m_gamePadIndex];
 
 			KeyboardState touche = Keyboard.GetState();
+
 			m_ship.MoveState.Reset();
 
 			if (touche.IsKeyDown(Keys.Up) || g.ThumbSticks.Left.Y < 0)
@@ -156,7 +162,7 @@ namespace Xe.SpaceRace
 			#region 2 players
 			if (m_raceScreen.InitDatas.TotalPlayerCount == 1) // 2 player
 			{
-				if (v.Height > v.Width) // si la hauteur > largeur, on coupe en 2 dans la hauteur
+				if (v.Height > v.Width) // cut height in 2
 				{
 					v.Height = v.Height / 2;
 
@@ -190,7 +196,7 @@ namespace Xe.SpaceRace
 			#region 3 players
 			if (m_raceScreen.InitDatas.TotalPlayerCount == 2) // 3 player
 			{
-				if (v.Height > v.Width) // si la hauteur > largeur, on coupe en 2 dans la hauteur
+				if (v.Height > v.Width)
 				{
 					v.Height = v.Height / 3;
 
@@ -203,7 +209,7 @@ namespace Xe.SpaceRace
 					if (this.m_playerIndex == PlayerIndex.Three)
 						v.Y = v.Height * 2;
 				}
-				else // cas standard (4/3, 16/9, 16/10)
+				else // standard case (4/3, 16/9, 16/10)
 				{
 					v.Width = v.Width / 2;
 
@@ -232,7 +238,7 @@ namespace Xe.SpaceRace
 			#region 4 players
 			if (m_raceScreen.InitDatas.TotalPlayerCount == 3) // 4 player
 			{
-				if (v.Height > v.Width) // si la hauteur > largeur, on coupe en 2 dans la hauteur
+				if (v.Height > v.Width)
 				{
 					v.Height = v.Height / 4;
 
@@ -248,7 +254,7 @@ namespace Xe.SpaceRace
 					if (this.m_playerIndex == PlayerIndex.Four)
 						v.Y = v.Height * 3;
 				}
-				else // cas standard (4/3, 16/9, 16/10)
+				else // standard case
 				{
 					v.Width = v.Width / 2;
 					v.Height = v.Height / 2;

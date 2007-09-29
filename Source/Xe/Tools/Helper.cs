@@ -443,7 +443,7 @@ namespace Xe.Tools
 		/// <returns>a string formatted : "( x , y , z )"</returns>
 		public static string Vector3ToString(Vector3 vector)
 		{
-			return "( "+Math.Round(vector.X,3)+" , "+ Math.Round(vector.Y,3)+" , "+Math.Round(vector.Z,3)+" )";		
+			return "( " + Math.Round(vector.X, 3) + " , " + Math.Round(vector.Y, 3) + " , " + Math.Round(vector.Z, 3) + " )";
 		}
 
 		private static Random random = new Random((int)DateTime.Now.Ticks);
@@ -541,7 +541,7 @@ namespace Xe.Tools
 			return tempList;
 		}*/
 
-		private static void ShuffleList(ref List<object> list)
+		private static void ShuffleList(ref IList<object> list)
 		{
 			Random random = new Random();
 
@@ -554,6 +554,32 @@ namespace Xe.Tools
 				list[i] = list[j];
 				list[j] = tmp;
 			}
+		}
+
+		public static Color RampGreenRed(float ratio)
+		{
+			ratio = Math.Min(Math.Max(ratio, 0), 1);
+			
+			int r = 0;
+			int g = 0;
+			int b = 0;
+
+			if (ratio > 0.5)
+			{
+				g = 255 - (int)(Math.Max(ratio - 0.5, 0) * 1.6 * 255);
+				r = 255;
+			}
+			else
+			{
+				g = 255;
+				r = (int)(ratio * 2 * 255);
+			}
+
+			r = Math.Min(Math.Max(r, 0), 255);
+			g = Math.Min(Math.Max(g, 0), 255);
+			b = Math.Min(Math.Max(b, 0), 255);
+
+			return new Color(new Vector4(r,g,b,255));
 		}
 	}
 }
