@@ -6,7 +6,7 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 
-namespace TsunamiGL.Xna.Components
+namespace Xe.TimeTime.Events
 {
 	public delegate void CallbackMethod( EventArgs args );
 

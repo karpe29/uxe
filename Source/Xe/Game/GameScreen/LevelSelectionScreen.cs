@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using Xe.SpaceRace;
 using Xe.TimeTime;
 using Xe.Tools;
+using Xe.Input;
 
 namespace Xe.GameScreen
 {
@@ -40,7 +41,7 @@ namespace Xe.GameScreen
 			buttonBack.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - buttonBack.Width / 2;
 			buttonBack.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonBack.Height / 2;
 			buttonBack.Click += new ClickHandler(buttonBack_Click);
-			XeGame.GuiManager.AddControl(buttonBack);
+			XeGame.GuiManager.Controls.Add(buttonBack);
 
 			buttonPlaySpaceRace = new Button(GameScreenManager.Game, XeGame.GuiManager);
 			buttonPlaySpaceRace.Text = "Play SpaceRace";
@@ -49,7 +50,7 @@ namespace Xe.GameScreen
 			buttonPlaySpaceRace.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 3 / 4 - buttonPlaySpaceRace.Width / 2;
 			buttonPlaySpaceRace.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonPlaySpaceRace.Height / 2;
 			buttonPlaySpaceRace.Click += new ClickHandler(buttonPlaySpaceRace_Click);
-			XeGame.GuiManager.AddControl(buttonPlaySpaceRace);
+			XeGame.GuiManager.Controls.Add(buttonPlaySpaceRace);
 
 			buttonPlayTimeTime = new Button(GameScreenManager.Game, XeGame.GuiManager);
 			buttonPlayTimeTime.Text = "Play TimeTime";
@@ -58,31 +59,31 @@ namespace Xe.GameScreen
 			buttonPlayTimeTime.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 3 / 4 - buttonPlayTimeTime.Width / 2;
 			buttonPlayTimeTime.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 4 / 5 - buttonPlayTimeTime.Height / 2;
 			buttonPlayTimeTime.Click += new ClickHandler(buttonPlayTimeTime_Click);
-			XeGame.GuiManager.AddControl(buttonPlayTimeTime);
+			XeGame.GuiManager.Controls.Add(buttonPlayTimeTime);
 
 			sliderLevel = new Slider(GameScreenManager.Game, XeGame.GuiManager);
-			sliderLevel.Width = (buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5;
+			sliderLevel.Width = (int)((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5);
 			sliderLevel.Height = 30;
-			sliderLevel.X = buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10);
+			sliderLevel.X = (int)(buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10));
 			sliderLevel.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderLevel.Height / 2;
 			sliderLevel.MinValue = 0;
 			sliderLevel.MaxValue = 3;
 			sliderLevel.Step = 1;
 			sliderLevel.Value = 2;
 			//sliderLevel.ValueChanged += new ValueChangedHandler(levelSlider_ValueChanged);
-			XeGame.GuiManager.AddControl(sliderLevel);
+			XeGame.GuiManager.Controls.Add(sliderLevel);
 
 			sliderPlayerCount = new Slider(GameScreenManager.Game, XeGame.GuiManager);
-			sliderPlayerCount.Width = (buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5;
+			sliderPlayerCount.Width = (int)((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5);
 			sliderPlayerCount.Height = 30;
-			sliderPlayerCount.X = buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10);
+			sliderPlayerCount.X = (int)(buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10));
 			sliderPlayerCount.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 4 / 5 - sliderLevel.Height / 2;
 			sliderPlayerCount.MinValue = 0;
 			sliderPlayerCount.MaxValue = 3;
 			sliderPlayerCount.Step = 1;
 			sliderPlayerCount.Value = 0;
 			//sliderPlayerCount.ValueChanged += new ValueChangedHandler(levelPlayerCount_ValueChanged);
-			XeGame.GuiManager.AddControl(sliderPlayerCount);
+			XeGame.GuiManager.Controls.Add(sliderPlayerCount);
 
 		}
 
@@ -135,12 +136,12 @@ namespace Xe.GameScreen
 				buttonPlayTimeTime.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 3 / 4 - buttonPlayTimeTime.Width / 2;
 				buttonPlayTimeTime.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 4 / 5 - buttonPlayTimeTime.Height / 2;
 
-				sliderLevel.Width = (buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5;
-				sliderLevel.X = buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10);
+				sliderLevel.Width = (int)((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5);
+				sliderLevel.X = (int)(buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10));
 				sliderLevel.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderLevel.Height / 2;
 
-				sliderPlayerCount.Width = (buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5;
-				sliderPlayerCount.X = buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10);
+				sliderPlayerCount.Width = (int)((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5);
+				sliderPlayerCount.X = (int)(buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10));
 				sliderPlayerCount.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 4 / 5 - sliderLevel.Height / 2;
 			}
 		}
@@ -149,19 +150,19 @@ namespace Xe.GameScreen
 
 		protected override void Cleanup()
 		{
-			XeGame.GuiManager.RemoveControl(buttonBack);
+			XeGame.GuiManager.Controls.Remove(buttonBack);
 			buttonBack.Dispose();
 
-			XeGame.GuiManager.RemoveControl(buttonPlaySpaceRace);
+			XeGame.GuiManager.Controls.Remove(buttonPlaySpaceRace);
 			buttonPlaySpaceRace.Dispose();
 
-			XeGame.GuiManager.RemoveControl(buttonPlayTimeTime);
+			XeGame.GuiManager.Controls.Remove(buttonPlayTimeTime);
 			buttonPlayTimeTime.Dispose();
 
-			XeGame.GuiManager.RemoveControl(sliderLevel);
+			XeGame.GuiManager.Controls.Remove(sliderLevel);
 			sliderLevel.Dispose();
 
-			XeGame.GuiManager.RemoveControl(sliderPlayerCount);
+			XeGame.GuiManager.Controls.Remove(sliderPlayerCount);
 			sliderPlayerCount.Dispose();
 		}
 

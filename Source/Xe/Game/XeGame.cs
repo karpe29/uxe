@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Input;
 using Xe.Tools;
 using Xe.Graphics2D.PostProcess;
 using System.Reflection;
+using Xe.Input;
 
 namespace Xe
 {
@@ -51,9 +52,9 @@ namespace Xe
 		}
 
 
-		public static GUIManager GuiManager
+		public static IGUIManager GuiManager
 		{
-			get { return (GUIManager)ServiceHelper.Get<IGUIManagerService>(); }
+			get { return ServiceHelper.Get<IGUIManager>(); }
 		}
 
 		public static Reporter Reporter
@@ -61,9 +62,9 @@ namespace Xe
 			get { return (Reporter)ServiceHelper.Get<IReporterService>(); }
 		}
 
-		public static Ebi Ebi
+		public static IEbiService Ebi
 		{
-			get { return (Ebi)ServiceHelper.Get<IEbiService>(); }
+			get { return ServiceHelper.Get<IEbiService>(); }
 		}
 
 		public static Stats Stats
@@ -98,13 +99,23 @@ namespace Xe
 		private ConsoleScreen m_consoleScreen;
 		private IntroScreen m_introScreen;
 
-		private GUIManager m_guiManager;
+		private GUIManager<SpriteRenderer> m_guiManager;
 
 		private Reporter m_reporter;
 
-		private Ebi m_ebi;
+		private Ebi<MKController> m_ebi;
 
 		#endregion 
+
+		public static int WitdhPercent(float percent)
+		{
+			return (int) (XeGame.Device.PresentationParameters.BackBufferWidth * MathHelper.Clamp(percent, 0, 1));
+		}
+
+		public static int HeightPercent(float percent)
+		{
+			return (int) (XeGame.Device.PresentationParameters.BackBufferHeight * MathHelper.Clamp(percent, 0, 1));
+		}
 
 
 
@@ -132,14 +143,16 @@ namespace Xe
 			m_graphics.PreferredBackBufferHeight = 768;
 			m_graphics.PreferMultiSampling = true;
 			
-			m_ebi = new Ebi(this);
+			m_ebi = new Ebi<MKController> (this);
 			m_ebi.UpdateOrder = 0;
 			Components.Add(m_ebi);
+			ServiceHelper.Add<IEbiService>(m_ebi);
 
-			m_guiManager = new GUIManager(this);
+			m_guiManager = new GUIManager<SpriteRenderer> (this, m_ebi);
 			m_guiManager.UpdateOrder = 11*1000;
 			m_guiManager.DrawOrder = 11*1000;
 			Components.Add(m_guiManager);
+			ServiceHelper.Add<IGUIManager>(m_guiManager);
 
 			m_reporter = new Reporter(this);
 			m_reporter.UpdateOrder = 0;
@@ -159,7 +172,7 @@ namespace Xe
 		{
 			s_device = m_graphics.GraphicsDevice;
 
-			m_guiManager.LoadSettings(@"Content\XML\gui_Xe.xml");
+			m_guiManager.LoadSettings(@"Content\XML\Xe_GUI.xml");
 
 			m_statScreen = new StatScreen(s_gameScreenManager);
 
@@ -190,28 +203,12 @@ namespace Xe
 		{
 			base.Update(gameTime);
 
-			GamePadState playerOneGamePadState = GamePad.GetState(PlayerIndex.One);
-			GamePadState playerTwoGamePadState = GamePad.GetState(PlayerIndex.Two);
-			KeyboardState keyboardState = Keyboard.GetState();
-
-			if (playerOneGamePadState.Buttons.Back == ButtonState.Pressed ||
-				playerTwoGamePadState.Buttons.Back == ButtonState.Pressed ||
-				keyboardState.IsKeyDown(Keys.Escape))
+			if (InputHelper.KeyboardEscapeJustPressed)
 				this.Exit();
 
-			if (keyboardState.IsKeyDown(Keys.LeftAlt) || keyboardState.IsKeyDown(Keys.RightAlt))
-				if (keyboardState.IsKeyDown(Keys.Enter))
+			if (InputHelper.Keyboard.IsKeyDown(Keys.LeftAlt) || InputHelper.Keyboard.IsKeyDown(Keys.RightAlt))
+				if (InputHelper.Keyboard.IsKeyDown(Keys.Enter))
 				{
-					if (this.m_graphics.IsFullScreen)
-					{
-						this.m_graphics.PreferredBackBufferWidth = 1024;
-						this.m_graphics.PreferredBackBufferHeight = 768;
-					}
-					else
-					{
-						this.m_graphics.PreferredBackBufferWidth = 1920;
-						this.m_graphics.PreferredBackBufferHeight = 1200;
-					}
 					this.m_graphics.ToggleFullScreen();
 				}
 		}

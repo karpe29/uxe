@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Xe.Graphics3D;
 using Xe.Tools;
 using Xe.Physics3D;
+using Xe.Input;
 
 namespace Xe.SpaceRace
 {
@@ -37,13 +38,13 @@ namespace Xe.SpaceRace
 			DetermineNextPlayerIndex();
 
 			labelPlayer = new Label(GameScreenManager.Game, XeGame.GuiManager);
-			labelPlayer.TextAlign = TextAlignment.Center;
+			labelPlayer.TextAlign = TextAlign.Center;
 			labelPlayer.Text = "Player " + (m_datas.CurrentPlayerNumber + 1).ToString() + " Ship";
 			labelPlayer.Width = 120;
 			labelPlayer.Height = 30;
 			labelPlayer.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - labelPlayer.Width / 2;
 			labelPlayer.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 1 / 4 - labelPlayer.Height / 2;
-			XeGame.GuiManager.AddControl(labelPlayer);
+			XeGame.GuiManager.Controls.Add(labelPlayer);
 
 			buttonBack = new Button(GameScreenManager.Game, XeGame.GuiManager);
 			buttonBack.Text = "Back";
@@ -52,7 +53,7 @@ namespace Xe.SpaceRace
 			buttonBack.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - buttonBack.Width / 2;
 			buttonBack.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonBack.Height / 2;
 			buttonBack.Click += new ClickHandler(buttonBack_Click);
-			XeGame.GuiManager.AddControl(buttonBack);
+			XeGame.GuiManager.Controls.Add(buttonBack);
 
 			buttonAccept = new Button(GameScreenManager.Game, XeGame.GuiManager);
 			buttonAccept.Text = "Accept";
@@ -61,19 +62,19 @@ namespace Xe.SpaceRace
 			buttonAccept.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 3 / 4 - buttonAccept.Width / 2;
 			buttonAccept.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonAccept.Height / 2;
 			buttonAccept.Click += new ClickHandler(buttonAccept_Click);
-			XeGame.GuiManager.AddControl(buttonAccept);
+			XeGame.GuiManager.Controls.Add(buttonAccept);
 
 			sliderShip = new Slider(GameScreenManager.Game, XeGame.GuiManager);
-			sliderShip.Width = (buttonAccept.X - buttonBack.X - buttonBack.Width) * 4 / 5;
+			sliderShip.Width = (int) ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 4 / 5);
 			sliderShip.Height = 30;
-			sliderShip.X = buttonBack.X + buttonBack.Width + ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 1 / 10);
+			sliderShip.X = (int) (buttonBack.X + buttonBack.Width + ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 1 / 10));
 			sliderShip.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderShip.Height / 2;
 			sliderShip.MinValue = 0;
 			sliderShip.MaxValue = ShipType.Types.Length - 1;
 			sliderShip.Step = 1;
 			sliderShip.Value = 0;
 			sliderShip.ValueChanged += new ValueChangedHandler(sliderShip_ValueChanged);
-			XeGame.GuiManager.AddControl(sliderShip);
+			XeGame.GuiManager.Controls.Add(sliderShip);
 
 			m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
 			m_ship.ratioParticles = 2;
@@ -158,8 +159,8 @@ namespace Xe.SpaceRace
 				buttonAccept.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 3 / 4 - buttonAccept.Width / 2;
 				buttonAccept.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonAccept.Height / 2;
 
-				sliderShip.Width = (buttonAccept.X - buttonBack.X - buttonBack.Width) * 4 / 5;
-				sliderShip.X = buttonBack.X + buttonBack.Width + ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 1 / 10);
+				sliderShip.Width = (int)((buttonAccept.X - buttonBack.X - buttonBack.Width) * 4 / 5);
+				sliderShip.X = (int)(buttonBack.X + buttonBack.Width + ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 1 / 10));
 				sliderShip.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderShip.Height / 2;
 			}
 
@@ -179,16 +180,16 @@ namespace Xe.SpaceRace
 
 		protected override void Cleanup()
 		{
-			XeGame.GuiManager.RemoveControl(labelPlayer);
+			XeGame.GuiManager.Controls.Remove(labelPlayer);
 			labelPlayer.Dispose();
 
-			XeGame.GuiManager.RemoveControl(buttonBack);
+			XeGame.GuiManager.Controls.Remove(buttonBack);
 			buttonBack.Dispose();
 
-			XeGame.GuiManager.RemoveControl(buttonAccept);
+			XeGame.GuiManager.Controls.Remove(buttonAccept);
 			buttonAccept.Dispose();
 
-			XeGame.GuiManager.RemoveControl(sliderShip);
+			XeGame.GuiManager.Controls.Remove(sliderShip);
 			sliderShip.Dispose();
 		}
 

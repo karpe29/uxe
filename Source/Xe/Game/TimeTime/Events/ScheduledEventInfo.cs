@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace TsunamiGL.Xna.Components
+namespace Xe.TimeTime.Events
 {
     public partial class EventManager
     {

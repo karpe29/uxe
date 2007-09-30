@@ -152,29 +152,29 @@ namespace Xe.GUI
 			get { return base.Text; }
 		}
 
-		public Slider(Game game, GUIManager guiManager)
+		public Slider(Game game, IGUIManager guiManager)
 			: base(game, guiManager)
 		{
 			base.Text = "";
 
 			m_sliderLine = new SliderLine(game, guiManager, this);
-			m_sliderLine.UpdateOrder = guiManager.DrawOrder;
-			m_sliderLine.DrawOrder = guiManager.DrawOrder;
+			//m_sliderLine.UpdateOrder = guiManager.DrawOrder;
+			//m_sliderLine.DrawOrder = guiManager.DrawOrder;
 
 			//guiManager.AddControl(m_sliderLine);
 			//game.Components.Add(m_sliderLine);
-			this.m_controls.Add(m_sliderLine);
+			this.Controls.Add(m_sliderLine);
 
 			m_sliderArrow = new SliderArrow(game, guiManager, this);
 			m_sliderArrow.LockY = true;
-			m_sliderArrow.UpdateOrder = guiManager.DrawOrder + 1;
-			m_sliderArrow.DrawOrder = guiManager.DrawOrder + 1;
+			//m_sliderArrow.UpdateOrder = guiManager.DrawOrder + 1;
+			//m_sliderArrow.DrawOrder = guiManager.DrawOrder + 1;
 
 			m_sliderArrow.Move += new MoveHandler(OnSliderArrowMove);
 
 			//guiManager.AddControl(m_sliderArrow);
 			//game.Components.Add(m_sliderArrow);
-			this.m_controls.Add(m_sliderArrow);
+			this.Controls.Add(m_sliderArrow);
 
 			this.Width = 200;
 			this.Height = 30;
@@ -192,8 +192,8 @@ namespace Xe.GUI
 		{
 			base.Initialize();
 
-			foreach (UIControl c in m_controls)
-				c.Initialize();
+			//foreach (UIControl c in Controls)
+			//	c.Initialize();
 		}
 
 		protected override void LoadGraphicsContent(bool loadAllContent)
@@ -216,16 +216,16 @@ namespace Xe.GUI
 		{
 			base.Update(gameTime);
 
-			foreach (UIControl c in m_controls)
-				c.Update(gameTime);
+			//foreach (UIControl c in Controls)
+			//	c.Update(gameTime);
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
 
-			foreach (UIControl c in m_controls)
-				c.Draw(gameTime);
+			//foreach (UIControl c in Controls)
+			//	c.Draw(gameTime);
 		}
 
 		/// <summary>
@@ -242,14 +242,14 @@ namespace Xe.GUI
 		/// </summary>
 		public int UpdateArrowWithoutChangingValue()
 		{
-			return m_sliderArrow.AbsX = (int)(m_value * (this.m_sliderLine.Width - this.m_sliderArrow.Width) / (MaxValue - MinValue)) + this.m_sliderLine.AbsolutePosition.X;
+			return m_sliderArrow.AbsX = (int) ((m_value * (this.m_sliderLine.Width - this.m_sliderArrow.Width) / (MaxValue - MinValue)) + this.m_sliderLine.AbsolutePosition.X);
 		}
 
 		public new int X
 		{
 			get
 			{
-				return m_sliderLine.X;
+				return (int) m_sliderLine.X;
 			}
 			set
 			{
@@ -262,7 +262,7 @@ namespace Xe.GUI
 		{
 			get
 			{
-				return m_sliderLine.Y;
+				return (int) m_sliderLine.Y;
 			}
 			set
 			{
@@ -276,7 +276,7 @@ namespace Xe.GUI
 		{
 			get
 			{
-				return m_sliderLine.Width;
+				return (int)m_sliderLine.Width;
 			}
 			set
 			{
@@ -289,7 +289,7 @@ namespace Xe.GUI
 		{
 			get
 			{
-				return m_sliderArrow.Height;
+				return (int) m_sliderArrow.Height;
 			}
 			set
 			{
@@ -300,5 +300,151 @@ namespace Xe.GUI
 				this.m_sliderLine.Height = (int)(value / 2);
 			}
 		}
+	}
+
+	public class SliderLine : UIControl
+	{
+
+		Slider m_slider;
+
+		public SliderLine(Game game, IGUIManager guiManager, Slider slider)
+			: base(game, guiManager)
+		{
+			m_slider = slider;
+
+			this.IsHoverable = true;
+			this.IsDraggable = false;
+			this.IsResizable = true;
+			this.Enabled = true;
+
+			this.Text = "";
+
+			this.Width = 200;
+			this.Height = 10;
+		}
+
+		public override void Initialize()
+		{
+			base.Initialize();
+		}
+
+		protected override void LoadGraphicsContent(bool loadAllContent)
+		{
+			/*
+			 * base.LoadGraphicsContent(loadAllContent);
+
+			//m_outRects = m_guiManager.CreateControl(new Rectangle(5, 125, 25, 25), new Rectangle(m_absX, m_absY, m_width, m_height));
+			//m_overRects = m_guiManager.CreateControl(new Rectangle(35, 125, 25, 25), new Rectangle(m_absX, m_absY, m_width, m_height));
+			//m_downRects = m_guiManager.CreateControl(new Rectangle(65, 125, 25, 25), new Rectangle(m_absX, m_absY, m_width, m_height));
+			//m_disabledRects = m_guiManager.CreateControl(new Rectangle(35, 125, 25, 25), new Rectangle(m_absX, m_absY, m_width, m_height));
+			m_outRects = m_guiManager.CreateControl("sliderline.out", new Rectangle(m_absX, m_absY, m_width, m_height));
+			m_overRects = m_guiManager.CreateControl("sliderline.over", new Rectangle(m_absX, m_absY, m_width, m_height));
+			m_downRects = m_guiManager.CreateControl("sliderline.down", new Rectangle(m_absX, m_absY, m_width, m_height));
+			m_disabledRects = m_guiManager.CreateControl("sliderline.disabled", new Rectangle(m_absX, m_absY, m_width, m_height));
+			 * */
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			/*base.Update(gameTime);
+
+			if (m_needsUpdate)
+			{
+				m_outRects = m_guiManager.CreateControl("sliderline.out", new Rectangle(m_absX, m_absY, m_width, m_height));
+				m_overRects = m_guiManager.CreateControl("sliderline.over", new Rectangle(m_absX, m_absY, m_width, m_height));
+				m_downRects = m_guiManager.CreateControl("sliderline.down", new Rectangle(m_absX, m_absY, m_width, m_height));
+				m_disabledRects = m_guiManager.CreateControl("sliderline.disabled", new Rectangle(m_absX, m_absY, m_width, m_height));
+
+				m_needsUpdate = false;
+			}*/
+		}
+
+		public int AbsX
+		{
+			set
+			{
+			/*	this.m_absX = value;
+				m_needsUpdate = true;*/
+			}
+		}
+
+	}
+
+	public class SliderArrow : UIControl
+	{
+		Slider m_slider;
+
+		public SliderArrow(Game game, IGUIManager guiManager, Slider slider)
+			: base(game, guiManager)
+		{
+			m_slider = slider;
+
+			this.IsHoverable = true;
+			this.IsDraggable = true;
+			this.IsResizable = false;
+			this.Enabled = true;
+
+			this.Text = "";
+
+			this.Width = 10;
+			this.Height = 20;
+		}
+
+
+		public override void Initialize()
+		{
+			base.Initialize();
+		}
+
+		protected override void LoadGraphicsContent(bool loadAllContent)
+		{
+			/*
+			 * base.LoadGraphicsContent(loadAllContent);
+
+			//m_outRects = m_guiManager.CreateControl(new Rectangle(5, 125, 25, 25), new Rectangle(m_absX, m_absY, m_width, m_height));
+			//m_overRects = m_guiManager.CreateControl(new Rectangle(35, 125, 25, 25), new Rectangle(m_absX, m_absY, m_width, m_height));
+			//m_downRects = m_guiManager.CreateControl(new Rectangle(65, 125, 25, 25), new Rectangle(m_absX, m_absY, m_width, m_height));
+			//m_disabledRects = m_guiManager.CreateControl(new Rectangle(35, 125, 25, 25), new Rectangle(m_absX, m_absY, m_width, m_height));
+			m_outRects = m_guiManager.CreateControl("sliderarrow.out", new Rectangle(m_absX, m_absY, m_width, m_height));
+			m_overRects = m_guiManager.CreateControl("sliderarrow.over", new Rectangle(m_absX, m_absY, m_width, m_height));
+			m_downRects = m_guiManager.CreateControl("sliderarrow.down", new Rectangle(m_absX, m_absY, m_width, m_height));
+			m_disabledRects = m_guiManager.CreateControl("sliderarrow.disabled", new Rectangle(m_absX, m_absY, m_width, m_height));
+			 * */
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+/*
+			base.Update(gameTime);
+
+
+			if (this.AbsolutePosition.X < this.m_slider.SliderLine.AbsolutePosition.X)
+				this.AbsX = this.m_slider.SliderLine.AbsolutePosition.X;
+
+			if (this.AbsolutePosition.X > this.m_slider.SliderLine.AbsolutePosition.X + this.m_slider.SliderLine.Width - this.Width)
+				this.AbsX = this.m_slider.SliderLine.AbsolutePosition.X + this.m_slider.SliderLine.Width - this.Width;
+
+			if (m_needsUpdate)
+			{
+				m_outRects = m_guiManager.CreateControl("sliderarrow.out", new Rectangle(m_absX, m_absY, m_width, m_height));
+				m_overRects = m_guiManager.CreateControl("sliderarrow.over", new Rectangle(m_absX, m_absY, m_width, m_height));
+				m_downRects = m_guiManager.CreateControl("sliderarrow.down", new Rectangle(m_absX, m_absY, m_width, m_height));
+				m_disabledRects = m_guiManager.CreateControl("sliderarrow.disabled", new Rectangle(m_absX, m_absY, m_width, m_height));
+
+				m_needsUpdate = false;
+			}
+ * */
+		}
+
+		public int AbsX
+		{
+			set
+			{/*
+				this.m_absX = value;
+				m_needsUpdate = true;*/
+			}
+		}
+
+
 	}
 }

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Xe.Tools;
 using Xe.Graphics2D;
+using Xe.Input;
 
 namespace Xe.GameScreen
 {

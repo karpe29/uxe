@@ -1,160 +1,178 @@
-#region License
-/*
- *  Xna5D.GUI.dll
- *  Copyright (C)2007 John Sedlak (http://jsedlak.org)
- *  
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-*/
-#endregion License
-
 #region Using Statements
 using System;
-using System.IO;
 using System.Xml;
-using System.Xml.Schema;
-using System.Diagnostics;
-using System.ComponentModel;
 using System.Collections.Generic;
 
-using Xe;
-using Xe.Graphics2D;
-
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Storage;
+
 using Xe.Tools;
+using Xe.Input;
 #endregion
 
 namespace Xe.GUI
 {
-    public class CheckBox : UIControl
-    {
-        #region Members
-        protected Label m_label;
-        protected string m_labelText = "";
+	public class CheckBox : UIControl
+	{
+		#region Members
+		protected Label m_label;
+		protected string m_labelText = "";
 
-        protected bool m_isChecked = false;
-        #endregion
+		protected bool m_isChecked = false;
+		#endregion
 
-		public CheckBox(Game game, GUIManager guiManager)
-            : base(game, guiManager)
-        {
-            m_label = new Label(game, guiManager);
-            m_label.MouseDown += new MouseDownHandler(Label_MouseDown);
+		public CheckBox(Game game, IGUIManager guiManager)
+			: base(game, guiManager)
+		{
+			m_label = new Label(game, guiManager);
+			m_label.Name = "CB_LABEL";
+			m_label.MouseDown += new MouseDownHandler(Label_MouseDown);
 
-            game.Components.Add(m_label);
-            this.Width = 25;
+			this.IsTextVisible = false;
+			this.IsFocusable = false;
+			this.Width = 32;
 
-            m_label.Width -= 30;
+			this.Text = "";
+			this.ControlTag = "checkbox";
+		}
 
-            m_text = "";
-            this.Text = "CheckBox";
+		public override void Initialize()
+		{
+			this.ClippingOffset.Width = -m_label.Width - 5;
+			this.Controls.Add(m_label);
 
-            //guiManager.AddControl(m_label);
-            this.Controls.Add(m_label);
-        }
+			base.Initialize();
+		}
 
-        protected void Label_MouseDown(MouseEventArgs args)
-        {
-            this.Checked = !this.Checked;
-        }
+		protected void Label_MouseDown(MouseEventArgs e)
+		{
+			this.Checked = !this.Checked;
+		}
 
-        protected override void LoadGraphicsContent(bool loadAllContent)
-        {
-            base.LoadGraphicsContent(loadAllContent);
-            
-            // out: new Rectangle(5, 35, 25, 25)
-            // over: new Rectangle(5, 35, 25, 25)
-            // down: new Rectangle(35, 35, 25, 25)
-            // diabled: new Rectangle(5, 35, 25, 25)
-            m_outRects = m_guiManager.CreateControl("checkbox.out", new Rectangle(m_absX, m_absY, m_width, m_height));
-            m_overRects = m_guiManager.CreateControl("checkbox.over", new Rectangle(m_absX, m_absY, m_width, m_height));
-            m_downRects = m_guiManager.CreateControl("checkbox.down", new Rectangle(m_absX, m_absY, m_width, m_height));
-            m_disabledRects = m_guiManager.CreateControl("checkbox.disabled", new Rectangle(m_absX, m_absY, m_width, m_height));
-        }
+		protected override void OnMouseUp(MouseEventArgs args)
+		{
+			//base.OnMouseUp(args);
+		}
 
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
+		protected override void OnMouseDown(MouseEventArgs args)
+		{
+			//base.OnMouseDown(args);
+		}
 
-            //if (m_isChecked)
-            //  m_state = UIState.Down;
+		protected override void OnLostFocus(object sender)
+		{
+			//base.OnLostFocus(sender);
+		}
 
-            if (m_needsUpdate)
-            {
-                m_outRects = m_guiManager.CreateControl("checkbox.out", new Rectangle(m_absX, m_absY, m_width, m_height));
-                m_overRects = m_guiManager.CreateControl("checkbox.over", new Rectangle(m_absX, m_absY, m_width, m_height));
-                m_downRects = m_guiManager.CreateControl("checkbox.down", new Rectangle(m_absX, m_absY, m_width, m_height));
-                m_disabledRects = m_guiManager.CreateControl("checkbox.disabled", new Rectangle(m_absX, m_absY, m_width, m_height));
+		protected override void OnGotFocus(object sender)
+		{
+			//base.OnGotFocus(sender);
+		}
 
-                m_label.X = m_absX + 30;
-                m_label.Y = m_absY;
-                m_label.Text = m_labelText;
+		protected override void OnMove(object sender)
+		{
+			base.OnMove(sender);
 
-                m_needsUpdate = false;
-            }
-        }
+			if (m_label != null)
+			{
+				m_label.X = this.X + 37;
+				m_label.Y = this.Y;
+			}
+		}
 
-        protected override void OnVisibleChanged(object sender, EventArgs args)
-        {
-            base.OnVisibleChanged(sender, args);
+		protected override void OnClick(object sender, MouseEventArgs args)
+		{
+			System.Console.WriteLine("Processing click!");
 
-            m_label.Visible = this.Visible;
-        }
+			base.OnClick(sender, args);
 
-        protected override void OnDrawOrderChanged(object sender, EventArgs args)
-        {
-            base.OnDrawOrderChanged(sender, args);
+			if (this.Ebi.Focus == this)
+				this.Checked = !this.Checked;
 
-            m_label.DrawOrder = this.DrawOrder;
-        }
+			System.Console.WriteLine("Checked: " + this.Checked.ToString());
+		}
 
-        protected override void OnMouseUp(MouseEventArgs args)
-        {
-            //base.OnMouseUp(args);
-        }
+		public override void Update(GameTime gameTime)
+		{
+			bool _needUpdate = m_needsUpdate;
+			if (m_needsUpdate)
+			{
+				m_label.X = this.X + 37;
+				m_label.Y = this.Y;
+				m_label.Text = m_labelText;
 
-        protected override void OnMouseDown(MouseEventArgs args)
-        {
-            //base.OnMouseDown(args);
+				//ClippingOffset = new Vector4(0, 0, -m_label.Width - 5, 0);
+				//ClippingOffset = Vector4.UnitZ * (-m_label.Width - 5);
+				this.ClippingOffset.Width = -m_label.Width - 5;
 
-            if (m_ebi.GetFocus() == this)
-            {
-                this.Checked = !this.Checked;
-            }
-        }
+				//m_label.Alpha = this.Alpha;
+			}
 
-        public bool Checked
-        {
-            get
-            {
-                return m_isChecked;
-            }
-            set
-            {
-                m_isChecked = value;
+			base.Update(gameTime);
 
-                if (m_isChecked)
-                    m_state = UIState.Down;
-                else
-                    m_state = UIState.Out;
-            }
-        }
+			if (_needUpdate)
+			{
+				m_label.X = this.X + 37;
+				m_label.Y = this.Y;
+			}
+		}
 
-        public new string Text
-        {
-            get
-            {
-                return m_labelText;
-            }
-            set
-            {
-                m_labelText = value;
-            }
-        }
-    }
+		public Label Label
+		{
+			get { return m_label; }
+			set { m_label = value; }
+		}
+
+		public bool Checked
+		{
+			get
+			{
+				return m_isChecked;
+			}
+			set
+			{
+				m_isChecked = value;
+
+				if (m_isChecked)
+					ChangeState(UIState.Down);
+				else
+					ChangeState(UIState.Out);
+			}
+		}
+
+		//public new int Width
+		//{
+		//    get
+		//    {
+		//        return m_width;
+		//    }
+		//    set
+		//    {
+		//        int _width = value;
+
+		//        m_label.Width = _width - 37;
+
+		//        m_width = 32;
+
+		//        //base.Width = _width;
+		//    }
+		//}
+
+		public new string Text
+		{
+			get
+			{
+				return m_labelText;
+			}
+			set
+			{
+				m_labelText = value;
+
+				if (m_label != null)
+					m_label.Text = m_labelText;
+			}
+		}
+	}
 }

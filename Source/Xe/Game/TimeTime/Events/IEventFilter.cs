@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TsunamiGL.Xna.Components
+namespace Xe.TimeTime.Events
 {
     /// <summary>
     /// Interface for event filters, used to manage event

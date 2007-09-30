@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Xe;
 using Xe.Tools;
+using Xe.Input;
 
 namespace Xe.GameScreen
 {
@@ -39,7 +40,7 @@ namespace Xe.GameScreen
 			buttonNewGame.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - buttonNewGame.Width / 2;
 			buttonNewGame.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonNewGame.Height / 2;
 			buttonNewGame.Click += new ClickHandler(buttonNewGame_Click);
-			XeGame.GuiManager.AddControl(buttonNewGame);
+			XeGame.GuiManager.Controls.Add(buttonNewGame);
 
 			buttonOptions = new Button(GameScreenManager.Game, XeGame.GuiManager);
 			buttonOptions.Text = "Options";
@@ -48,7 +49,7 @@ namespace Xe.GameScreen
 			buttonOptions.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 2 / 4 - buttonOptions.Width / 2;
 			buttonOptions.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonOptions.Height / 2;
 			buttonOptions.Click += new ClickHandler(buttonOptions_Click);
-			XeGame.GuiManager.AddControl(buttonOptions);
+			XeGame.GuiManager.Controls.Add(buttonOptions);
 
 			buttonQuit = new Button(GameScreenManager.Game, XeGame.GuiManager);
 			buttonQuit.Text = "Quit";
@@ -57,7 +58,7 @@ namespace Xe.GameScreen
 			buttonQuit.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 3 / 4 - buttonQuit.Width / 2;
 			buttonQuit.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonQuit.Height / 2;
 			buttonQuit.Click += new ClickHandler(buttonQuit_Click);
-			XeGame.GuiManager.AddControl(buttonQuit);
+			XeGame.GuiManager.Controls.Add(buttonQuit);
 		}
 
 		void buttonOptions_Click(object sender, MouseEventArgs args)
@@ -83,13 +84,13 @@ namespace Xe.GameScreen
 
 		protected override void Cleanup()
 		{
-			XeGame.GuiManager.RemoveControl(buttonNewGame);
+			XeGame.GuiManager.Controls.Remove(buttonNewGame);
 			buttonNewGame.Dispose();
 
-			XeGame.GuiManager.RemoveControl(buttonOptions);
+			XeGame.GuiManager.Controls.Remove(buttonOptions);
 			buttonOptions.Dispose();
 
-			XeGame.GuiManager.RemoveControl(buttonQuit);
+			XeGame.GuiManager.Controls.Remove(buttonQuit);
 			buttonQuit.Dispose();
 		}
 
