@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TsunamiGL.Xna.Components
+namespace Xe.TimeTime.Events
 {
     public interface IEventManager
     {

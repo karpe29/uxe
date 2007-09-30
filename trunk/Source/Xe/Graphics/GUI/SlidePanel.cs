@@ -29,6 +29,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Xe.Tools;
+using Xe.Input;
 #endregion
 
 namespace Xe.GUI
@@ -41,7 +42,7 @@ namespace Xe.GUI
         protected bool m_activated = false;
         #endregion
 
-		public SlidePanel(Game game, GUIManager guiManager)
+		public SlidePanel(Game game, IGUIManager guiManager)
             : base(game, guiManager)
         {
             m_miniButton = new MiniButton(game, guiManager);

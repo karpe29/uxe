@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Xe.Tools
+namespace Xe.Input
 {
 	public class InputHelper : GameComponent
 	{
@@ -591,18 +591,21 @@ namespace Xe.Tools
 			}
 		}
 
+		static bool[] m_isGamePadConnected = new bool[4];
 		/// <summary>
 		/// Is game pad connected
 		/// </summary>
 		/// <returns>Bool</returns>
-		public static bool IsGamePadConnected
+		public static bool[] IsGamePadConnected
 		{
 			get
 			{
-				return gamePadState[(int)PlayerIndex.One].IsConnected
-					&& gamePadState[(int)PlayerIndex.Two].IsConnected
-					&& gamePadState[(int)PlayerIndex.Three].IsConnected
-					&& gamePadState[(int)PlayerIndex.Four].IsConnected;
+				m_isGamePadConnected[0] = gamePadState[(int)PlayerIndex.One].IsConnected;
+				m_isGamePadConnected[1] = gamePadState[(int)PlayerIndex.Two].IsConnected;
+				m_isGamePadConnected[2] = gamePadState[(int)PlayerIndex.Three].IsConnected;
+				m_isGamePadConnected[3] = gamePadState[(int)PlayerIndex.Four].IsConnected; ;
+
+				return m_isGamePadConnected;
 			}
 		}
 

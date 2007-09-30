@@ -30,6 +30,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Xe.Tools;
+using Xe.Input;
 #endregion
 
 namespace Xe.GUI
@@ -40,7 +41,7 @@ namespace Xe.GUI
 
         protected SpriteParameters m_params = new SpriteParameters();
 
-		public MiniButton(Game game, GUIManager guiManager)
+		public MiniButton(Game game, IGUIManager guiManager)
             : base(game, guiManager)
         {
             this.IsHoverable = true;

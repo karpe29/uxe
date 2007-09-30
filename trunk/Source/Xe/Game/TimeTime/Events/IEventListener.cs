@@ -1,6 +1,6 @@
 using System;
 
-namespace TsunamiGL.Xna.Components
+namespace Xe.TimeTime.Events
 {
     /// <summary>
     /// Interface all event listener classes must implement.

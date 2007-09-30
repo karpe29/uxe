@@ -56,7 +56,7 @@ namespace Xe.Tools
                 GraphicsDevice device = graphicsService.GraphicsDevice;
 
 
-				effect = XeGame.ContentManager.Load<Effect>(@"Content\Effects\vectorLine.fx");
+				effect = XeGame.ContentManager.Load<Effect>(@"Content\Effects\Vector");
 
                 m_paramVP = effect.Parameters["mVP"];
                 m_paramWorld = effect.Parameters["mWorld"];

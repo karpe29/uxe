@@ -23,6 +23,7 @@ using Xe.Graphics3D;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Xe.Input;
 #endregion
 
 namespace Xe.Tools
@@ -108,7 +109,7 @@ namespace Xe.Tools
 
             try
             {
-                if ((m_ebi != null) && (m_ebi.GetFocus() != null))
+                if ((m_ebi != null) && (m_ebi.Focus != null))
                     return;
 
                 if (m_camera.UpDirection == Vector3.Up)

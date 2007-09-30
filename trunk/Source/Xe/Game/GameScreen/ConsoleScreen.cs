@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Xe.Tools;
+using Xe.Input;
 
 namespace Xe.GameScreen
 {

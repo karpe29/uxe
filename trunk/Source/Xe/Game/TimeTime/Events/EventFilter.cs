@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TsunamiGL.Xna.Components
+namespace Xe.TimeTime.Events
 {
 	public partial class EventManager
 	{

@@ -1,158 +1,216 @@
-#region License
-/*
- *  Xna5D.GUI.dll
- *  Copyright (C)2007 John Sedlak (http://jsedlak.org)
- *  
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-*/
-#endregion License
-
 #region Using Statements
 using System;
-using System.IO;
 using System.Xml;
-using System.Xml.Schema;
-using System.Diagnostics;
-using System.ComponentModel;
 using System.Collections.Generic;
 
-using Xe;
-
-using Xe.Graphics2D;
-
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Storage;
+
+using Xe;
 using Xe.Tools;
+using Xe.Graphics;
+using Xe.Input;
 #endregion
 
 namespace Xe.GUI
 {
-    public class RadioButton : UIControl
-    {
-        #region Members
-        protected Label m_label;
-        protected string m_labelText = "";
+	public class RadioButton : UIControl
+	{
+		#region Members
+		protected Label m_label;
+		protected string m_labelText = "";
 
-        protected bool m_isChecked = false;
-        #endregion
+		protected bool m_isChecked = false;
 
-        public RadioButton(Game game, GUIManager guiManager)
-            : base(game, guiManager)
-        {
-            m_label = new Label(game, guiManager);
-            m_label.MouseDown += new MouseDownHandler(Label_MouseDown);
+		public event ClickHandler CheckChanged;
+		#endregion
 
-            game.Components.Add(m_label);
-            this.Width = 25;
+		public RadioButton(Game game, IGUIManager guiManager)
+			: base(game, guiManager)
+		{
+			m_label = new Label(game, guiManager);
+			m_label.Name = "RB_LABEL";
+			m_label.MouseDown += new MouseDownHandler(Label_MouseDown);
 
-            m_label.Width -= 30;
+			this.IsFocusable = false;
+			this.Width = 32;
 
-            m_text = "";
-            this.Text = "Radio";
+			this.Text = "";
+			this.ControlTag = "radiobutton";
+		}
 
-            //guiManager.AddControl(m_label);
-            this.Controls.Add(m_label);
-        }
+		public override void Initialize()
+		{
+			this.Controls.Add(m_label);
 
-        protected void Label_MouseDown(MouseEventArgs args)
-        {
-            this.Checked = !this.Checked;
-        }
+			base.Initialize();
+		}
 
-        protected override void LoadGraphicsContent(bool loadAllContent)
-        {
-            base.LoadGraphicsContent(loadAllContent);
+		protected void Label_MouseDown(MouseEventArgs e)
+		{
+			this.Checked = !this.Checked;
 
-            // Out: new Rectangle(5, 65, 25, 25)
-            // Over: new Rectangle(5, 65, 25, 25)
-            // Down: new Rectangle(35, 65, 25, 25)
-            // Disabled: new Rectangle(5, 65, 25, 25)
-            m_outRects = m_guiManager.CreateControl("radiobutton.out", new Rectangle(m_absX, m_absY, m_width, m_height));
-            m_overRects = m_guiManager.CreateControl("radiobutton.over", new Rectangle(m_absX, m_absY, m_width, m_height));
-            m_downRects = m_guiManager.CreateControl("radiobutton.down", new Rectangle(m_absX, m_absY, m_width, m_height));
-            m_disabledRects = m_guiManager.CreateControl("radiobutton.disabled", new Rectangle(m_absX, m_absY, m_width, m_height));
-        }
+			if (CheckChanged != null)
+				CheckChanged.Invoke(this, e);
+		}
 
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
+		protected override void OnMouseUp(MouseEventArgs args)
+		{
+			//base.OnMouseUp(args);
+		}
 
-            if (m_needsUpdate)
-            {
-                m_outRects = m_guiManager.CreateControl("radiobutton.out", new Rectangle(m_absX, m_absY, m_width, m_height));
-                m_overRects = m_guiManager.CreateControl("radiobutton.over", new Rectangle(m_absX, m_absY, m_width, m_height));
-                m_downRects = m_guiManager.CreateControl("radiobutton.down", new Rectangle(m_absX, m_absY, m_width, m_height));
-                m_disabledRects = m_guiManager.CreateControl("radiobutton.disabled", new Rectangle(m_absX, m_absY, m_width, m_height));
+		protected override void OnMouseDown(MouseEventArgs args)
+		{
+			//base.OnMouseDown(args);
+		}
 
-                m_label.X = m_absX + 30;
-                m_label.Y = m_absY;
-                m_label.Text = m_labelText;
+		protected override void OnLostFocus(object sender)
+		{
+			//base.OnLostFocus(sender);
+		}
 
-                m_needsUpdate = false;
-            }
-        }
+		protected override void OnGotFocus(object sender)
+		{
+			//base.OnGotFocus(sender);
+		}
 
-        protected override void OnVisibleChanged(object sender, EventArgs args)
-        {
-            base.OnVisibleChanged(sender, args);
+		protected override void OnClick(object sender, MouseEventArgs args)
+		{
+			base.OnClick(sender, args);
 
-            m_label.Visible = this.Visible;
-        }
+			if (this.Ebi.Focus == this)
+			{
+				this.Checked = !this.Checked;
 
-        protected override void OnDrawOrderChanged(object sender, EventArgs args)
-        {
-            base.OnDrawOrderChanged(sender, args);
+				if (CheckChanged != null)
+					CheckChanged.Invoke(this, args);
+			}
+		}
 
-            m_label.DrawOrder = this.DrawOrder;
-        }
+		public override void Update(GameTime gameTime)
+		{
+			bool _needUpdate = m_needsUpdate;
+			if (m_needsUpdate)
+			{
+				m_label.X = this.X + 37;
+				m_label.Y = this.Y;
 
-        protected override void OnMouseUp(MouseEventArgs args)
-        {
-            //base.OnMouseUp(args);
-        }
+				m_label.Text = m_labelText;
 
-        protected override void OnMouseDown(MouseEventArgs args)
-        {
-            //base.OnMouseDown(args);
+				//ClippingOffset = new Vector4(0, 0, -105, 0);
+				this.ClippingOffset.Width = -m_label.Width - 5;
 
-            if (m_ebi.GetFocus() == this)
-            {
-                this.Checked = !this.Checked;
-            }
-        }
+				//m_label.Alpha = this.Alpha;
+			}
 
-        public bool Checked
-        {
-            get
-            {
-                return m_isChecked;
-            }
-            set
-            {
-                m_isChecked = value;
+			base.Update(gameTime);
 
-                if (m_isChecked)
-                    m_state = UIState.Down;
-                else
-                    m_state = UIState.Out;
-            }
-        }
+			if (_needUpdate)
+			{
+				m_label.X = this.X + 37;
+				m_label.Y = this.Y;
+			}
+		}
 
-        public new string Text
-        {
-            get
-            {
-                return m_labelText;
-            }
-            set
-            {
-                m_labelText = value;
-            }
-        }
-    }
+
+		public bool Checked
+		{
+			get
+			{
+				return m_isChecked;
+			}
+			set
+			{
+				m_isChecked = value;
+
+				if (m_isChecked)
+				{
+					//m_state = UIState.Down;
+					ChangeState(UIState.Down);
+
+					UpdateGroupedControls();
+				}
+				else
+				{
+					if (!CheckForEmpty())
+						ChangeState(UIState.Out);
+					//m_state = UIState.Out;
+				}
+			}
+		}
+
+		public new string Text
+		{
+			get
+			{
+				return m_labelText;
+			}
+			set
+			{
+				m_labelText = value;
+
+				if (m_label != null)
+					m_label.Text = m_labelText;
+			}
+		}
+
+		protected virtual bool CheckForEmpty()
+		{
+			if (this.Parent != null)
+			{
+				for (int i = 0; i < this.Parent.Controls.MasterList.Count; i++)
+				{
+					RadioButton _button = this.Parent.Controls.MasterList[i] as RadioButton;
+					if (_button != null && _button != this && _button.Visible && _button.Enabled)
+						if (_button.Checked)
+							return false;
+				}
+			}
+			else
+			{
+				if (this.GUIManager != null)
+				{
+					for (int i = 0; i < this.GUIManager.Controls.MasterList.Count; i++)
+					{
+						RadioButton _button = this.GUIManager.Controls.MasterList[i] as RadioButton;
+						if (_button != null && _button != this && _button.Visible && _button.Enabled)
+							if (_button.Checked)
+								return false;
+					}
+				}
+			}
+
+			return true;
+		}
+
+		protected virtual void UpdateGroupedControls()
+		{
+			if (m_isChecked)
+			{
+				if (this.Parent != null)
+				{
+					for (int i = 0; i < this.Parent.Controls.MasterList.Count; i++)
+					{
+						RadioButton _button = this.Parent.Controls.MasterList[i] as RadioButton;
+						if (_button != null && _button != this && _button.Visible && _button.Enabled)
+							_button.Checked = false;
+					}
+				}
+				else
+				{
+					if (this.GUIManager != null)
+					{
+						for (int i = 0; i < this.GUIManager.Controls.MasterList.Count; i++)
+						{
+							RadioButton _button = this.GUIManager.Controls.MasterList[i] as RadioButton;
+							if (_button != null && _button != this && _button.Visible && _button.Enabled)
+								_button.Checked = false;
+						}
+					}
+				}
+			}
+		}
+	}
 }

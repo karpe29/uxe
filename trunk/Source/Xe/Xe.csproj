@@ -527,21 +527,9 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ToneMapping</Name>
     </Compile>
-    <Compile Include="Graphics\2D\QuadBase.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>QuadBase</Name>
-    </Compile>
     <Compile Include="Graphics\2D\SafeArea.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SafeArea</Name>
-    </Compile>
-    <Compile Include="Graphics\2D\Sprite.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>Sprite</Name>
-    </Compile>
-    <Compile Include="Graphics\2D\SpriteManager.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>SpriteManager</Name>
     </Compile>
     <Compile Include="Graphics\3D\BasicModel3D.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -566,6 +554,107 @@
     <Compile Include="Graphics\3D\Particles\ParticleSystems\SunFireParticleSystem.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SunFireParticleSystem</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\ControlCollection.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ControlCollection</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Collections\DrawComparer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>DrawComparer</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Collections\TabComparer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TabComparer</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Collections\UpdateComparer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>UpdateComparer</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Cursor.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Cursor</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Font2D.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Font2D</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\GUIQuad.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GUIQuad</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\AnimatedQuad.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AnimatedQuad</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\Frame.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Frame</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\IMoveable.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IMoveable</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\Path.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Path</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\QuadBase.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>QuadBase</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\QuadRenderer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>QuadRenderer</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\Rect.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Rect</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\SpriteRenderer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SpriteRenderer</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\SliderCombo.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SliderCombo</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\TextBoxText.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TextBoxText</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\UIControl.cs">
+      <SubType>Code</SubType>
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>UIControl</Name>
+    </Compile>
+    <Compile Include="Input\Controllers\ControllerBase.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ControllerBase</Name>
+    </Compile>
+    <Compile Include="Input\Controllers\GamePadController.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GamePadController</Name>
+    </Compile>
+    <Compile Include="Input\Controllers\MKController.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>MKController</Name>
+    </Compile>
+    <Compile Include="Input\Ebi.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Ebi</Name>
+    </Compile>
+    <Compile Include="Input\IEbiService.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IEbiService</Name>
+    </Compile>
+    <Compile Include="Input\IFocusable.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IFocusable</Name>
+    </Compile>
+    <Compile Include="Input\InputHelper.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>InputHelper</Name>
     </Compile>
     <Compile Include="Tools\CameraInput.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -671,37 +760,17 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Label</Name>
     </Compile>
-    <Compile Include="Graphics\GUI\MiniButton.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>MiniButton</Name>
-    </Compile>
     <Compile Include="Graphics\GUI\RadioButton.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>RadioButton</Name>
-    </Compile>
-    <Compile Include="Graphics\GUI\SlidePanel.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>SlidePanel</Name>
     </Compile>
     <Compile Include="Graphics\GUI\Slider.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Slider</Name>
     </Compile>
-    <Compile Include="Graphics\GUI\SliderArrow.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>SliderArrow</Name>
-    </Compile>
-    <Compile Include="Graphics\GUI\SliderLine.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>SliderLine</Name>
-    </Compile>
     <Compile Include="Graphics\GUI\TextBox.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>TextBox</Name>
-    </Compile>
-    <Compile Include="Graphics\GUI\UIControl.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>UIControl</Name>
     </Compile>
     <Compile Include="Physics\3D\IPhysical3D.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -719,17 +788,13 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Console</Name>
     </Compile>
-    <Compile Include="Tools\Ebi.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>Ebi</Name>
-    </Compile>
     <Compile Include="Tools\Helper.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Helper</Name>
     </Compile>
-    <Compile Include="Tools\InputHelper.cs">
+    <Compile Include="Tools\LineRenderer.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>InputHelper</Name>
+      <Name>LineRenderer</Name>
     </Compile>
     <Compile Include="Tools\Map.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -738,6 +803,10 @@
     <Compile Include="Tools\Message.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Message</Name>
+    </Compile>
+    <Compile Include="Tools\Parser.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Parser</Name>
     </Compile>
     <Compile Include="Tools\Reporter.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -1069,11 +1138,30 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Effects\vectorLine.fx">
+    <Content Include="Content\Effects\Vector.fx">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
-      <Name>vectorLine</Name>
+      <Name>Vector</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Effects\Line.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Line</Name>
+    </Content>
+    <Content Include="Content\Textures\GUI.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>GUI</Name>
+    </Content>
+    <Content Include="Content\XML\Xe_GUI.xml">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Xe_GUI</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

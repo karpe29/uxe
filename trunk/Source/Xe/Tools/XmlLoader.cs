@@ -1,21 +1,7 @@
-#region License
-/*
- *  Xna5D.dll
- *  Copyright (C)2007 John Sedlak (http://jsedlak.org)
- *  
- *  This software is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * 
- *  Date Created: December 04, 2006
- */
-#endregion
-
 #region Using Statements
 using System;
-using System.IO;
 using System.Xml;
-using System.Xml.Schema;
+using System.Text;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
@@ -24,8 +10,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Xe.Tools
 {
+    /// <summary>
+    /// XmlLoader provides basic, default functions for loading and parsing
+    /// XML filesl
+    /// </summary>
     public static class XmlLoader
     {
+        #region Building a Rectangle
         /// <summary>
         /// Builds a Rectangle object from a valid XmlNode.
         /// </summary>
@@ -33,26 +24,42 @@ namespace Xe.Tools
         /// <returns>A valid Rectangle object, Rectangle.Empty if loading fails.</returns>
         public static Rectangle BuildRectangle(XmlNode node)
         {
-            Rectangle _rect = Rectangle.Empty;
-
-            if (node.Name.ToLower().Equals("rectangle") ||
-               node.Name.ToLower().Equals("source") ||
-               node.Name.ToLower().Equals("destination"))
+            try
             {
+                Rectangle _rect = Rectangle.Empty;
+
+                // Search for the child nodes and load the data.
                 foreach (XmlNode _child in node.ChildNodes)
                 {
                     if (_child.Name.ToLower().Equals("x"))
-                        int.TryParse(_child.FirstChild.Value, out _rect.X);
+                        Parser.ParseInt(_child.FirstChild.Value, out _rect.X);
                     else if (_child.Name.ToLower().Equals("y"))
-                        int.TryParse(_child.FirstChild.Value, out _rect.Y);
+                        Parser.ParseInt(_child.FirstChild.Value, out _rect.Y);
                     else if (_child.Name.ToLower().Equals("width"))
-                        int.TryParse(_child.FirstChild.Value, out _rect.Width);
+                        Parser.ParseInt(_child.FirstChild.Value, out _rect.Width);
                     else if (_child.Name.ToLower().Equals("height"))
-                        int.TryParse(_child.FirstChild.Value, out _rect.Height);
+                        Parser.ParseInt(_child.FirstChild.Value, out _rect.Height);
                 }
-            }
 
-            return _rect;
+                return _rect;
+            }
+            catch
+            {
+                return Rectangle.Empty;
+            }
         }
+        #endregion
+
+        public static string GetAttribute(XmlNode node, string attr)
+        {
+            string _value = (node.Attributes[attr] != null) ? node.Attributes[attr].Value : string.Empty;
+
+            return _value;
+        }
+
+        //public static T GetAttribute<T>(XmlNode node, string attr)
+        //{
+        //    return (T)(object)GetAttribute(node, attr);
+        //}
     }
 }

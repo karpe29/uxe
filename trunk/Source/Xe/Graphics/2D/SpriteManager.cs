@@ -15,10 +15,9 @@
 using System;
 using System.Collections.Generic;
 
-using Xe;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Xe.GUI;
 #endregion
 
 namespace Xe.Graphics2D

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using Xe.Tools;
 using Xe.Physics3D;
 using Microsoft.Xna.Framework.Graphics;
+using Xe.Input;
 
 namespace Xe.SpaceRace
 {

@@ -16,12 +16,12 @@ namespace Xe.SpaceRace
 		{
 			labelLife = new Label(gameScreenManager.Game, XeGame.GuiManager);
 			labelLife.Text = "|||||||||||||||||||||||||||||||||||||||||||||||||||||-";
-			labelLife.TextAlign = TextAlignment.Center;
+			labelLife.TextAlign = TextAlign.Center;
 			labelLife.Width = 220;
 			labelLife.Height = 30;
 			labelLife.X = XeGame.Device.PresentationParameters.BackBufferWidth * 3 / 4 - labelLife.Width / 2;
 			labelLife.Y = XeGame.Device.PresentationParameters.BackBufferHeight * 3 / 4 - labelLife.Height / 2;
-			XeGame.GuiManager.AddControl(labelLife);
+			XeGame.GuiManager.Controls.Add(labelLife);
 		}
 
 		public override void Update(GameTime gameTime)

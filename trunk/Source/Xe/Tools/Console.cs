@@ -24,12 +24,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using Xe.Tools;
+using Xe.Input;
 #endregion
 
 namespace Xe.Tools
 {
-    public partial class Console : Microsoft.Xna.Framework.DrawableGameComponent, IService, IConsoleService
+    public partial class Console : Microsoft.Xna.Framework.DrawableGameComponent, IService, IConsoleService, IFocusable
     {
         #region History Class
         protected class HistoryString
@@ -101,13 +101,13 @@ namespace Xe.Tools
         {
             if (active)
             {
-                m_ebis.SetFocus(this);
+                m_ebis.Focus = this;
 
                 m_isActive = true;
             }
             else
             {
-                m_ebis.SetFocus(null);
+                m_ebis.Focus = null;
 
                 m_isActive = false;
             }
@@ -135,7 +135,7 @@ namespace Xe.Tools
         {
             if (m_isActive && focus == null)
             {
-                m_ebis.SetFocus(this);
+                m_ebis.Focus = this;
                 focus = this;
             }
 
@@ -143,7 +143,7 @@ namespace Xe.Tools
             {
                 if (k.Key == Microsoft.Xna.Framework.Input.Keys.OemTilde)
                 {
-                    m_ebis.SetFocus(this);
+                    m_ebis.Focus = this;
 
                     m_isActive = true;
 
@@ -154,7 +154,7 @@ namespace Xe.Tools
             {
                 if (k.Key == Microsoft.Xna.Framework.Input.Keys.OemTilde)
                 {
-                    m_ebis.SetFocus(null);
+                    m_ebis.Focus = null;
 
                     m_isActive = false;
                 }
@@ -426,7 +426,59 @@ namespace Xe.Tools
             }
         }
         #endregion
-    }
+
+		#region IFocusable Members
+
+		public bool Focus()
+		{
+			throw new Exception("The method or operation is not implemented.");
+		}
+
+		public void UnFocus()
+		{
+			throw new Exception("The method or operation is not implemented.");
+		}
+
+		public bool TabNext()
+		{
+			throw new Exception("The method or operation is not implemented.");
+		}
+
+		public bool TabPrev()
+		{
+			throw new Exception("The method or operation is not implemented.");
+		}
+
+		public event GotFocusHandler GotFocus;
+
+		public event LostFocusHandler LostFocus;
+
+		public bool IsTabable
+		{
+			get
+			{
+				throw new Exception("The method or operation is not implemented.");
+			}
+			set
+			{
+				throw new Exception("The method or operation is not implemented.");
+			}
+		}
+
+		public int TabOrder
+		{
+			get
+			{
+				throw new Exception("The method or operation is not implemented.");
+			}
+			set
+			{
+				throw new Exception("The method or operation is not implemented.");
+			}
+		}
+
+		#endregion
+	}
 
     public delegate void NewMessageHandler(Message msg);
 

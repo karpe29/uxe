@@ -1,0 +1,605 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Thrust_GUI>
+	<Texture ID="0">Content/Textures/GUI</Texture>
+	<CornerSize>16</CornerSize>
+	<GUI_Elements>
+		<Element TextureID="0"  name="uicontrol">
+			<Source name="out" style="9quad">
+				<Rectangle>
+					<x>0</x>
+					<y>0</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="9quad">
+				<Rectangle>
+					<x>64</x>
+					<y>0</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="9quad">
+				<Rectangle>
+					<x>192</x>
+					<y>0</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="9quad">
+				<Rectangle>
+					<x>64</x>
+					<y>0</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="9quad">
+				<Rectangle>
+					<x>128</x>
+					<y>0</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+		<Element TextureID="0"  name="button">
+			<Source name="out" style="9quad">
+				<Rectangle>
+					<x>0</x>
+					<y>0</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="9quad">
+				<Rectangle>
+					<x>64</x>
+					<y>0</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="9quad">
+				<Rectangle>
+					<x>192</x>
+					<y>0</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="9quad">
+				<Rectangle>
+					<x>64</x>
+					<y>0</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="9quad">
+				<Rectangle>
+					<x>128</x>
+					<y>0</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+		<Element TextureID="0"  name="textbox">
+			<Source name="out" style="9quad">
+				<Rectangle>
+					<x>0</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="9quad">
+				<Rectangle>
+					<x>0</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="9quad">
+				<Rectangle>
+					<x>64</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="9quad">
+				<Rectangle>
+					<x>64</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="9quad">
+				<Rectangle>
+					<x>128</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+		<Element TextureID="0" name="label">
+			<Source name="out" style="9quad">
+				<Rectangle>
+					<x>0</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="9quad">
+				<Rectangle>
+					<x>0</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="9quad">
+				<Rectangle>
+					<x>0</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="9quad">
+				<Rectangle>
+					<x>0</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="9quad">
+				<Rectangle>
+					<x>128</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+		<Element TextureID="0" name="checkbox">
+			<Source name="out" style="1quad">
+				<Rectangle>
+					<x>0</x>
+					<y>128</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="1quad">
+				<Rectangle>
+					<x>0</x>
+					<y>128</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="1quad">
+				<Rectangle>
+					<x>64</x>
+					<y>128</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="1quad">
+				<Rectangle>
+					<x>0</x>
+					<y>128</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="1quad">
+				<Rectangle>
+					<x>32</x>
+					<y>128</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+		<Element TextureID="0" name="radiobutton">
+			<Source name="out" style="1quad">
+				<Rectangle>
+					<x>0</x>
+					<y>160</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="1quad">
+				<Rectangle>
+					<x>0</x>
+					<y>160</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="1quad">
+				<Rectangle>
+					<x>64</x>
+					<y>160</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="1quad">
+				<Rectangle>
+					<x>0</x>
+					<y>160</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="1quad">
+				<Rectangle>
+					<x>32</x>
+					<y>160</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+
+		<!--Slider
+		<Element TextureID="0" name="slider">
+			<Source name="out" style="9quad">
+				<Rectangle>
+					<x>0</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="9quad">
+				<Rectangle>
+					<x>64</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="9quad">
+				<Rectangle>
+					<x>64</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="9quad">
+				<Rectangle>
+					<x>0</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="9quad">
+				<Rectangle>
+					<x>128</x>
+					<y>64</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+		</Element>-->
+		<Element TextureID="0" name="slider">
+			<Source name="out" style="9quad">
+				<Rectangle>
+					<x>448</x>
+					<y>448</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="9quad">
+				<Rectangle>
+					<x>448</x>
+					<y>448</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="9quad">
+				<Rectangle>
+					<x>448</x>
+					<y>448</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="9quad">
+				<Rectangle>
+					<x>448</x>
+					<y>448</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="9quad">
+				<Rectangle>
+					<x>448</x>
+					<y>448</y>
+					<Width>64</Width>
+					<Height>64</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+
+		<!--Slider Vertical Up and Down Buttons-->
+		<Element TextureID="0" name="sliderBtnUp">
+			<Source name="out" style="1quad">
+				<Rectangle>
+					<x>96</x>
+					<y>128</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="1quad">
+				<Rectangle>
+					<x>128</x>
+					<y>128</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="1quad">
+				<Rectangle>
+					<x>128</x>
+					<y>128</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="1quad">
+				<Rectangle>
+					<x>160</x>
+					<y>128</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="1quad">
+				<Rectangle>
+					<x>160</x>
+					<y>128</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+		<Element TextureID="0" name="sliderBtnDown">
+			<Source name="out" style="1quad">
+				<Rectangle>
+					<x>96</x>
+					<y>160</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="1quad">
+				<Rectangle>
+					<x>128</x>
+					<y>160</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="1quad">
+				<Rectangle>
+					<x>128</x>
+					<y>160</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="1quad">
+				<Rectangle>
+					<x>160</x>
+					<y>160</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="1quad">
+				<Rectangle>
+					<x>160</x>
+					<y>160</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+
+		<!--Slider Horizontal Up and Down Buttons-->
+		<Element TextureID="0" name="sliderBtnLeft">
+			<Source name="out" style="1quad">
+				<Rectangle>
+					<x>128</x>
+					<y>192</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="1quad">
+				<Rectangle>
+					<x>160</x>
+					<y>192</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="1quad">
+				<Rectangle>
+					<x>160</x>
+					<y>192</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="1quad">
+				<Rectangle>
+					<x>192</x>
+					<y>192</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="1quad">
+				<Rectangle>
+					<x>128</x>
+					<y>192</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+		<Element TextureID="0" name="sliderBtnRight">
+			<Source name="out" style="1quad">
+				<Rectangle>
+					<x>128</x>
+					<y>224</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="1quad">
+				<Rectangle>
+					<x>160</x>
+					<y>224</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="1quad">
+				<Rectangle>
+					<x>160</x>
+					<y>224</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="1quad">
+				<Rectangle>
+					<x>192</x>
+					<y>224</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="1quad">
+				<Rectangle>
+					<x>128</x>
+					<y>224</y>
+					<Width>32</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+
+		<!--Horizontal and Vertical Slider Buttons-->
+		<Element TextureID="0" name="sliderBtnVert">
+			<Source name="out" style="1quad">
+				<Rectangle>
+					<x>192</x>
+					<y>174</y>
+					<Width>32</Width>
+					<Height>12</Height>
+				</Rectangle>
+
+			</Source>
+			<Source name="over" style="1quad">
+				<Rectangle>
+					<x>192</x>
+					<y>174</y>
+					<Width>32</Width>
+					<Height>12</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="1quad">
+				<Rectangle>
+					<x>192</x>
+					<y>174</y>
+					<Width>32</Width>
+					<Height>12</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="1quad">
+				<Rectangle>
+					<x>224</x>
+					<y>174</y>
+					<Width>32</Width>
+					<Height>12</Height>
+				</Rectangle>
+
+			</Source>
+			<Source name="disabled" style="1quad">
+				<Rectangle>
+					<x>192</x>
+					<y>174</y>
+					<Width>32</Width>
+					<Height>12</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+		<Element TextureID="0" name="sliderBtnHoriz">
+			<Source name="out" style="1quad">
+				<Rectangle>
+					<x>202</x>
+					<y>132</y>
+					<Width>12</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="1quad">
+				<Rectangle>
+					<x>202</x>
+					<y>132</y>
+					<Width>12</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="1quad">
+				<Rectangle>
+					<x>202</x>
+					<y>132</y>
+					<Width>12</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="1quad">
+				<Rectangle>
+					<x>234</x>
+					<y>132</y>
+					<Width>12</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="1quad">
+				<Rectangle>
+					<x>202</x>
+					<y>132</y>
+					<Width>12</Width>
+					<Height>32</Height>
+				</Rectangle>
+			</Source>
+		</Element>
+	</GUI_Elements>
+</Thrust_GUI>
