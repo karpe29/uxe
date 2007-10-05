@@ -136,7 +136,7 @@ namespace Xe.SpaceRace
 			fireParticles.Update(gameTime);
 			smokePlumeParticles.Update(gameTime);
 
-
+			/*
 			KeyboardState ks = Keyboard.GetState();
 
 			if (ks.IsKeyDown(Keys.A))
@@ -163,7 +163,7 @@ namespace Xe.SpaceRace
 				XeGame.PostProcessManager.EnableToneMapping = true;
 			else
 				XeGame.PostProcessManager.EnableToneMapping = false;
-
+			*/
 
 		}
 			

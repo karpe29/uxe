@@ -3,47 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Xe.Graphics2D.PostProcess
 {
-    public class GaussianBlur
-    {
-        #region Effect Code
-        private const string EffectCode1 = "// Pixel shader applies a one dimensional gaussian blur filter.\r\n"
-            + "// This is to be used twice by the postprocess, first to\r\n"
-            + "// blur horizontally, and then again to blur vertically.\r\n"
-            + "sampler TextureSampler : register(s0);\r\n"
-            + "float BloomScale = 2.0f;\r\n"
-            + "#define SAMPLE_COUNT ";
+    public class AdvancedGaussianBlur : PostProcessEffect
+	{
+		#region Variables and Properties
 
-        private const string EffectCode2 = "\r\n"
-            + "float2 SampleOffsets[SAMPLE_COUNT];\r\n"
-            + "float SampleWeights[SAMPLE_COUNT];\r\n"
-            + "float4 PixelShader(float2 texCoord : TEXCOORD0) : COLOR0\r\n"
-            + "{\r\n"
-            + "    float4 c = 0;\r\n"
-            + "    // Combine a number of weighted image filter taps.\r\n"
-            + "    for (int i = 0; i < SAMPLE_COUNT; i++)\r\n"
-            + "    {\r\n"
-            + "        c += tex2D(TextureSampler, texCoord + SampleOffsets[i]) * SampleWeights[i];\r\n"
-            + "    }\r\n"
-            + "    return c * BloomScale;\r\n"
-            + "}\r\n"
-            + "technique GaussianBlur\r\n"
-            + "{\r\n"
-            + "    pass Pass1\r\n"
-            + "    {\r\n"
-            + "        PixelShader = compile ps_2_0 PixelShader();\r\n"
-            + "        ZEnable = false;\r\n"
-            + "    }\r\n"
-            + "}";
-        #endregion
-
-        EffectParameter weightsParameter, offsetsParameter;
+		EffectParameter weightsParameter, offsetsParameter;
         EffectParameter bloomScaleParameter = null;
-        private int m_SampleCount = 15;
-        private EffectPass GaussianBlurPass = null;
-        private float m_BlurAmount = 0;
+
+		int m_SampleCount;
+
+		private float m_BlurAmount = 0;
         private readonly float[] Weights = null;
         private readonly Vector2[] Offsets = null;
 
@@ -59,8 +32,6 @@ namespace Xe.Graphics2D.PostProcess
             }
         }
 
-        Effect effect = null;
-
         public float BloomScale
         {
             get
@@ -71,53 +42,37 @@ namespace Xe.Graphics2D.PostProcess
             {
                 bloomScaleParameter.SetValue(value);
             }
-        }
+		}
 
-        internal GaussianBlur(GraphicsDevice graphicsDevice) : this(graphicsDevice, 13)
+		#endregion
+
+        internal AdvancedGaussianBlur(GraphicsDevice graphicsDevice, ContentManager contentManager)
+			:base (graphicsDevice,contentManager, "AdvancedGaussianBlur")
         {
-        }
-        internal GaussianBlur(GraphicsDevice graphicsDevice, int sampleCount)
-        {
-            m_SampleCount = sampleCount;
+			EffectParameter tmpParam = m_effect.Parameters["SampleCount"];
+			m_SampleCount = tmpParam.GetValueInt32();
 
-            Weights = new float[sampleCount];
-            Offsets = new Vector2[sampleCount];
-
-            CompiledEffect ce = Effect.CompileEffectFromSource(EffectCode1 + sampleCount + EffectCode2, null, null, CompilerOptions.None, Microsoft.Xna.Framework.TargetPlatform.Windows);
-            effect = new Effect(graphicsDevice, ce.GetEffectCode(), CompilerOptions.None, new EffectPool());
+			Weights = new float[m_SampleCount];
+			Offsets = new Vector2[m_SampleCount];
             
-            weightsParameter = effect.Parameters["SampleWeights"];
-            offsetsParameter = effect.Parameters["SampleOffsets"];
-            bloomScaleParameter = effect.Parameters["BloomScale"];
+            weightsParameter = m_effect.Parameters["SampleWeights"];
+            offsetsParameter = m_effect.Parameters["SampleOffsets"];
 
-            GaussianBlurPass = effect.Techniques["GaussianBlur"].Passes[0];
-
-            graphicsDevice.Disposing += new EventHandler(GraphicsDevice_Disposing);
+            bloomScaleParameter = m_effect.Parameters["BloomScale"];
         }
 
-        internal void Begin()
+        internal override void Begin()
         {
             weightsParameter.SetValue(Weights);
             offsetsParameter.SetValue(Offsets);
-            effect.Begin();
-            GaussianBlurPass.Begin();
-        }
 
-        internal void End()
-        {
-            GaussianBlurPass.End();
-            effect.End();
-        }
-
-
-        private void GraphicsDevice_Disposing(object sender, EventArgs e)
-        {
-            effect.Dispose();
+			base.Begin();
         }
 
         /// <summary>
         /// Computes sample weightings and texture coordinate offsets
         /// for one pass of a separable gaussian blur filter.
+		/// Called in PostProcessManger, once for V blur, once for H blur
         /// </summary>
         internal void SetBlurParameters(float dx, float dy)
         {

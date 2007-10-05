@@ -162,10 +162,7 @@ namespace Xe
 			s_gameScreenManager.DrawOrder = 500;
 			Components.Add(s_gameScreenManager);
 
-			s_postProcessManager = new PostProcessManager(this);
-			s_postProcessManager.UpdateOrder = 10*1000;
-			s_postProcessManager.DrawOrder = 10*1000;
-			Components.Add(s_postProcessManager);
+			
 		}
 			
 		protected override void Initialize()
@@ -179,6 +176,11 @@ namespace Xe
 			m_consoleScreen = new ConsoleScreen(s_gameScreenManager);
 
 			m_introScreen = new IntroScreen(s_gameScreenManager);
+
+			s_postProcessManager = new PostProcessManager(this, m_graphics.GraphicsDevice, s_contentManager);
+			s_postProcessManager.UpdateOrder = 10 * 1000;
+			s_postProcessManager.DrawOrder = 10 * 1000;
+			Components.Add(s_postProcessManager);
 
 			base.Initialize();
 		}

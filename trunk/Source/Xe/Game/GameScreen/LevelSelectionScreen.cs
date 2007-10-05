@@ -19,8 +19,8 @@ namespace Xe.GameScreen
 		Button buttonPlaySpaceRace;
 		Button buttonPlayTimeTime;
 
-		Slider sliderLevel;
-		Slider sliderPlayerCount;
+		StringSlider sliderLevel;
+		StringSlider sliderPlayerCount;
 
 
 		public LevelSelectionScreen(GameScreenManager gameScreenManager)
@@ -61,27 +61,27 @@ namespace Xe.GameScreen
 			buttonPlayTimeTime.Click += new ClickHandler(buttonPlayTimeTime_Click);
 			XeGame.GuiManager.Controls.Add(buttonPlayTimeTime);
 
-			sliderLevel = new Slider(GameScreenManager.Game, XeGame.GuiManager);
+			sliderLevel = new StringSlider(GameScreenManager.Game, XeGame.GuiManager);
 			sliderLevel.Width = (int)((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5);
 			sliderLevel.Height = 30;
 			sliderLevel.X = (int)(buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10));
 			sliderLevel.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderLevel.Height / 2;
-			sliderLevel.MinValue = 0;
-			sliderLevel.MaxValue = 3;
-			sliderLevel.Step = 1;
-			sliderLevel.Value = 2;
+			//sliderLevel.MinValue = 0;
+			//sliderLevel.MaxValue = 3;
+			//sliderLevel.Step = 1;
+			//sliderLevel.Value = 2;
 			//sliderLevel.ValueChanged += new ValueChangedHandler(levelSlider_ValueChanged);
 			XeGame.GuiManager.Controls.Add(sliderLevel);
 
-			sliderPlayerCount = new Slider(GameScreenManager.Game, XeGame.GuiManager);
+			sliderPlayerCount = new StringSlider(GameScreenManager.Game, XeGame.GuiManager);
 			sliderPlayerCount.Width = (int)((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5);
 			sliderPlayerCount.Height = 30;
 			sliderPlayerCount.X = (int)(buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10));
 			sliderPlayerCount.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 4 / 5 - sliderLevel.Height / 2;
-			sliderPlayerCount.MinValue = 0;
-			sliderPlayerCount.MaxValue = 3;
-			sliderPlayerCount.Step = 1;
-			sliderPlayerCount.Value = 0;
+			//sliderPlayerCount.MinValue = 0;
+			//sliderPlayerCount.MaxValue = 3;
+			//sliderPlayerCount.Step = 1;
+			//sliderPlayerCount.Value = 0;
 			//sliderPlayerCount.ValueChanged += new ValueChangedHandler(levelPlayerCount_ValueChanged);
 			XeGame.GuiManager.Controls.Add(sliderPlayerCount);
 
@@ -90,11 +90,11 @@ namespace Xe.GameScreen
 		void buttonPlaySpaceRace_Click(object sender, MouseEventArgs args)
 		{
 			// save difficulty level as levelSlider won't exists after Cleanup();
-			SpaceRaceInitDatas datas = new SpaceRaceInitDatas(sliderLevel.ValuePercent, (int)sliderPlayerCount.Value);
+			//SpaceRaceInitDatas datas = new SpaceRaceInitDatas(sliderLevel.ValuePercent, (int)sliderPlayerCount.Value);
 		
 			ExitScreen();
 
-			ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager, datas);
+			//ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager, datas);
 		}
 
 		void buttonPlayTimeTime_Click(object sender, MouseEventArgs args)

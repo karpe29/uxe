@@ -39,7 +39,7 @@ namespace Xe.GUI
     {
         protected string m_guiElementID = "minibutton";
 
-        protected SpriteParameters m_params = new SpriteParameters();
+        //protected SpriteParameters m_params = new SpriteParameters();
 
 		public MiniButton(Game game, IGUIManager guiManager)
             : base(game, guiManager)
@@ -227,16 +227,16 @@ namespace Xe.GUI
             }
         }
 
-        public SpriteParameters Parameters
-        {
-            get
-            {
-                return m_params;
-            }
-            set
-            {
-                m_params = value;
-            }
-        }
+		//public SpriteParameters Parameters
+		//{
+		//    get
+		//    {
+		//        return m_params;
+		//    }
+		//    set
+		//    {
+		//        m_params = value;
+		//    }
+		//}
     }
 }

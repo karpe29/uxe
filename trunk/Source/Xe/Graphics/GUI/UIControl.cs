@@ -129,7 +129,7 @@ namespace Xe.GUI
 		// gone through a hard reset.
 		protected bool m_initialized = false;
 
-		private IReporterService m_reporter;
+		protected IReporterService m_reporter;
 
 		// Offsets
 		private Vector2 m_offset = new Vector2(0, 0);       // Offset vector used for resizing and dragging.

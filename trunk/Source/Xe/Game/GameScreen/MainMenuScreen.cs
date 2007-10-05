@@ -35,6 +35,7 @@ namespace Xe.GameScreen
 
 			buttonNewGame = new Button(GameScreenManager.Game, XeGame.GuiManager);
 			buttonNewGame.Text = "New Game";
+			buttonNewGame.IsDraggable = false;
 			buttonNewGame.Width = 120;
 			buttonNewGame.Height = 30;
 			buttonNewGame.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - buttonNewGame.Width / 2;
