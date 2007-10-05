@@ -22,49 +22,12 @@ namespace Xe.Graphics2D.PostProcess
         RenderTarget2D FullTarget1 = null, FullTarget2 = null, /*HalfTarget = null,*/ CurrentTarget = null;
 
         GraphicsDevice GraphicsDevice = null;
+		ContentManager ContentManager = null;
 
-        Monochrome monochrome = null;
-        ColorInverse colorInverse = null;
-        BloomExtract bloomExtract = null;
-        GaussianBlur gaussianBlur = null;
-        Combine combine = null;
-        ToneMapping toneMapping = null;
-        RadialBlur radialBlur = null;
-        DownSample downSample = null;
-
-        #region Properties
-        public BloomExtract BloomExtract
-        {
-            get
-            {
-                return bloomExtract;
-            }
-        }
-
-        public ToneMapping ToneMapping
-        {
-            get
-            {
-                return toneMapping;
-            }
-        }
-
-        public GaussianBlur GaussianBlur
-        {
-            get
-            {
-                return gaussianBlur;
-            }
-        }
-
-        public RadialBlur RadialBlur
-        {
-            get
-            {
-                return radialBlur;
-            }
-        }
-        #endregion
+        AdvancedGaussianBlur gaussianBlur = null;
+        AdvancedCombine combine = null;
+        AdvancedToneMapping toneMapping = null;
+        AdvancedRadialBlur radialBlur = null;
 
         public PostProcess(GraphicsDevice graphicsDevice)
         {
@@ -98,10 +61,10 @@ namespace Xe.Graphics2D.PostProcess
             bloomExtract = new BloomExtract(graphicsDevice);
             monochrome = new Monochrome(graphicsDevice);
             colorInverse = new ColorInverse(graphicsDevice);
-            gaussianBlur = new GaussianBlur(graphicsDevice);
-            combine = new Combine(graphicsDevice);
-            toneMapping = new ToneMapping(graphicsDevice);
-            radialBlur = new RadialBlur(graphicsDevice);
+            gaussianBlur = new AdvancedGaussianBlur(graphicsDevice);
+            combine = new AdvancedCombine(graphicsDevice);
+            toneMapping = new AdvancedToneMapping(graphicsDevice);
+            radialBlur = new AdvancedRadialBlur(graphicsDevice);
             downSample = new DownSample(graphicsDevice);
         }
 

@@ -3,34 +3,239 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+using Xe.Tools;
 
 namespace Xe.Graphics2D.PostProcess
 {
-	/// <summary>
-	/// A simple layer over PostProcess engine
-	/// TODO : add properties to enable/disable/parametrize effects
-	/// </summary>
 	public class PostProcessManager : DrawableGameComponent
 	{
-		PostProcess m_postProcess;
+		int ScreenWidth = 800, ScreenHeight = 600;
+		int PostWidth, PostHeight;
 
-		public PostProcessManager(Game game)
-			:base (game)
+		Texture2D BackBuffer = null, PostBuffer = null;
+
+		SpriteBatch SpriteBatch = null;
+
+		RenderTarget2D FullTarget1 = null, FullTarget2 = null, /*HalfTarget = null,*/ CurrentTarget = null;
+
+		GraphicsDevice m_graphicsDevice = null;
+		ContentManager m_contentManager = null;
+
+		AdvancedGaussianBlur gaussianBlur = null;
+		AdvancedCombine combine = null;
+		AdvancedToneMapping toneMapping = null;
+		AdvancedRadialBlur radialBlur = null;
+
+		PostProcessEffect bloomExtract = null;
+
+		public PostProcessManager(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager)
+			: base(game)
 		{
+			m_graphicsDevice = graphicsDevice;
+			m_contentManager = contentManager;
+
+			SpriteBatch = new SpriteBatch(graphicsDevice);
+
+			// Look up the resolution and format of our main backbuffer.
+			PresentationParameters pp = graphicsDevice.PresentationParameters;
+
+			ScreenWidth = pp.BackBufferWidth;
+			ScreenHeight = pp.BackBufferHeight;
+
+			SurfaceFormat format = pp.BackBufferFormat;
+
+			// Create a texture for reading back the backbuffer contents.
+			BackBuffer = new Texture2D(graphicsDevice, ScreenWidth, ScreenHeight, 1,
+										  ResourceUsage.ResolveTarget, format,
+										  ResourceManagementMode.Manual);
+			PostBuffer = BackBuffer;
+			//Get w, h
+
+			PostWidth = ScreenWidth / 2;
+			PostHeight = ScreenHeight / 2;
+
+			FullTarget1 = new RenderTarget2D(graphicsDevice, ScreenWidth, ScreenHeight, 1, format);
+			FullTarget2 = new RenderTarget2D(graphicsDevice, ScreenWidth, ScreenHeight, 1, format);
+			//HalfTarget = new RenderTarget2D(graphicsDevice, PostWidth, PostHeight, 1, format);
+
+			CurrentTarget = FullTarget1;
+
+
+			gaussianBlur = new AdvancedGaussianBlur(graphicsDevice, m_contentManager);
+			combine = new AdvancedCombine(graphicsDevice, m_contentManager);
+			toneMapping = new AdvancedToneMapping(graphicsDevice, m_contentManager);
+			radialBlur = new AdvancedRadialBlur(graphicsDevice, m_contentManager);
+
+			bloomExtract = new PostProcessEffect(graphicsDevice, m_contentManager, "Bloom");
 		}
 
-		protected override void LoadGraphicsContent(bool loadAllContent)
-		{
-			base.LoadGraphicsContent(loadAllContent);
+		#region RenderTargets and Present
 
-			m_postProcess = new PostProcess(XeGame.Device);
-			m_postProcess.GaussianBlur.BloomScale = 1f;
-			m_postProcess.GaussianBlur.BlurAmount = 1.0f;
+		public void ResolveBackBuffer()
+		{
+			RenderTarget2D rt = GraphicsDevice.GetRenderTarget(0) as RenderTarget2D;
+
+			if (rt == null)
+			{
+				GraphicsDevice.ResolveBackBuffer(BackBuffer);
+			}
+			else
+			{
+				GraphicsDevice.ResolveRenderTarget(0);
+				BackBuffer = rt.GetTexture();
+			}
+
+			PostBuffer = BackBuffer;
+
+			PostWidth = ScreenWidth;
+			PostHeight = ScreenHeight;
 		}
-		
+
+		private void ResolveRenderTarget()
+		{
+			GraphicsDevice.ResolveRenderTarget(0);
+			PostBuffer = CurrentTarget.GetTexture();
+			GraphicsDevice.SetRenderTarget(0, null);
+		}
+
+		private void SetRenderTarget()
+		{
+			CurrentTarget = CurrentTarget == FullTarget1 ? FullTarget2 : FullTarget1;
+			GraphicsDevice.SetRenderTarget(0, CurrentTarget);
+		}
+
+		public void Present(RenderTarget2D renderTarget2D)
+		{
+			GraphicsDevice.SetRenderTarget(0, renderTarget2D);
+			GraphicsDevice.Clear(Color.Black);
+			SpriteBatch.Begin();
+
+			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
+
+			SpriteBatch.End();
+		}
+
+		#endregion
+
+		#region Generic and Advanced Effects Process
+
+		public void ApplyEffect(PostProcessEffect effect)
+		{
+			SetRenderTarget();
+
+			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+
+			effect.Begin();
+			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
+
+			SpriteBatch.End();
+			effect.End();
+
+			ResolveRenderTarget();
+		}
+
+		public void ApplyDownSample()
+		{
+			PostWidth /= 2;
+			PostHeight /= 2;
+
+			SetRenderTarget();
+
+			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+			//downSample.Begin();
+			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth * 2, PostHeight * 2), Color.White);
+
+			SpriteBatch.End();
+			//downSample.End();
+
+			ResolveRenderTarget();
+		}
+
+		public void ApplyUpSample()
+		{
+			PostWidth *= 2;
+			PostHeight *= 2;
+			SetRenderTarget();
+
+			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+
+			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth / 2, PostHeight / 2), Color.White);
+
+			SpriteBatch.End();
+
+			ResolveRenderTarget();
+		}
+
+		public void ApplyBloomExtract()
+		{
+			SetRenderTarget();
+
+			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+
+			bloomExtract.Begin();
+			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
+
+			SpriteBatch.End();
+			bloomExtract.End();
+
+			ResolveRenderTarget();
+		}
+
+		public void ApplyGaussianBlurV()
+		{
+			SetRenderTarget();
+			gaussianBlur.SetBlurParameters(0, 1.0f / (float)PostHeight);
+			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+
+			gaussianBlur.Begin();
+			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
+
+			SpriteBatch.End();
+			gaussianBlur.End();
+
+			ResolveRenderTarget();
+		}
+
+		public void ApplyGaussianBlurH()
+		{
+			SetRenderTarget();
+			gaussianBlur.SetBlurParameters(1.0f / (float)PostWidth, 0);
+			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+
+			gaussianBlur.Begin();
+			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
+
+			SpriteBatch.End();
+			gaussianBlur.End();
+
+			ResolveRenderTarget();
+		}
+
+		public void CombineWithBackBuffer()
+		{
+			SetRenderTarget();
+			GraphicsDevice.Textures[1] = BackBuffer;
+			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+
+			combine.Begin();
+			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
+
+			SpriteBatch.End();
+			combine.End();
+
+			ResolveRenderTarget();
+		}
+
+		#endregion
+
+		#region Global PostProcessing Application
+
 		/// <summary>
 		/// Apply Post Process effects depending on settings
 		/// </summary>
+		/*
 		public override void  Draw(GameTime gameTime)
 		{
 			if (!IsPostProcessActive)
@@ -93,107 +298,7 @@ namespace Xe.Graphics2D.PostProcess
 			m_postProcess.Present(null);
 
 			base.Draw(gameTime);
-		}
-
-		#region Properties
-
-		public bool IsPostProcessActive
-		{
-			get
-			{
-				return EnableToneMapping ||
-						  EnableMonochrome ||
-						  EnableGaussianBlur ||
-						  EnableColorInverse ||
-						  EnableBloom ||
-						  EnableRadialBlur;
-			}
-		}
-
-		public bool IsColorVariationActive
-		{
-			get
-			{
-				return //EnableColorInverse ||
-						  EnableMonochrome ||
-						  EnableToneMapping;
-			}
-		}
-
-		public bool EnableColorInverse = false;
-
-		public bool EnableMonochrome = false;
-
-		#region Radial Blur
-		public bool EnableRadialBlur = false;
-
-		public float RadialBlurStart
-		{
-			set { m_postProcess.RadialBlur.BlurStart = value; }
-			get { return m_postProcess.RadialBlur.BlurStart; }
-		}
-
-		public float RadialBlurWidth
-		{
-			set { m_postProcess.RadialBlur.BlurWidth = value; }
-			get { return m_postProcess.RadialBlur.BlurWidth; }
-		}
-
-		public Vector2 RadialBlurCenter 
-		{
-			set { m_postProcess.RadialBlur.Center = value; }
-			get { return m_postProcess.RadialBlur.Center; }
-		}
-		#endregion
-		
-		#region Bloom
-		public bool EnableBloom = false;
-
-		public float BloomThresold
-		{
-			set { m_postProcess.BloomExtract.Threshold = value; }
-			get { return m_postProcess.BloomExtract.Threshold; }
-		}
-		#endregion
-
-		#region Gaussian Blur
-		public bool EnableGaussianBlur = false;
-
-		public float GaussianBlurBloomScale
-		{
-			set { m_postProcess.GaussianBlur.BloomScale = value; }
-			get { return m_postProcess.GaussianBlur.BloomScale; }
-		}
-
-		public float GaussianBlurAmount
-		{
-			set { m_postProcess.GaussianBlur.BlurAmount = value; }
-			get { return m_postProcess.GaussianBlur.BlurAmount; }
-		}
-		#endregion
-
-		#region Tone Mapping
-
-		public bool EnableToneMapping = false;
-
-		public float ToneMappingDefog
-		{
-			set { m_postProcess.ToneMapping.DeFog = value; }
-			get { return m_postProcess.ToneMapping.DeFog; }
-		}
-
-		public float ToneMappingExposure
-		{
-			set { m_postProcess.ToneMapping.Exposure = value; }
-			get { return m_postProcess.ToneMapping.Exposure; }
-		}
-
-		public float ToneMappingGamma
-		{
-			set { m_postProcess.ToneMapping.Gamma = value; }
-			get { return m_postProcess.ToneMapping.Gamma; }
-		}
-		#endregion
+		}*/
 		#endregion
 	}
 }

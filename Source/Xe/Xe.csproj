@@ -145,36 +145,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Images\error.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>error</Name>
-    </Content>
-    <Content Include="Content\Images\gui_default.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>gui_default</Name>
-    </Content>
-    <Content Include="Content\Images\gui_Xe.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>gui_Xe</Name>
-    </Content>
-    <Content Include="Content\Images\question.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>question</Name>
-    </Content>
-    <Content Include="Content\Images\warning.png">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>TextureImporter</Importer>
-      <Processor>SpriteTextureProcessor</Processor>
-      <Name>warning</Name>
-    </Content>
     <Content Include="Content\logo.avi">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Name>logo</Name>
@@ -196,11 +166,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>SpriteTextureProcessor</Processor>
       <Name>FireGrade</Name>
-    </Content>
-    <Content Include="Content\XML\gui_Xe.xml">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>gui_Xe</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\XML\Log.xslt">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -475,57 +440,29 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Animation2D</Name>
     </Compile>
-    <Compile Include="Graphics\2D\PostProcess\BloomExtract.cs">
+    <Compile Include="Graphics\2D\PostProcess\AdvancedCombine.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>BloomExtract</Name>
+      <Name>AdvancedCombine</Name>
     </Compile>
-    <Compile Include="Graphics\2D\PostProcess\BrightPass.cs">
+    <Compile Include="Graphics\2D\PostProcess\AdvancedGaussianBlur.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>BrightPass</Name>
+      <Name>AdvancedGaussianBlur</Name>
     </Compile>
-    <Compile Include="Graphics\2D\PostProcess\ColorInverse.cs">
+    <Compile Include="Graphics\2D\PostProcess\PostProcessEffect.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>ColorInverse</Name>
-    </Compile>
-    <Compile Include="Graphics\2D\PostProcess\Combine.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>Combine</Name>
-    </Compile>
-    <Compile Include="Graphics\2D\PostProcess\DepthOfField.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>DepthOfField</Name>
-    </Compile>
-    <Compile Include="Graphics\2D\PostProcess\DownSample.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>DownSample</Name>
-    </Compile>
-    <Compile Include="Graphics\2D\PostProcess\GaussianBlur.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>GaussianBlur</Name>
-    </Compile>
-    <Compile Include="Graphics\2D\PostProcess\Monochrome.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>Monochrome</Name>
-    </Compile>
-    <Compile Include="Graphics\2D\PostProcess\NormalEdgeDetect.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>NormalEdgeDetect</Name>
-    </Compile>
-    <Compile Include="Graphics\2D\PostProcess\PostProcess.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>PostProcess</Name>
+      <Name>PostProcessEffect</Name>
     </Compile>
     <Compile Include="Graphics\2D\PostProcess\PostProcessManager.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>PostProcessManager</Name>
     </Compile>
-    <Compile Include="Graphics\2D\PostProcess\RadialBlur.cs">
+    <Compile Include="Graphics\2D\PostProcess\AdvancedRadialBlur.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>RadialBlur</Name>
+      <Name>AdvancedRadialBlur</Name>
     </Compile>
-    <Compile Include="Graphics\2D\PostProcess\ToneMapping.cs">
+    <Compile Include="Graphics\2D\PostProcess\AdvancedToneMapping.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>ToneMapping</Name>
+      <Name>AdvancedToneMapping</Name>
     </Compile>
     <Compile Include="Graphics\2D\SafeArea.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -615,9 +552,21 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SpriteRenderer</Name>
     </Compile>
+    <Compile Include="Graphics\GUI\SlidePanel.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SlidePanel</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\SliderButton.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SliderButton</Name>
+    </Compile>
     <Compile Include="Graphics\GUI\SliderCombo.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SliderCombo</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\StringSlider.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>StringSlider</Name>
     </Compile>
     <Compile Include="Graphics\GUI\TextBoxText.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -1165,6 +1114,116 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Effects\PostProcess\AdvancedCombine.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>AdvancedCombine</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\AdvancedGaussianBlur.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>AdvancedGaussianBlur</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\AdvancedRadialBlur.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>AdvancedRadialBlur</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\AdvancedToneMapping.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>AdvancedToneMapping</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\Bloom.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Bloom</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\Blur.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Blur</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\Bright.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Bright</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\ColorInverse.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>ColorInverse</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\DepthOfField.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>DepthOfField</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\DownSample.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>DownSample</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\EdgeDetect.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>EdgeDetect</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\Embossed.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Embossed</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\Greyscale.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Greyscale</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\GreyscaleAroundCenter.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>GreyscaleAroundCenter</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\GreyscaleHalfScreen.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>GreyscaleHalfScreen</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\NightTime.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>NightTime</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\Sharpen.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Sharpen</Name>
+    </Content>
+    <Content Include="Content\Effects\PostProcess\UnderWater.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>UnderWater</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Physics\2D\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -1179,9 +1238,6 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <FlavorProperties GUID="{9F340DF3-2AED-4330-AC16-78AC2D9B4738}">
-        <Thumbnail Include="Content\Images\error.png" />
-      </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
 </Project>

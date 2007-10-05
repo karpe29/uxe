@@ -37,24 +37,27 @@ namespace Xe.GUI
     public partial class SlidePanel : UIControl
     {
         #region Members
-        protected MiniButton m_miniButton;
+        protected Button m_button;
 
         protected bool m_activated = false;
+
+		Dock Dock;
+
         #endregion
 
 		public SlidePanel(Game game, IGUIManager guiManager)
             : base(game, guiManager)
         {
-            m_miniButton = new MiniButton(game, guiManager);
-            m_miniButton.Name = "btnOpenClose";
-            m_miniButton.ElementID = "slide";
-            m_miniButton.Click += new ClickHandler(OnOpenCloseClick);
-            m_miniButton.Width = 13;
-            m_miniButton.Height = 25;
+            m_button = new Button(game, guiManager);
+            m_button.Name = "btnOpenClose";
+            m_button.ControlTag = "slide";
+            m_button.Click += new ClickHandler(OnOpenCloseClick);
+            m_button.Width = 13;
+            m_button.Height = 25;
 
-            game.Components.Add(m_miniButton);
+            game.Components.Add(m_button);
 
-            this.Controls.Add(m_miniButton);
+            this.Controls.Add(m_button);
 
             this.Dock = Dock.Right;
         }
@@ -68,13 +71,13 @@ namespace Xe.GUI
             {
                 //this.X = this.GraphicsDevice.Viewport.Width + 1;
 
-                m_miniButton.ElementID = "slide";
+				m_button.ControlTag = "slide";
             }
             else
             {
                 //this.X = this.GraphicsDevice.Viewport.Width - this.Width;
 
-                m_miniButton.ElementID = "slide2";
+				m_button.ControlTag = "slide2";
             }
 
             m_activated = !m_activated;
@@ -90,35 +93,32 @@ namespace Xe.GUI
             base.LoadGraphicsContent(loadAllContent);
 
             try
-            {
+            {/*
                 switch (this.Dock)
                 {
                     case Dock.Left:
                         this.X = -this.Width - 1;
-                        m_miniButton.Parameters.SpriteEffects = SpriteEffects.FlipHorizontally;
+                        m_button.Parameters.SpriteEffects = SpriteEffects.FlipHorizontally;
                         break;
                     case Dock.Right:
                         this.X = this.GraphicsDevice.Viewport.Width + 1;
-                        m_miniButton.Parameters.SpriteEffects = SpriteEffects.None;
+                        m_button.Parameters.SpriteEffects = SpriteEffects.None;
                         break;
                     case Dock.Top:
                         this.Y = -this.Height - 1;
-                        m_miniButton.Parameters.SpriteEffects = SpriteEffects.None;
+                        m_button.Parameters.SpriteEffects = SpriteEffects.None;
                         break;
                     case Dock.Bottom:
                         this.Y = this.GraphicsDevice.Viewport.Height + 1;
-                        m_miniButton.Parameters.SpriteEffects = SpriteEffects.FlipVertically;
+                        m_button.Parameters.SpriteEffects = SpriteEffects.FlipVertically;
                         break;
                     default:
                         this.X = this.GraphicsDevice.Viewport.Width + 1;
-                        m_miniButton.Parameters.SpriteEffects = SpriteEffects.None;
+                        m_button.Parameters.SpriteEffects = SpriteEffects.None;
                         break;
                 }
 
-                m_outRects = m_guiManager.CreateControl("slidepanel.out", new Rectangle(m_absX, m_absY, m_width, m_height));
-                m_overRects = m_guiManager.CreateControl("slidepanel.out", new Rectangle(m_absX, m_absY, m_width, m_height));
-                m_downRects = m_guiManager.CreateControl("slidepanel.out", new Rectangle(m_absX, m_absY, m_width, m_height));
-                m_disabledRects = m_guiManager.CreateControl("slidepanel.disabled", new Rectangle(m_absX, m_absY, m_width, m_height));
+               */
             }
             catch (Exception e)
             {
@@ -134,37 +134,33 @@ namespace Xe.GUI
             if (m_needsUpdate)
             {
                 try
-                {
+                {/*
                     switch (this.Dock)
                     {
                         case Dock.Left:
-                            m_miniButton.X = this.X + this.Width;
-                            m_miniButton.Y = this.Y + 5;
+                            m_button.X = this.X + this.Width;
+                            m_button.Y = this.Y + 5;
                             break;
                         case Dock.Right:
-                            m_miniButton.X = this.X - (m_miniButton.Width);
-                            m_miniButton.Y = this.Y + 5;
+                            m_button.X = this.X - (m_button.Width);
+                            m_button.Y = this.Y + 5;
                             break;
                         case Dock.Top:
-                            m_miniButton.X = this.X + 5;
-                            m_miniButton.Y = this.Y + this.Height;
+                            m_button.X = this.X + 5;
+                            m_button.Y = this.Y + this.Height;
                             //m_miniButton.Y = this.Y + this.Height;
                             //m_miniButton.Parameters.Origin = new Vector2((float)m_miniButton.X, (float)m_miniButton.Y);
                             break;
                         case Dock.Bottom:
-                            m_miniButton.X = this.X + 5;
-                            m_miniButton.Y = this.Y - m_miniButton.Height;
+                            m_button.X = this.X + 5;
+                            m_button.Y = this.Y - m_button.Height;
                             break;
                         default:
-                            m_miniButton.X = this.X - (m_miniButton.Width);
-                            m_miniButton.Y = this.Y + 5;
+                            m_button.X = this.X - (m_button.Width);
+                            m_button.Y = this.Y + 5;
                             break;
                     }
-
-                    m_outRects = m_guiManager.CreateControl("label.out", new Rectangle(m_absX, m_absY, m_width, m_height));
-                    m_overRects = m_guiManager.CreateControl("label.out", new Rectangle(m_absX, m_absY, m_width, m_height));
-                    m_downRects = m_guiManager.CreateControl("label.out", new Rectangle(m_absX, m_absY, m_width, m_height));
-                    m_disabledRects = m_guiManager.CreateControl("label.disabled", new Rectangle(m_absX, m_absY, m_width, m_height));
+					*/
 
                     m_needsUpdate = false;
                 }

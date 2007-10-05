@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Xe.Graphics._3D.Particles
+namespace Xe.Graphics3D.Particles
 {
 	class ParticleSystemManager
 	{
