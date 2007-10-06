@@ -713,10 +713,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>RadioButton</Name>
     </Compile>
-    <Compile Include="Graphics\GUI\Slider.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>Slider</Name>
-    </Compile>
     <Compile Include="Graphics\GUI\TextBox.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>TextBox</Name>
