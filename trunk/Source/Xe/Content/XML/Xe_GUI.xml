@@ -343,7 +343,7 @@
 		</Element>
 
 		<!--Slider Vertical Up and Down Buttons-->
-		<Element TextureID="0" name="sliderBtnUp">
+		<Element TextureID="0" name="sliderUpButton">
 			<Source name="out" style="1quad">
 				<Rectangle>
 					<x>96</x>
@@ -385,7 +385,7 @@
 				</Rectangle>
 			</Source>
 		</Element>
-		<Element TextureID="0" name="sliderBtnDown">
+		<Element TextureID="0" name="sliderDownButton">
 			<Source name="out" style="1quad">
 				<Rectangle>
 					<x>96</x>
@@ -429,7 +429,7 @@
 		</Element>
 
 		<!--Slider Horizontal Up and Down Buttons-->
-		<Element TextureID="0" name="sliderBtnLeft">
+		<Element TextureID="0" name="sliderLeftButton">
 			<Source name="out" style="1quad">
 				<Rectangle>
 					<x>128</x>
@@ -471,7 +471,7 @@
 				</Rectangle>
 			</Source>
 		</Element>
-		<Element TextureID="0" name="sliderBtnRight">
+		<Element TextureID="0" name="sliderRightButton">
 			<Source name="out" style="1quad">
 				<Rectangle>
 					<x>128</x>
@@ -515,7 +515,7 @@
 		</Element>
 
 		<!--Horizontal and Vertical Slider Buttons-->
-		<Element TextureID="0" name="sliderBtnVert">
+		<Element TextureID="0" name="sliderVerticalButton">
 			<Source name="out" style="1quad">
 				<Rectangle>
 					<x>192</x>
@@ -559,7 +559,7 @@
 				</Rectangle>
 			</Source>
 		</Element>
-		<Element TextureID="0" name="sliderBtnHoriz">
+		<Element TextureID="0" name="sliderHorizontalButton">
 			<Source name="out" style="1quad">
 				<Rectangle>
 					<x>202</x>

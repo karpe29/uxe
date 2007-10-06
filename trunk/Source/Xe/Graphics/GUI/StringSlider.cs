@@ -26,8 +26,18 @@ namespace Xe.GUI
 		public StringSlider(Game game, IGUIManager guiManager)
 			: base(game, guiManager)
 		{
-			Button 
+			this.TreeLevel = 0;
+
+
+
 			this.Index = 0;
+		}
+
+		public override void Initialize()
+		{
+			this.ClippingOffset.Width = -100;
+
+			base.Initialize();
 		}
 
 		protected override void OnKeyDown(object sender, KeyEventArgs e)
@@ -121,6 +131,13 @@ namespace Xe.GUI
 		{
 			get { return m_isLoopable; }
 			set { m_isLoopable = value; }
+		}
+
+		public override void Draw(GameTime gameTime)
+		{
+			base.Draw(gameTime);
+
+			//b.Draw(gameTime);
 		}
 	}
 }

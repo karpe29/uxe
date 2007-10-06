@@ -18,7 +18,7 @@ namespace Xe.SpaceRace
 		Button buttonAccept;
 		Label labelPlayer;
 
-		Slider sliderShip;
+		StringSlider sliderShip;
 		SpaceRaceInitDatas m_datas;
 
 		float angle = 0;
@@ -63,7 +63,7 @@ namespace Xe.SpaceRace
 			buttonAccept.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonAccept.Height / 2;
 			buttonAccept.Click += new ClickHandler(buttonAccept_Click);
 			XeGame.GuiManager.Controls.Add(buttonAccept);
-
+			/*
 			sliderShip = new Slider(GameScreenManager.Game, XeGame.GuiManager);
 			sliderShip.Width = (int) ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 4 / 5);
 			sliderShip.Height = 30;
@@ -75,9 +75,9 @@ namespace Xe.SpaceRace
 			sliderShip.Value = 0;
 			sliderShip.ValueChanged += new ValueChangedHandler(sliderShip_ValueChanged);
 			XeGame.GuiManager.Controls.Add(sliderShip);
-
-			m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
-			m_ship.ratioParticles = 2;
+*/
+			//m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
+			//m_ship.ratioParticles = 2;
 
 			ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1.0f, 1, viewDistance * 2.0f);
 		}
@@ -109,15 +109,15 @@ namespace Xe.SpaceRace
 
 		void sliderShip_ValueChanged(object sender, float value)
 		{
-			m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
-			m_ship.ratioParticles = 2;
+			//m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
+			//m_ship.ratioParticles = 2;
 		}
 
 		void buttonAccept_Click(object sender, MouseEventArgs args)
 		{
 			ExitScreen();
 
-			m_datas.ShipTypes.Add(ShipType.Types[(int)sliderShip.Value]);
+			//m_datas.ShipTypes.Add(ShipType.Types[(int)sliderShip.Value]);
 
 			// dernier joueur ?
 			if (m_datas.CurrentPlayerNumber++ < m_datas.TotalPlayerCount)
