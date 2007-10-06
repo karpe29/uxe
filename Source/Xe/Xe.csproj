@@ -492,7 +492,7 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SunFireParticleSystem</Name>
     </Compile>
-    <Compile Include="Graphics\3D\ControlCollection.cs">
+    <Compile Include="Graphics\GUI\Collections\ControlCollection.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ControlCollection</Name>
     </Compile>
