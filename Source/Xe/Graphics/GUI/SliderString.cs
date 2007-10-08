@@ -11,31 +11,75 @@ using Xe.Input;
 
 namespace Xe.GUI
 {
-	public class StringSlider : UIControl
+	public enum SliderType
+	{
+		Vertical,
+		Horizontal
+	}
+
+	public class SliderString : UIControl
 	{
 		private int m_curIndex;
 		private List<string> m_strings = new List<string>();
 
-		private string m_leftButton = "<";
-		private string m_rightButton = ">";
+		SliderType m_type = SliderType.Horizontal;
+
+		private UIControl m_buttonMinus, m_buttonPlus;
 
 		private string m_text = "";
 
 		private bool m_isLoopable = true;
 
-		public StringSlider(Game game, IGUIManager guiManager)
+		public SliderString(Game game, IGUIManager guiManager)
+			: this(game, guiManager, SliderType.Horizontal)
+		{
+		}
+
+		public SliderString(Game game, IGUIManager guiManager, SliderType type)
 			: base(game, guiManager)
 		{
 			this.TreeLevel = 0;
-
-
-
 			this.Index = 0;
+			this.TextAlign = TextAlign.Center;
+
+			this.Width = 52;
+
+			m_type = type;
+
+			if (m_type == SliderType.Vertical)
+			{
+				m_buttonPlus = new SliderUpButton(game, guiManager);
+				m_buttonMinus = new SliderDownButton(game, guiManager);
+			}
+
+			if (m_type == SliderType.Horizontal)
+			{
+				m_buttonPlus = new SliderRightButton(game, guiManager);
+				m_buttonMinus = new SliderLeftButton(game, guiManager);
+			}
+
+			this.m_buttonPlus.Click += new ClickHandler(buttonPlus_Click);
+			this.m_buttonMinus.Click += new ClickHandler(buttonMinus_Click);
+
+			
+		}
+
+		void buttonMinus_Click(object sender, MouseEventArgs e)
+		{
+			//throw new Exception("The method or operation is not implemented.");
+		}
+
+		void buttonPlus_Click(object sender, MouseEventArgs e)
+		{
+			//throw new Exception("The method or operation is not implemented.");
 		}
 
 		public override void Initialize()
 		{
-			this.ClippingOffset.Width = -100;
+			//this.ClippingOffset = new Rect(100,100,100,100);
+
+			this.Controls.Add(m_buttonPlus);
+			this.Controls.Add(m_buttonMinus);
 
 			base.Initialize();
 		}
@@ -93,7 +137,7 @@ namespace Xe.GUI
 			else
 				_text = m_strings[m_curIndex];
 
-			base.Text = String.Format("{0}{1} {2} {3}", m_text, m_leftButton, _text, m_rightButton);
+			base.Text = String.Format("{0}{1}", m_text, _text);
 		}
 
 		public new string Text
@@ -136,8 +180,33 @@ namespace Xe.GUI
 		public override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
+		}
 
-			//b.Draw(gameTime);
+		public override void Update(GameTime gameTime)
+		{
+			bool _needUpdate = m_needsUpdate;
+
+			if (m_needsUpdate)
+			{
+				m_buttonMinus.X = this.X - 37; m_buttonMinus.Y = this.Y;
+				m_buttonPlus.X = this.X + 5; m_buttonPlus.Y = this.Y;
+
+				//ClippingOffset = new Vector4(0, 0, -m_label.Width - 5, 0);
+				//ClippingOffset = Vector4.UnitZ * (-m_label.Width - 5);
+				//this.ClippingOffset.Width = -m_label.Width - 5;
+
+				//m_label.Alpha = this.Alpha;
+			}
+
+			base.Update(gameTime);
+
+			if (_needUpdate)
+			{
+				m_buttonMinus.X = this.X - 37; m_buttonMinus.Y = this.Y;
+				m_buttonPlus.X = this.X + 5; m_buttonPlus.Y = this.Y;
+
+			}
+
 		}
 	}
 }

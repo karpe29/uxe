@@ -18,7 +18,7 @@ namespace Xe.SpaceRace
 		Button buttonAccept;
 		Label labelPlayer;
 
-		StringSlider sliderShip;
+		SliderString sliderShip;
 		SpaceRaceInitDatas m_datas;
 
 		float angle = 0;

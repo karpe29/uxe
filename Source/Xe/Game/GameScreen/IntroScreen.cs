@@ -19,8 +19,10 @@ namespace Xe.GameScreen
 		public IntroScreen(GameScreenManager gameScreenManager)
 			: base(gameScreenManager, true)
 		{
+#if DEBUG
 			// end right now... TODO: not end in demo version
-			//End();
+			End();
+#endif
 
 			this.Initialize();
 

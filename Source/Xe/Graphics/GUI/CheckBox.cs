@@ -31,7 +31,7 @@ namespace Xe.GUI
 			m_label.MouseDown += new MouseDownHandler(Label_MouseDown);
 
 			this.IsTextVisible = false;
-			this.IsFocusable = false;
+			this.IsFocusable = true;
 			this.Width = 32;
 
 			this.Text = "";
@@ -97,6 +97,7 @@ namespace Xe.GUI
 		public override void Update(GameTime gameTime)
 		{
 			bool _needUpdate = m_needsUpdate;
+
 			if (m_needsUpdate)
 			{
 				m_label.X = this.X + 37;
@@ -141,25 +142,7 @@ namespace Xe.GUI
 					ChangeState(UIState.Out);
 			}
 		}
-
-		//public new int Width
-		//{
-		//    get
-		//    {
-		//        return m_width;
-		//    }
-		//    set
-		//    {
-		//        int _width = value;
-
-		//        m_label.Width = _width - 37;
-
-		//        m_width = 32;
-
-		//        //base.Width = _width;
-		//    }
-		//}
-
+				
 		public new string Text
 		{
 			get

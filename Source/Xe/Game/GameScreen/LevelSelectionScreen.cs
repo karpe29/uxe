@@ -19,8 +19,8 @@ namespace Xe.GameScreen
 		Button buttonPlaySpaceRace;
 		Button buttonPlayTimeTime;
 
-		StringSlider sliderLevel;
-		StringSlider sliderPlayerCount;
+		SliderString sliderLevel;
+		SliderString sliderPlayerCount;
 
 
 		public LevelSelectionScreen(GameScreenManager gameScreenManager)
@@ -61,7 +61,7 @@ namespace Xe.GameScreen
 			buttonPlayTimeTime.Click += new ClickHandler(buttonPlayTimeTime_Click);
 			XeGame.GuiManager.Controls.Add(buttonPlayTimeTime);
 
-			sliderLevel = new StringSlider(GameScreenManager.Game, XeGame.GuiManager);
+			sliderLevel = new SliderString(GameScreenManager.Game, XeGame.GuiManager);
 			sliderLevel.Width = (int)((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5);
 			sliderLevel.Height = 30;
 			sliderLevel.X = (int)(buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10));
@@ -73,7 +73,7 @@ namespace Xe.GameScreen
 			//sliderLevel.ValueChanged += new ValueChangedHandler(levelSlider_ValueChanged);
 			XeGame.GuiManager.Controls.Add(sliderLevel);
 
-			sliderPlayerCount = new StringSlider(GameScreenManager.Game, XeGame.GuiManager);
+			sliderPlayerCount = new SliderString(GameScreenManager.Game, XeGame.GuiManager);
 			sliderPlayerCount.Width = (int)((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 4 / 5);
 			sliderPlayerCount.Height = 30;
 			sliderPlayerCount.X = (int)(buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10));
