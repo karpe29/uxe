@@ -88,15 +88,15 @@ namespace Xe.GUI
 		private UIState m_nextState = UIState.Out;  // The next state to apply.
 
 		// Position fields
-		private float m_x = 10;         // Relative X Position
-		private float m_y = 10;         // Relative Y Position
-		private float m_absX = 10;      // Absolute X Position
-		private float m_absY = 10;      // Absolute Y Position
-		protected float m_width = 100;    // Width
-		protected float m_height = 32;    // Height
+		protected float m_x = 10;         // Relative X Position
+		protected float m_y = 10;         // Relative Y Position
+		protected float m_absX = 10;      // Absolute X Position
+		protected float m_absY = 10;      // Absolute Y Position
+		protected float m_width = 32;   // Width
+		protected float m_height = 32;  // Height
 		private float m_lastX = 10;     // Previous X Position
 		private float m_lastY = 10;     // Previous Y Position
-		private float m_lastW = 100;
+		private float m_lastW = 32;
 		private float m_lastH = 32;
 		private Vector2 m_absPosition = new Vector2();
 		private Vector2 m_initialPos = new Vector2();
@@ -104,7 +104,7 @@ namespace Xe.GUI
 
 		// Vector Position & Size
 		private Vector2 m_vecPosition = new Vector2(10, 10);
-		private Vector2 m_vecSize = new Vector2(100, 32);
+		private Vector2 m_vecSize = new Vector2(32, 32);
 
 		// Text to be drawn.
 		private string m_text = "Hello, world.";
@@ -323,7 +323,7 @@ namespace Xe.GUI
 				m_nextState = m_lastState;
 				m_lastState = m_curState;
 				m_curState = UIState.Transitioning;
-				//Console.WriteLine("Going up.");
+				System.Console.WriteLine("Going up.");
 			}
 		}
 
@@ -334,7 +334,7 @@ namespace Xe.GUI
 				m_lastState = m_curState;
 				m_curState = UIState.Transitioning;
 				m_nextState = UIState.Down;
-				//Console.WriteLine("Going down.");
+				System.Console.WriteLine("Going down.");
 
 				if (this.Selected != null)
 					this.Selected.Invoke(this);

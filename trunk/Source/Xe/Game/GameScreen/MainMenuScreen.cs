@@ -62,18 +62,25 @@ namespace Xe.GameScreen
 			XeGame.GuiManager.Controls.Add(buttonQuit);
 
 			SliderString n = new SliderString(gameScreenManager.Game, XeGame.GuiManager, SliderType.Horizontal);
-			n.Text = "Test";
 			n.X = 100;
 			n.Y = 100;
-			//n.Width = 200;
-			n.Height = 50;
+			List<string> l = new List<string>();
+			l.Add("One player 1");
+			l.Add("Two Players 2");
+			l.Add("Three Players 3");
+			n.Strings = l;
+			n.Loopable = true;
+			n.Width = 400;
+			n.Index = 0;
+			//n.IsDraggable = false;
+			//n.Height = 50;
 			XeGame.GuiManager.Controls.Add(n);
 
 			CheckBox c = new CheckBox(gameScreenManager.Game, XeGame.GuiManager);
 			c.Text = "cccc";
 			c.TextAlign = TextAlign.Center;
-			c.X = 300;
-			c.Y = 300;
+			c.X = 100;
+			c.Y = 200;
 			c.Label.Width = 100;
 			//c.Height = 30;
 			XeGame.GuiManager.Controls.Add(c);

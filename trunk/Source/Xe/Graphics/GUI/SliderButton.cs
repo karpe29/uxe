@@ -23,7 +23,7 @@ namespace Xe.GUI
 		{
 			this.ControlTag = "sliderDownButton";
 			this.IsTextVisible = false;
-			this.Width = 32;
+
 		}
 	}
 
@@ -45,6 +45,7 @@ namespace Xe.GUI
 		{
 			this.ControlTag = "sliderLeftButton";
 			this.IsTextVisible = false;
+			this.IsOneQuad = true;
 		}
 	}
 
