@@ -28,6 +28,7 @@ namespace Xe.GUI
 		{
 			m_label = new Label(game, guiManager);
 			m_label.Name = "CB_LABEL";
+			m_label.TextAlign = TextAlign.Center;
 			m_label.MouseDown += new MouseDownHandler(Label_MouseDown);
 
 			this.IsTextVisible = false;

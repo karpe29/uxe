@@ -22,6 +22,9 @@ namespace Xe.GUI
 
 			this.IsFocusable = false;
 			this.IsHoverable = false;
+
+			this.ForeColor = Color.DarkGray;
+			this.ForeColorHover = Color.DimGray;
 		}
 	}
 }

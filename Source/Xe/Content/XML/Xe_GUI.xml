@@ -1,8 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Thrust_GUI>
+<Xe_GUI>
 	<Texture ID="0">Content/Textures/GUI</Texture>
 	<CornerSize>16</CornerSize>
 	<GUI_Elements>
+		<Element TextureID="0"  name="dummy">
+			<Source name="out" style="1quad">
+				<Rectangle>
+					<x>0</x>
+					<y>0</y>
+					<Width>1</Width>
+					<Height>1</Height>
+				</Rectangle>
+			</Source>
+			<Source name="over" style="1quad">
+				<Rectangle>
+					<x>0</x>
+					<y>0</y>
+					<Width>1</Width>
+					<Height>1</Height>
+				</Rectangle>
+			</Source>
+			<Source name="down" style="1quad">
+				<Rectangle>
+					<x>0</x>
+					<y>0</y>
+					<Width>1</Width>
+					<Height>1</Height>
+				</Rectangle>
+			</Source>
+			<Source name="focused" style="1quad">
+				<Rectangle>
+					<x>0</x>
+					<y>0</y>
+					<Width>1</Width>
+					<Height>1</Height>
+				</Rectangle>
+			</Source>
+			<Source name="disabled" style="1quad">
+				<Rectangle>
+					<x>0</x>
+					<y>0</y>
+					<Width>1</Width>
+					<Height>1</Height>
+				</Rectangle>
+			</Source>
+		</Element>
 		<Element TextureID="0"  name="uicontrol">
 			<Source name="out" style="9quad">
 				<Rectangle>
@@ -602,4 +644,4 @@
 			</Source>
 		</Element>
 	</GUI_Elements>
-</Thrust_GUI>
+</Xe_GUI>

@@ -645,7 +645,7 @@ namespace Xe.GUI
 		/// <param name="node">A valid Thrust_GUI XML Node.</param>
 		public void LoadSettings(XmlNode node)
 		{
-			if (node.Name.Equals("Thrust_GUI"))
+			if (node.Name.Equals("Xe_GUI"))
 			{
 				foreach (XmlNode _child in node.ChildNodes)
 				{

@@ -13,18 +13,19 @@ namespace Xe.GUI
 {
 	public enum SliderType
 	{
-		Vertical,
+		Vertical, // disabled atm
 		Horizontal
 	}
 
 	public class SliderString : UIControl
 	{
-		private int m_curIndex;
+		private int m_index;
 		private List<string> m_strings = new List<string>();
 
-		SliderType m_type = SliderType.Horizontal;
+		SliderType m_type;
 
 		private UIControl m_buttonMinus, m_buttonPlus;
+		private Label m_label;
 
 		private string m_text = "";
 
@@ -39,10 +40,18 @@ namespace Xe.GUI
 			: base(game, guiManager)
 		{
 			this.TreeLevel = 0;
-			this.Index = 0;
+			this.m_index = 0;	
 			this.TextAlign = TextAlign.Center;
+			this.IsTextVisible = false;
+			this.ControlTag = "dummy";
 
-			this.Width = 52;
+			this.m_label = new Label(game, guiManager);
+			this.m_label.ControlTag = "button";
+			this.m_label.Name = "SS_LABEL";
+			//this.m_label.Enabled = false;
+			this.m_label.TextAlign = TextAlign.Center;
+			
+			//this.Height = 30;
 
 			m_type = type;
 
@@ -61,41 +70,48 @@ namespace Xe.GUI
 			this.m_buttonPlus.Click += new ClickHandler(buttonPlus_Click);
 			this.m_buttonMinus.Click += new ClickHandler(buttonMinus_Click);
 
-			
-		}
 
-		void buttonMinus_Click(object sender, MouseEventArgs e)
-		{
-			//throw new Exception("The method or operation is not implemented.");
-		}
-
-		void buttonPlus_Click(object sender, MouseEventArgs e)
-		{
-			//throw new Exception("The method or operation is not implemented.");
 		}
 
 		public override void Initialize()
 		{
 			//this.ClippingOffset = new Rect(100,100,100,100);
 
+			this.Controls.Add(m_label);
 			this.Controls.Add(m_buttonPlus);
 			this.Controls.Add(m_buttonMinus);
 
 			base.Initialize();
 		}
 
+		void buttonMinus_Click(object sender, MouseEventArgs e)
+		{
+			if (m_isLoopable && this.Index == 0)
+				this.Index = m_strings.Count - 1;
+			else
+				this.Index--;
+		}
+
+		void buttonPlus_Click(object sender, MouseEventArgs e)
+		{
+			if (m_isLoopable && this.Index == m_strings.Count - 1)
+				this.Index = 0;
+			else
+				this.Index++;
+		}
+
 		protected override void OnKeyDown(object sender, KeyEventArgs e)
 		{
 			base.OnKeyDown(sender, e);
 
-			if (e.Key == Keys.Right)
+			if (e.Key == Keys.Right || e.Key == Keys.Up)
 			{
 				if (m_isLoopable && this.Index == m_strings.Count - 1)
 					this.Index = 0;
 				else
 					this.Index++;
 			}
-			else if (e.Key == Keys.Left)
+			else if (e.Key == Keys.Left || e.Key == Keys.Down)
 			{
 				if (m_isLoopable && this.Index == 0)
 					this.Index = m_strings.Count - 1;
@@ -124,31 +140,20 @@ namespace Xe.GUI
 			}
 		}
 
-		protected override void OnButtonUp(object sender, ButtonEventArgs e)
-		{
-			base.OnButtonUp(sender, e);
-		}
-
 		private void ResetText()
 		{
 			string _text;
-			if (m_curIndex < 0 || m_strings.Count == 0)
-				_text = "";
+			if (m_index < 0 || m_strings.Count == 0)
+				_text = "No Values Set";
 			else
-				_text = m_strings[m_curIndex];
+				_text = m_strings[m_index];
 
-			base.Text = String.Format("{0}{1}", m_text, _text);
+			m_label.Text = _text;//String.Format("{0}{1}", m_text, _text);
 		}
 
 		public new string Text
 		{
-			get { return base.Text; }
-			set
-			{
-				m_text = value;
-
-				ResetText();
-			}
+			get { return m_label.Text; }
 		}
 
 		public List<string> Strings
@@ -159,13 +164,13 @@ namespace Xe.GUI
 
 		public int Index
 		{
-			get { return m_curIndex; }
+			get { return m_index; }
 			set
 			{
 				if (m_strings.Count > 0)
-					m_curIndex = (int)MathHelper.Clamp(value, 0, m_strings.Count - 1);
+					m_index = (int)MathHelper.Clamp(value, 0, m_strings.Count - 1);
 				else
-					m_curIndex = -1;
+					m_index = -1;
 
 				ResetText();
 			}
@@ -188,8 +193,7 @@ namespace Xe.GUI
 
 			if (m_needsUpdate)
 			{
-				m_buttonMinus.X = this.X - 37; m_buttonMinus.Y = this.Y;
-				m_buttonPlus.X = this.X + 5; m_buttonPlus.Y = this.Y;
+				ResetPositions();
 
 				//ClippingOffset = new Vector4(0, 0, -m_label.Width - 5, 0);
 				//ClippingOffset = Vector4.UnitZ * (-m_label.Width - 5);
@@ -202,11 +206,41 @@ namespace Xe.GUI
 
 			if (_needUpdate)
 			{
-				m_buttonMinus.X = this.X - 37; m_buttonMinus.Y = this.Y;
-				m_buttonPlus.X = this.X + 5; m_buttonPlus.Y = this.Y;
-
+				ResetPositions();
 			}
+		}
 
+		private void ResetPositions()
+		{
+			if (m_buttonMinus != null && m_buttonPlus != null)
+			{
+				m_buttonMinus.X = this.X;
+				m_label.X = this.X + m_buttonMinus.Width;
+				m_buttonPlus.X = this.X + m_buttonMinus.Width + m_label.Width;
+
+
+				m_buttonMinus.Y = this.Y;
+				m_label.Y = this.Y;
+				m_buttonPlus.Y = this.Y;
+			}
+		}
+
+		protected override void OnMove(object sender)
+		{
+			base.OnMove(sender);
+
+			ResetPositions();
+		}
+
+		public new float Width
+		{
+			get { return base.Width; }
+			set
+			{
+				base.Width = value;
+
+				m_label.Width = base.Width - m_buttonMinus.Width - m_buttonPlus.Width;
+			}
 		}
 	}
 }
