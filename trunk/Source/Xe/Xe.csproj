@@ -564,9 +564,9 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SliderCombo</Name>
     </Compile>
-    <Compile Include="Graphics\GUI\StringSlider.cs">
+    <Compile Include="Graphics\GUI\SliderString.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>StringSlider</Name>
+      <Name>SliderString</Name>
     </Compile>
     <Compile Include="Graphics\GUI\TextBoxText.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>

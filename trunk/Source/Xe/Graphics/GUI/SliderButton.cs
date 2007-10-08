@@ -8,7 +8,7 @@ namespace Xe.GUI
 {
 	public class SliderUpButton : UIControl
 	{
-		SliderUpButton(Game game, IGUIManager guiManager)
+		public SliderUpButton(Game game, IGUIManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderUpButton";
@@ -18,27 +18,29 @@ namespace Xe.GUI
 
 	public class SliderDownButton : UIControl
 	{
-		SliderDownButton(Game game, IGUIManager guiManager)
+		public SliderDownButton(Game game, IGUIManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderDownButton";
 			this.IsTextVisible = false;
+			this.Width = 32;
 		}
 	}
 
 	public class SliderRightButton : UIControl
 	{
-		SliderRightButton(Game game, IGUIManager guiManager)
+		public SliderRightButton(Game game, IGUIManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderRightButton";
 			this.IsTextVisible = false;
+			this.IsOneQuad = true;
 		}
 	}
 
 	public class SliderLeftButton : UIControl
 	{
-		SliderLeftButton(Game game, IGUIManager guiManager)
+		public SliderLeftButton(Game game, IGUIManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderLeftButton";
@@ -48,7 +50,7 @@ namespace Xe.GUI
 
 	public class SliderVerticalButton : UIControl
 	{
-		SliderVerticalButton(Game game, IGUIManager guiManager)
+		public SliderVerticalButton(Game game, IGUIManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderVerticalButton";
@@ -58,7 +60,7 @@ namespace Xe.GUI
 
 	public class SliderHorizontalButton : UIControl
 	{
-		SliderHorizontalButton(Game game, IGUIManager guiManager)
+		public SliderHorizontalButton(Game game, IGUIManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderHorizontalButton";

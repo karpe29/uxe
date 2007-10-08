@@ -92,8 +92,8 @@ namespace Xe.GUI
 		private float m_y = 10;         // Relative Y Position
 		private float m_absX = 10;      // Absolute X Position
 		private float m_absY = 10;      // Absolute Y Position
-		private float m_width = 100;    // Width
-		private float m_height = 32;    // Height
+		protected float m_width = 100;    // Width
+		protected float m_height = 32;    // Height
 		private float m_lastX = 10;     // Previous X Position
 		private float m_lastY = 10;     // Previous Y Position
 		private float m_lastW = 100;

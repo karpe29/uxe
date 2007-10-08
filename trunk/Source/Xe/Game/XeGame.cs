@@ -26,8 +26,6 @@ namespace Xe
 		public static readonly string FONT_GUI = "BatmanForeverAlternate";
 
 		public static readonly string FONT_DBG = "Perspective Sans";
-
-
 		
 		private static ContentManager s_contentManager;
 		
@@ -107,16 +105,25 @@ namespace Xe
 
 		#endregion 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="percent">percent between 0 and 1</param>
+		/// <returns>percent width of the screen</returns>
 		public static int WitdhPercent(float percent)
 		{
 			return (int) (XeGame.Device.PresentationParameters.BackBufferWidth * MathHelper.Clamp(percent, 0, 1));
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="percent">percent between 0 and 1</param>
+		/// <returns>percent height of the screen</returns>
 		public static int HeightPercent(float percent)
 		{
 			return (int) (XeGame.Device.PresentationParameters.BackBufferHeight * MathHelper.Clamp(percent, 0, 1));
 		}
-
 
 
 		public XeGame()
@@ -161,8 +168,6 @@ namespace Xe
 			s_gameScreenManager.UpdateOrder = 500;
 			s_gameScreenManager.DrawOrder = 500;
 			Components.Add(s_gameScreenManager);
-
-			
 		}
 			
 		protected override void Initialize()
@@ -171,30 +176,20 @@ namespace Xe
 
 			m_guiManager.LoadSettings(@"Content\XML\Xe_GUI.xml");
 
-			m_statScreen = new StatScreen(s_gameScreenManager);
-
-			m_consoleScreen = new ConsoleScreen(s_gameScreenManager);
-
-			m_introScreen = new IntroScreen(s_gameScreenManager);
-
 			s_postProcessManager = new PostProcessManager(this, m_graphics.GraphicsDevice, s_contentManager);
 			s_postProcessManager.UpdateOrder = 10 * 1000;
 			s_postProcessManager.DrawOrder = 10 * 1000;
 			Components.Add(s_postProcessManager);
 
 			base.Initialize();
+
+			m_statScreen = new StatScreen(s_gameScreenManager);
+
+			m_consoleScreen = new ConsoleScreen(s_gameScreenManager);
+
+			m_introScreen = new IntroScreen(s_gameScreenManager);
 		}
 
-		protected override void LoadGraphicsContent(bool loadAllContent)
-		{
-			base.LoadGraphicsContent(loadAllContent);
-
-			if (loadAllContent)
-			{
-			}
-		}
-
-		
 		protected override bool BeginDraw()
 		{
 			m_graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -213,11 +208,6 @@ namespace Xe
 				{
 					this.m_graphics.ToggleFullScreen();
 				}
-		}
-
-		protected override void Draw(GameTime gameTime)
-		{
-			base.Draw(gameTime);
 		}
 	}
 }

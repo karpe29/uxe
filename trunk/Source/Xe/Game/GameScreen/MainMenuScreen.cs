@@ -38,8 +38,8 @@ namespace Xe.GameScreen
 			buttonNewGame.IsDraggable = false;
 			buttonNewGame.Width = 120;
 			buttonNewGame.Height = 30;
-			buttonNewGame.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - buttonNewGame.Width / 2;
-			buttonNewGame.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonNewGame.Height / 2;
+			buttonNewGame.X = XeGame.WitdhPercent(0.25f) - buttonNewGame.Width / 2;
+			buttonNewGame.Y = XeGame.HeightPercent(0.75f) - buttonNewGame.Height / 2;
 			buttonNewGame.Click += new ClickHandler(buttonNewGame_Click);
 			XeGame.GuiManager.Controls.Add(buttonNewGame);
 
@@ -47,8 +47,8 @@ namespace Xe.GameScreen
 			buttonOptions.Text = "Options";
 			buttonOptions.Width = 120;
 			buttonOptions.Height = 30;
-			buttonOptions.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 2 / 4 - buttonOptions.Width / 2;
-			buttonOptions.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonOptions.Height / 2;
+			buttonOptions.X = XeGame.WitdhPercent(0.5f) - buttonOptions.Width / 2;
+			buttonOptions.Y = XeGame.HeightPercent(0.75f) - buttonOptions.Height / 2;
 			buttonOptions.Click += new ClickHandler(buttonOptions_Click);
 			XeGame.GuiManager.Controls.Add(buttonOptions);
 
@@ -56,10 +56,28 @@ namespace Xe.GameScreen
 			buttonQuit.Text = "Quit";
 			buttonQuit.Width = 120;
 			buttonQuit.Height = 30;
-			buttonQuit.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth * 3 / 4 - buttonQuit.Width / 2;
-			buttonQuit.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonQuit.Height / 2;
+			buttonQuit.X = XeGame.WitdhPercent(0.75f) - buttonQuit.Width / 2;
+			buttonQuit.Y = XeGame.HeightPercent(0.75f) - buttonQuit.Height / 2;
 			buttonQuit.Click += new ClickHandler(buttonQuit_Click);
 			XeGame.GuiManager.Controls.Add(buttonQuit);
+
+			SliderString n = new SliderString(gameScreenManager.Game, XeGame.GuiManager, SliderType.Horizontal);
+			n.Text = "Test";
+			n.X = 100;
+			n.Y = 100;
+			//n.Width = 200;
+			n.Height = 50;
+			XeGame.GuiManager.Controls.Add(n);
+
+			CheckBox c = new CheckBox(gameScreenManager.Game, XeGame.GuiManager);
+			c.Text = "cccc";
+			c.TextAlign = TextAlign.Center;
+			c.X = 300;
+			c.Y = 300;
+			c.Label.Width = 100;
+			//c.Height = 30;
+			XeGame.GuiManager.Controls.Add(c);
+
 		}
 
 		void buttonOptions_Click(object sender, MouseEventArgs args)
