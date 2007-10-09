@@ -18,6 +18,18 @@ namespace Xe.GameScreen
 		Effect myEffect;
 		Texture2D myTexture;
 
+		private static int nb_cotes = 72;
+		private double ratio;
+		private List<tube> les_tubes = new List<tube>();
+		private List<cercle> les_cercles = new List<cercle>();
+		private Random aleatoire = new Random();
+		private Vector3 pos;
+		private Matrix orient;
+		private int count = 0;
+		private double courbe = 0, inc_courbe = 0.0001;
+		private Color[] coul = new Color[] { Color.DarkBlue, Color.Black };
+
+
 		//Position of the model in world space
 		Vector3 modelPosition = new Vector3(0, 0, 0);
 		float modelRotation = 0.0f;
@@ -62,6 +74,18 @@ namespace Xe.GameScreen
 		public MainBackgroundScreen(GameScreenManager gameScreenManager)
 			: base(gameScreenManager, true)
 		{
+			double rayon;
+			orient = Matrix.Identity;
+			for (int i = 0; i <= 200; i++)
+			{
+				pos = new Vector3(i * 2, 0, 0);
+				rayon = 50 - 10 * Math.Log((double)i / 5 + 1);
+				les_cercles.Add(new cercle(XeGame.Device, nb_cotes, rayon, pos, orient, coul[i % 2]));
+			}
+			for (int i = 0; i < 200; i++)
+			{
+				les_tubes.Add(new tube(XeGame.Device, nb_cotes, les_cercles[i], les_cercles[i + 1]));
+			}
 		}
 
 		public void AddEffectToModel(Model thisModel, Effect thisEffect)
@@ -128,6 +152,14 @@ namespace Xe.GameScreen
 			Matrix[] transforms = new Matrix[myModel.Bones.Count];
 			myModel.CopyAbsoluteBoneTransformsTo(transforms);
 
+
+
+				
+
+
+
+
+
 			//myEffect.Parameters
 
 			//myEffect.Parameters["World"].SetValue(Matrix.Identity);
@@ -168,6 +200,11 @@ namespace Xe.GameScreen
 				{
 					pass.Begin();
 					//Draw the mesh, will use the effects set above.
+					for (int k = 0; k < les_tubes.Count; k++)
+					{
+						les_tubes[k].draw();
+					}
+
 					foreach (ModelMeshPart part in myModel.Meshes[i].MeshParts)
 					{
 						this.GraphicsDevice.VertexDeclaration = part.VertexDeclaration;
@@ -186,66 +223,159 @@ namespace Xe.GameScreen
 
 		public override void Update(GameTime gameTime)
 		{
-			//base.Update(gameTime);
-
-			//modelRotation += (float)gameTime.ElapsedGameTime.TotalMilliseconds * (MathHelper.ToRadians(0.02f) * r.Next(1, 2));
-
-			//float f = 0.002f;
-			/*
-			float f = 5f;
-
-			KeyboardState k = Keyboard.GetState();
+			long iTime = (long)(gameTime.ElapsedGameTime.Milliseconds);
 			
-			if (k.IsKeyDown(Keys.Right))
-				cameraPosition.X += f;
-			if (k.IsKeyDown(Keys.Left))
-				cameraPosition.X -= f;
-			if (k.IsKeyDown(Keys.Up))
-				cameraPosition.Z += f;
-			if (k.IsKeyDown(Keys.Down))
-				cameraPosition.Z -= f;
-			if (k.IsKeyDown(Keys.PageUp))
-				cameraPosition.Y += f;
-			if (k.IsKeyDown(Keys.PageDown))
-				cameraPosition.Y -= f;
+			/*if (Keyboard.GetState()[Keys.Up] == KeyState.Down)
+			{
+				Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(100f, 500f, 0f), new Vector3(100f, 0f, 0f), new Vector3(1f, 0, 0));
+				myEffect.Parameters["xView"].SetValue(viewMatrix);
 
 
-			if (k.IsKeyDown(Keys.NumPad6))
-				cameraTagetPosition.X += f;
-			if (k.IsKeyDown(Keys.NumPad4))
-				cameraTagetPosition.X -= f;
-			if (k.IsKeyDown(Keys.NumPad8))
-				cameraTagetPosition.Z += f;
-			if (k.IsKeyDown(Keys.NumPad2))
-				cameraTagetPosition.Z -= f;
-			if (k.IsKeyDown(Keys.NumPad9))
-				cameraTagetPosition.Y += f;
-			if (k.IsKeyDown(Keys.NumPad3))
-				cameraTagetPosition.Y -= f;
-			
-			/*
-			if (k.IsKeyDown(Keys.Up))
-				Horizontal += f;
+			}
+			if (Keyboard.GetState()[Keys.Down] == KeyState.Down)
+			{
+				Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(-75f, 10f, -10f), new Vector3(100f, 0f, 0f), new Vector3(0, 1f, 0));
+				myEffect.Parameters["xView"].SetValue(viewMatrix);
+			}*/
 
-			if (k.IsKeyDown(Keys.Down))
-				Horizontal -= f;
+			courbe += inc_courbe;
+			if (Math.Abs(courbe) >= 0.005) inc_courbe = -inc_courbe;
+			Matrix rot;
+			Vector3 pos = new Vector3(0, 0, 0);
+			for (int i = 0; i < les_cercles.Count; i++)
+			{
+				//les_cercles[i].vertices[(count + i) % nb_cotes].Color = Color.Black;
+				//les_cercles[i].vertices[(count + 3 + i) % nb_cotes].Color = Color.LightGreen;
 
-			if (k.IsKeyDown(Keys.Right))
-				Vertical -= f;
+				rot = Matrix.CreateRotationY((float)(i * courbe));
+				les_cercles[i].deplace(pos, rot);
+				pos = pos + Vector3.Transform(new Vector3(2, 0, 0), rot);
 
-			if (k.IsKeyDown(Keys.Left))
-				Vertical += f;
+			}
+			count++;
+			count %= nb_cotes;
 
-			if (k.IsKeyDown(Keys.Add))
-				TimeScale += f;
 
-			if (k.IsKeyDown(Keys.Subtract))
-				TimeScale -= f;
+	
 
-			Console.WriteLine("TimeScale  : " + TimeScale);
-			Console.WriteLine("Horizontal : " + Horizontal);
-			Console.WriteLine("Vertical   : " + Vertical);
-			*/
+
+			//la transformatio en elle même
+
+			base.Update(gameTime);
 		}
+
+		public class cercle
+		{
+			private GraphicsDevice graph;
+			public int nb_cotes;
+			public double rayon;
+			public VertexPositionColor[] vertices;
+			public Vector3 pos;
+			public Matrix orient;
+			public Color couleur;
+
+			public cercle(GraphicsDevice l_graph, int l_nb_cotes, double l_rayon, Vector3 l_pos, Matrix l_orient, Color l_couleur)
+			{
+				graph = l_graph;
+				nb_cotes = l_nb_cotes;
+				rayon = l_rayon;
+				pos = l_pos;
+				orient = l_orient;
+				couleur = l_couleur;
+
+
+				vertices = new VertexPositionColor[nb_cotes];
+				deplace();
+				for (int j = 0; j < nb_cotes; j++)
+				{
+					vertices[j].Color = couleur;
+				}
+			}
+
+			public void deplace(Vector3 l_pos, Matrix l_orient)
+			{
+				pos = l_pos;
+				orient = l_orient;
+				deplace();
+			}
+
+			public void deplace()
+			{
+				Vector3 point_cercle;
+				double angle;
+
+				for (int j = 0; j < nb_cotes; j++)
+				{
+					angle = Math.PI * 2 * j / nb_cotes;
+					point_cercle.X = (float)0;
+					point_cercle.Y = (float)(rayon * Math.Sin(angle));
+					point_cercle.Z = (float)(rayon * Math.Cos(angle));
+					vertices[j].Position = pos + Vector3.Transform(point_cercle, orient);
+				}
+			}
+
+
+
+		}
+
+
+		public class tube
+		{
+			private GraphicsDevice graph;
+			private IndexBuffer indexBuffer;
+			private VertexBuffer vertexBuffer;
+			private int nb_cotes;
+			public cercle cercle_debut, cercle_fin;
+			public VertexPositionColor[] vertices;
+
+
+
+			public tube(GraphicsDevice l_graph, int l_nb_cotes, cercle l_cercle_debut, cercle l_cercle_fin)
+			{
+				graph = l_graph;
+				nb_cotes = l_nb_cotes;
+				cercle_debut = l_cercle_debut;
+				cercle_fin = l_cercle_fin;
+				short[] indices = new short[nb_cotes * 6];
+				for (int i = 0; i < nb_cotes; i++)
+				{
+					indices[i * 6] = indices[i * 6 + 3] = (short)(i);
+					indices[i * 6 + 1] = (short)((i + 1) % nb_cotes);
+					indices[i * 6 + 2] = indices[i * 6 + 5] = (short)(nb_cotes + (i + 1) % nb_cotes);
+					indices[i * 6 + 4] = (short)(nb_cotes + i);
+				}
+
+				this.indexBuffer = new IndexBuffer(graph, typeof(short), indices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
+				this.indexBuffer.SetData(indices);
+
+				vertices = new VertexPositionColor[nb_cotes * 2];
+				this.vertexBuffer = new VertexBuffer(graph, typeof(VertexPositionColor), vertices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
+
+
+
+			}
+
+
+			public void draw()
+			{
+				//current_couleur=(current_couleur+1)%100;
+				/*for (int j = 0; j < nb_cotes; j++)
+				{
+					vertices[j].Color = coul;
+					vertices[j + nb_cotes].Color = coul;
+				}*/
+
+				cercle_debut.vertices.CopyTo(vertices, 0);
+				cercle_fin.vertices.CopyTo(vertices, nb_cotes);
+				this.vertexBuffer.SetData(vertices);
+
+				graph.Vertices[0].SetSource(vertexBuffer, 0, VertexPositionColor.SizeInBytes);
+				graph.Indices = this.indexBuffer;
+				graph.VertexDeclaration = new VertexDeclaration(graph, VertexPositionColor.VertexElements);
+				graph.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, nb_cotes * 2, 0, nb_cotes * 2);
+			}
+
+		}
+
 	}
 }

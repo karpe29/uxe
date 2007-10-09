@@ -203,7 +203,7 @@ namespace Xe.GameScreen
 		{
 			base.Update(gameTime);
 
-			modelRotation += (float)gameTime.ElapsedGameTime.TotalMilliseconds * MathHelper.ToRadians(0.005f);
+			modelRotation += (float)gameTime.ElapsedGameTime.TotalMilliseconds * MathHelper.ToRadians(0.01f);
 
 			//float f = 0.002f;
 			/*

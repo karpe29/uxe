@@ -20,7 +20,7 @@ namespace Xe.GameScreen
 		Xe.GUI.Button buttonOptions;
 		Xe.GUI.Button buttonQuit;
 
-		public static Type BackgroundScreenType = typeof(MainBackgroundScreen2);
+		public static Type BackgroundScreenType = typeof(MainBackgroundScreen);
 
 		public MainMenuScreen(GameScreenManager gameScreenManager)
 			: base(gameScreenManager, false)

@@ -1220,6 +1220,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Textures\wedge_p1_diff_v1.tga">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>wedge_p1_diff_v1</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Physics\2D\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
