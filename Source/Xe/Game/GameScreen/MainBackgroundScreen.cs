@@ -75,7 +75,7 @@ namespace Xe.GameScreen
 			: base(gameScreenManager, true)
 		{
 			double rayon;
-			orient = Matrix.Identity;
+			orient =  Matrix.CreateRotationY(MathHelper.PiOver2);
 			for (int i = 0; i <= 200; i++)
 			{
 				pos = new Vector3(i * 2, 0, 0);
@@ -248,7 +248,7 @@ namespace Xe.GameScreen
 				//les_cercles[i].vertices[(count + 3 + i) % nb_cotes].Color = Color.LightGreen;
 
 				rot = Matrix.CreateRotationY((float)(i * courbe));
-				les_cercles[i].deplace(pos, rot);
+				//les_cercles[i].deplace(pos, rot);
 				pos = pos + Vector3.Transform(new Vector3(2, 0, 0), rot);
 
 			}
