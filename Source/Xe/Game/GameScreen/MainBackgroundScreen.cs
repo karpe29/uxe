@@ -14,7 +14,7 @@ namespace Xe.GameScreen
 {
 	class MainBackgroundScreen : IGameScreen
 	{
-		Model myModel;
+		//Model myModel;
 		Effect myEffect;
 		Texture2D myTexture;
 
@@ -27,7 +27,7 @@ namespace Xe.GameScreen
 		private Matrix orient;
 		private int count = 0;
 		private double courbe = 0, inc_courbe = 0.0001;
-		private Color[] coul = new Color[] { Color.DarkBlue, Color.Black };
+		private Color[] coul = new Color[] { Color.Blue, Color.Red };
 
 
 		//Position of the model in world space
@@ -105,23 +105,31 @@ namespace Xe.GameScreen
 		{
 			base.LoadGraphicsContent(loadAllContent);
 
-			myModel = XeGame.ContentManager.Load<Model>(@"Content\Models\MenuTunnel");
+			//myModel = XeGame.ContentManager.Load<Model>(@"Content\Models\MenuTunnel");
+			
+			myEffect = new BasicEffect(XeGame.Device,null);//XeGame.ContentManager.Load<Effect>(@"Content\Effects\MrWiggle");
+			/*((BasicEffect)myEffect).LightingEnabled = true;
+			((BasicEffect)myEffect).DirectionalLight0.Enabled = true;
+			((BasicEffect)myEffect).DirectionalLight0.DiffuseColor = Vector3.One;
+			((BasicEffect)myEffect).DirectionalLight0.Direction = Vector3.Normalize(new Vector3(1.0f, -1.0f, -1.0f));
+			((BasicEffect)myEffect).DirectionalLight0.SpecularColor = Vector3.One;
 
-			myEffect = XeGame.ContentManager.Load<Effect>(@"Content\Effects\MrWiggle");
-			myEffect.Parameters["TimeScale"].SetValue(TimeScale);
+			/*myEffect.Parameters["TimeScale"].SetValue(TimeScale);
 			myEffect.Parameters["Horizontal"].SetValue(Horizontal);
 			myEffect.Parameters["Vertical"].SetValue(Vertical);
 			myEffect.Parameters["colorTexture"].SetValue(myTexture);
 			myEffect.CurrentTechnique = myEffect.Techniques["Textured"];
 			foreach (EffectParameter p in myEffect.Parameters)
 				Console.WriteLine(p.Name);
-
+			*/
 			myTexture = XeGame.ContentManager.Load<Texture2D>(@"Content\Textures\wedge_p1_diff_v1");
 
 			//Aspect ratio to use for the projection matrix
 			aspectRatio = aspectRatio = (float)this.GraphicsDevice.PresentationParameters.BackBufferWidth / (float)this.GraphicsDevice.PresentationParameters.BackBufferHeight;
 
-			ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 500000.0f);
+			((BasicEffect)myEffect).World = Matrix.Identity;
+			((BasicEffect)myEffect).View = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
+			((BasicEffect)myEffect).Projection= Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 500000.0f);
 		}
 
 		#region IGameScreen Members
@@ -136,7 +144,7 @@ namespace Xe.GameScreen
 		{
 			//base.Draw(gameTime);
 
-			XeGame.Stats.AddModelPolygonsCount(myModel);
+			//XeGame.Stats.AddModelPolygonsCount(myModel);
 
 			this.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
 			this.GraphicsDevice.RenderState.TwoSidedStencilMode = true;
@@ -149,8 +157,8 @@ namespace Xe.GameScreen
 			this.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
 
 			//Copy any parent transforms
-			Matrix[] transforms = new Matrix[myModel.Bones.Count];
-			myModel.CopyAbsoluteBoneTransformsTo(transforms);
+			//Matrix[] transforms = new Matrix[myModel.Bones.Count];
+			//myModel.CopyAbsoluteBoneTransformsTo(transforms);
 
 
 
@@ -168,12 +176,12 @@ namespace Xe.GameScreen
 
 
 			//Draw the model, a model can have multiple meshes, so loop
-			for (int i = 0; i < myModel.Meshes.Count; i++)
+			/*for (int i = 0; i < myModel.Meshes.Count; i++)
 			{
 				//This is where the mesh orientation is set, as well as our camera and projection
 				for (int j = 0; j < myModel.Meshes[i].Effects.Count; j++)
 				{
-					(myModel.Meshes[i].Effects[j] as BasicEffect).EnableDefaultLighting();
+					//(myModel.Meshes[i].Effects[j] as BasicEffect).EnableDefaultLighting();
 					(myModel.Meshes[i].Effects[j] as BasicEffect).World =
 						transforms[myModel.Meshes[i].ParentBone.Index]
 						* Matrix.CreateRotationY(modelRotation)
@@ -183,42 +191,47 @@ namespace Xe.GameScreen
 					(myModel.Meshes[i].Effects[j] as BasicEffect).Projection = ProjectionMatrix;
 
 
-					myEffect.Parameters["Timer"].SetValue((float)gameTime.TotalGameTime.TotalSeconds);
+					//myEffect.Parameters["Timer"].SetValue((float)gameTime.TotalGameTime.TotalSeconds);
 					/*
 							myEffect.Parameters["TimeScale"].SetValue(TimeScale);
 							myEffect.Parameters["Horizontal"].SetValue(Horizontal);
 							myEffect.Parameters["Vertical"].SetValue(Vertical);
-					*/
-					myEffect.Parameters["World"].SetValue(transforms[myModel.Meshes[i].ParentBone.Index]);
-					myEffect.Parameters["WorldIT"].SetValue(Matrix.Invert(Matrix.Transpose(transforms[myModel.Meshes[i].ParentBone.Index])));
-					myEffect.Parameters["WorldViewProj"].SetValue(transforms[myModel.Meshes[i].ParentBone.Index] * ViewMatrix * ProjectionMatrix);
+					
+
+
 				}
 
-				myEffect.Begin();
+		
+				((BasicEffect)myEffect).World = Matrix.Identity;
+				((BasicEffect)myEffect).View = ViewMatrix;
+				((BasicEffect)myEffect).Projection = projectionMatrix;
 
+			*/
+				myEffect.Begin();
+		
 				foreach (EffectPass pass in myEffect.CurrentTechnique.Passes)
 				{
 					pass.Begin();
-					//Draw the mesh, will use the effects set above.
+					//Draw the mesh, will use the effects set above.*/
 					for (int k = 0; k < les_tubes.Count; k++)
 					{
 						les_tubes[k].draw();
 					}
 
-					foreach (ModelMeshPart part in myModel.Meshes[i].MeshParts)
+					/*foreach (ModelMeshPart part in myModel.Meshes[i].MeshParts)
 					{
 						this.GraphicsDevice.VertexDeclaration = part.VertexDeclaration;
 						this.GraphicsDevice.Vertices[0].SetSource(myModel.Meshes[i].VertexBuffer, part.StreamOffset, part.VertexStride);
 						this.GraphicsDevice.Indices = myModel.Meshes[i].IndexBuffer;
 						this.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.BaseVertex, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
 					}
-					//myModel.Meshes[i].Draw();
+					//myModel.Meshes[i].Draw();*/
 					pass.End();
 				}
 
 				myEffect.End();
-
-			}
+			
+			
 		}
 
 		public override void Update(GameTime gameTime)
@@ -243,8 +256,8 @@ namespace Xe.GameScreen
 			//if (Math.Abs(courbe) >= 0.005) inc_courbe = -inc_courbe;
 			Matrix rot;
 			courbe += time * 0.003;
-			Vector3 pos = new Vector3(0, 0, 0),
-				rot_axis = Vector3.Transform(Vector3.Up, Matrix.CreateRotationX((float)courbe))				;
+			courbe %= MathHelper.TwoPi;
+			Vector3 pos = new Vector3(0, 0, 0),rot_axis;
 
 			for (int i = 0; i < les_cercles.Count; i++)
 			{
@@ -252,6 +265,7 @@ namespace Xe.GameScreen
 				//les_cercles[i].vertices[(count + 3 + i) % nb_cotes].Color = Color.LightGreen;
 
 				//rot = Matrix.CreateRotationY((float)( i * courbe));
+				rot_axis = Vector3.Transform(Vector3.Up, Matrix.CreateRotationX((float) (courbe + i * 0.01))) ;
 				rot = Matrix.CreateFromAxisAngle(rot_axis, (float)(i * 0.004));
 				les_cercles[i].deplace(pos, rot);
 				pos = pos + Vector3.Transform(new Vector3(2, 0, 0), rot);
@@ -344,9 +358,9 @@ namespace Xe.GameScreen
 				short[] indices = new short[nb_cotes * 6];
 				for (int i = 0; i < nb_cotes; i++)
 				{
-					indices[i * 6] = indices[i * 6 + 3] = (short)(i);
+					indices[i * 6+2] = indices[i * 6 + 3] = (short)(i);
 					indices[i * 6 + 1] = (short)((i + 1) % nb_cotes);
-					indices[i * 6 + 2] = indices[i * 6 + 5] = (short)(nb_cotes + (i + 1) % nb_cotes);
+					indices[i * 6] = indices[i * 6 + 5] = (short)(nb_cotes + (i + 1) % nb_cotes);
 					indices[i * 6 + 4] = (short)(nb_cotes + i);
 				}
 
