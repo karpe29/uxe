@@ -41,7 +41,9 @@ namespace Xe.GUI
 
 		public override void Initialize()
 		{
-			this.ClippingOffset.Width = -m_label.Width - 5;
+			Rectangle tempRectangle = this.ClippingOffset;
+			tempRectangle.Width = (int)-m_label.Width - 5;
+			this.ClippingOffset = tempRectangle;
 			this.Controls.Add(m_label);
 
 			base.Initialize();
@@ -107,7 +109,9 @@ namespace Xe.GUI
 
 				//ClippingOffset = new Vector4(0, 0, -m_label.Width - 5, 0);
 				//ClippingOffset = Vector4.UnitZ * (-m_label.Width - 5);
-				this.ClippingOffset.Width = -m_label.Width - 5;
+				Rectangle tempRect = this.ClippingOffset;
+				tempRect.Width = (int)-m_label.Width - 5; ;
+				this.ClippingOffset = tempRect;
 
 				//m_label.Alpha = this.Alpha;
 			}

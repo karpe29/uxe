@@ -48,9 +48,9 @@ namespace Xe.GUI
 		// State Possibilites
 		private bool m_isTabable = true;        // Whether or not the control can be tabbed to.
 		private bool m_isHoverable = true;      // Whether or not the control can be hovered over.
-		private bool m_isDraggable = true;      // Whether or not the control can be dragged.
+		private bool m_isDraggable = false;      // Whether or not the control can be dragged.
 		private bool m_isDragging = false;      // Whether or not the control is being dragged.
-		private bool m_isSizeable = true;       // Whether or not the control can be resized.
+		private bool m_isSizeable = false;       // Whether or not the control can be resized.
 		private bool m_isSnapable = false;      // Whether or not the control snaps to the grid.
 		private bool m_isTextVisible = true;    // Whether or not the text is drawn
 		private bool m_isFocusable = true;      // Whether or not the control can be given focus.
@@ -114,6 +114,9 @@ namespace Xe.GUI
 
 		// Text alignment
 		private TextAlign m_textAlign = TextAlign.Left;
+		private TextAlignVertical m_textAlignVertical = TextAlignVertical.Top;
+		private BreakStyle m_breakStyle = BreakStyle.Word;
+
 
 		// Color of the text
 		private Color m_foreColor = Color.White;        // Base
@@ -134,7 +137,7 @@ namespace Xe.GUI
 		// Offsets
 		private Vector2 m_offset = new Vector2(0, 0);       // Offset vector used for resizing and dragging.
 		protected Vector2 m_textOffset = new Vector2(0, 0);   // Offset vector used for the text rendering
-		protected Rect m_viewportOffset = new Rect(0, 0, 0, 0); // Offset vector used for resizing the viewport
+		protected Rectangle m_viewportOffset = new Rectangle(0, 0, 0, 0); // Offset vector used for resizing the viewport
 
 		// Clipping Viewport
 		private Viewport m_viewport = new Viewport();
@@ -730,10 +733,28 @@ namespace Xe.GUI
 
 			if (m_isTextVisible)
 			{
+				//Vector2 tempVector = new Vector2(m_vecPosition.X + this.GUIManager.CornerSize/2, m_vecPosition.Y + this.GUIManager.CornerSize/2);
+				//Vector2 tempVectorSize = new Vector2(m_vecSize.X - this.GUIManager.CornerSize / 2, m_vecSize.Y - this.GUIManager.CornerSize / 2);
+				//Rectangle tempRect = new Rectangle((int)tempVector.X, (int)tempVector.Y, (int)tempVectorSize.X, (int)tempVectorSize.Y);
+				
+				Rectangle tempRect = new Rectangle((int)m_vecPosition.X, (int)m_vecPosition.Y, (int)m_vecSize.X, (int)m_vecSize.Y);
+
+				if (m_vecSize.X >= 3 * GUIManager.CornerSize)
+				{
+					tempRect.X = (int)m_vecPosition.X + this.GUIManager.CornerSize / 2;
+					tempRect.Width = (int)m_vecSize.X - this.GUIManager.CornerSize / 2;
+				}
+
+				if (m_vecSize.Y >= 3 * GUIManager.CornerSize)
+				{
+					tempRect.Y = (int)m_vecPosition.Y + this.GUIManager.CornerSize / 2;
+					tempRect.Height = (int)m_vecSize.Y - this.GUIManager.CornerSize / 2;
+				}
+
 				if (m_curState == UIState.Over)
-					m_font2d.DrawTextBox(m_guiManager.FontName, m_text, m_textAlign, m_vecPosition, m_vecSize, m_foreColorHover);
+					m_font2d.DrawTextBox(m_guiManager.FontName, m_text, m_textAlign, m_textAlignVertical, m_breakStyle, tempRect, GUIManager.CornerSize, m_foreColorHover);
 				else
-					m_font2d.DrawTextBox(m_guiManager.FontName, m_text, m_textAlign, m_vecPosition, m_vecSize, m_foreColor);
+					m_font2d.DrawTextBox(m_guiManager.FontName, m_text, m_textAlign, m_textAlignVertical, m_breakStyle, tempRect, GUIManager.CornerSize, m_foreColor);
 			}
 		}
 
@@ -1400,6 +1421,18 @@ namespace Xe.GUI
 			set { m_textAlign = value; }
 		}
 
+		public TextAlignVertical TextAlignVertical
+		{
+			get { return m_textAlignVertical; }
+			set { m_textAlignVertical = value; }
+		}
+
+		public BreakStyle BreakStyle
+		{
+			get { return m_breakStyle; }
+			set { m_breakStyle = value; }
+		}
+
 		/// <summary>
 		/// Gets or Sets the associated source rectangle
 		/// tag.
@@ -1520,7 +1553,7 @@ namespace Xe.GUI
 		/// controls. For instance the value (10,10,10,10) will
 		/// bring the clipping viewport in by 10 pixels on each side.
 		/// </summary>
-		public Rect ClippingOffset
+		public Rectangle ClippingOffset
 		{
 			get { return m_viewportOffset; }
 			set

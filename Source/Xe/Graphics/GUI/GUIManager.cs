@@ -19,7 +19,9 @@ namespace Xe.GUI
 	public partial class GUIManager<T> : Microsoft.Xna.Framework.DrawableGameComponent, IGUIManager where T : QuadRenderer, new()
 	{
 		#region Static Members
-		private static int m_cornerSize = 5;
+		
+		private int m_cornerSize = 5;
+
 		private static float m_alphaFadeSpeed = 0.01f;
 		private static int m_globalSnapValue = 5;
 		private static bool m_globalSnap = false;
@@ -57,7 +59,7 @@ namespace Xe.GUI
 		/// <summary>
 		/// Gets or Sets the GUI's corner size.
 		/// </summary>
-		public static int CornerSize
+		public int CornerSize
 		{
 			get { return m_cornerSize; }
 			set { m_cornerSize = value; }
@@ -806,6 +808,8 @@ namespace Xe.GUI
 		IEbiService Ebi { get; set; }
 
 		string FontName { get; set; }
+
+		int CornerSize { get; set; }
 
 		ControlCollection Controls { get; set; }
 

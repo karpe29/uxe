@@ -9,223 +9,186 @@ using Xe.Tools;
 
 namespace Xe.Graphics2D.PostProcess
 {
-	public class PostProcessManager : DrawableGameComponent
+	public class PostProcessManager : DrawableGameComponent, IDisposable
 	{
-		int ScreenWidth = 800, ScreenHeight = 600;
-		int PostWidth, PostHeight;
+		private GraphicsDevice device = null;
+		private Viewport viewPort = new Viewport();
 
-		Texture2D BackBuffer = null, PostBuffer = null;
+		private Texture2D heatHazeMap = null;
+		private Texture2D resolveTarget = null;
 
-		SpriteBatch SpriteBatch = null;
-
-		RenderTarget2D FullTarget1 = null, FullTarget2 = null, /*HalfTarget = null,*/ CurrentTarget = null;
-
-		GraphicsDevice m_graphicsDevice = null;
-		ContentManager m_contentManager = null;
-
-		AdvancedGaussianBlur gaussianBlur = null;
-		AdvancedCombine combine = null;
-		AdvancedToneMapping toneMapping = null;
-		AdvancedRadialBlur radialBlur = null;
-
-		PostProcessEffect bloomExtract = null;
+		private SpriteBatch spriteBatch = null;
+		private RenderTarget2D renderTarget1 = null;
+		private RenderTarget2D renderTarget2 = null;
+		private RenderTarget2D renderTargetcurrent = null;
+		private RenderTarget2D renderTargetHeatHaze = null;
 
 		public PostProcessManager(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager)
 			: base(game)
 		{
-			m_graphicsDevice = graphicsDevice;
-			m_contentManager = contentManager;
+			device = graphicsDevice;
+			viewPort = device.Viewport;
+			device.DeviceReset += new EventHandler(device_DeviceReset);
 
-			SpriteBatch = new SpriteBatch(graphicsDevice);
+			spriteBatch = new SpriteBatch(graphicsDevice);
 
-			// Look up the resolution and format of our main backbuffer.
-			PresentationParameters pp = graphicsDevice.PresentationParameters;
+			heatHazeMap = new Texture2D(device, 1, 1, 1,
+							  ResourceUsage.None,
+							  device.PresentationParameters.BackBufferFormat,
+							  ResourceManagementMode.Manual);
 
-			ScreenWidth = pp.BackBufferWidth;
-			ScreenHeight = pp.BackBufferHeight;
+			resolveTarget = new Texture2D(device, viewPort.Width, viewPort.Height, 1,
+				   ResourceUsage.ResolveTarget,
+				   device.PresentationParameters.BackBufferFormat,
+				   ResourceManagementMode.Manual);
 
-			SurfaceFormat format = pp.BackBufferFormat;
+			renderTarget1 = new RenderTarget2D(device, viewPort.Width, viewPort.Height, 1, device.PresentationParameters.BackBufferFormat, MultiSampleType.None, 0);
+			renderTarget2 = new RenderTarget2D(device, viewPort.Width, viewPort.Height, 1, device.PresentationParameters.BackBufferFormat, MultiSampleType.None, 0);
+			renderTargetcurrent = renderTarget1;
+			renderTargetHeatHaze = new RenderTarget2D(device, viewPort.Width, viewPort.Height, 1, device.PresentationParameters.BackBufferFormat, MultiSampleType.None, 0);
 
-			// Create a texture for reading back the backbuffer contents.
-			BackBuffer = new Texture2D(graphicsDevice, ScreenWidth, ScreenHeight, 1,
-										  ResourceUsage.ResolveTarget, format,
-										  ResourceManagementMode.Manual);
-			PostBuffer = BackBuffer;
-			//Get w, h
+			////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////
+			// Declare and init effects HERE
+			////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////
 
-			PostWidth = ScreenWidth / 2;
-			PostHeight = ScreenHeight / 2;
-
-			FullTarget1 = new RenderTarget2D(graphicsDevice, ScreenWidth, ScreenHeight, 1, format);
-			FullTarget2 = new RenderTarget2D(graphicsDevice, ScreenWidth, ScreenHeight, 1, format);
-			//HalfTarget = new RenderTarget2D(graphicsDevice, PostWidth, PostHeight, 1, format);
-
-			CurrentTarget = FullTarget1;
-
-
-			gaussianBlur = new AdvancedGaussianBlur(graphicsDevice, m_contentManager);
-			combine = new AdvancedCombine(graphicsDevice, m_contentManager);
-			toneMapping = new AdvancedToneMapping(graphicsDevice, m_contentManager);
-			radialBlur = new AdvancedRadialBlur(graphicsDevice, m_contentManager);
-
-			bloomExtract = new PostProcessEffect(graphicsDevice, m_contentManager, "Bloom");
 		}
 
-		#region RenderTargets and Present
-
-		public void ResolveBackBuffer()
+		private void device_DeviceReset(object sender, EventArgs e)
 		{
-			RenderTarget2D rt = GraphicsDevice.GetRenderTarget(0) as RenderTarget2D;
+			viewPort = device.Viewport;
+		}
 
-			if (rt == null)
-			{
-				GraphicsDevice.ResolveBackBuffer(BackBuffer);
-			}
-			else
-			{
-				GraphicsDevice.ResolveRenderTarget(0);
-				BackBuffer = rt.GetTexture();
-			}
-
-			PostBuffer = BackBuffer;
-
-			PostWidth = ScreenWidth;
-			PostHeight = ScreenHeight;
+		private void SwitchSetRenderTarget()
+		{
+			renderTargetcurrent = renderTargetcurrent == renderTarget1 ? renderTarget2 : renderTarget1;
+			device.SetRenderTarget(0, renderTargetcurrent);
 		}
 
 		private void ResolveRenderTarget()
 		{
-			GraphicsDevice.ResolveRenderTarget(0);
-			PostBuffer = CurrentTarget.GetTexture();
-			GraphicsDevice.SetRenderTarget(0, null);
+			device.ResolveRenderTarget(0);
+			resolveTarget = renderTargetcurrent.GetTexture();
 		}
 
-		private void SetRenderTarget()
+		public PostProcessResult RetrieveFrameBuffer()
 		{
-			CurrentTarget = CurrentTarget == FullTarget1 ? FullTarget2 : FullTarget1;
-			GraphicsDevice.SetRenderTarget(0, CurrentTarget);
+			RenderTarget2D rt = device.GetRenderTarget(0) as RenderTarget2D;
+
+			if (rt == null)
+			{
+				device.ResolveBackBuffer(resolveTarget);
+				return new PostProcessResult(resolveTarget);
+			}
+			else
+			{
+				device.ResolveRenderTarget(0);
+				return new PostProcessResult(rt.GetTexture());
+			}
 		}
 
-		public void Present(RenderTarget2D renderTarget2D)
+		public void Present(RenderTarget2D renderTarget, PostProcessResult lastScene)
 		{
-			GraphicsDevice.SetRenderTarget(0, renderTarget2D);
-			GraphicsDevice.Clear(Color.Black);
-			SpriteBatch.Begin();
+			device.SetRenderTarget(0, renderTarget);
+			spriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+			spriteBatch.Draw(lastScene.SceneTexture, new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), Color.White);
+			spriteBatch.End();
+		}
 
-			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
+		/// <summary>
+		/// Apply basic effect (and advanced too, if they dont need per pass parameters)
+		/// See example with Gaussian Vert/Hor blur - under -
+		/// </summary>
+		/// <param name="lastScene"></param>
+		/// <returns></returns>
+		public PostProcessResult ApplyEffect(PostProcessEffect effect, PostProcessResult lastScene)
+		{
+			SwitchSetRenderTarget();
 
-			SpriteBatch.End();
+			spriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+
+			effect.Begin();
+
+			spriteBatch.Draw(lastScene.SceneTexture, new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), Color.White);
+
+			spriteBatch.End();
+			effect.End();
+
+			ResolveRenderTarget();
+			return new PostProcessResult(resolveTarget);
+		}
+		/*
+		public PostProcessResult ApplyGaussianBlurWithBloomV(PostProcessResult lastScene)
+		{
+			SwitchSetRenderTarget();
+			gaussianBlur.SetBlurParameters(0, 1.0f / (float)viewPort.Height);
+			spriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+
+			gaussianBlur.Begin();
+			spriteBatch.Draw(lastScene.SceneTexture, new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), Color.White);
+
+			spriteBatch.End();
+			gaussianBlur.End();
+
+			ResolveRenderTarget();
+			return new PostProcessResult(resolveTarget);
+		}
+
+		public PostProcessResult ApplyGaussianBlurWithBloomH(PostProcessResult lastScene)
+		{
+			SwitchSetRenderTarget();
+			gaussianBlur.SetBlurParameters(1.0f / (float)viewPort.Width, 0);
+			spriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+
+			gaussianBlur.Begin();
+			spriteBatch.Draw(lastScene.SceneTexture, new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), Color.White);
+
+			spriteBatch.End();
+			gaussianBlur.End();
+
+			ResolveRenderTarget();
+			return new PostProcessResult(resolveTarget);
+		}
+				
+		public PostProcessResult CombineScreens(PostProcessResult scene1, PostProcessResult scene2)
+		{
+			SwitchSetRenderTarget();
+
+			spriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+
+			combineEffect.Begin();
+			device.Textures[1] = scene2.SceneTexture;
+			spriteBatch.Draw(scene1.SceneTexture, new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), Color.White);
+
+			spriteBatch.End();
+			combineEffect.End();
+
+			ResolveRenderTarget();
+			return new PostProcessResult(resolveTarget);
+		}
+		*/		
+
+		#region IDisposable Members
+
+		public new void Dispose()
+		{
+			spriteBatch.Dispose();
+			renderTarget1.Dispose();
+			renderTarget2.Dispose();
+			resolveTarget.Dispose();
+			heatHazeMap.Dispose();
+
+			base.Dispose();
 		}
 
 		#endregion
 
-		#region Generic and Advanced Effects Process
+		#region IDisposable Members
 
-		public void ApplyEffect(PostProcessEffect effect)
+		void IDisposable.Dispose()
 		{
-			SetRenderTarget();
-
-			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
-
-			effect.Begin();
-			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
-
-			SpriteBatch.End();
-			effect.End();
-
-			ResolveRenderTarget();
-		}
-
-		public void ApplyDownSample()
-		{
-			PostWidth /= 2;
-			PostHeight /= 2;
-
-			SetRenderTarget();
-
-			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
-			//downSample.Begin();
-			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth * 2, PostHeight * 2), Color.White);
-
-			SpriteBatch.End();
-			//downSample.End();
-
-			ResolveRenderTarget();
-		}
-
-		public void ApplyUpSample()
-		{
-			PostWidth *= 2;
-			PostHeight *= 2;
-			SetRenderTarget();
-
-			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
-
-			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth / 2, PostHeight / 2), Color.White);
-
-			SpriteBatch.End();
-
-			ResolveRenderTarget();
-		}
-
-		public void ApplyBloomExtract()
-		{
-			SetRenderTarget();
-
-			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
-
-			bloomExtract.Begin();
-			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
-
-			SpriteBatch.End();
-			bloomExtract.End();
-
-			ResolveRenderTarget();
-		}
-
-		public void ApplyGaussianBlurV()
-		{
-			SetRenderTarget();
-			gaussianBlur.SetBlurParameters(0, 1.0f / (float)PostHeight);
-			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
-
-			gaussianBlur.Begin();
-			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
-
-			SpriteBatch.End();
-			gaussianBlur.End();
-
-			ResolveRenderTarget();
-		}
-
-		public void ApplyGaussianBlurH()
-		{
-			SetRenderTarget();
-			gaussianBlur.SetBlurParameters(1.0f / (float)PostWidth, 0);
-			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
-
-			gaussianBlur.Begin();
-			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
-
-			SpriteBatch.End();
-			gaussianBlur.End();
-
-			ResolveRenderTarget();
-		}
-
-		public void CombineWithBackBuffer()
-		{
-			SetRenderTarget();
-			GraphicsDevice.Textures[1] = BackBuffer;
-			SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
-
-			combine.Begin();
-			SpriteBatch.Draw(PostBuffer, new Rectangle(0, 0, PostWidth, PostHeight), new Rectangle(0, 0, PostWidth, PostHeight), Color.White);
-
-			SpriteBatch.End();
-			combine.End();
-
-			ResolveRenderTarget();
+			this.Dispose();
 		}
 
 		#endregion
