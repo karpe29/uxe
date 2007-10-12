@@ -21,11 +21,13 @@ namespace Xe.GUI
         public Vector2 Offset;
         public Vector2 Origin;
         public Vector2 Scale;
+		public int CornerSize;
         public SpriteEffects Effects;
         public float LayerDepth;
 
         public Rectangle Dest;
         public TextAlign Align = TextAlign.Left;
+		public TextAlignVertical AlignVertical = TextAlignVertical.Top;
         public BreakStyle Break = BreakStyle.Word;
 
         public List<TextBoxLine> Lines = new List<TextBoxLine>();

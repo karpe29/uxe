@@ -100,7 +100,9 @@ namespace Xe.GUI
 				m_label.Text = m_labelText;
 
 				//ClippingOffset = new Vector4(0, 0, -105, 0);
-				this.ClippingOffset.Width = -m_label.Width - 5;
+				Rectangle tempRectangle = this.ClippingOffset;
+				tempRectangle.Width = (int)-m_label.Width - 5;
+				this.ClippingOffset = tempRectangle;
 
 				//m_label.Alpha = this.Alpha;
 			}

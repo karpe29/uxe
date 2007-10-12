@@ -46,9 +46,9 @@ namespace Xe.GUI
 			this.ControlTag = "dummy";
 
 			this.m_label = new Label(game, guiManager);
-			this.m_label.ControlTag = "button";
+			this.m_label.ControlTag = "label";
 			this.m_label.Name = "SS_LABEL";
-			//this.m_label.Enabled = false;
+			//Sthis.m_label.Enabled = false;
 			this.m_label.TextAlign = TextAlign.Center;
 			
 			//this.Height = 30;

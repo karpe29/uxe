@@ -134,9 +134,9 @@ namespace Xe.GameScreen
 
 		#region IGameScreen Members
 
-		public override bool IsBlockingUpdate { get { return true; } }
+		public override bool IsBlockingUpdate { get { return false; } }
 
-		public override bool IsBlockingDraw { get { return true; } }
+		public override bool IsBlockingDraw { get { return false; } }
 
 		#endregion
 
@@ -147,7 +147,8 @@ namespace Xe.GameScreen
 			//XeGame.Stats.AddModelPolygonsCount(myModel);
 
 			this.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
-			this.GraphicsDevice.RenderState.TwoSidedStencilMode = true;
+			//this.GraphicsDevice.RenderState.TwoSidedStencilMode = true;
+
 
 			this.GraphicsDevice.RenderState.DepthBufferEnable = true;
 			this.GraphicsDevice.RenderState.AlphaBlendEnable = false;

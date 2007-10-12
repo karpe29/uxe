@@ -34,10 +34,10 @@ namespace Xe.GameScreen
 			this.GameScreenManager.AddGameScreen(this);
 
 			buttonNewGame = new Button(GameScreenManager.Game, XeGame.GuiManager);
-			buttonNewGame.Text = "New Game";
+			buttonNewGame.Text = "New Gamehaha";
 			buttonNewGame.IsDraggable = false;
 			buttonNewGame.Width = 120;
-			buttonNewGame.Height = 30;
+			buttonNewGame.Height = 32;
 			buttonNewGame.X = XeGame.WitdhPercent(0.25f) - buttonNewGame.Width / 2;
 			buttonNewGame.Y = XeGame.HeightPercent(0.75f) - buttonNewGame.Height / 2;
 			buttonNewGame.Click += new ClickHandler(buttonNewGame_Click);
@@ -46,7 +46,7 @@ namespace Xe.GameScreen
 			buttonOptions = new Button(GameScreenManager.Game, XeGame.GuiManager);
 			buttonOptions.Text = "Options";
 			buttonOptions.Width = 120;
-			buttonOptions.Height = 30;
+			buttonOptions.Height = 32;
 			buttonOptions.X = XeGame.WitdhPercent(0.5f) - buttonOptions.Width / 2;
 			buttonOptions.Y = XeGame.HeightPercent(0.75f) - buttonOptions.Height / 2;
 			buttonOptions.Click += new ClickHandler(buttonOptions_Click);
@@ -55,7 +55,7 @@ namespace Xe.GameScreen
 			buttonQuit = new Button(GameScreenManager.Game, XeGame.GuiManager);
 			buttonQuit.Text = "Quit";
 			buttonQuit.Width = 120;
-			buttonQuit.Height = 30;
+			buttonQuit.Height = 32;
 			buttonQuit.X = XeGame.WitdhPercent(0.75f) - buttonQuit.Width / 2;
 			buttonQuit.Y = XeGame.HeightPercent(0.75f) - buttonQuit.Height / 2;
 			buttonQuit.Click += new ClickHandler(buttonQuit_Click);

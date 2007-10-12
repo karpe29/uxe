@@ -196,6 +196,22 @@ namespace Xe
 			return base.BeginDraw();
 		}
 
+		protected override void Draw(GameTime gameTime)
+		{
+			//PostProcessResult r = s_postProcessManager.RetrieveFrameBuffer();
+			//r = pp.ApplySmartBlur(r);
+			//r = pp.ApplyGaussianBlurWithBloomH(r);
+			//r = pp.ApplyGaussianBlurWithBloomV(r);
+			//r = pp.ApplyMonochrome(r);
+
+			//PostProcessResult s = pp.ApplyBloomExtract(r);
+			//r = pp.CombineScreens(r, s);
+			//r = pp.ApplyRadialBlur(r);
+			//pp.Present(null, r);
+			
+			base.Draw(gameTime);
+		}
+
 		protected override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
