@@ -736,21 +736,28 @@ namespace Xe.GUI
 				//Vector2 tempVector = new Vector2(m_vecPosition.X + this.GUIManager.CornerSize/2, m_vecPosition.Y + this.GUIManager.CornerSize/2);
 				//Vector2 tempVectorSize = new Vector2(m_vecSize.X - this.GUIManager.CornerSize / 2, m_vecSize.Y - this.GUIManager.CornerSize / 2);
 				//Rectangle tempRect = new Rectangle((int)tempVector.X, (int)tempVector.Y, (int)tempVectorSize.X, (int)tempVectorSize.Y);
-				
+
 				Rectangle tempRect = new Rectangle((int)m_vecPosition.X, (int)m_vecPosition.Y, (int)m_vecSize.X, (int)m_vecSize.Y);
 
-				if (m_vecSize.X >= 3 * GUIManager.CornerSize)
+				if (m_vecSize.X >= 2 * GUIManager.CornerSize)
 				{
 					tempRect.X = (int)m_vecPosition.X + this.GUIManager.CornerSize / 2;
-					tempRect.Width = (int)m_vecSize.X - this.GUIManager.CornerSize / 2;
+					tempRect.Width = (int)m_vecSize.X - this.GUIManager.CornerSize ;
 				}
 
-				if (m_vecSize.Y >= 3 * GUIManager.CornerSize)
+				if (m_vecSize.Y >= 2 * GUIManager.CornerSize)
 				{
 					tempRect.Y = (int)m_vecPosition.Y + this.GUIManager.CornerSize / 2;
-					tempRect.Height = (int)m_vecSize.Y - this.GUIManager.CornerSize / 2;
+					tempRect.Height = (int)m_vecSize.Y - this.GUIManager.CornerSize ;
 				}
+#if DEBUG
+				XeGame.s_vectorRenderer.SetColor(Color.Red);
 
+				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X, tempRect.Y, 0), new Vector3(tempRect.X + tempRect.Width, tempRect.Y, 0));
+				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X, tempRect.Y, 0), new Vector3(tempRect.X, tempRect.Y + tempRect.Height, 0));
+				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X, tempRect.Y + tempRect.Height, 0), new Vector3(tempRect.X + tempRect.Width, tempRect.Y + tempRect.Height, 0));
+				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X + tempRect.Width, tempRect.Y, 0), new Vector3(tempRect.X + tempRect.Width, tempRect.Y + tempRect.Height, 0));
+#endif
 				if (m_curState == UIState.Over)
 					m_font2d.DrawTextBox(m_guiManager.FontName, m_text, m_textAlign, m_textAlignVertical, m_breakStyle, tempRect, GUIManager.CornerSize, m_foreColorHover);
 				else

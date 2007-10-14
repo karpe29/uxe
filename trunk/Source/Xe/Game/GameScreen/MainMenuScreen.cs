@@ -34,10 +34,11 @@ namespace Xe.GameScreen
 			this.GameScreenManager.AddGameScreen(this);
 
 			buttonNewGame = new Button(GameScreenManager.Game, XeGame.GuiManager);
-			buttonNewGame.Text = "New Gamehaha";
+			buttonNewGame.Text = "New Game";
+			buttonNewGame.TextAlignVertical = TextAlignVertical.Center;
 			buttonNewGame.IsDraggable = false;
 			buttonNewGame.Width = 120;
-			buttonNewGame.Height = 32;
+			buttonNewGame.Height = 120;
 			buttonNewGame.X = XeGame.WitdhPercent(0.25f) - buttonNewGame.Width / 2;
 			buttonNewGame.Y = XeGame.HeightPercent(0.75f) - buttonNewGame.Height / 2;
 			buttonNewGame.Click += new ClickHandler(buttonNewGame_Click);
@@ -147,5 +148,16 @@ namespace Xe.GameScreen
 		public override bool IsBlockingDraw { get { return false; } }
 
 		#endregion
+
+		public override void Update(GameTime gameTime)
+		{
+			base.Update(gameTime);
+
+			if (InputHelper.Keyboard.IsKeyDown(Keys.Add))
+				this.buttonNewGame.Height++;
+
+			if (InputHelper.Keyboard.IsKeyDown(Keys.Subtract))
+				this.buttonNewGame.Height--;
+		}
 	}
 }
