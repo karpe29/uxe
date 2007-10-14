@@ -316,6 +316,7 @@ namespace Xe.GUI
 			_string.Dest = box;
 			_string.CornerSize = cornerSize;
 			_string.Align = align;
+			_string.AlignVertical = alignVertical;
 
 			_string.LineIndex = lineIndex;
 			_string.HorizontalIndex = charIndex;

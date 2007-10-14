@@ -35,6 +35,8 @@ namespace Xe
 
 		private static PostProcessManager s_postProcessManager;
 
+		public static VectorRenderer s_vectorRenderer;
+
 		#endregion	
 
 		#region Static Properties
@@ -168,6 +170,10 @@ namespace Xe
 			s_gameScreenManager.UpdateOrder = 500;
 			s_gameScreenManager.DrawOrder = 500;
 			Components.Add(s_gameScreenManager);
+
+			s_vectorRenderer = new VectorRenderer(this);
+			s_vectorRenderer.DrawOrder = 0;
+			Components.Add(s_vectorRenderer);
 		}
 			
 		protected override void Initialize()
