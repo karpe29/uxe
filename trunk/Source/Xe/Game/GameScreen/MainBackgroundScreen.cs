@@ -108,6 +108,7 @@ namespace Xe.GameScreen
 			//myModel = XeGame.ContentManager.Load<Model>(@"Content\Models\MenuTunnel");
 			
 			myEffect = new BasicEffect(XeGame.Device,null);//XeGame.ContentManager.Load<Effect>(@"Content\Effects\MrWiggle");
+			((BasicEffect)myEffect).VertexColorEnabled = true;
 			/*((BasicEffect)myEffect).LightingEnabled = true;
 			((BasicEffect)myEffect).DirectionalLight0.Enabled = true;
 			((BasicEffect)myEffect).DirectionalLight0.DiffuseColor = Vector3.One;
@@ -255,6 +256,8 @@ namespace Xe.GameScreen
 			
 			//courbe += inc_courbe;
 			//if (Math.Abs(courbe) >= 0.005) inc_courbe = -inc_courbe;
+			
+/*
 			Matrix rot;
 			courbe += time * 0.003;
 			courbe %= MathHelper.TwoPi;
@@ -274,8 +277,8 @@ namespace Xe.GameScreen
 			}
 			count++;
 			count %= nb_cotes;
-
-
+			
+			*/
 	
 
 
@@ -306,6 +309,7 @@ namespace Xe.GameScreen
 
 				vertices = new VertexPositionColor[nb_cotes];
 				deplace();
+
 				for (int j = 0; j < nb_cotes; j++)
 				{
 					vertices[j].Color = couleur;
@@ -371,7 +375,11 @@ namespace Xe.GameScreen
 				vertices = new VertexPositionColor[nb_cotes * 2];
 				this.vertexBuffer = new VertexBuffer(graph, typeof(VertexPositionColor), vertices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
 
-
+	
+				
+				
+				cercle_debut.vertices.CopyTo(vertices, 0);
+				cercle_fin.vertices.CopyTo(vertices, nb_cotes);
 
 			}
 
@@ -385,12 +393,11 @@ namespace Xe.GameScreen
 					vertices[j + nb_cotes].Color = coul;
 				}*/
 
-				cercle_debut.vertices.CopyTo(vertices, 0);
-				cercle_fin.vertices.CopyTo(vertices, nb_cotes);
 				this.vertexBuffer.SetData(vertices);
 
 				graph.Vertices[0].SetSource(vertexBuffer, 0, VertexPositionColor.SizeInBytes);
 				graph.Indices = this.indexBuffer;
+
 				graph.VertexDeclaration = new VertexDeclaration(graph, VertexPositionColor.VertexElements);
 				graph.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, nb_cotes * 2, 0, nb_cotes * 2);
 			}
