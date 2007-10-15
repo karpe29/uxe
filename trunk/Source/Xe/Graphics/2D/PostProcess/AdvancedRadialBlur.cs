@@ -53,7 +53,7 @@ namespace Xe.Graphics2D.PostProcess
 
 		#endregion
 
-		internal AdvancedRadialBlur(GraphicsDevice graphicsDevice, ContentManager contentManager)
+		public AdvancedRadialBlur(GraphicsDevice graphicsDevice, ContentManager contentManager)
 			: base(graphicsDevice, contentManager, "AdvancedRadialBlur")
         {
             blurWidthParameter = m_effect.Parameters["BlurWidth"];

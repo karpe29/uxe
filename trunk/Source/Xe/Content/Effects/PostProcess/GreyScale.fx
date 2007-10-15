@@ -9,14 +9,13 @@ struct PixelInput
 
 float4 GreyScale(PixelInput input) : COLOR
 {
-	float4 color = tex2D( TextureSampler, input.TexCoord);
-	if (input.TexCoord.x > 0.5)
-		color.rgb = dot(color.rgb, float3(0.3, 0.59, 0.11));
-	return( color );
+float4 color = tex2D( TextureSampler, input.TexCoord);
+color.rgb = dot(color.rgb, float3(0.3, 0.59, 0.11));
+return( color );
 }
 
 
-technique GreyScaleHalfScreen
+technique GreyScale
 {
  pass P0
  {

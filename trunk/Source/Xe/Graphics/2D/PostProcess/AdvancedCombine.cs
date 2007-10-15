@@ -77,7 +77,7 @@ namespace Xe.Graphics2D.PostProcess
 
 		#endregion
 
-        internal AdvancedCombine(GraphicsDevice graphicsDevice, ContentManager contentManager)
+        public AdvancedCombine(GraphicsDevice graphicsDevice, ContentManager contentManager)
 			: base (graphicsDevice, contentManager, "AdvancedCombine")
         {
             Intensity1Parameter = m_effect.Parameters["Intensity1"];

@@ -1,17 +1,32 @@
+#region About
+/* Based on the work of Mahdi Khodadadi
+ * http://www.mahdi-khodadadi.com/
+ * Effects and Manager by Mahdi Khodadadi
+ * Additional Effects by Glenn Wilson (Mykre)
+ * Enhancements by jbriguet.
+ * */
+#endregion
+
+#region Using Statements
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
 using Xe.Tools;
+using Microsoft.Xna.Framework.Content;
+using System.IO;
+#endregion
 
 namespace Xe.Graphics2D.PostProcess
 {
 	public class PostProcessManager : DrawableGameComponent, IDisposable
 	{
+		public static string EFFECT_PATH = @"Content\Effects\PostProcess\";
+
 		private GraphicsDevice device = null;
+		private ContentManager ContentManager = null;
 		private Viewport viewPort = new Viewport();
 
 		private Texture2D heatHazeMap = null;
@@ -23,10 +38,13 @@ namespace Xe.Graphics2D.PostProcess
 		private RenderTarget2D renderTargetcurrent = null;
 		private RenderTarget2D renderTargetHeatHaze = null;
 
+		Dictionary<String, PostProcessEffect> EffectDictionary = new Dictionary<String, PostProcessEffect>();
+
 		public PostProcessManager(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager)
 			: base(game)
 		{
 			device = graphicsDevice;
+			ContentManager = contentManager;
 			viewPort = device.Viewport;
 			device.DeviceReset += new EventHandler(device_DeviceReset);
 
@@ -49,10 +67,44 @@ namespace Xe.Graphics2D.PostProcess
 
 			////////////////////////////////////////////////////////
 			////////////////////////////////////////////////////////
-			// Declare and init effects HERE
+			// Loads all effect from EFFECT_PATH
 			////////////////////////////////////////////////////////
 			////////////////////////////////////////////////////////
 
+			foreach (string s in Directory.GetFiles(EFFECT_PATH))
+			{
+				string s2 = s.Remove(0, EFFECT_PATH.Length);
+				string s3 = "";
+
+				if (s2.EndsWith(".xnb"))
+				{
+					s3 = s2.Substring(0, s2.Length -4);
+					this.AddEffect(s3);
+				}	
+			}
+		}
+
+		private void AddEffect(string p)
+		{
+			try
+			{
+				Type t = Type.GetType(this.GetType().Namespace + "." + p, false);
+
+				PostProcessEffect ppe = null;
+
+				if (t != null && t.BaseType == typeof(PostProcessEffect))
+					ppe = (PostProcessEffect)Activator.CreateInstance(t, this.device, this.ContentManager);
+				else
+					if (!p.StartsWith("Advanced"))
+						ppe = new PostProcessEffect(this.device, this.ContentManager, p);
+
+				if (ppe != null)
+					EffectDictionary.Add(p, ppe);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 		private void device_DeviceReset(object sender, EventArgs e)
@@ -108,12 +160,12 @@ namespace Xe.Graphics2D.PostProcess
 
 			spriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
 
-			effect.Begin();
+			effect.BeginPostProcess();
 
 			spriteBatch.Draw(lastScene.SceneTexture, new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), Color.White);
 
 			spriteBatch.End();
-			effect.End();
+			effect.EndPostProcess();
 
 			ResolveRenderTarget();
 			return new PostProcessResult(resolveTarget);
@@ -167,7 +219,7 @@ namespace Xe.Graphics2D.PostProcess
 			ResolveRenderTarget();
 			return new PostProcessResult(resolveTarget);
 		}
-		*/		
+		*/
 
 		#region IDisposable Members
 

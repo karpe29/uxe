@@ -8,6 +8,7 @@ namespace Xe.Graphics2D.PostProcess
 {
 	public class PostProcessEffect
 	{
+		
 		private string m_name = null;
 
 		public string Name { get { return m_name; } }
@@ -19,8 +20,9 @@ namespace Xe.Graphics2D.PostProcess
 		{
 			m_name = effectName;
 
-			m_effect = contentManager.Load<Effect>(@"Content\Effects\PostProcess\" + m_name);
+			m_effect = contentManager.Load<Effect>(PostProcessManager.EFFECT_PATH + m_name);
 
+			// NullReferenceException occurs here if (technique name != file name)
 			m_pass = m_effect.Techniques[m_name].Passes[0];
 
 			graphicsDevice.Disposing += new EventHandler(GraphicsDevice_Disposing);
@@ -31,13 +33,13 @@ namespace Xe.Graphics2D.PostProcess
 			m_effect.Dispose();
 		}
 
-		internal virtual void Begin()
+		internal virtual void BeginPostProcess()
 		{
 			m_effect.Begin();
 			m_pass.Begin();
 		}
 
-		internal virtual void End()
+		internal virtual void EndPostProcess()
 		{
 			m_pass.End();
 			m_effect.End();

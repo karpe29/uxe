@@ -8,13 +8,9 @@ namespace Xe.Graphics2D.PostProcess
 {
 	public sealed class AdvancedSmartBlur : PostProcessEffect
 	{
-		private EffectParameter BlurAmountParameter = null;
+		#region Variables and Properties
 
-		internal AdvancedSmartBlur(GraphicsDevice graphicsDevice, ContentManager contentManager)
-			: base(graphicsDevice, contentManager, "AdvancedSmartBlur")
-		{
-			BlurAmountParameter = m_effect.Parameters["BlurAmount"];
-		}
+		private EffectParameter BlurAmountParameter = null;
 
 		public float BlurAmount
 		{
@@ -26,6 +22,14 @@ namespace Xe.Graphics2D.PostProcess
 			{
 				BlurAmountParameter.SetValue(value);
 			}
+		}
+
+		#endregion
+
+		public AdvancedSmartBlur(GraphicsDevice graphicsDevice, ContentManager contentManager)
+			: base(graphicsDevice, contentManager, "AdvancedSmartBlur")
+		{
+			BlurAmountParameter = m_effect.Parameters["BlurAmount"];
 		}
 	}
 }
