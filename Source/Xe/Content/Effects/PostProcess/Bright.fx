@@ -17,7 +17,7 @@ technique Bright
 {
     pass p0
     {
-        VertexShader = null;
+        //VertexShader = null;
         PixelShader = compile ps_2_0 BrightPassFilter();
         ZEnable = false;
     }

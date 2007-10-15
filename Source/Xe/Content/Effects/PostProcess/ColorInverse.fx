@@ -1,4 +1,5 @@
 sampler TextureSampler : register(s0);
+
 float4 PixelShader(float2 texCoord : TEXCOORD0) : COLOR0
 {
     // Look up the original image color.

@@ -24,7 +24,7 @@ namespace Xe.GameScreen
 			m_stats = new Stats(gameScreenManager.Game, XeGame.ContentManager);
 			m_stats.Enabled = m_stats.Visible = false;
 			m_stats.DrawOrder = 10*1000 + 2;
-			m_stats.ForeColor = Color.WhiteSmoke;
+			m_stats.ForeColor = Color.Red;
 			m_stats.Initialize();
 			
 			GameScreenManager.Game.Components.Add(m_stats);

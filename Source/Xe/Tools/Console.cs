@@ -431,22 +431,25 @@ namespace Xe.Tools
 
 		public bool Focus()
 		{
-			throw new Exception("The method or operation is not implemented.");
+			//throw new Exception("The method or operation is not implemented.");
+			return true;
 		}
 
 		public void UnFocus()
 		{
-			throw new Exception("The method or operation is not implemented.");
+			//throw new Exception("The method or operation is not implemented.");
 		}
 
 		public bool TabNext()
 		{
-			throw new Exception("The method or operation is not implemented.");
+			//throw new Exception("The method or operation is not implemented.");
+			return true;
 		}
 
 		public bool TabPrev()
 		{
-			throw new Exception("The method or operation is not implemented.");
+			//throw new Exception("The method or operation is not implemented.");
+			return true;
 		}
 
 		public event GotFocusHandler GotFocus;
