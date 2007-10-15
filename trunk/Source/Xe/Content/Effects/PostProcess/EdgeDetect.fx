@@ -27,7 +27,7 @@ float4 _PixelShader( float2 Tex : TEXCOORD0) : COLOR0
     }
     return Sum;
 }
-technique NormalEdgeDetect
+technique EdgeDetect
 {
     pass p0
     {

@@ -13,7 +13,7 @@ float4 BrightPassFilter( in float2 Tex : TEXCOORD0 ) : COLOR0
     return float4( ColorOut, 1.0f );
 }
 
-technique BrightPass
+technique Bright
 {
     pass p0
     {
