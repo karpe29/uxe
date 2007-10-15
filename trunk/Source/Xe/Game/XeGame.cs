@@ -26,9 +26,9 @@ namespace Xe
 		public static readonly string FONT_GUI = "BatmanForeverAlternate";
 
 		public static readonly string FONT_DBG = "Perspective Sans";
-		
+
 		private static ContentManager s_contentManager;
-		
+
 		private static GameScreenManager s_gameScreenManager;
 
 		private static GraphicsDevice s_device;
@@ -37,7 +37,7 @@ namespace Xe
 
 		public static VectorRenderer s_vectorRenderer;
 
-		#endregion	
+		#endregion
 
 		#region Static Properties
 
@@ -105,7 +105,7 @@ namespace Xe
 
 		private Ebi<MKController> m_ebi;
 
-		#endregion 
+		#endregion
 
 		/// <summary>
 		/// 
@@ -114,7 +114,7 @@ namespace Xe
 		/// <returns>percent width of the screen</returns>
 		public static int WitdhPercent(float percent)
 		{
-			return (int) (XeGame.Device.PresentationParameters.BackBufferWidth * MathHelper.Clamp(percent, 0, 1));
+			return (int)(XeGame.Device.PresentationParameters.BackBufferWidth * MathHelper.Clamp(percent, 0, 1));
 		}
 
 		/// <summary>
@@ -124,7 +124,7 @@ namespace Xe
 		/// <returns>percent height of the screen</returns>
 		public static int HeightPercent(float percent)
 		{
-			return (int) (XeGame.Device.PresentationParameters.BackBufferHeight * MathHelper.Clamp(percent, 0, 1));
+			return (int)(XeGame.Device.PresentationParameters.BackBufferHeight * MathHelper.Clamp(percent, 0, 1));
 		}
 
 
@@ -146,20 +146,20 @@ namespace Xe
 
 			Window.Title = "Xe3D v" + Assembly.GetCallingAssembly().GetName().Version.ToString();
 			Window.AllowUserResizing = true;
-			
+
 			m_graphics.SynchronizeWithVerticalRetrace = false;
 			m_graphics.PreferredBackBufferWidth = 1024;
 			m_graphics.PreferredBackBufferHeight = 768;
 			m_graphics.PreferMultiSampling = true;
-			
-			m_ebi = new Ebi<MKController> (this);
+
+			m_ebi = new Ebi<MKController>(this);
 			m_ebi.UpdateOrder = 0;
 			Components.Add(m_ebi);
 			ServiceHelper.Add<IEbiService>(m_ebi);
 
-			m_guiManager = new GUIManager<SpriteRenderer> (this, m_ebi);
-			m_guiManager.UpdateOrder = 11*1000;
-			m_guiManager.DrawOrder = 11*1000;
+			m_guiManager = new GUIManager<SpriteRenderer>(this, m_ebi);
+			m_guiManager.UpdateOrder = 10 * 1000;
+			m_guiManager.DrawOrder = 10 * 1000;
 			Components.Add(m_guiManager);
 			ServiceHelper.Add<IGUIManager>(m_guiManager);
 
@@ -167,15 +167,15 @@ namespace Xe
 			m_reporter.UpdateOrder = 0;
 
 			s_gameScreenManager = new GameScreenManager(this);
-			s_gameScreenManager.UpdateOrder = 500;
-			s_gameScreenManager.DrawOrder = 500;
+			s_gameScreenManager.UpdateOrder = 2 * 1000;
+			s_gameScreenManager.DrawOrder = 2 * 1000;
 			Components.Add(s_gameScreenManager);
 
 			s_vectorRenderer = new VectorRenderer(this);
 			s_vectorRenderer.DrawOrder = 0;
 			Components.Add(s_vectorRenderer);
 		}
-			
+
 		protected override void Initialize()
 		{
 			s_device = m_graphics.GraphicsDevice;
@@ -183,8 +183,8 @@ namespace Xe
 			m_guiManager.LoadSettings(@"Content\XML\Xe_GUI.xml");
 
 			s_postProcessManager = new PostProcessManager(this, m_graphics.GraphicsDevice, s_contentManager);
-			s_postProcessManager.UpdateOrder = 10 * 1000;
-			s_postProcessManager.DrawOrder = 10 * 1000;
+			s_postProcessManager.UpdateOrder = 14 * 1000;
+			s_postProcessManager.DrawOrder = 14 * 1000;
 			Components.Add(s_postProcessManager);
 
 			base.Initialize();
@@ -214,10 +214,13 @@ namespace Xe
 			//r = pp.CombineScreens(r, s);
 			//r = pp.ApplyRadialBlur(r);
 			//pp.Present(null, r);
-			
+
 			base.Draw(gameTime);
+
+			//s_postProcessManager.Draw(gameTime);
 		}
 
+		int i = 0;
 		protected override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
@@ -230,6 +233,20 @@ namespace Xe
 				{
 					this.m_graphics.ToggleFullScreen();
 				}
+
+			if (InputHelper.KeyboardSpaceJustPressed)
+			{
+				if (i >= s_postProcessManager.EffectDictionary.Count - 1)
+					i = 0;
+				else
+					i++;
+			}
+
+			XeGame.Stats.AddDebugString(s_postProcessManager.EffectDictionary.Keys[i] + " " + i);
+
+			this.Window.Title = s_postProcessManager.EffectDictionary.Keys[i] + " " + i;
+
+			s_postProcessManager.AppliedEffects.Enqueue(s_postProcessManager.EffectDictionary.Keys[i]);
 		}
 	}
 }
