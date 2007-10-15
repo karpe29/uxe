@@ -1190,23 +1190,23 @@
       <Processor>EffectProcessor</Processor>
       <Name>Embossed</Name>
     </Content>
-    <Content Include="Content\Effects\PostProcess\Greyscale.fx">
+    <Content Include="Content\Effects\PostProcess\GreyScale.fx">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
-      <Name>Greyscale</Name>
+      <Name>GreyScale</Name>
     </Content>
-    <Content Include="Content\Effects\PostProcess\GreyscaleAroundCenter.fx">
+    <Content Include="Content\Effects\PostProcess\GreyScaleAroundCenter.fx">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
-      <Name>GreyscaleAroundCenter</Name>
+      <Name>GreyScaleAroundCenter</Name>
     </Content>
-    <Content Include="Content\Effects\PostProcess\GreyscaleHalfScreen.fx">
+    <Content Include="Content\Effects\PostProcess\GreyScaleHalfScreen.fx">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
-      <Name>GreyscaleHalfScreen</Name>
+      <Name>GreyScaleHalfScreen</Name>
     </Content>
     <Content Include="Content\Effects\PostProcess\NightTime.fx">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>

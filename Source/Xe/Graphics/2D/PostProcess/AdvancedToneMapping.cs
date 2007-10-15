@@ -51,7 +51,7 @@ namespace Xe.Graphics2D.PostProcess
 
 		#endregion
 
-		internal AdvancedToneMapping(GraphicsDevice graphicsDevice, ContentManager contentManager)
+		public AdvancedToneMapping(GraphicsDevice graphicsDevice, ContentManager contentManager)
 			: base (graphicsDevice, contentManager, "AdvancedToneMapping")
         {
             exposureParameter = m_effect.Parameters["exposure"];

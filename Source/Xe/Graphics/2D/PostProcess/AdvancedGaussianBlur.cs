@@ -46,7 +46,7 @@ namespace Xe.Graphics2D.PostProcess
 
 		#endregion
 
-        internal AdvancedGaussianBlur(GraphicsDevice graphicsDevice, ContentManager contentManager)
+        public AdvancedGaussianBlur(GraphicsDevice graphicsDevice, ContentManager contentManager)
 			:base (graphicsDevice,contentManager, "AdvancedGaussianBlur")
         {
 			EffectParameter tmpParam = m_effect.Parameters["SampleCount"];
@@ -61,12 +61,12 @@ namespace Xe.Graphics2D.PostProcess
             bloomScaleParameter = m_effect.Parameters["BloomScale"];
         }
 
-        internal override void Begin()
+        internal override void BeginPostProcess()
         {
             weightsParameter.SetValue(Weights);
             offsetsParameter.SetValue(Offsets);
 
-			base.Begin();
+			base.BeginPostProcess();
         }
 
         /// <summary>

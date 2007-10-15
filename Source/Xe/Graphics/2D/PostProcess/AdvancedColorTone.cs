@@ -9,19 +9,12 @@ namespace Xe.Graphics2D.PostProcess
 {
 	public sealed class AdvancedColorTone : PostProcessEffect
 	{
+		#region Variables and Properties
+
 		private EffectParameter lightColorParameter = null;
 		private EffectParameter darkColorParameter = null;
 		private EffectParameter desatParameter = null;
 		private EffectParameter tonedParameter = null;
-
-		internal AdvancedColorTone(GraphicsDevice graphicsDevice, ContentManager contentManager)
-			: base(graphicsDevice, contentManager, "AdvancedColorTone")
-		{
-			lightColorParameter = m_effect.Parameters["LightColor"];
-			darkColorParameter = m_effect.Parameters["DarkColor"];
-			desatParameter = m_effect.Parameters["Desat"];
-			tonedParameter = m_effect.Parameters["Toned"];
-		}
 
 		public Vector3 LightColor
 		{
@@ -69,6 +62,17 @@ namespace Xe.Graphics2D.PostProcess
 			{
 				tonedParameter.SetValue(value);
 			}
+		}
+
+		#endregion
+
+		public AdvancedColorTone(GraphicsDevice graphicsDevice, ContentManager contentManager)
+			: base(graphicsDevice, contentManager, "AdvancedColorTone")
+		{
+			lightColorParameter = m_effect.Parameters["LightColor"];
+			darkColorParameter = m_effect.Parameters["DarkColor"];
+			desatParameter = m_effect.Parameters["Desat"];
+			tonedParameter = m_effect.Parameters["Toned"];
 		}
 	}
 }
