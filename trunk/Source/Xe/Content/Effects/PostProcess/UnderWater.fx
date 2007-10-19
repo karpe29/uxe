@@ -1,13 +1,11 @@
 sampler TextureSampler;
 
-
 float timervalue=1.0;
 
-
-struct PS_INPUT {
- float2 TexCoord : TEXCOORD0;
+struct PS_INPUT
+{
+	float2 TexCoord : TEXCOORD0;
 };
-
 
 float4 UnderWater( PS_INPUT Input ) : COLOR0
 {
@@ -19,11 +17,10 @@ float4 UnderWater( PS_INPUT Input ) : COLOR0
     return Color;
 }
 
-
-
-technique UnderWater { 
- pass P0{ 
-  PixelShader = compile ps_2_0 UnderWater(); 
- } 
- 
+technique UnderWater
+{ 
+	pass P0
+	{ 
+		PixelShader = compile ps_2_0 UnderWater(); 
+	} 
 }

@@ -1142,12 +1142,6 @@
       <Processor>EffectProcessor</Processor>
       <Name>AdvancedToneMapping</Name>
     </Content>
-    <Content Include="Content\Effects\PostProcess\Bloom.fx">
-      <XNAUseContentPipeline>true</XNAUseContentPipeline>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Name>Bloom</Name>
-    </Content>
     <Content Include="Content\Effects\PostProcess\Blur.fx">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>
       <Importer>EffectImporter</Importer>
@@ -1249,6 +1243,36 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Name>AdvancedSmartBlur</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Effects\PostProcess\BrightExtract.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>BrightExtract</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Effects\PostScreenGlow.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>PostScreenGlow</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Effects\PostScreenMenu.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>PostScreenMenu</Name>
+    </Content>
+    <Content Include="Content\Effects\PostScreenShadowBlur.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>PostScreenShadowBlur</Name>
     </Content>
   </ItemGroup>
   <ItemGroup>

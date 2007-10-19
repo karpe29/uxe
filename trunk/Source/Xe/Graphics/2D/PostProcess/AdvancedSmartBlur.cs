@@ -26,8 +26,8 @@ namespace Xe.Graphics2D.PostProcess
 
 		#endregion
 
-		public AdvancedSmartBlur(GraphicsDevice graphicsDevice, ContentManager contentManager)
-			: base(graphicsDevice, contentManager, "AdvancedSmartBlur")
+		public AdvancedSmartBlur(PostProcessManager manager)
+			: base(manager, "AdvancedSmartBlur")
 		{
 			BlurAmountParameter = m_effect.Parameters["BlurAmount"];
 		}

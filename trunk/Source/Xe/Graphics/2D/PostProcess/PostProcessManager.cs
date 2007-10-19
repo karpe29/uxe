@@ -24,11 +24,11 @@ namespace Xe.Graphics2D.PostProcess
 {
 	public class PostProcessManager : DrawableGameComponent, IDisposable
 	{
+		#region Variable and Properties
 		public static string EFFECT_PATH = @"Content\Effects\PostProcess\";
 
 		private GraphicsDevice m_device = null;
 		private ContentManager m_contentManager = null;
-		private Viewport m_viewPort = new Viewport();
 
 		private Texture2D m_heatHazeMap = null;
 		private Texture2D m_resolveTarget = null;
@@ -41,6 +41,16 @@ namespace Xe.Graphics2D.PostProcess
 
 		public SortedList<String, PostProcessEffect> EffectDictionary = new SortedList<String, PostProcessEffect>();
 		public Queue<String> AppliedEffects = new Queue<string>();
+
+		public new GraphicsDevice GraphicsDevice { get { return m_device; } }
+
+		public ContentManager ContentManager { get { return m_contentManager; } }
+
+		public SpriteBatch SpriteBatch { get { return m_spriteBatch; } }
+
+		public Viewport Viewport { get { return m_device.Viewport; } }
+
+		#endregion
 
 		public PostProcessManager(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager)
 			: base(game)
@@ -78,10 +88,10 @@ namespace Xe.Graphics2D.PostProcess
 				PostProcessEffect ppe = null;
 
 				if (t != null && t.BaseType == typeof(PostProcessEffect))
-					ppe = (PostProcessEffect)Activator.CreateInstance(t, this.m_device, this.m_contentManager);
+					ppe = (PostProcessEffect)Activator.CreateInstance(t, this);
 				else
 					if (!p.StartsWith("Advanced"))
-						ppe = new PostProcessEffect(this.m_device, this.m_contentManager, p);
+						ppe = new PostProcessEffect(this, p);
 
 				if (ppe != null)
 					EffectDictionary.Add(p, ppe);
@@ -99,10 +109,9 @@ namespace Xe.Graphics2D.PostProcess
 			CreateRenderTargets();
 		}
 
+		// MUST NOT BE CALLED WHEN VIEWPORT IS DIFFERENT FROM DEFAULT ONE.
 		private void CreateRenderTargets()
 		{
-			m_viewPort = m_device.Viewport;
-
 			m_spriteBatch = new SpriteBatch(this.m_device);
 
 			m_heatHazeMap = new Texture2D(m_device, 1, 1, 1,
@@ -110,32 +119,34 @@ namespace Xe.Graphics2D.PostProcess
 							  m_device.PresentationParameters.BackBufferFormat,
 							  ResourceManagementMode.Manual);
 
-			m_resolveTarget = new Texture2D(m_device, m_viewPort.Width, m_viewPort.Height, 1,
+			m_resolveTarget = new Texture2D(m_device, Viewport.Width, Viewport.Height, 1,
 				   ResourceUsage.ResolveTarget,
 				   m_device.PresentationParameters.BackBufferFormat,
 				   ResourceManagementMode.Manual);
 
-			m_renderTarget1 = new RenderTarget2D(m_device, m_viewPort.Width, m_viewPort.Height, 1, m_device.PresentationParameters.BackBufferFormat,
+			m_renderTarget1 = new RenderTarget2D(m_device, Viewport.Width, Viewport.Height, 1, m_device.PresentationParameters.BackBufferFormat,
 				m_device.PresentationParameters.MultiSampleType, 0);
-			m_renderTarget2 = new RenderTarget2D(m_device, m_viewPort.Width, m_viewPort.Height, 1, m_device.PresentationParameters.BackBufferFormat,
+			m_renderTarget2 = new RenderTarget2D(m_device, Viewport.Width, Viewport.Height, 1, m_device.PresentationParameters.BackBufferFormat,
 				m_device.PresentationParameters.MultiSampleType, 0);
 
 			m_renderTargetcurrent = m_renderTarget1;
 
-			m_renderTargetHeatHaze = new RenderTarget2D(m_device, m_viewPort.Width, m_viewPort.Height, 1, m_device.PresentationParameters.BackBufferFormat,
+			m_renderTargetHeatHaze = new RenderTarget2D(m_device, Viewport.Width, Viewport.Height, 1, m_device.PresentationParameters.BackBufferFormat,
 				m_device.PresentationParameters.MultiSampleType, 0);
 		}
-		
-		private void SwitchSetRenderTarget()
+
+		public void SwitchSetRenderTarget()
 		{
 			m_renderTargetcurrent = m_renderTargetcurrent == m_renderTarget1 ? m_renderTarget2 : m_renderTarget1;
 			m_device.SetRenderTarget(0, m_renderTargetcurrent);
 		}
 
-		private void ResolveRenderTarget()
+		public Texture2D ResolveRenderTarget()
 		{
 			m_device.ResolveRenderTarget(0);
 			m_resolveTarget = m_renderTargetcurrent.GetTexture();
+
+			return m_resolveTarget;
 		}
 
 		public PostProcessResult RetrieveFrameBuffer()
@@ -158,7 +169,7 @@ namespace Xe.Graphics2D.PostProcess
 		{
 			m_device.SetRenderTarget(0, renderTarget);
 			m_spriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
-			m_spriteBatch.Draw(lastScene.SceneTexture, new Rectangle(m_viewPort.X, m_viewPort.Y, m_viewPort.Width, m_viewPort.Height), Color.White);
+			m_spriteBatch.Draw(lastScene.SceneTexture, new Rectangle(Viewport.X, Viewport.Y, Viewport.Width, Viewport.Height), Color.White);
 			m_spriteBatch.End();
 		}
 
@@ -176,7 +187,8 @@ namespace Xe.Graphics2D.PostProcess
 
 			effect.BeginPostProcess();
 
-			m_spriteBatch.Draw(lastScene.SceneTexture, new Rectangle(m_viewPort.X, m_viewPort.Y, m_viewPort.Width, m_viewPort.Height), new Rectangle(m_viewPort.X, m_viewPort.Y, m_viewPort.Width, m_viewPort.Height), Color.White);
+			m_spriteBatch.Draw(lastScene.SceneTexture, new Rectangle(Viewport.X, Viewport.Y, Viewport.Width, Viewport.Height),
+				new Rectangle(Viewport.X, Viewport.Y, Viewport.Width, Viewport.Height), Color.White);
 
 			m_spriteBatch.End();
 			effect.EndPostProcess();
@@ -184,56 +196,16 @@ namespace Xe.Graphics2D.PostProcess
 			ResolveRenderTarget();
 			return new PostProcessResult(m_resolveTarget);
 		}
-		/*
-		public PostProcessResult ApplyGaussianBlurWithBloomV(PostProcessResult lastScene)
+
+		public override void Update(GameTime gameTime)
 		{
-			SwitchSetRenderTarget();
-			gaussianBlur.SetBlurParameters(0, 1.0f / (float)viewPort.Height);
-			spriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+			base.Update(gameTime);
 
-			gaussianBlur.Begin();
-			spriteBatch.Draw(lastScene.SceneTexture, new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), Color.White);
-
-			spriteBatch.End();
-			gaussianBlur.End();
-
-			ResolveRenderTarget();
-			return new PostProcessResult(resolveTarget);
+			for (int i = 0; i < EffectDictionary.Count; i++)
+			{
+				EffectDictionary[EffectDictionary.Keys[i]].Update(gameTime);
+			}
 		}
-
-		public PostProcessResult ApplyGaussianBlurWithBloomH(PostProcessResult lastScene)
-		{
-			SwitchSetRenderTarget();
-			gaussianBlur.SetBlurParameters(1.0f / (float)viewPort.Width, 0);
-			spriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
-
-			gaussianBlur.Begin();
-			spriteBatch.Draw(lastScene.SceneTexture, new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), Color.White);
-
-			spriteBatch.End();
-			gaussianBlur.End();
-
-			ResolveRenderTarget();
-			return new PostProcessResult(resolveTarget);
-		}
-				
-		public PostProcessResult CombineScreens(PostProcessResult scene1, PostProcessResult scene2)
-		{
-			SwitchSetRenderTarget();
-
-			spriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
-
-			combineEffect.Begin();
-			device.Textures[1] = scene2.SceneTexture;
-			spriteBatch.Draw(scene1.SceneTexture, new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), new Rectangle(viewPort.X, viewPort.Y, viewPort.Width, viewPort.Height), Color.White);
-
-			spriteBatch.End();
-			combineEffect.End();
-
-			ResolveRenderTarget();
-			return new PostProcessResult(resolveTarget);
-		}
-		*/
 
 		#region IDisposable Members
 
@@ -264,13 +236,17 @@ namespace Xe.Graphics2D.PostProcess
 		/// <summary>
 		/// Apply Post Process effects depending on settings
 		/// </summary>
-		public override void  Draw(GameTime gameTime)
+		public override void Draw(GameTime gameTime)
 		{
 			PostProcessResult rlast = this.RetrieveFrameBuffer();
+			PostProcessEffect ppe = null;
 
 			while (AppliedEffects.Count > 0)
 			{
-				rlast = ApplyEffect(EffectDictionary[AppliedEffects.Dequeue()], rlast);
+				ppe = EffectDictionary[AppliedEffects.Dequeue()];
+
+				// after getting the effect, call his delegate (may come back to generic Manager ApplyEffect)
+				rlast = ppe.ApplyEffect(ppe, rlast);
 			}
 
 			this.Present(null, rlast);

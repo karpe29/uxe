@@ -51,8 +51,8 @@ namespace Xe.Graphics2D.PostProcess
 
 		#endregion
 
-		public AdvancedToneMapping(GraphicsDevice graphicsDevice, ContentManager contentManager)
-			: base (graphicsDevice, contentManager, "AdvancedToneMapping")
+		public AdvancedToneMapping(PostProcessManager manager)
+			: base(manager, "AdvancedToneMapping")
         {
             exposureParameter = m_effect.Parameters["exposure"];
             defogParameter = m_effect.Parameters["defog"];
