@@ -158,8 +158,8 @@ namespace Xe
 			ServiceHelper.Add<IEbiService>(m_ebi);
 
 			m_guiManager = new GUIManager<SpriteRenderer>(this, m_ebi);
-			m_guiManager.UpdateOrder = 10 * 1000;
-			m_guiManager.DrawOrder = 10 * 1000;
+			m_guiManager.UpdateOrder = 9 * 1000;
+			m_guiManager.DrawOrder = 9 * 1000;
 			Components.Add(m_guiManager);
 			ServiceHelper.Add<IGUIManager>(m_guiManager);
 
@@ -183,8 +183,8 @@ namespace Xe
 			m_guiManager.LoadSettings(@"Content\XML\Xe_GUI.xml");
 
 			s_postProcessManager = new PostProcessManager(this, m_graphics.GraphicsDevice, s_contentManager);
-			s_postProcessManager.UpdateOrder = 14 * 1000;
-			s_postProcessManager.DrawOrder = 14 * 1000;
+			s_postProcessManager.UpdateOrder = 10 * 1000;
+			s_postProcessManager.DrawOrder = 10 * 1000;
 			Components.Add(s_postProcessManager);
 
 			base.Initialize();
@@ -204,20 +204,7 @@ namespace Xe
 
 		protected override void Draw(GameTime gameTime)
 		{
-			//PostProcessResult r = s_postProcessManager.RetrieveFrameBuffer();
-			//r = pp.ApplySmartBlur(r);
-			//r = pp.ApplyGaussianBlurWithBloomH(r);
-			//r = pp.ApplyGaussianBlurWithBloomV(r);
-			//r = pp.ApplyMonochrome(r);
-
-			//PostProcessResult s = pp.ApplyBloomExtract(r);
-			//r = pp.CombineScreens(r, s);
-			//r = pp.ApplyRadialBlur(r);
-			//pp.Present(null, r);
-
 			base.Draw(gameTime);
-
-			//s_postProcessManager.Draw(gameTime);
 		}
 
 		int i = 0;

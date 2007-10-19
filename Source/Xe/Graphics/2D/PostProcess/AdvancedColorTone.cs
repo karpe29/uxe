@@ -66,8 +66,8 @@ namespace Xe.Graphics2D.PostProcess
 
 		#endregion
 
-		public AdvancedColorTone(GraphicsDevice graphicsDevice, ContentManager contentManager)
-			: base(graphicsDevice, contentManager, "AdvancedColorTone")
+		public AdvancedColorTone(PostProcessManager manager)
+			: base(manager, "AdvancedColorTone")
 		{
 			lightColorParameter = m_effect.Parameters["LightColor"];
 			darkColorParameter = m_effect.Parameters["DarkColor"];

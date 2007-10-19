@@ -31,7 +31,7 @@ namespace Xe.GameScreen
 
 			m_safeArea = new SafeArea(GameScreenManager.Game);
 			m_safeArea.Enabled = m_safeArea.Visible = false;
-			m_safeArea.DrawOrder = 10*1000 + 1;
+			m_safeArea.DrawOrder = 10 * 1000 + 1;
 			m_safeArea.Initialize();
 
 			GameScreenManager.Game.Components.Add(m_safeArea);

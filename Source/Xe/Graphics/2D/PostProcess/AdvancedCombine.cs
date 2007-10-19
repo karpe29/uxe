@@ -77,8 +77,8 @@ namespace Xe.Graphics2D.PostProcess
 
 		#endregion
 
-        public AdvancedCombine(GraphicsDevice graphicsDevice, ContentManager contentManager)
-			: base (graphicsDevice, contentManager, "AdvancedCombine")
+        public AdvancedCombine(PostProcessManager manager)
+			: base (manager, "AdvancedCombine")
         {
             Intensity1Parameter = m_effect.Parameters["Intensity1"];
             Intensity2Parameter = m_effect.Parameters["Intensity2"];
@@ -86,6 +86,26 @@ namespace Xe.Graphics2D.PostProcess
             Saturation2Parameter = m_effect.Parameters["Saturation2"];
             SaturationColorParameter = m_effect.Parameters["SaturationColor"];
 
+			this.ApplyEffect = new ApplyEffectDelegate(CombineScreens);
         }
+
+		public PostProcessResult CombineScreens(PostProcessEffect ppe, PostProcessResult scene)
+		{
+			m_manager.SwitchSetRenderTarget();
+
+			m_manager.SpriteBatch.Begin(SpriteBlendMode.None, SpriteSortMode.Immediate, SaveStateMode.None);
+
+			this.BeginPostProcess();
+
+			m_manager.GraphicsDevice.Textures[1] = m_manager.RetrieveFrameBuffer().SceneTexture;
+
+			m_manager.SpriteBatch.Draw(scene.SceneTexture, new Rectangle(m_manager.Viewport.X, m_manager.Viewport.Y, m_manager.Viewport.Width, m_manager.Viewport.Height),
+				new Rectangle(m_manager.Viewport.X, m_manager.Viewport.Y, m_manager.Viewport.Width, m_manager.Viewport.Height), Color.White);
+
+			m_manager.SpriteBatch.End();
+			this.EndPostProcess();
+
+			return new PostProcessResult(m_manager.ResolveRenderTarget());
+		}
     }
 }

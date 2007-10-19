@@ -32,14 +32,13 @@ float4 DownFilter( in float2 Tex : TEXCOORD0 ) : COLOR0
     {
         Color += tex2D(TextureSampler, Tex + PixelCoordsDownFilter[i].xy );
     }
-    return Color / 16;
+    return Color /16;
 }
 
 technique DownSample
 {
     pass p0
     {
-        VertexShader = null;
         PixelShader = compile ps_2_0 DownFilter();
         ZEnable = false;
     }

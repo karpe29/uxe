@@ -1,6 +1,7 @@
 // Pixel shader extracts the brighter areas of an image.
 sampler TextureSampler : register(s0);
 float Threshold = 0.25F;
+
 float4 PixelShader(float2 texCoord : TEXCOORD0) : COLOR0
 {
     // Look up the original image color.

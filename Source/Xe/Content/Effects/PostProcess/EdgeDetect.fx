@@ -1,4 +1,5 @@
 sampler NormalSampler : register(s0);
+
 float2 PixelKernel[4] =
 {
     { 0,  1},
@@ -31,7 +32,6 @@ technique EdgeDetect
 {
     pass p0
     {
-        VertexShader = null;
         PixelShader = compile ps_2_0 _PixelShader();
         ZEnable = false;
     }
