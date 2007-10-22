@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Xe.Graphics2D.PostProcess;
+using Microsoft.Xna.Framework.Content;
 
 namespace Xe.Graphics2D.PostProcess
 {

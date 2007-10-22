@@ -14,7 +14,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
-using Xe.Tools;
 using Microsoft.Xna.Framework.Content;
 using System.IO;
 using System.Collections;
