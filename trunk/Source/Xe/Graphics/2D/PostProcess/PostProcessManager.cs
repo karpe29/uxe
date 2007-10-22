@@ -110,6 +110,8 @@ namespace Xe.Graphics2D.PostProcess
 		}
 
 		// MUST NOT BE CALLED WHEN VIEWPORT IS DIFFERENT FROM DEFAULT ONE.
+		// WILL probably get random results if device lost/reset happen during multiplayer draw (if it can happens)
+		// OR WORSE, can even CRASH !
 		private void CreateRenderTargets()
 		{
 			m_spriteBatch = new SpriteBatch(this.m_device);
