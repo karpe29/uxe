@@ -99,7 +99,7 @@ namespace Xe
 		private ConsoleScreen m_consoleScreen;
 		private IntroScreen m_introScreen;
 
-		private GUIManager<SpriteRenderer> m_guiManager;
+		private GUIManager<VertexRenderer> m_guiManager;
 
 		private Reporter m_reporter;
 
@@ -157,7 +157,7 @@ namespace Xe
 			Components.Add(m_ebi);
 			ServiceHelper.Add<IEbiService>(m_ebi);
 
-			m_guiManager = new GUIManager<SpriteRenderer>(this, m_ebi);
+			m_guiManager = new GUIManager<VertexRenderer>(this, m_ebi);
 			m_guiManager.UpdateOrder = 9 * 1000;
 			m_guiManager.DrawOrder = 9 * 1000;
 			Components.Add(m_guiManager);

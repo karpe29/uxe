@@ -536,6 +536,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>AnimatedQuad</Name>
     </Compile>
+    <Compile Include="Graphics\GUI\Quads\VertexRenderer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>VertexRenderer</Name>
+    </Compile>
     <Compile Include="Graphics\GUI\Quads\Frame.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Frame</Name>
@@ -748,6 +752,10 @@
     <Compile Include="Tools\LineRenderer.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>LineRenderer</Name>
+    </Compile>
+    <Compile Include="Tools\ManagedThread.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ManagedThread</Name>
     </Compile>
     <Compile Include="Tools\Map.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -1273,6 +1281,30 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Name>PostScreenShadowBlur</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Effects\VertexRenderer.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>VertexRenderer</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Effects\PostProcess\Shockwave.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Shockwave</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Effects\PostProcess\BlurBloom.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>BlurBloom</Name>
     </Content>
   </ItemGroup>
   <ItemGroup>
