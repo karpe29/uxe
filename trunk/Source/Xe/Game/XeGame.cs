@@ -233,7 +233,7 @@ namespace Xe
 
 			this.Window.Title = s_postProcessManager.EffectDictionary.Keys[i] + " " + i;
 
-			s_postProcessManager.AppliedEffects.Enqueue(s_postProcessManager.EffectDictionary.Keys[i]);
+			//s_postProcessManager.AppliedEffects.Enqueue(s_postProcessManager.EffectDictionary.Keys[i]);
 		}
 	}
 }

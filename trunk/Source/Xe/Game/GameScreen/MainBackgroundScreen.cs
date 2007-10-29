@@ -35,7 +35,7 @@ namespace Xe.GameScreen
 		float modelRotation = 0.0f;
 
 		//Position of the Camera in world space, for our view matrix
-		Vector3 cameraPosition = new Vector3(-200, 0, 0);
+		Vector3 cameraPosition = new Vector3(-100, 0, 0);
 		Vector3 cameraTagetPosition = new Vector3(0, 0, 0);
 
 		private Matrix projectionMatrix;
@@ -79,8 +79,9 @@ namespace Xe.GameScreen
 			for (int i = 0; i <= 200; i++)
 			{
 				pos = new Vector3(i * 2, 0, 0);
-				rayon = 50 - 10 * Math.Log((double)i / 5 + 1);
-				les_cercles.Add(new cercle(XeGame.Device, nb_cotes, rayon, pos, orient, coul[i % 2]));
+				//rayon = 50 - 10 * Math.Log((double)i / 5 + 1);
+				rayon = 50;
+				les_cercles.Add(new cercle(XeGame.Device, nb_cotes, rayon, pos, orient,new Color(Convert.ToByte(i*255/200),0,Convert.ToByte(255-i*255/200))));
 			}
 			for (int i = 0; i < 200; i++)
 			{
@@ -107,8 +108,11 @@ namespace Xe.GameScreen
 
 			//myModel = XeGame.ContentManager.Load<Model>(@"Content\Models\MenuTunnel");
 			
-			myEffect = new BasicEffect(XeGame.Device,null);//XeGame.ContentManager.Load<Effect>(@"Content\Effects\MrWiggle");
-			((BasicEffect)myEffect).VertexColorEnabled = true;
+			//myEffect = new BasicEffect(XeGame.Device,null);
+			myEffect = XeGame.ContentManager.Load<Effect>(@"Content\Effects\MrWiggle");
+
+			myEffect.CurrentTechnique = myEffect.Techniques[0];
+			//((BasicEffect)myEffect).VertexColorEnabled = true;
 			/*((BasicEffect)myEffect).LightingEnabled = true;
 			((BasicEffect)myEffect).DirectionalLight0.Enabled = true;
 			((BasicEffect)myEffect).DirectionalLight0.DiffuseColor = Vector3.One;
@@ -123,14 +127,18 @@ namespace Xe.GameScreen
 			foreach (EffectParameter p in myEffect.Parameters)
 				Console.WriteLine(p.Name);
 			*/
-			myTexture = XeGame.ContentManager.Load<Texture2D>(@"Content\Textures\wedge_p1_diff_v1");
+			myTexture = XeGame.ContentManager.Load<Texture2D>(@"Content\Textures\FireGrade");
+
+			myEffect.Parameters["colorTexture"].SetValue(myTexture);
 
 			//Aspect ratio to use for the projection matrix
 			aspectRatio = aspectRatio = (float)this.GraphicsDevice.PresentationParameters.BackBufferWidth / (float)this.GraphicsDevice.PresentationParameters.BackBufferHeight;
 
-			((BasicEffect)myEffect).World = Matrix.Identity;
+			
+			/*((BasicEffect)myEffect).World = Matrix.Identity;
 			((BasicEffect)myEffect).View = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
 			((BasicEffect)myEffect).Projection= Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 500000.0f);
+			 */
 		}
 
 		#region IGameScreen Members
@@ -207,8 +215,16 @@ namespace Xe.GameScreen
 				((BasicEffect)myEffect).World = Matrix.Identity;
 				((BasicEffect)myEffect).View = ViewMatrix;
 				((BasicEffect)myEffect).Projection = projectionMatrix;
+			  
+			 
 
 			*/
+			myEffect.Parameters["WorldIT"].SetValue(Matrix.Identity);
+			myEffect.Parameters["WorldViewProj"].SetValue(Matrix.Identity * ViewMatrix * projectionMatrix);
+			myEffect.Parameters["World"].SetValue(Matrix.Identity);
+			myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(ViewMatrix));
+			
+			
 				myEffect.Begin();
 		
 				foreach (EffectPass pass in myEffect.CurrentTechnique.Passes)
@@ -239,7 +255,8 @@ namespace Xe.GameScreen
 		public override void Update(GameTime gameTime)
 		{
 			long time = (long)(gameTime.ElapsedGameTime.Milliseconds);
-			
+			myEffect.Parameters["Timer"].SetValue(time);
+
 			/*if (Keyboard.GetState()[Keys.Up] == KeyState.Down)
 			{
 				Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(100f, 500f, 0f), new Vector3(100f, 0f, 0f), new Vector3(1f, 0, 0));
@@ -351,6 +368,7 @@ namespace Xe.GameScreen
 			private int nb_cotes;
 			public cercle cercle_debut, cercle_fin;
 			public VertexPositionColor[] vertices;
+			private VertexDeclaration vertexDeclaration;
 
 
 
@@ -381,6 +399,7 @@ namespace Xe.GameScreen
 				cercle_debut.vertices.CopyTo(vertices, 0);
 				cercle_fin.vertices.CopyTo(vertices, nb_cotes);
 
+				vertexDeclaration = new VertexDeclaration(graph, VertexPositionColor.VertexElements);
 			}
 
 
@@ -397,8 +416,8 @@ namespace Xe.GameScreen
 
 				graph.Vertices[0].SetSource(vertexBuffer, 0, VertexPositionColor.SizeInBytes);
 				graph.Indices = this.indexBuffer;
+				graph.VertexDeclaration = vertexDeclaration;
 
-				graph.VertexDeclaration = new VertexDeclaration(graph, VertexPositionColor.VertexElements);
 				graph.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, nb_cotes * 2, 0, nb_cotes * 2);
 			}
 
