@@ -26,9 +26,12 @@ namespace Xe.GameScreen
 			: base(gameScreenManager, false)
 		{
 			// if we don't already have a backgroundScreen, create one
-			if (this.GameScreenManager.CurrentGameScreen.GetType() != BackgroundScreenType)
+			
+			/*if (this.GameScreenManager.CurrentGameScreen.GetType() != BackgroundScreenType)
 				if (BackgroundScreenType.BaseType == typeof(IGameScreen))
 					Activator.CreateInstance(BackgroundScreenType, this.GameScreenManager);
+			*/
+			MainBackgroundScreen mbgs = new MainBackgroundScreen(this.GameScreenManager);
 
 			// add it to the list of GameScreens
 			this.GameScreenManager.AddGameScreen(this);
