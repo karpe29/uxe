@@ -127,7 +127,7 @@ namespace Xe.GameScreen
 			foreach (EffectParameter p in myEffect.Parameters)
 				Console.WriteLine(p.Name);
 			*/
-			myTexture = XeGame.ContentManager.Load<Texture2D>(@"Content\Textures\FireGrade");
+			myTexture = XeGame.ContentManager.Load<Texture2D>(@"Content\Textures\GUI");
 
 			myEffect.Parameters["colorTexture"].SetValue(myTexture);
 
@@ -227,7 +227,13 @@ namespace Xe.GameScreen
 			myEffect.Parameters["WorldViewProj"].SetValue(world * view * projection);
 			myEffect.Parameters["World"].SetValue(world);
 			myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(view));
+			myEffect.Parameters["LightPos"].SetValue(new Vector3(100,49,0));
+			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 1, 1));
+			myEffect.Parameters["AmbiColor"].SetValue(new Vector3(.5f, .5f, .5f));
+			myEffect.Parameters["SurfColor"].SetValue(new Vector3(1, 0, 0));
 
+
+			
 			
 			
 				myEffect.Begin();
@@ -314,7 +320,7 @@ namespace Xe.GameScreen
 			private GraphicsDevice graph;
 			public int nb_cotes;
 			public double rayon;
-			public VertexPositionColor[] vertices;
+			public VertexPositionTexture[] vertices;
 			public Vector3 pos;
 			public Matrix orient;
 			public Color couleur;
@@ -329,12 +335,12 @@ namespace Xe.GameScreen
 				couleur = l_couleur;
 
 
-				vertices = new VertexPositionColor[nb_cotes];
+				vertices = new VertexPositionTexture[nb_cotes];
 				deplace();
 
 				for (int j = 0; j < nb_cotes; j++)
 				{
-					vertices[j].Color = couleur;
+					vertices[j].TextureCoordinate = new Vector2(((float)j)/((float)nb_cotes),l_pos.X/((float)200));
 				}
 			}
 
@@ -372,7 +378,7 @@ namespace Xe.GameScreen
 			private VertexBuffer vertexBuffer;
 			private int nb_cotes;
 			public cercle cercle_debut, cercle_fin;
-			public VertexPositionColor[] vertices;
+			public VertexPositionTexture[] vertices;
 			private VertexDeclaration vertexDeclaration;
 
 
@@ -395,8 +401,8 @@ namespace Xe.GameScreen
 				this.indexBuffer = new IndexBuffer(graph, typeof(short), indices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
 				this.indexBuffer.SetData(indices);
 
-				vertices = new VertexPositionColor[nb_cotes * 2];
-				this.vertexBuffer = new VertexBuffer(graph, typeof(VertexPositionColor), vertices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
+				vertices = new VertexPositionTexture[nb_cotes * 2];
+				this.vertexBuffer = new VertexBuffer(graph, typeof(VertexPositionTexture), vertices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
 
 	
 				
@@ -404,7 +410,7 @@ namespace Xe.GameScreen
 				cercle_debut.vertices.CopyTo(vertices, 0);
 				cercle_fin.vertices.CopyTo(vertices, nb_cotes);
 
-				vertexDeclaration = new VertexDeclaration(graph, VertexPositionColor.VertexElements);
+				vertexDeclaration = new VertexDeclaration(graph, VertexPositionTexture.VertexElements);
 			}
 
 
@@ -419,7 +425,7 @@ namespace Xe.GameScreen
 
 				this.vertexBuffer.SetData(vertices);
 
-				graph.Vertices[0].SetSource(vertexBuffer, 0, VertexPositionColor.SizeInBytes);
+				graph.Vertices[0].SetSource(vertexBuffer, 0, VertexPositionTexture.SizeInBytes);
 				graph.Indices = this.indexBuffer;
 				graph.VertexDeclaration = vertexDeclaration;
 
