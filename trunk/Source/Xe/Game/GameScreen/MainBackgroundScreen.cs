@@ -111,7 +111,7 @@ namespace Xe.GameScreen
 			//myEffect = new BasicEffect(XeGame.Device,null);
 			myEffect = XeGame.ContentManager.Load<Effect>(@"Content\Effects\MrWiggle");
 
-			myEffect.CurrentTechnique = myEffect.Techniques[0];
+			myEffect.CurrentTechnique = myEffect.Techniques[1];
 			//((BasicEffect)myEffect).VertexColorEnabled = true;
 			/*((BasicEffect)myEffect).LightingEnabled = true;
 			((BasicEffect)myEffect).DirectionalLight0.Enabled = true;
@@ -219,10 +219,15 @@ namespace Xe.GameScreen
 			 
 
 			*/
-			myEffect.Parameters["WorldIT"].SetValue(Matrix.Identity);
-			myEffect.Parameters["WorldViewProj"].SetValue(Matrix.Identity * ViewMatrix * projectionMatrix);
-			myEffect.Parameters["World"].SetValue(Matrix.Identity);
-			myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(ViewMatrix));
+			Matrix world = Matrix.Identity;
+			Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
+			Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 500000.0f);
+
+			myEffect.Parameters["WorldIT"].SetValue(Matrix.Invert(Matrix.Transpose( world)));
+			myEffect.Parameters["WorldViewProj"].SetValue(world * view * projection);
+			myEffect.Parameters["World"].SetValue(world);
+			myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(view));
+
 			
 			
 				myEffect.Begin();
@@ -255,21 +260,21 @@ namespace Xe.GameScreen
 		public override void Update(GameTime gameTime)
 		{
 			long time = (long)(gameTime.ElapsedGameTime.Milliseconds);
-			myEffect.Parameters["Timer"].SetValue(time);
-
-			/*if (Keyboard.GetState()[Keys.Up] == KeyState.Down)
+			myEffect.Parameters["Timer"].SetValue((float)(gameTime.TotalGameTime.TotalSeconds));
+			/*
+			if (Keyboard.GetState()[Keys.Right] == KeyState.Down)
 			{
-				Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(100f, 500f, 0f), new Vector3(100f, 0f, 0f), new Vector3(1f, 0, 0));
-				myEffect.Parameters["xView"].SetValue(viewMatrix);
+				viewMatrix = Matrix.CreateLookAt(new Vector3(100f, 500f, 0f), new Vector3(100f, 0f, 0f), new Vector3(1f, 0, 0));
+				myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(ViewMatrix));
 
 
 			}
-			if (Keyboard.GetState()[Keys.Down] == KeyState.Down)
+			if (Keyboard.GetState()[Keys.Left] == KeyState.Down)
 			{
-				Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(-75f, 10f, -10f), new Vector3(100f, 0f, 0f), new Vector3(0, 1f, 0));
-				myEffect.Parameters["xView"].SetValue(viewMatrix);
-			}*/
+				myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(ViewMatrix));
 
+			}
+			*/
 			
 			//courbe += inc_courbe;
 			//if (Math.Abs(courbe) >= 0.005) inc_courbe = -inc_courbe;
