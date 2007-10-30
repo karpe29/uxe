@@ -18,7 +18,7 @@ namespace Xe.GameScreen
 		Effect myEffect;
 		Texture2D myTexture;
 
-		private static int nb_cotes = 128;
+		private static int nb_cotes = 60;
 		private double ratio;
 		private List<tube> les_tubes = new List<tube>();
 		private List<cercle> les_cercles = new List<cercle>();
@@ -38,36 +38,56 @@ namespace Xe.GameScreen
 		Vector3 cameraPosition = new Vector3(-100, 0, 0);
 		Vector3 cameraTagetPosition = new Vector3(0, 0, 0);
 
-		private Matrix projectionMatrix;
+		private Matrix projection;
+		private Matrix view;
+		private Matrix world;
 		private float aspectRatio;
 
 		Random r = new Random();
 
-		public Matrix ViewMatrix
-		{
-			get
-			{
-				// pas optimal du tout !
-				return Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up) * Matrix.CreateRotationZ(modelRotation);
-			}
-			/*set
-			{
-				// Set view matrix, usually only done in ChaseCamera.Update!
-				viewMatrix = value;
-			}*/
-		}
 
-		public Matrix ProjectionMatrix
+		public Matrix Projection
 		{
 			get
 			{
-				return projectionMatrix;
+				return projection;
 			}
 			set
 			{
-				projectionMatrix = value;
+				projection = value;
+			myEffect.Parameters["WorldViewProj"].SetValue(World * View * projection);
 			}
 		}
+
+
+		public Matrix View
+		{
+			get
+			{
+				return view;
+			}
+			set
+			{
+				view = value;
+				myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(view));
+			}
+		}
+
+
+		public Matrix World
+		{
+			get
+			{
+				return world;
+			}
+			set
+			{
+				world = value;
+			myEffect.Parameters["WorldIT"].SetValue(Matrix.Invert(Matrix.Transpose( world)));
+			myEffect.Parameters["World"].SetValue(world);
+			}
+		}
+
 
 		private float TimeScale = 4.0f, Horizontal = 0.75f, Vertical = 0.75f;
 
@@ -133,6 +153,16 @@ namespace Xe.GameScreen
 
 			//Aspect ratio to use for the projection matrix
 			aspectRatio = aspectRatio = (float)this.GraphicsDevice.PresentationParameters.BackBufferWidth / (float)this.GraphicsDevice.PresentationParameters.BackBufferHeight;
+
+
+			World = Matrix.Identity;
+			View = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
+			Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 500000.0f);
+
+			myEffect.Parameters["LightPos"].SetValue(new Vector3(20, 49.9f, 0));
+			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 0, 0));
+			myEffect.Parameters["AmbiColor"].SetValue(new Vector3(.5f, .5f, .5f));
+			myEffect.Parameters["SurfColor"].SetValue(new Vector3(1, 1, 1));
 
 			
 			/*((BasicEffect)myEffect).World = Matrix.Identity;
@@ -219,18 +249,6 @@ namespace Xe.GameScreen
 			 
 
 			*/
-			Matrix world = Matrix.Identity;
-			Matrix view = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
-			Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 500000.0f);
-
-			myEffect.Parameters["WorldIT"].SetValue(Matrix.Invert(Matrix.Transpose( world)));
-			myEffect.Parameters["WorldViewProj"].SetValue(world * view * projection);
-			myEffect.Parameters["World"].SetValue(world);
-			myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(view));
-			myEffect.Parameters["LightPos"].SetValue(new Vector3(20,49.9f,0));
-			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 0, 0));
-			myEffect.Parameters["AmbiColor"].SetValue(new Vector3(.5f, .5f, .5f));
-			myEffect.Parameters["SurfColor"].SetValue(new Vector3(1, 1, 1));
 
 
 			
@@ -393,9 +411,9 @@ namespace Xe.GameScreen
 				for (int i = 0; i < nb_cotes; i++)
 				{
 					indices[i * 6+2] = indices[i * 6 + 3] = (short)(i);
-					indices[i * 6 + 1] = (short)(i + 1);
-					indices[i * 6] = indices[i * 6 + 5] = (short)(i + 1 );
-					indices[i * 6 + 4] = (short)(nb_cotes + i);
+					indices[i * 6 + 1] = (short)((i + 1));
+					indices[i * 6] = indices[i * 6 + 5] = (short)(nb_cotes +i + 2 );
+					indices[i * 6 + 4] = (short)(nb_cotes +1+ i);
 				}
 
 				this.indexBuffer = new IndexBuffer(graph, typeof(short), indices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
