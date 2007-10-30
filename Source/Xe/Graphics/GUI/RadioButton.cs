@@ -14,7 +14,7 @@ using Xe.Graphics;
 using Xe.Input;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
 	public class RadioButton : UIControl
 	{
@@ -27,7 +27,7 @@ namespace Xe.GUI
 		public event ClickHandler CheckChanged;
 		#endregion
 
-		public RadioButton(Game game, IGUIManager guiManager)
+		public RadioButton(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			m_label = new Label(game, guiManager);
@@ -172,11 +172,11 @@ namespace Xe.GUI
 			}
 			else
 			{
-				if (this.GUIManager != null)
+				if (this.GuiManager != null)
 				{
-					for (int i = 0; i < this.GUIManager.Controls.MasterList.Count; i++)
+					for (int i = 0; i < this.GuiManager.Controls.MasterList.Count; i++)
 					{
-						RadioButton _button = this.GUIManager.Controls.MasterList[i] as RadioButton;
+						RadioButton _button = this.GuiManager.Controls.MasterList[i] as RadioButton;
 						if (_button != null && _button != this && _button.Visible && _button.Enabled)
 							if (_button.Checked)
 								return false;
@@ -202,11 +202,11 @@ namespace Xe.GUI
 				}
 				else
 				{
-					if (this.GUIManager != null)
+					if (this.GuiManager != null)
 					{
-						for (int i = 0; i < this.GUIManager.Controls.MasterList.Count; i++)
+						for (int i = 0; i < this.GuiManager.Controls.MasterList.Count; i++)
 						{
-							RadioButton _button = this.GUIManager.Controls.MasterList[i] as RadioButton;
+							RadioButton _button = this.GuiManager.Controls.MasterList[i] as RadioButton;
 							if (_button != null && _button != this && _button.Visible && _button.Enabled)
 								_button.Checked = false;
 						}

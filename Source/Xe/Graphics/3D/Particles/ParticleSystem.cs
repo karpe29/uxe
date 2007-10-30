@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Xe.Tools;
 using Xe.SpaceRace;
+using Xe.Gui;
 #endregion
 
 namespace Xe.Graphics3D.Particles

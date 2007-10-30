@@ -16,6 +16,8 @@
     <StartupObject>
     </StartupObject>
     <ApplicationIcon>Game.ico</ApplicationIcon>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>XeBinary.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Xbox 360' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,7 +47,7 @@
     <NoStdLib>true</NoStdLib>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <NoWarn>
     </NoWarn>
@@ -79,7 +81,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
@@ -127,9 +128,9 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Exception</Name>
     </Compile>
-    <Compile Include="Tools\File.cs">
+    <Compile Include="Tools\XeFile.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>File</Name>
+      <Name>XeFile</Name>
     </Compile>
     <Compile Include="Tools\IniFile.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -139,7 +140,7 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>LogFile</Name>
     </Compile>
-    <Compile Include="Tools\Stats.cs">
+    <Compile Include="Graphics\GUI\Stats.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Stats</Name>
     </Compile>
@@ -741,7 +742,7 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IShipPhysical</Name>
     </Compile>
-    <Compile Include="Tools\Console.cs">
+    <Compile Include="Graphics\GUI\Console.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Console</Name>
     </Compile>
@@ -749,7 +750,7 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Helper</Name>
     </Compile>
-    <Compile Include="Tools\LineRenderer.cs">
+    <Compile Include="Graphics\2D\LineRenderer.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>LineRenderer</Name>
     </Compile>
@@ -785,7 +786,7 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Tokenizer</Name>
     </Compile>
-    <Compile Include="Tools\VectorRenderer.cs">
+    <Compile Include="Graphics\2D\VectorRenderer.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>VectorRenderer</Name>
     </Compile>
@@ -1312,6 +1313,42 @@
       <Processor>SpriteTextureProcessor</Processor>
       <Name>team</Name>
     </Content>
+    <Content Include="Content\Textures\cube.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>cube</Name>
+    </Content>
+    <Content Include="Content\Textures\cube_rusty.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>cube_rusty</Name>
+    </Content>
+    <Content Include="Content\Textures\cube_xna.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>cube_xna</Name>
+    </Content>
+    <Content Include="Content\Textures\cube_ziggyware.png">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>cube_ziggyware</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Models\cube.fbx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>cube</Name>
+    </Content>
+    <None Include="XeBinary.pfx">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>XeBinary</Name>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Physics\2D\" />

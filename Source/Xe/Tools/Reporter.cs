@@ -351,6 +351,7 @@ namespace Xe.Tools
 
     public enum ReportLevel
     {
+		None = 0,
         Messages = 1,
         Warnings = 2,
         Errors = 4,

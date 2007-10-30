@@ -132,7 +132,7 @@ namespace Xe.Tools
         #endregion
 
         #region XML
-        public XmlNode ToXML()
+        public XmlNode ToXml()
         {
             return null;
         }
@@ -195,13 +195,13 @@ namespace Xe.Tools
         #endregion
     }
 
-    public class Map<I, T> : IDisposable
+    public class Map<TI, TK> : IDisposable
     {
         #region Item Class
         private class MapItem
         {
-            public T ObjectRef;
-            public I Index;
+            public TK ObjectRef;
+            public TI Index;
 
             public MapItem()
             {
@@ -256,7 +256,7 @@ namespace Xe.Tools
         #endregion
 
         #region Map Item Management (MIM)
-        public void Add(I index, T objectRef)
+        public void Add(TI index, TK objectRef)
         {
             try
             {
@@ -278,7 +278,7 @@ namespace Xe.Tools
             }
         }
 
-        public void Remove(I index)
+        public void Remove(TI index)
         {
             try
             {
@@ -312,15 +312,15 @@ namespace Xe.Tools
         #endregion
 
         #region Indexing
-        public T this[I index]
+        public TK this[TI index]
         {
             get
             {
                 foreach (MapItem _item in m_map)
                     if (_item.Index.Equals(index))
-                        return (T)_item.ObjectRef;
+                        return (TK)_item.ObjectRef;
 
-                return default(T);
+                return default(TK);
             }
             set
             {

@@ -12,13 +12,13 @@ namespace Xe.Graphics2D.PostProcess
 		#region Variables and Properties
 
 		EffectParameter weightsParameter, offsetsParameter;
-		EffectParameter bloomScaleParameter = null;
+		EffectParameter bloomScaleParameter;
 
 		int m_SampleCount;
 
-		private float m_BlurAmount = 0;
-		private readonly float[] Weights = null;
-		private readonly Vector2[] Offsets = null;
+		private float m_BlurAmount;
+		private readonly float[] Weights;
+		private readonly Vector2[] Offsets;
 
 		public float BlurAmount
 		{

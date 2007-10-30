@@ -4,14 +4,15 @@ using System.Text;
 
 using System.IO;
 
-namespace Xe.Tools
+namespace Xe.Tools.IO
 {
-	public class XeFile
+	public class XeFile : IDisposable
 	{
-		private string m_filename = "";
+		private string m_fileName = "";
 		private FileMode m_fileMode = FileMode.OpenOrCreate; 
 		private FileAccess m_fileAccess = FileAccess.ReadWrite;
 		private FileShare m_fileShare = FileShare.None; 
+		
 		private FileStream m_fileStream = null;			
 		private StreamWriter m_streamWriter = null;
 		private StreamReader m_streamReader = null;
@@ -22,7 +23,7 @@ namespace Xe.Tools
 		{
 			get
 			{
-				return m_filename;
+				return m_fileName;
 			}
 		}
 
@@ -33,12 +34,12 @@ namespace Xe.Tools
 				try
 				{
 					if (m_fileStream == null)
-						m_fileStream = new FileStream(m_filename, m_fileMode, m_fileAccess, m_fileShare);
+						m_fileStream = new FileStream(m_fileName, m_fileMode, m_fileAccess, m_fileShare);
 					return m_fileStream;
 				}
 				catch (Exception ex)
 				{
-					throw (ex);
+					throw ;
 				}
 			}
 		}
@@ -58,7 +59,7 @@ namespace Xe.Tools
 				}
 				catch (Exception ex)
 				{
-					throw (ex);
+					throw;
 				}
 			}
 		}
@@ -77,40 +78,40 @@ namespace Xe.Tools
 				}
 				catch (Exception ex)
 				{
-					throw (ex);
+					throw;
 				}
 			}
 		}
 
-		public XeFile(string filename)
+		public XeFile(string fileName)
 		{
-			m_filename = filename;
+			m_fileName = fileName;
 		}
 
-		public XeFile(string filename, FileMode mode)
+		public XeFile(string fileName, FileMode mode)
 		{
-			m_filename = filename;
+			m_fileName = fileName;
 			m_fileMode = mode;
 		}
 
-		public XeFile(string filename, FileMode mode, FileAccess access)
+		public XeFile(string fileName, FileMode mode, FileAccess access)
 		{
-			m_filename = filename;
+			m_fileName = fileName;
 			m_fileMode = mode;
 			m_fileAccess = access;
 		}
 
-		public XeFile(string filename, FileMode mode, FileAccess access, FileShare share)
+		public XeFile(string fileName, FileMode mode, FileAccess access, FileShare share)
 		{
-			m_filename = filename;
+			m_fileName = fileName;
 			m_fileMode = mode;
 			m_fileAccess = access;
 			m_fileShare = share;
 		}
 
-		public XeFile(string filename, FileMode mode, FileAccess access, FileShare share, bool autoFlush)
+		public XeFile(string fileName, FileMode mode, FileAccess access, FileShare share, bool autoFlush)
 		{
-			m_filename = filename;
+			m_fileName = fileName;
 			m_fileMode = mode;
 			m_fileAccess = access;
 			m_fileShare = share;
@@ -133,11 +134,11 @@ namespace Xe.Tools
 		{
 			if (m_fileStream != null)
 			{
+				m_streamWriter.Close();
+				m_streamReader.Close();
+				
 				FileStream.Flush();
 				FileStream.Close();
-				m_fileStream = null;
-				m_streamWriter = null;
-				m_streamReader = null;
 			}
 		}
 
@@ -151,7 +152,7 @@ namespace Xe.Tools
 			}
 			catch (Exception ex)
 			{
-				throw ex;
+				throw;
 			}
 		}
 
@@ -213,5 +214,30 @@ namespace Xe.Tools
 				throw;
 			}
 		}
+
+		#region IDisposable Members
+
+		public void Dispose()
+		{
+			if (m_streamWriter != null)
+			{
+				m_streamWriter.Dispose();
+				m_streamWriter = null;
+			}
+
+			if (m_streamReader != null)
+			{
+				m_streamReader.Dispose();
+				m_streamReader = null;
+			}
+
+			if (m_fileStream != null)
+			{
+				m_fileStream.Dispose();
+				m_fileStream = null;
+			}
+		}
+
+		#endregion
 	}
 }

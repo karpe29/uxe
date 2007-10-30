@@ -11,10 +11,10 @@ namespace Xe.Graphics2D.PostProcess
 	{
 		#region Variables and Properties
 
-		private EffectParameter lightColorParameter = null;
-		private EffectParameter darkColorParameter = null;
-		private EffectParameter desatParameter = null;
-		private EffectParameter tonedParameter = null;
+		private EffectParameter lightColorParameter;
+		private EffectParameter darkColorParameter;
+		private EffectParameter desatParameter;
+		private EffectParameter tonedParameter;
 
 		public Vector3 LightColor
 		{

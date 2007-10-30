@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Content;
 #endregion
 
 
-namespace Xe.Tools
+namespace Xe.Graphics2D
 {
     /// <summary>
     /// Represents a single line segment.  Drawing is handled by the LineManager class.
@@ -111,7 +111,7 @@ namespace Xe.Tools
     /// <summary>
     /// Class to handle drawing a list of lines.
     /// </summary>
-    class LineRenderer
+    class LineRenderer : IDisposable
     {
         GraphicsDevice device;
         private Effect effect;
@@ -325,5 +325,30 @@ namespace Xe.Tools
 
             effect.End();
         }
-    }
+
+		#region IDisposable Members
+
+		public void Dispose()
+		{
+			if (vb != null)
+			{
+				vb.Dispose();
+				vb = null;
+			}
+
+			if (ib != null)
+			{
+				ib.Dispose();
+				ib = null;
+			}
+
+			if (vdecl != null)
+			{
+				vdecl.Dispose();
+				vdecl = null;
+			}
+		}
+
+		#endregion
+	}
 }

@@ -23,6 +23,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Xe.Tools;
+using Xe.Gui;
 #endregion
 
 namespace Xe.Graphics3D
@@ -109,7 +110,7 @@ namespace Xe.Graphics3D
         #endregion
 
         #region Event Handlers
-        protected virtual void OnCameraMatrixChanged(MatrixType type)
+        protected virtual void OnCameraMatrixChanged(object sender, MatrixType type)
         {
             if (m_camera != null)
             {

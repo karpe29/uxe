@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace Xe.Tools
+namespace Xe.Tools.Xml
 {
     /// <summary>
     /// XmlLoader provides basic, default functions for loading and parsing

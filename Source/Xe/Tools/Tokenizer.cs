@@ -108,18 +108,21 @@ namespace Xe.Tools
         /// Gets the rest of the string without tokenizing any of it.
         /// </summary>
         /// <returns>A String.</returns>
-        public string getRest()
+        public string Rest
         {
-            string temp = "";
-            for (int i = cToken + 1; i < myTokens.Length; i++)
-            {
-                if (i + 1 >= myTokens.Length)
-                    temp += myTokens[i].Trim();
-                else
-                    temp += myTokens[i].Trim() + " ";
-            }
+			get
+			{
+				string temp = "";
+				for (int i = cToken + 1; i < myTokens.Length; i++)
+				{
+					if (i + 1 >= myTokens.Length)
+						temp += myTokens[i].Trim();
+					else
+						temp += myTokens[i].Trim() + " ";
+				}
 
-            return temp;
+				return temp;
+			}
         }
 
         /// <summary>

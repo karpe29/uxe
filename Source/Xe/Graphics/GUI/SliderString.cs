@@ -9,7 +9,7 @@ using Xe.Input;
 
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
 	public enum SliderType
 	{
@@ -31,12 +31,12 @@ namespace Xe.GUI
 
 		private bool m_isLoopable = true;
 
-		public SliderString(Game game, IGUIManager guiManager)
+		public SliderString(Game game, IGuiManager guiManager)
 			: this(game, guiManager, SliderType.Horizontal)
 		{
 		}
 
-		public SliderString(Game game, IGUIManager guiManager, SliderType type)
+		public SliderString(Game game, IGuiManager guiManager, SliderType type)
 			: base(game, guiManager)
 		{
 			this.TreeLevel = 0;

@@ -6,18 +6,19 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Xe.Tools;
 using Xe.Input;
+using Xe.Gui;
 
 namespace Xe.GameScreen
 {
 	class ConsoleScreen : IGameScreen
 	{
-		private Xe.Tools.Console m_console;
-		private bool m_showConsole = false;
+		private Xe.Gui.Console m_console;
+		private bool m_showConsole;
 
 		public ConsoleScreen(GameScreenManager gameScreenManager) 
 			: base(gameScreenManager, true)
 		{
-			m_console = new Xe.Tools.Console(this.GameScreenManager.Game, XeGame.ContentManager);
+			m_console = new Xe.Gui.Console(this.GameScreenManager.Game, XeGame.ContentManager);
 			
 			m_console.DrawOrder = 10000;
 

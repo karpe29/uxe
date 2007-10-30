@@ -11,9 +11,9 @@ namespace Xe.Graphics2D.PostProcess
 	{
 		#region Variables and Properties
 
-		private EffectParameter blurWidthParameter = null;
-        private EffectParameter blurStartParameter = null;
-        private EffectParameter centerParameter = null;
+		private EffectParameter blurWidthParameter;
+        private EffectParameter blurStartParameter;
+        private EffectParameter centerParameter;
 
         public float BlurWidth
         {

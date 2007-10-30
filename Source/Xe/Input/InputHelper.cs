@@ -398,8 +398,10 @@ namespace Xe.Input
 		/// for an input text. Only used to enter the player name in the game.
 		/// </summary>
 		/// <param name="inputText">Input text</param>
-		public static void HandleKeyboardInput(ref string inputText)
+		public static string HandleKeyboardInput()
 		{
+			string outputText = "";
+
 			// Is a shift key pressed (we have to check both, left and right)
 			bool isShiftPressed =
 				keyboardState.IsKeyDown(Keys.LeftShift) ||
@@ -413,19 +415,21 @@ namespace Xe.Input
 					// No special key?
 					if (IsSpecialKey(pressedKey) == false &&
 						// Max. allow 32 chars
-						inputText.Length < 32)
+						outputText.Length < 32)
 					{
 						// Then add the letter to our inputText.
 						// Check also the shift state!
-						inputText += KeyToChar(pressedKey, isShiftPressed);
+						outputText += KeyToChar(pressedKey, isShiftPressed);
 					}
 					else if (pressedKey == Keys.Back &&
-						inputText.Length > 0)
+						outputText.Length > 0)
 					{
 						// Remove 1 character at end
-						inputText = inputText.Substring(0, inputText.Length - 1);
+						outputText = outputText.Substring(0, outputText.Length - 1);
 					}
 				}
+
+			return outputText;
 		}
 
 		/// <summary>

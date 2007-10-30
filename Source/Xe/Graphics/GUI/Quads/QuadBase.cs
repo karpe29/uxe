@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Xe;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
     public class QuadBase : Microsoft.Xna.Framework.DrawableGameComponent
     {

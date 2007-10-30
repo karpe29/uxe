@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Xe.GUI;
+using Xe.Gui;
 using Microsoft.Xna.Framework;
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
 	public class SliderUpButton : UIControl
 	{
-		public SliderUpButton(Game game, IGUIManager guiManager)
+		public SliderUpButton(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderUpButton";
@@ -18,7 +18,7 @@ namespace Xe.GUI
 
 	public class SliderDownButton : UIControl
 	{
-		public SliderDownButton(Game game, IGUIManager guiManager)
+		public SliderDownButton(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderDownButton";
@@ -29,7 +29,7 @@ namespace Xe.GUI
 
 	public class SliderRightButton : UIControl
 	{
-		public SliderRightButton(Game game, IGUIManager guiManager)
+		public SliderRightButton(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderRightButton";
@@ -40,7 +40,7 @@ namespace Xe.GUI
 
 	public class SliderLeftButton : UIControl
 	{
-		public SliderLeftButton(Game game, IGUIManager guiManager)
+		public SliderLeftButton(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderLeftButton";
@@ -51,7 +51,7 @@ namespace Xe.GUI
 
 	public class SliderVerticalButton : UIControl
 	{
-		public SliderVerticalButton(Game game, IGUIManager guiManager)
+		public SliderVerticalButton(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderVerticalButton";
@@ -61,7 +61,7 @@ namespace Xe.GUI
 
 	public class SliderHorizontalButton : UIControl
 	{
-		public SliderHorizontalButton(Game game, IGUIManager guiManager)
+		public SliderHorizontalButton(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "sliderHorizontalButton";

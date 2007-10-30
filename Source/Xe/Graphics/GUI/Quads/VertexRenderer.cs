@@ -6,41 +6,41 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
-    public class VertexRenderer : QuadRenderer
-    {
-        #region Members
+	public class VertexRenderer : QuadRenderer, IDisposable
+	{
+		#region Members
 		VertexDeclaration vertexDecl = null;
 		VertexPositionTexture[] verts = null;
 		short[] ib = null;
 
 		Effect quadRenderEffect;
 
-        private Queue<QuadBase> m_quads = new Queue<QuadBase>();
+		private Queue<QuadBase> m_quads = new Queue<QuadBase>();
 
-        private Vector2 m_vectorOne = new Vector2(1, 1);
-        #endregion
+		private Vector2 m_vectorOne = new Vector2(1, 1);
+		#endregion
 
-        #region Constructors
-        public VertexRenderer()
-            : base()
-        {
-        }
-        #endregion
+		#region Constructors
+		public VertexRenderer()
+			: base()
+		{
+		}
+		#endregion
 
-        #region Initialization
-        public override void Initialize(Game game, GraphicsDevice device)
-        {
-            base.Initialize(game, device);
-        }
+		#region Initialization
+		public override void Initialize(Game game, GraphicsDevice device)
+		{
+			base.Initialize(game, device);
+		}
 
-        protected override void LoadGraphicsContent(bool loadAllContent)
-        {
-            base.LoadGraphicsContent(loadAllContent);
+		protected override void LoadGraphicsContent(bool loadAllContent)
+		{
+			base.LoadGraphicsContent(loadAllContent);
 
-            if (loadAllContent)
-            {
+			if (loadAllContent)
+			{
 				IGraphicsDeviceService graphicsService =
 					(IGraphicsDeviceService)base.Game.Services.GetService(
 												typeof(IGraphicsDeviceService));
@@ -68,64 +68,64 @@ namespace Xe.GUI
 				ib = new short[] { 0, 1, 2, 2, 3, 0 };
 
 				quadRenderEffect = XeGame.ContentManager.Load<Effect>(@"Content\Effects\VertexRenderer");
-            }
-        }
+			}
+		}
 
-        protected override void UnloadGraphicsContent(bool unloadAllContent)
-        {
-            base.UnloadGraphicsContent(unloadAllContent);
+		protected override void UnloadGraphicsContent(bool unloadAllContent)
+		{
+			base.UnloadGraphicsContent(unloadAllContent);
 
-            if (unloadAllContent)
-            {
+			if (unloadAllContent)
+			{
 				if (vertexDecl != null)
 					vertexDecl.Dispose();
 
 				vertexDecl = null;
-            }
-        }
-        #endregion
+			}
+		}
+		#endregion
 
-        public override void RenderQuad(QuadBase quad)
-        {
-            // If the quad isn't worthy, don't add it.
-            if (quad == null)
-                return;
+		public override void RenderQuad(QuadBase quad)
+		{
+			// If the quad isn't worthy, don't add it.
+			if (quad == null)
+				return;
 
-            base.RenderQuad(quad);
+			base.RenderQuad(quad);
 
-            // Add the quad to the queue
-            m_quads.Enqueue(quad);
+			// Add the quad to the queue
+			m_quads.Enqueue(quad);
 
-            if (!this.UseBreadthFirst)
-                Flush();
-        }
+			if (!this.UseBreadthFirst)
+				Flush();
+		}
 
-        public override void Flush()
-        {
-            base.Flush();
+		public override void Flush()
+		{
+			base.Flush();
 
-            // Return if there are no quads to draw
-            if (m_quads.Count <= 0)
-                return;
+			// Return if there are no quads to draw
+			if (m_quads.Count <= 0)
+				return;
 
 			IGraphicsDeviceService graphicsService = (IGraphicsDeviceService)
 			   base.Game.Services.GetService(typeof(IGraphicsDeviceService));
 
-            // Flush out the quads
+			// Flush out the quads
 			quadRenderEffect.Begin();
 			quadRenderEffect.Techniques[0].Passes[0].Begin();
 
 
-            while (m_quads.Count > 0)
-            {
-                // Get the quad.
-                QuadBase _quad = m_quads.Dequeue();
+			while (m_quads.Count > 0)
+			{
+				// Get the quad.
+				QuadBase _quad = m_quads.Dequeue();
 
-                // If the texture is null, don't bother.
-                if (_quad.Texture == null)
-                    continue;
+				// If the texture is null, don't bother.
+				if (_quad.Texture == null)
+					continue;
 
-                // Render the quad.
+				// Render the quad.
 				GraphicsDevice device = graphicsService.GraphicsDevice;
 				device.VertexDeclaration = vertexDecl;
 
@@ -145,18 +145,30 @@ namespace Xe.GUI
 
 				device.DrawUserIndexedPrimitives<VertexPositionTexture>
 					(PrimitiveType.TriangleStrip, verts, 0, 4, ib, 0, 2);
-            }
+			}
 
 			quadRenderEffect.Techniques[0].Passes[0].End();
 			quadRenderEffect.End();
-        }
+		}
 
-        #region Properties
-        protected Queue<QuadBase> Quads
-        {
-            get { return m_quads; }
-            set { m_quads = value; }
-        }
-        #endregion
-    }
+		#region Properties
+		protected Queue<QuadBase> Quads
+		{
+			get { return m_quads; }
+			set { m_quads = value; }
+		}
+		#endregion
+
+		#region IDisposable Members
+
+		public void Dispose()
+		{
+			if (vertexDecl != null)
+				vertexDecl.Dispose();
+			
+			vertexDecl = null;
+		}
+
+		#endregion
+	}
 }

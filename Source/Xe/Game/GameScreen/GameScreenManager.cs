@@ -9,7 +9,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using System.Collections;
 
-using Xe.GUI;
+using Xe.Gui;
 using Xe;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

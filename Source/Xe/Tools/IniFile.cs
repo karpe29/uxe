@@ -5,26 +5,9 @@ using System.Text;
 using System.Collections;
 using System.IO;
 
-namespace Xe.Tools
+namespace Xe.Tools.IO
 {
-	public class IniFile : Hashtable
-	{
-		/// <summary>
-		/// Indexeur qui renvoie la valeur associé à une clef dans le fichier de configuration
-		/// </summary>
-		public String this[string index]
-		{
-			get
-			{
-				if (base.Contains(index.ToUpper()))
-					return base[index.ToUpper()] as string;
-				else
-					return null;
-			}
-		}
-	}
-
-	public class ConfigFile : IniFile
+	public class IniFile : Hashtable, IDisposable
 	{
 		XeFile m_file = null;
 
@@ -33,7 +16,7 @@ namespace Xe.Tools
 		/// </summary>
 		/// <param name="path">Chemin où se trouve le fichier</param>
 		/// <param name="filename">Nom du fichier a charger</param>
-		public ConfigFile(string filepath)
+		public IniFile(string filepath)
 		{
 			this.LoadConfig(filepath);
 		}        
@@ -64,7 +47,7 @@ namespace Xe.Tools
 						strArray = thisString.Split('=');
 						thisString = m_file.ReadLine();
 
-						if (strArray[0].Trim() == "") continue;
+						if (String.IsNullOrEmpty(strArray[0].Trim())) continue;
 						if (strArray[0].Trim()[0] == ';') continue;
 						if (strArray[0].Trim()[0] == '[') continue;
 
@@ -91,7 +74,8 @@ namespace Xe.Tools
 
 				foreach (object key in base.Values)
 				{
-					string line = (key as string) + "=" + this[key as string] + "\n\r";
+					string skey = (key as string);
+					string line = skey + "=" + this[skey] + "\n\r";
 					tmpFile.Write(line);
 				}
 
@@ -102,5 +86,32 @@ namespace Xe.Tools
 				throw new System.Exception("Error Saving Config File: " + filepath, ex);
 			}
 		}
+
+		/// <summary>
+		/// Indexeur qui renvoie la valeur associé à une clef dans le fichier de configuration
+		/// </summary>
+		public String this[string index]
+		{
+			get
+			{
+				if (base.Contains(index.ToUpper()))
+					return base[index.ToUpper()] as string;
+				else
+					return null;
+			}
+		}
+
+		#region IDisposable Members
+
+		public void Dispose()
+		{
+			if (m_file != null)
+			{
+				m_file.Dispose();
+				m_file = null;
+			}
+		}
+
+		#endregion
 	}
 }

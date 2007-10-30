@@ -12,11 +12,11 @@ using Xe;
 using Xe.Tools;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
 	public class Button : UIControl
 	{
-		public Button(Game game, IGUIManager guiManager)
+		public Button(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "button";

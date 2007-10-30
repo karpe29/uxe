@@ -24,7 +24,7 @@ using Microsoft.Xna.Framework.Content;
 using Xe.Tools;
 #endregion
 
-namespace Xe.Tools
+namespace Xe.Gui
 {
     public partial class Stats : Microsoft.Xna.Framework.DrawableGameComponent
     {

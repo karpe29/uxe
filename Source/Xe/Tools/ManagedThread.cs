@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace Lotus.Threading
+namespace Xe.Tools.Threading
 {
     #region Delegates
 

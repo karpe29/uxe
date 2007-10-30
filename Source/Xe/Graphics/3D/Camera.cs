@@ -214,7 +214,7 @@ namespace Xe.Graphics3D
         #endregion
 
         #region Event Handlers
-        protected virtual void OnMatrixChanged(MatrixType type)
+        protected virtual void OnMatrixChanged(object sender, MatrixType type)
         {
         }
 
@@ -245,7 +245,7 @@ namespace Xe.Graphics3D
                 m_viewMat = value;
 
                 if (MatrixChanged != null)
-                    MatrixChanged.Invoke(MatrixType.View);
+                    MatrixChanged.Invoke(this, MatrixType.View);
             }
         }
 
@@ -263,7 +263,7 @@ namespace Xe.Graphics3D
                 m_projMat = value;
 
                 if (MatrixChanged != null)
-                    MatrixChanged.Invoke(MatrixType.Projection);
+                    MatrixChanged.Invoke(this, MatrixType.Projection);
             }
         }
 
@@ -522,7 +522,7 @@ namespace Xe.Graphics3D
         #endregion
     }
 
-    public delegate void MatrixChangedHandler(MatrixType type);
+    public delegate void MatrixChangedHandler(object sender, MatrixType type);
 
     public enum MatrixType
     {

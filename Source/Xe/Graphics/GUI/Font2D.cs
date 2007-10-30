@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
 	/// <summary>
 	/// This is a game component that provides basic, 2D font drawing
@@ -96,7 +96,7 @@ namespace Xe.GUI
 			catch (Exception e)
 			{
 				// TODO: Do something with the error...
-				Console.WriteLine(e.Message);
+				System.Console.WriteLine(e.Message);
 			}
 		}
 
@@ -120,7 +120,7 @@ namespace Xe.GUI
 			catch (Exception e)
 			{
 				// TODO: Do something with the error...
-				Console.WriteLine(e.Message);
+				System.Console.WriteLine(e.Message);
 			}
 		}
 		#endregion

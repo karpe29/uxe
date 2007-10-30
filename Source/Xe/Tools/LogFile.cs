@@ -4,7 +4,7 @@ using System.Text;
 
 using System.IO;
 
-namespace Xe.Tools
+namespace Xe.Tools.IO
 {
 	public enum Verbosity
 	{
@@ -15,7 +15,7 @@ namespace Xe.Tools
 		Debug = 4		// Debug Detailed Output (4)
 	}
 
-	public class LogFile
+	public class LogFile : IDisposable
 	{
 		Verbosity m_logOption;
 		int m_maxSize;
@@ -79,5 +79,18 @@ namespace Xe.Tools
 		{
 			m_file.Write("[" + DateTime.Now.ToString("G") + "]");
 		}
+
+		#region IDisposable Members
+
+		public void Dispose()
+		{
+			if (m_file != null)
+			{
+				m_file.Dispose();
+				m_file = null;
+			}
+		}
+
+		#endregion
 	}
 }

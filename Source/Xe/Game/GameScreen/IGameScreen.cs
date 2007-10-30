@@ -33,7 +33,7 @@ namespace Xe.GameScreen
 			}
 		}
 
-		public IGameScreen(GameScreenManager gameScreenManager, bool autoAdd)
+		protected IGameScreen(GameScreenManager gameScreenManager, bool autoAdd)
 			: base(gameScreenManager.Game)
 		{
 			this.GameScreenManager = gameScreenManager;

@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
-    public class SpriteRenderer : QuadRenderer
+    public class SpriteRenderer : QuadRenderer, IDisposable
     {
         #region Members
         private SpriteBatch m_sBatch = null;
@@ -132,5 +132,18 @@ namespace Xe.GUI
             set { m_sortMode = value; }
         }
         #endregion
-    }
+
+		#region IDisposable Members
+
+		public void Dispose()
+		{
+			if (m_sBatch != null)
+			{
+				m_sBatch.Dispose();
+				m_sBatch = null;
+			}
+		}
+
+		#endregion
+	}
 }

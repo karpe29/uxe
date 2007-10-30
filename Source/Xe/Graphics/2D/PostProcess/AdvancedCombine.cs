@@ -11,11 +11,11 @@ namespace Xe.Graphics2D.PostProcess
 	{
 		#region Variables and Properties
 
-		private EffectParameter Intensity1Parameter = null;
-		private EffectParameter Intensity2Parameter = null;
-		private EffectParameter Saturation1Parameter = null;
-		private EffectParameter Saturation2Parameter = null;
-		private EffectParameter SaturationColorParameter = null;
+		private EffectParameter Intensity1Parameter;
+		private EffectParameter Intensity2Parameter;
+		private EffectParameter Saturation1Parameter;
+		private EffectParameter Saturation2Parameter;
+		private EffectParameter SaturationColorParameter;
 		
 		public float Intensity1
         {
