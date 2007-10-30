@@ -1306,6 +1306,12 @@
       <Processor>EffectProcessor</Processor>
       <Name>BlurBloom</Name>
     </Content>
+    <Content Include="Content\Textures\team.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>team</Name>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Physics\2D\" />
