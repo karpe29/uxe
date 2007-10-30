@@ -18,21 +18,10 @@ namespace Xe.GameScreen
 		Effect myEffect;
 		Texture2D myTexture;
 
-		private static int nb_cotes = 60;
-		private double ratio;
-		private List<tube> les_tubes = new List<tube>();
-		private List<cercle> les_cercles = new List<cercle>();
-		private Random aleatoire = new Random();
-		private Vector3 pos;
-		private Matrix orient;
-		private int count = 0;
-		private double courbe = 0, inc_courbe = 0.0001;
-		private Color[] coul = new Color[] { Color.Blue, Color.Red };
-
+		tunnel myTunnel=new tunnel();
 
 		//Position of the model in world space
 		Vector3 modelPosition = new Vector3(0, 0, 0);
-		float modelRotation = 0.0f;
 
 		//Position of the Camera in world space, for our view matrix
 		Vector3 cameraPosition = new Vector3(-100, 0, 0);
@@ -89,24 +78,11 @@ namespace Xe.GameScreen
 		}
 
 
-		private float TimeScale = 4.0f, Horizontal = 0.75f, Vertical = 0.75f;
 
 		public MainBackgroundScreen(GameScreenManager gameScreenManager)
 			: base(gameScreenManager, true)
 		{
-			double rayon;
-			orient = Matrix.Identity;
-			for (int i = 0; i <= 200; i++)
-			{
-				pos = new Vector3(i * 2, 0, 0);
-				//rayon = 50 - 10 * Math.Log((double)i / 5 + 1);
-				rayon = 50;
-				les_cercles.Add(new cercle(XeGame.Device, nb_cotes, rayon, pos, orient,new Color(Convert.ToByte(i*255/200),0,Convert.ToByte(255-i*255/200))));
-			}
-			for (int i = 0; i < 200; i++)
-			{
-				les_tubes.Add(new tube(XeGame.Device, nb_cotes, les_cercles[i], les_cercles[i + 1]));
-			}
+
 		}
 
 		public void AddEffectToModel(Model thisModel, Effect thisEffect)
@@ -260,11 +236,7 @@ namespace Xe.GameScreen
 				{
 					pass.Begin();
 					//Draw the mesh, will use the effects set above.*/
-					for (int k = 0; k < les_tubes.Count; k++)
-					{
-						les_tubes[k].draw();
-					}
-
+					myTunnel.draw();
 					/*foreach (ModelMeshPart part in myModel.Meshes[i].MeshParts)
 					{
 						this.GraphicsDevice.VertexDeclaration = part.VertexDeclaration;
@@ -332,124 +304,155 @@ namespace Xe.GameScreen
 
 			base.Update(gameTime);
 		}
-
-		public class cercle
+		public class tunnel
 		{
-			private GraphicsDevice graph;
-			public int nb_cotes;
-			public double rayon;
-			public VertexPositionTexture[] vertices;
-			public Vector3 pos;
-			public Matrix orient;
-			public Color couleur;
+			private static int nb_cotes = 60, nb_cercles = 100;
+			private static float longueur = 1000,rayon=50;
+			private List<tube> les_tubes = new List<tube>();
+			private List<cercle> les_cercles = new List<cercle>();
+			private Vector3 pos;
+			private Matrix orient=Matrix.Identity;
 
-			public cercle(GraphicsDevice l_graph, int l_nb_cotes, double l_rayon, Vector3 l_pos, Matrix l_orient, Color l_couleur)
+			public tunnel()
 			{
-				graph = l_graph;
-				nb_cotes = l_nb_cotes;
-				rayon = l_rayon;
-				pos = l_pos;
-				orient = l_orient;
-				couleur = l_couleur;
-
-
-				vertices = new VertexPositionTexture[nb_cotes+1];
-				deplace();
-
-				for (int j = 0; j <= nb_cotes; j++)
+				for (int i = 0; i <= nb_cercles; i++)
 				{
-					vertices[j].TextureCoordinate = new Vector2(1f-((float)j)/((float)nb_cotes),l_pos.X/((float)400));
+					pos = new Vector3((float)i * longueur / (float)nb_cercles, 0, 0);
+					les_cercles.Add(new cercle(XeGame.Device, nb_cotes, rayon, pos, orient));
 				}
-			}
-
-			public void deplace(Vector3 l_pos, Matrix l_orient)
-			{
-				pos = l_pos;
-				orient = l_orient;
-				deplace();
-			}
-
-			public void deplace()
-			{
-				Vector3 point_cercle;
-				double angle;
-
-				for (int j = 0; j <= nb_cotes; j++)
+				for (int i = 0; i < nb_cercles; i++)
 				{
-					angle = Math.PI * 2 * j / nb_cotes;
-					point_cercle.X = (float)0;
-					point_cercle.Y = (float)(rayon * Math.Sin(angle));
-					point_cercle.Z = (float)(rayon * Math.Cos(angle));
-					vertices[j].Position = pos + Vector3.Transform(point_cercle, orient);
-				}
-			}
-
-
-
-		}
-
-
-		public class tube
-		{
-			private GraphicsDevice graph;
-			private IndexBuffer indexBuffer;
-			private VertexBuffer vertexBuffer;
-			private int nb_cotes;
-			public cercle cercle_debut, cercle_fin;
-			public VertexPositionTexture[] vertices;
-			private VertexDeclaration vertexDeclaration;
-
-
-
-			public tube(GraphicsDevice l_graph, int l_nb_cotes, cercle l_cercle_debut, cercle l_cercle_fin)
-			{
-				graph = l_graph;
-				nb_cotes = l_nb_cotes;
-				cercle_debut = l_cercle_debut;
-				cercle_fin = l_cercle_fin;
-				short[] indices = new short[nb_cotes * 6];
-				for (int i = 0; i < nb_cotes; i++)
-				{
-					indices[i * 6+2] = indices[i * 6 + 3] = (short)(i);
-					indices[i * 6 + 1] = (short)((i + 1));
-					indices[i * 6] = indices[i * 6 + 5] = (short)(nb_cotes +i + 2 );
-					indices[i * 6 + 4] = (short)(nb_cotes +1+ i);
+					les_tubes.Add(new tube(XeGame.Device, nb_cotes, les_cercles[i], les_cercles[i + 1]));
 				}
 
-				this.indexBuffer = new IndexBuffer(graph, typeof(short), indices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
-				this.indexBuffer.SetData(indices);
-
-				vertices = new VertexPositionTexture[(nb_cotes+1) * 2];
-				this.vertexBuffer = new VertexBuffer(graph, typeof(VertexPositionTexture), vertices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
-
-	
-				
-				
-				cercle_debut.vertices.CopyTo(vertices, 0);
-				cercle_fin.vertices.CopyTo(vertices, nb_cotes+1);
-
-				vertexDeclaration = new VertexDeclaration(graph, VertexPositionTexture.VertexElements);
 			}
-
 
 			public void draw()
 			{
-				//current_couleur=(current_couleur+1)%100;
-				/*for (int j = 0; j < nb_cotes; j++)
+
+				for (int k = 0; k < les_tubes.Count; k++)
 				{
-					vertices[j].Color = coul;
-					vertices[j + nb_cotes].Color = coul;
-				}*/
-
-				this.vertexBuffer.SetData(vertices);
-
-				graph.Vertices[0].SetSource(vertexBuffer, 0, VertexPositionTexture.SizeInBytes);
-				graph.Indices = this.indexBuffer;
-				graph.VertexDeclaration = vertexDeclaration;
-
-				graph.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, nb_cotes * 2, 0, nb_cotes * 2);
+					les_tubes[k].draw();
+				}
 			}
 
+
+			public class cercle
+			{
+				private GraphicsDevice graph;
+				public int nb_cotes;
+				public double rayon;
+				public VertexPositionTexture[] vertices;
+				public Vector3 pos;
+				public Matrix orient;
+
+				public cercle(GraphicsDevice l_graph, int l_nb_cotes, double l_rayon, Vector3 l_pos, Matrix l_orient)
+				{
+					graph = l_graph;
+					nb_cotes = l_nb_cotes;
+					rayon = l_rayon;
+					pos = l_pos;
+					orient = l_orient;
+
+
+					vertices = new VertexPositionTexture[nb_cotes + 1];
+					deplace();
+
+					for (int j = 0; j <= nb_cotes; j++)
+					{
+						vertices[j].TextureCoordinate = new Vector2(1f - ((float)j) / ((float)nb_cotes), l_pos.X / longueur);
+					}
+				}
+
+				public void deplace(Vector3 l_pos, Matrix l_orient)
+				{
+					pos = l_pos;
+					orient = l_orient;
+					deplace();
+				}
+
+				public void deplace()
+				{
+					Vector3 point_cercle;
+					double angle;
+
+					for (int j = 0; j <= nb_cotes; j++)
+					{
+						angle = Math.PI * 2 * j / nb_cotes;
+						point_cercle.X = (float)0;
+						point_cercle.Y = (float)(rayon * Math.Sin(angle));
+						point_cercle.Z = (float)(rayon * Math.Cos(angle));
+						vertices[j].Position = pos + Vector3.Transform(point_cercle, orient);
+					}
+				}
+
+
+
+			}
+
+
+			public class tube
+			{
+				private GraphicsDevice graph;
+				private IndexBuffer indexBuffer;
+				private VertexBuffer vertexBuffer;
+				private int nb_cotes;
+				public cercle cercle_debut, cercle_fin;
+				public VertexPositionTexture[] vertices;
+				private VertexDeclaration vertexDeclaration;
+
+
+
+				public tube(GraphicsDevice l_graph, int l_nb_cotes, cercle l_cercle_debut, cercle l_cercle_fin)
+				{
+					graph = l_graph;
+					nb_cotes = l_nb_cotes;
+					cercle_debut = l_cercle_debut;
+					cercle_fin = l_cercle_fin;
+					short[] indices = new short[nb_cotes * 6];
+					for (int i = 0; i < nb_cotes; i++)
+					{
+						indices[i * 6 + 2] = indices[i * 6 + 3] = (short)(i);
+						indices[i * 6 + 1] = (short)((i + 1));
+						indices[i * 6] = indices[i * 6 + 5] = (short)(nb_cotes + i + 2);
+						indices[i * 6 + 4] = (short)(nb_cotes + 1 + i);
+					}
+
+					this.indexBuffer = new IndexBuffer(graph, typeof(short), indices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
+					this.indexBuffer.SetData(indices);
+
+					vertices = new VertexPositionTexture[(nb_cotes + 1) * 2];
+					this.vertexBuffer = new VertexBuffer(graph, typeof(VertexPositionTexture), vertices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
+
+
+
+
+					cercle_debut.vertices.CopyTo(vertices, 0);
+					cercle_fin.vertices.CopyTo(vertices, nb_cotes + 1);
+
+					vertexDeclaration = new VertexDeclaration(graph, VertexPositionTexture.VertexElements);
+				}
+
+
+				public void draw()
+				{
+					//current_couleur=(current_couleur+1)%100;
+					/*for (int j = 0; j < nb_cotes; j++)
+					{
+						vertices[j].Color = coul;
+						vertices[j + nb_cotes].Color = coul;
+					}*/
+
+					this.vertexBuffer.SetData(vertices);
+
+					graph.Vertices[0].SetSource(vertexBuffer, 0, VertexPositionTexture.SizeInBytes);
+					graph.Indices = this.indexBuffer;
+					graph.VertexDeclaration = vertexDeclaration;
+
+					graph.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, nb_cotes * 2, 0, nb_cotes * 2);
+				}
+
+			}
 		}
 	}
 }
