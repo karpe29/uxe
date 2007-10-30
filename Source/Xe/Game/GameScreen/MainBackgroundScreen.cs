@@ -18,7 +18,7 @@ namespace Xe.GameScreen
 		Effect myEffect;
 		Texture2D myTexture;
 
-		private static int nb_cotes = 72;
+		private static int nb_cotes = 128;
 		private double ratio;
 		private List<tube> les_tubes = new List<tube>();
 		private List<cercle> les_cercles = new List<cercle>();
@@ -127,7 +127,7 @@ namespace Xe.GameScreen
 			foreach (EffectParameter p in myEffect.Parameters)
 				Console.WriteLine(p.Name);
 			*/
-			myTexture = XeGame.ContentManager.Load<Texture2D>(@"Content\Textures\GUI");
+			myTexture = XeGame.ContentManager.Load<Texture2D>(@"Content\Textures\team");
 
 			myEffect.Parameters["colorTexture"].SetValue(myTexture);
 
@@ -227,10 +227,10 @@ namespace Xe.GameScreen
 			myEffect.Parameters["WorldViewProj"].SetValue(world * view * projection);
 			myEffect.Parameters["World"].SetValue(world);
 			myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(view));
-			myEffect.Parameters["LightPos"].SetValue(new Vector3(100,49,0));
-			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 1, 1));
+			myEffect.Parameters["LightPos"].SetValue(new Vector3(20,49.9f,0));
+			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 0, 0));
 			myEffect.Parameters["AmbiColor"].SetValue(new Vector3(.5f, .5f, .5f));
-			myEffect.Parameters["SurfColor"].SetValue(new Vector3(1, 0, 0));
+			myEffect.Parameters["SurfColor"].SetValue(new Vector3(1, 1, 1));
 
 
 			
@@ -340,7 +340,7 @@ namespace Xe.GameScreen
 
 				for (int j = 0; j < nb_cotes; j++)
 				{
-					vertices[j].TextureCoordinate = new Vector2(((float)j)/((float)nb_cotes),l_pos.X/((float)200));
+					vertices[j].TextureCoordinate = new Vector2(1f-((float)j)/((float)nb_cotes),l_pos.X/((float)400));
 				}
 			}
 
