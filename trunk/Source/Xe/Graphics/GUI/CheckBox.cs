@@ -12,7 +12,7 @@ using Xe.Tools;
 using Xe.Input;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
 	public class CheckBox : UIControl
 	{
@@ -23,7 +23,7 @@ namespace Xe.GUI
 		protected bool m_isChecked = false;
 		#endregion
 
-		public CheckBox(Game game, IGUIManager guiManager)
+		public CheckBox(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			m_label = new Label(game, guiManager);

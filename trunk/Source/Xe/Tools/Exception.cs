@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-#if !XBOX360
-using System.Windows.Forms;
 
+#if !XBOX360
 using System.Net;
 using System.Net.Mail;
 #endif
+
 using Microsoft.SqlServer.MessageBox;
 
 namespace Xe.Tools
 {
-		public class ExceptionTool
+		public static class ExceptionTool
 		{
 			public static void ShowExceptionMessageBox(System.Exception e)
 			{
@@ -29,7 +29,7 @@ namespace Xe.Tools
 
 				emb.HelpLink = "http://xe3d.free.fr/";
 
-				emb.Show(null);
+//				emb.Show(null);
 
 				switch (emb.CustomDialogResult)
 				{
@@ -49,7 +49,7 @@ namespace Xe.Tools
 						SmtpClient thisSmtp = new SmtpClient("smtp.domainepublic.net");
 						thisSmtp.Send(thisMail);
 */						 
-						MessageBox.Show("Not Totally Implemented yet :)", "Ooops");
+//						MessageBox.Show("Not Totally Implemented yet :)", "Ooops");
 						break;
 
 					case ExceptionMessageBoxDialogResult.Button2: // retry 
@@ -59,7 +59,7 @@ namespace Xe.Tools
 						break;
 
 					case ExceptionMessageBoxDialogResult.Button4:
-						Application.Exit();
+//						Application.Exit();
 						break;
 				}
 			}

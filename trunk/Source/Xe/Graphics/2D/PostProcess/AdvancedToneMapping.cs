@@ -11,9 +11,9 @@ namespace Xe.Graphics2D.PostProcess
 
 		#region Variable and Properties
 
-		private EffectParameter exposureParameter = null;
-        private EffectParameter defogParameter = null;
-        private EffectParameter gammaParameter = null;
+		private EffectParameter exposureParameter;
+        private EffectParameter defogParameter;
+        private EffectParameter gammaParameter;
 
         public float Exposure
         {

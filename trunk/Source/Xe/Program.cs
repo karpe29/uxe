@@ -1,5 +1,3 @@
-
-
 namespace Xe
 {
 	static class Program

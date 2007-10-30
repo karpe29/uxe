@@ -249,12 +249,12 @@ namespace Xe.Graphics3D
 			effect.End();
 		}
 
-		public new int DrawOrder
+		public static new int DrawOrder
 		{
 			get { return 0; }
 		}
 
-		public new bool Visible
+		public static new bool Visible
 		{
 			get { return true; }
 		}

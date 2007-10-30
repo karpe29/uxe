@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Xe.GUI;
+using Xe.Gui;
 using Xe.Tools;
 using Xe.Input;
 
@@ -14,7 +14,7 @@ namespace Xe.GameScreen
 		string[] m_resolutions = new string[] {"640x480","800x600","1024x768","1152x768","1280x720","1280x960","1280x1024","1400x1050","1600x1200","1680x1050","1920x1080","1920x1200","2048x1536","2560x1600"};
 
 
-		Xe.GUI.Button buttonBack;
+		Xe.Gui.Button buttonBack;
 
 		public OptionScreen(GameScreenManager gameScreenManager)
 			: base(gameScreenManager, true)

@@ -14,6 +14,7 @@ namespace Xe.SpaceRace
 	{
 		public enum Names
 		{
+			None = 0,
 			Deimos = 600,
 			Phobos = 960,
 			Pluto = 2306,
@@ -151,7 +152,7 @@ namespace Xe.SpaceRace
 			}
 			else
 			{
-				m_model.LightPosition = GetTopSunPosition();
+				m_model.LightPosition = this.TopSunPosition;
 				m_model.Draw(gameTime);
 			}
 
@@ -159,15 +160,18 @@ namespace Xe.SpaceRace
 			base.Draw(gameTime);
 		}
 
-		public Vector3 GetTopSunPosition()
+		public Vector3 TopSunPosition
 		{
-			if (this.m_solarSystem == null) // ici on est le soleil de niveau 0
+			get
 			{
-				return this.Position;
-			}
-			else
-			{
-				return this.m_solarSystem.Sun.GetTopSunPosition();
+				if (this.m_solarSystem == null) // ici on est le soleil de niveau 0
+				{
+					return this.Position;
+				}
+				else
+				{
+					return this.m_solarSystem.Sun.TopSunPosition;
+				}
 			}
 		}
 

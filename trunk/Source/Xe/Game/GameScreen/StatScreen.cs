@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Xe.Tools;
 using Xe.Graphics2D;
 using Xe.Input;
+using Xe.Gui;
 
 namespace Xe.GameScreen
 {

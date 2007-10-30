@@ -10,7 +10,7 @@ namespace Xe.Graphics2D.PostProcess
 	{
 		#region Variables and Properties
 
-		private EffectParameter BlurAmountParameter = null;
+		private EffectParameter BlurAmountParameter;
 
 		public float BlurAmount
 		{

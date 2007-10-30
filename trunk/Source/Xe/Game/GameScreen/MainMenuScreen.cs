@@ -4,7 +4,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 
-using Xe.GUI;
+using Xe.Gui;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,9 +16,9 @@ namespace Xe.GameScreen
 {
 	class MainMenuScreen : IGameScreen
 	{
-		Xe.GUI.Button buttonNewGame;
-		Xe.GUI.Button buttonOptions;
-		Xe.GUI.Button buttonQuit;
+		Xe.Gui.Button buttonNewGame;
+		Xe.Gui.Button buttonOptions;
+		Xe.Gui.Button buttonQuit;
 
 		public static Type BackgroundScreenType = typeof(MainBackgroundScreen);
 

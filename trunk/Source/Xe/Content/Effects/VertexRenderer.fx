@@ -4,7 +4,7 @@ struct VS_OUTPUT
     float2 Tex  : TEXCOORD0;
 };
 
-texture colorTexture : DIFFUSE;
+//SAMPLER colorTexture;
 
 VS_OUTPUT VS(
     float3 InPos  : POSITION,
@@ -22,7 +22,7 @@ VS_OUTPUT VS(
 
 float4 PS(float2 TexCoord  : TEXCOORD0) : COLOR0
 {
-      return  float4(TexCoord.x, TexCoord.y, 0 , 1); 
+      return float4(TexCoord.x, TexCoord.y, 0 , 1); 
 }
 
 

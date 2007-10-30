@@ -26,7 +26,7 @@ using Xe.Tools;
 using Xe.Input;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
 	public class UIControl : Microsoft.Xna.Framework.DrawableGameComponent, IFocusable, IMoveable
 	{
@@ -42,7 +42,7 @@ namespace Xe.GUI
 
 		private QuadRenderer m_renderer;        // The rendering core used to draw.
 		private Font2D m_font2d;                // The font core used to render fonts.
-		private IGUIManager m_guiManager;       // The base GUI manager.
+		private IGuiManager m_guiManager;       // The base GUI manager.
 		private IEbiService m_ebiService;       // The Event Based Input Service
 
 		// State Possibilites
@@ -59,7 +59,7 @@ namespace Xe.GUI
 
 		private bool m_lockX = false;
 		private bool m_lockY = false;
-		private int m_snappingStep = GUIManager<QuadRenderer>.SnappingStep;
+		private int m_snappingStep;
 
 		private bool m_useEnter = false;
 		private bool m_useAButton = false;
@@ -202,10 +202,12 @@ namespace Xe.GUI
 		#endregion
 
 		#region Constructor
-		public UIControl(Game game, IGUIManager guiManager)
+		public UIControl(Game game, IGuiManager guiManager)
 			: base(game)
 		{
 			m_guiManager = guiManager;
+
+			m_snappingStep = m_guiManager.SnappingStep;
 
 			m_font2d = m_guiManager.Font2D;
 			m_renderer = m_guiManager.QuadRenderer;
@@ -657,7 +659,7 @@ namespace Xe.GUI
 			{
 				if (!m_lockX)
 				{
-					if (GUIManager<QuadRenderer>.UseSnapping || m_isSnapable)
+					if (this.GuiManager.UseSnapping || m_isSnapable)
 					{
 						int _sign = ((_state.X - (int)m_offset.X) - this.X < 0) ? -1 : 1;
 						int _dist = (int)Math.Abs((_state.X - (int)m_offset.X) - this.X);
@@ -675,7 +677,7 @@ namespace Xe.GUI
 				// If Y is not locked, update the position
 				if (!m_lockY)
 				{
-					if (GUIManager<QuadRenderer>.UseSnapping || m_isSnapable)
+					if (this.GuiManager.UseSnapping || m_isSnapable)
 					{
 						int _sign = ((_state.Y - (int)m_offset.Y) - this.Y < 0) ? -1 : 1;
 						int _dist = (int)Math.Abs((_state.Y - (int)m_offset.Y) - this.Y);
@@ -739,19 +741,19 @@ namespace Xe.GUI
 
 				Rectangle tempRect = new Rectangle((int)m_vecPosition.X, (int)m_vecPosition.Y, (int)m_vecSize.X, (int)m_vecSize.Y);
 
-				if (m_vecSize.X >= 2 * GUIManager.CornerSize)
+				if (m_vecSize.X >= 2 * GuiManager.CornerSize)
 				{
-					tempRect.X = (int)m_vecPosition.X + this.GUIManager.CornerSize / 2;
-					tempRect.Width = (int)m_vecSize.X - this.GUIManager.CornerSize ;
+					tempRect.X = (int)m_vecPosition.X + this.GuiManager.CornerSize / 2;
+					tempRect.Width = (int)m_vecSize.X - this.GuiManager.CornerSize ;
 				}
 
-				if (m_vecSize.Y >= 2 * GUIManager.CornerSize)
+				if (m_vecSize.Y >= 2 * GuiManager.CornerSize)
 				{
-					tempRect.Y = (int)m_vecPosition.Y + this.GUIManager.CornerSize / 2;
-					tempRect.Height = (int)m_vecSize.Y - this.GUIManager.CornerSize ;
+					tempRect.Y = (int)m_vecPosition.Y + this.GuiManager.CornerSize / 2;
+					tempRect.Height = (int)m_vecSize.Y - this.GuiManager.CornerSize ;
 				}
 #if DEBUG
-				XeGame.s_vectorRenderer.SetColor(Color.Red);
+				XeGame.s_vectorRenderer.SetColor(Color.White);
 
 				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X, tempRect.Y, 0), new Vector3(tempRect.X + tempRect.Width, tempRect.Y, 0));
 				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X, tempRect.Y, 0), new Vector3(tempRect.X, tempRect.Y + tempRect.Height, 0));
@@ -759,9 +761,9 @@ namespace Xe.GUI
 				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X + tempRect.Width, tempRect.Y, 0), new Vector3(tempRect.X + tempRect.Width, tempRect.Y + tempRect.Height, 0));
 #endif
 				if (m_curState == UIState.Over)
-					m_font2d.DrawTextBox(m_guiManager.FontName, m_text, m_textAlign, m_textAlignVertical, m_breakStyle, tempRect, GUIManager.CornerSize, m_foreColorHover);
+					m_font2d.DrawTextBox(m_guiManager.FontName, m_text, m_textAlign, m_textAlignVertical, m_breakStyle, tempRect, GuiManager.CornerSize, m_foreColorHover);
 				else
-					m_font2d.DrawTextBox(m_guiManager.FontName, m_text, m_textAlign, m_textAlignVertical, m_breakStyle, tempRect, GUIManager.CornerSize, m_foreColor);
+					m_font2d.DrawTextBox(m_guiManager.FontName, m_text, m_textAlign, m_textAlignVertical, m_breakStyle, tempRect, GuiManager.CornerSize, m_foreColor);
 			}
 		}
 
@@ -1070,7 +1072,7 @@ namespace Xe.GUI
 			set { m_snappingStep = value; }
 		}
 
-		protected IGUIManager GUIManager
+		protected IGuiManager GuiManager
 		{
 			get { return m_guiManager; }
 		}

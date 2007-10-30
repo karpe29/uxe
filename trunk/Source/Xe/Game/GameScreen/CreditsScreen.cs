@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Xe.GUI;
+using Xe.Gui;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 
@@ -13,8 +13,6 @@ namespace Xe.GameScreen
 		Label m_labelLoulou;
 		Label m_labelJB;
 		Label m_labelClick;
-
-		static float sizeRatio = 1.2f;
 
 		public CreditsScreen(GameScreenManager gameScreeManager)
 			: base(gameScreeManager, true)

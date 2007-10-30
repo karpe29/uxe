@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
     public interface IMoveable
     {

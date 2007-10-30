@@ -12,25 +12,26 @@ using Microsoft.Xna.Framework.Graphics;
 using Xe.Tools;
 using Xe.Input;
 using Xe.Graphics;
+using Xe.Tools.Xml;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
-	public partial class GUIManager<T> : Microsoft.Xna.Framework.DrawableGameComponent, IGUIManager where T : QuadRenderer, new()
+	public partial class GuiManager<T> : Microsoft.Xna.Framework.DrawableGameComponent, IGuiManager where T : QuadRenderer, new()
 	{
 		#region Static Members
 		
 		private int m_cornerSize = 5;
 
-		private static float m_alphaFadeSpeed = 0.01f;
-		private static int m_globalSnapValue = 5;
-		private static bool m_globalSnap = false;
+		private float m_alphaFadeSpeed = 0.01f;
+		private int m_globalSnapValue = 5;
+		private bool m_globalSnap = false;
 
 		/// <summary>
 		/// Gets or Sets the speed at which controls
 		/// become visible or invisible.
 		/// </summary>
-		public static float AlphaFadeSpeed
+		public float AlphaFadeSpeed
 		{
 			get { return m_alphaFadeSpeed; }
 			set { m_alphaFadeSpeed = value; }
@@ -40,7 +41,7 @@ namespace Xe.GUI
 		/// Gets or Sets whether or not controls should snap
 		/// to a grid.
 		/// </summary>
-		public static bool UseSnapping
+		public bool UseSnapping
 		{
 			get { return m_globalSnap; }
 			set { m_globalSnap = value; }
@@ -50,7 +51,7 @@ namespace Xe.GUI
 		/// Gets or Sets how much each step
 		/// on the grid movement makes.
 		/// </summary>
-		public static int SnappingStep
+		public int SnappingStep
 		{
 			get { return m_globalSnapValue; }
 			set { m_globalSnapValue = value; }
@@ -111,7 +112,7 @@ namespace Xe.GUI
 		#endregion
 
 		#region Constructor
-		public GUIManager(Game game, IEbiService ebi)
+		public GuiManager(Game game, IEbiService ebi)
 			: base(game)
 		{
 			// Create the content manager
@@ -164,6 +165,7 @@ namespace Xe.GUI
 			}
 
 			System.Console.WriteLine("New Focus: {0}", (_obj != null) ? _obj : "Null");
+
 			if (_obj != null && _obj is IFocusable)
 				m_ebi.Focus = (IFocusable)_obj;
 			else
@@ -801,7 +803,7 @@ namespace Xe.GUI
 		#endregion
 	}
 
-	public interface IGUIManager
+	public interface IGuiManager
 	{
 		Font2D Font2D { get; }
 		QuadRenderer QuadRenderer { get; set; }
@@ -810,6 +812,9 @@ namespace Xe.GUI
 		string FontName { get; set; }
 
 		int CornerSize { get; set; }
+		int SnappingStep { get; set; }
+		bool UseSnapping { get; set; }
+
 
 		ControlCollection Controls { get; set; }
 

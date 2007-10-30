@@ -11,11 +11,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Xe.Tools;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
 	public class Label : UIControl
 	{
-		public Label(Game game, IGUIManager guiManager)
+		public Label(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "label";

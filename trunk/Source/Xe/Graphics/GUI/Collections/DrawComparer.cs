@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
     internal class DrawComparer : IComparer<UIControl>
     {

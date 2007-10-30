@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Xe.Physics3D;
 using Xe.Tools;
+using Xe.Gui;
 #endregion
 
 namespace Xe.Graphics3D

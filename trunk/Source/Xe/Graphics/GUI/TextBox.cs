@@ -14,14 +14,14 @@ using Xe.Graphics;
 using Xe.Input;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
 	public class TextBox : UIControl
 	{
 		protected string m_cursor = "_";
 		protected double m_seconds = 0;
 
-		public TextBox(Game game, IGUIManager guiManager)
+		public TextBox(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			this.ControlTag = "textbox";

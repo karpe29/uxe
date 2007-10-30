@@ -32,7 +32,7 @@ using Xe.Tools;
 using Xe.Input;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
     public partial class SlidePanel : UIControl
     {
@@ -45,7 +45,7 @@ namespace Xe.GUI
 
         #endregion
 
-		public SlidePanel(Game game, IGUIManager guiManager)
+		public SlidePanel(Game game, IGuiManager guiManager)
             : base(game, guiManager)
         {
             m_button = new Button(game, guiManager);

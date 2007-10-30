@@ -21,7 +21,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Xe.Tools;
 #endregion
 
-namespace Xe.Tools
+namespace Xe.Tools.IO
 {
     public partial class TextLogger : Microsoft.Xna.Framework.GameComponent, IService, ITextLoggerService
     {
@@ -227,7 +227,7 @@ namespace Xe.Tools
             if (m_isOpen && m_stream != null)
             {
                 string _tabs = GetTabs();
-                msg.Msg.Replace("{tabs}", _tabs);
+                msg.Msg = msg.Msg.Replace("{tabs}", _tabs);
 
                 m_stream.WriteLine(String.Format("{0}Source:{1}\n{2}Destination:{3}\n{4}Message:{5}", _tabs, msg.Source, _tabs, msg.Destination, _tabs, msg.Msg));
             }

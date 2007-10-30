@@ -22,9 +22,9 @@ using Microsoft.Xna.Framework;
 using Xe.Tools;
 #endregion
 
-namespace Xe.Tools
+namespace Xe.Tools.Xml
 {
-    public delegate void BeforeClosingHandler();
+    public delegate void ClosingHandler();
 
     public partial class XmlLogger : Microsoft.Xna.Framework.GameComponent, IXmlLoggerService, Xe.Tools.IService
     {
@@ -37,7 +37,7 @@ namespace Xe.Tools
 
         protected int m_brackets = 0;
 
-        public event BeforeClosingHandler BeforeClosing;
+        public event ClosingHandler Closing;
 
         protected Xe.Tools.IReporterService m_reporter;
         #endregion
@@ -149,8 +149,8 @@ namespace Xe.Tools
         {
             if (m_xmlWriter != null && m_isOpen)
             {
-                if (BeforeClosing != null)
-                    BeforeClosing.Invoke();
+                if (Closing != null)
+                    Closing.Invoke();
 
                 Message end = new Message(this);
                 end.Source = this.ID;
@@ -350,7 +350,7 @@ namespace Xe.Tools
         /// <summary>
         /// BeforeClosingHandler Event
         /// </summary>
-        event BeforeClosingHandler BeforeClosing;
+        event ClosingHandler Closing;
 
         /// <summary>
         /// Load File creates the Xml File for logging.

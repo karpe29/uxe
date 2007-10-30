@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
 	public class GUIQuad : AnimatedQuad
 	{

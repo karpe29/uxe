@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Xe.GameScreen;
 using Xe.Tools;
+using Xe.Gui;
 #endregion
 
 namespace Xe.Graphics3D

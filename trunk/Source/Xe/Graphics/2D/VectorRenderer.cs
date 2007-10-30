@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
 
-namespace Xe.Tools
+namespace Xe.Graphics2D
 {
     public class VectorRenderer : DrawableGameComponent
     {

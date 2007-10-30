@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.

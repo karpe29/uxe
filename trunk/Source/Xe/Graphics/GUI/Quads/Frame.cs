@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
     public class Frame
     {

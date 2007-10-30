@@ -4,7 +4,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 
-using Xe.GUI;
+using Xe.Gui;
 using Microsoft.Xna.Framework.Input;
 using Xe.SpaceRace;
 using Xe.TimeTime;

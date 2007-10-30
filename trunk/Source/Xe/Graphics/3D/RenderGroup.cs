@@ -308,10 +308,6 @@ namespace Xe.Graphics3D
             {
                 return m_sceneItems;
             }
-            set
-            {
-                m_sceneItems = value;
-            }
         }
 
         public ClearOptions ClearOptions

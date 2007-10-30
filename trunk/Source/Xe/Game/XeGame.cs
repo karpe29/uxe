@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 
 using Xe;
 using Xe.Graphics2D;
-using Xe.GUI;
+using Xe.Gui;
 
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -52,9 +52,9 @@ namespace Xe
 		}
 
 
-		public static IGUIManager GuiManager
+		public static IGuiManager GuiManager
 		{
-			get { return ServiceHelper.Get<IGUIManager>(); }
+			get { return ServiceHelper.Get<IGuiManager>(); }
 		}
 
 		public static Reporter Reporter
@@ -99,7 +99,7 @@ namespace Xe
 		private ConsoleScreen m_consoleScreen;
 		private IntroScreen m_introScreen;
 
-		private GUIManager<VertexRenderer> m_guiManager;
+		private GuiManager<SpriteRenderer> m_guiManager;
 
 		private Reporter m_reporter;
 
@@ -157,11 +157,11 @@ namespace Xe
 			Components.Add(m_ebi);
 			ServiceHelper.Add<IEbiService>(m_ebi);
 
-			m_guiManager = new GUIManager<VertexRenderer>(this, m_ebi);
+			m_guiManager = new GuiManager<SpriteRenderer>(this, m_ebi);
 			m_guiManager.UpdateOrder = 9 * 1000;
 			m_guiManager.DrawOrder = 9 * 1000;
 			Components.Add(m_guiManager);
-			ServiceHelper.Add<IGUIManager>(m_guiManager);
+			ServiceHelper.Add<IGuiManager>(m_guiManager);
 
 			m_reporter = new Reporter(this);
 			m_reporter.UpdateOrder = 0;

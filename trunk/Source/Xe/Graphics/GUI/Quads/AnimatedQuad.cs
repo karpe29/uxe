@@ -6,9 +6,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Xe.Tools;
 using System.Xml;
+using Xe.Tools.Xml;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
     public class AnimatedQuad : QuadBase
     {

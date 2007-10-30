@@ -10,6 +10,7 @@ using Xe.Physics3D;
 using Xe.SpaceRace;
 using Xe.Graphics3D.Particles;
 using Xe.Tools;
+using Xe.Gui;
 
 namespace Xe.SpaceRace
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xe.GameScreen;
 using Microsoft.Xna.Framework;
-using Xe.GUI;
+using Xe.Gui;
 
 namespace Xe.SpaceRace
 {

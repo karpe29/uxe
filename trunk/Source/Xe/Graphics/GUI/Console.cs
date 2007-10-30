@@ -25,9 +25,10 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Xe.Input;
+using Xe.Tools;
 #endregion
 
-namespace Xe.Tools
+namespace Xe.Gui
 {
     public partial class Console : Microsoft.Xna.Framework.DrawableGameComponent, IService, IConsoleService, IFocusable
     {
