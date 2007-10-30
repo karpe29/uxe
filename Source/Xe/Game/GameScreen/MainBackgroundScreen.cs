@@ -335,10 +335,10 @@ namespace Xe.GameScreen
 				couleur = l_couleur;
 
 
-				vertices = new VertexPositionTexture[nb_cotes];
+				vertices = new VertexPositionTexture[nb_cotes+1];
 				deplace();
 
-				for (int j = 0; j < nb_cotes; j++)
+				for (int j = 0; j <= nb_cotes; j++)
 				{
 					vertices[j].TextureCoordinate = new Vector2(1f-((float)j)/((float)nb_cotes),l_pos.X/((float)400));
 				}
@@ -356,7 +356,7 @@ namespace Xe.GameScreen
 				Vector3 point_cercle;
 				double angle;
 
-				for (int j = 0; j < nb_cotes; j++)
+				for (int j = 0; j <= nb_cotes; j++)
 				{
 					angle = Math.PI * 2 * j / nb_cotes;
 					point_cercle.X = (float)0;
@@ -393,22 +393,22 @@ namespace Xe.GameScreen
 				for (int i = 0; i < nb_cotes; i++)
 				{
 					indices[i * 6+2] = indices[i * 6 + 3] = (short)(i);
-					indices[i * 6 + 1] = (short)((i + 1) % nb_cotes);
-					indices[i * 6] = indices[i * 6 + 5] = (short)(nb_cotes + (i + 1) % nb_cotes);
+					indices[i * 6 + 1] = (short)(i + 1);
+					indices[i * 6] = indices[i * 6 + 5] = (short)(i + 1 );
 					indices[i * 6 + 4] = (short)(nb_cotes + i);
 				}
 
 				this.indexBuffer = new IndexBuffer(graph, typeof(short), indices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
 				this.indexBuffer.SetData(indices);
 
-				vertices = new VertexPositionTexture[nb_cotes * 2];
+				vertices = new VertexPositionTexture[(nb_cotes+1) * 2];
 				this.vertexBuffer = new VertexBuffer(graph, typeof(VertexPositionTexture), vertices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
 
 	
 				
 				
 				cercle_debut.vertices.CopyTo(vertices, 0);
-				cercle_fin.vertices.CopyTo(vertices, nb_cotes);
+				cercle_fin.vertices.CopyTo(vertices, nb_cotes+1);
 
 				vertexDeclaration = new VertexDeclaration(graph, VertexPositionTexture.VertexElements);
 			}
