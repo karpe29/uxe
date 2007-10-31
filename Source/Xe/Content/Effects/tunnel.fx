@@ -160,9 +160,9 @@ vertexOutput MrWiggleVS(appdata IN) {
     float diffComp = max(0,ldn);
     float3 diffContrib = SurfColor * ( diffComp * LightColor + AmbiColor);
     OUT.diffCol = float4(diffContrib,1);
-    
-    OUT.TexCoord0 = IN.UV;
-    TunnelOffset = TunnelOffset + 1;
+    OUT.TexCoord0=IN.UV;
+    OUT.TexCoord0.y = (IN.UV.y+timeNow/50)%1000;
+ 
     //OUT.TexCoord0.x = IN.UV.x + TunnelOffset;
     //OUT.TexCoord0.y = IN.UV.y + TunneOffset;
     //OUT.TexCoord0.z = IN.UV.z + 1;
