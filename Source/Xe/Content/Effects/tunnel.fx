@@ -42,6 +42,8 @@ float Timer : Time < string UIWidget="None"; >;
 
 float TunnelOffset < > = 100.0f;
 	
+float longueur : longueur < > =100.0f;
+
 
 float TimeScale <
     string UIWidget = "slider";
@@ -65,7 +67,6 @@ float Vertical <
     float UIStep = 0.1;
 > = 0.5;
 
-float currPos ;
 
 float3 LightPos : Position <
     string Object = "PointLight";
@@ -140,12 +141,12 @@ vertexOutput MrWiggleVS(appdata IN) {
     
     
     float bourrelet=0;
-    float currPos=1000-(timeNow*100)%1000;
+    float currPos=longueur-(timeNow*100)%longueur;
     float diff=(currPos-Po.x)/10;
     
-    if (abs(diff)<=1.57)
+    if (abs(diff)<=3.14)
     {
-    bourrelet=cos(diff)/5;
+    bourrelet=(cos(diff)+1)/5;
     }
     
     //Po.x = Po.x;
@@ -161,7 +162,7 @@ vertexOutput MrWiggleVS(appdata IN) {
     float3 diffContrib = SurfColor * ( diffComp * LightColor + AmbiColor);
     OUT.diffCol = float4(diffContrib,1);
     OUT.TexCoord0=IN.UV;
-    OUT.TexCoord0.y = (IN.UV.y+timeNow/50)%1000;
+    OUT.TexCoord0.y = (IN.UV.y+timeNow/50)%longueur;
  
     //OUT.TexCoord0.x = IN.UV.x + TunnelOffset;
     //OUT.TexCoord0.y = IN.UV.y + TunneOffset;
