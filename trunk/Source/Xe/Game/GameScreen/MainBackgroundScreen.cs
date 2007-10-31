@@ -139,6 +139,8 @@ namespace Xe.GameScreen
 			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 0, 0));
 			myEffect.Parameters["AmbiColor"].SetValue(new Vector3(.5f, .5f, .5f));
 			myEffect.Parameters["SurfColor"].SetValue(new Vector3(1, 1, 1));
+			
+			myEffect.Parameters["longueur"].SetValue(tunnel.longueur);
 
 			
 			/*((BasicEffect)myEffect).World = Matrix.Identity;
@@ -268,8 +270,8 @@ namespace Xe.GameScreen
 			}
 			if (Keyboard.GetState()[Keys.Left] == KeyState.Down)
 			{
-				cameraPosition = new Vector3(-100, 0, 0);
-				cameraTagetPosition = new Vector3(0, 0, 0);
+				cameraPosition = new Vector3(0, 0, 0);
+				cameraTagetPosition = new Vector3(1000, 0, 0);
 				View = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
 
 			}
@@ -309,8 +311,8 @@ namespace Xe.GameScreen
 		}
 		public class tunnel
 		{
-			private static int nb_cotes = 60, nb_cercles = 100;
-			private static float longueur = 1000,rayon=50;
+			public static int nb_cotes = 60, nb_cercles = 200;
+			public static float longueur = 1000,rayon=50;
 			private List<tube> les_tubes = new List<tube>();
 			private List<cercle> les_cercles = new List<cercle>();
 			private Vector3 pos;
@@ -318,6 +320,7 @@ namespace Xe.GameScreen
 
 			public tunnel()
 			{
+
 				for (int i = 0; i <= nb_cercles; i++)
 				{
 					pos = new Vector3((float)i * longueur / (float)nb_cercles, 0, 0);
