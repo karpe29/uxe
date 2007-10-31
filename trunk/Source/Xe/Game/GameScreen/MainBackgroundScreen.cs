@@ -24,8 +24,8 @@ namespace Xe.GameScreen
 		Vector3 modelPosition = new Vector3(0, 0, 0);
 
 		//Position of the Camera in world space, for our view matrix
-		Vector3 cameraPosition = new Vector3(-100, 0, 0);
-		Vector3 cameraTagetPosition = new Vector3(0, 0, 0);
+		Vector3 cameraPosition = new Vector3(500, 0, 1000);
+		Vector3 cameraTagetPosition = new Vector3(500, 0, 0);
 
 		private Matrix projection;
 		private Matrix view;
@@ -44,7 +44,6 @@ namespace Xe.GameScreen
 			set
 			{
 				projection = value;
-			myEffect.Parameters["WorldViewProj"].SetValue(World * View * projection);
 			}
 		}
 
@@ -59,6 +58,7 @@ namespace Xe.GameScreen
 			{
 				view = value;
 				myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(view));
+				myEffect.Parameters["WorldViewProj"].SetValue(World * view * Projection);
 			}
 		}
 
@@ -105,7 +105,7 @@ namespace Xe.GameScreen
 			//myModel = XeGame.ContentManager.Load<Model>(@"Content\Models\MenuTunnel");
 			
 			//myEffect = new BasicEffect(XeGame.Device,null);
-			myEffect = XeGame.ContentManager.Load<Effect>(@"Content\Effects\MrWiggle");
+			myEffect = XeGame.ContentManager.Load<Effect>(@"Content\Effects\tunnel");
 
 			myEffect.CurrentTechnique = myEffect.Techniques[1];
 			//((BasicEffect)myEffect).VertexColorEnabled = true;
@@ -131,9 +131,9 @@ namespace Xe.GameScreen
 			aspectRatio = aspectRatio = (float)this.GraphicsDevice.PresentationParameters.BackBufferWidth / (float)this.GraphicsDevice.PresentationParameters.BackBufferHeight;
 
 
+			Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 500000.0f);
 			World = Matrix.Identity;
 			View = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
-			Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 500000.0f);
 
 			myEffect.Parameters["LightPos"].SetValue(new Vector3(20, 49.9f, 0));
 			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 0, 0));
@@ -257,20 +257,23 @@ namespace Xe.GameScreen
 		{
 			long time = (long)(gameTime.ElapsedGameTime.Milliseconds);
 			myEffect.Parameters["Timer"].SetValue((float)(gameTime.TotalGameTime.TotalSeconds));
-			/*
+			
 			if (Keyboard.GetState()[Keys.Right] == KeyState.Down)
 			{
-				viewMatrix = Matrix.CreateLookAt(new Vector3(100f, 500f, 0f), new Vector3(100f, 0f, 0f), new Vector3(1f, 0, 0));
-				myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(ViewMatrix));
+				 cameraPosition = new Vector3(500, 0, 1000);
+				 cameraTagetPosition = new Vector3(500, 0, 0);
+				 View = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
 
 
 			}
 			if (Keyboard.GetState()[Keys.Left] == KeyState.Down)
 			{
-				myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(ViewMatrix));
+				cameraPosition = new Vector3(-100, 0, 0);
+				cameraTagetPosition = new Vector3(0, 0, 0);
+				View = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
 
 			}
-			*/
+			
 			
 			//courbe += inc_courbe;
 			//if (Math.Abs(courbe) >= 0.005) inc_courbe = -inc_courbe;

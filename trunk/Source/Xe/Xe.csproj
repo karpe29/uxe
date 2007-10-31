@@ -1345,6 +1345,12 @@
       <Processor>ModelProcessor</Processor>
       <Name>cube</Name>
     </Content>
+    <Content Include="Content\Effects\tunnel.fx">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>tunnel</Name>
+    </Content>
     <None Include="XeBinary.pfx">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>XeBinary</Name>
