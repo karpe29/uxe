@@ -24,8 +24,9 @@ namespace Xe.GameScreen
 		Vector3 modelPosition = new Vector3(0, 0, 0);
 
 		//Position of the Camera in world space, for our view matrix
-		Vector3 cameraPosition = new Vector3(500, 0, 1000);
-		Vector3 cameraTagetPosition = new Vector3(500, 0, 0);
+		Vector3 cameraPosition = new Vector3(0, 0, 0);
+		float cameraTargetOffset = 100;
+		Vector3 cameraTargetPosition = new Vector3(100, 0, 0);
 
 		private Matrix projection;
 		private Matrix view;
@@ -133,7 +134,7 @@ namespace Xe.GameScreen
 
 			Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 500000.0f);
 			World = Matrix.Identity;
-			View = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
+			View = Matrix.CreateLookAt(cameraPosition, cameraTargetPosition, Vector3.Up);
 
 			myEffect.Parameters["LightPos"].SetValue(new Vector3(20, 49.9f, 0));
 			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 0, 0));
@@ -259,23 +260,53 @@ namespace Xe.GameScreen
 		{
 			long time = (long)(gameTime.ElapsedGameTime.Milliseconds);
 			myEffect.Parameters["Timer"].SetValue((float)(gameTime.TotalGameTime.TotalSeconds));
-			
+			int touche = 0;
+
+			if (Keyboard.GetState()[Keys.Up] == KeyState.Down)
+			{
+				touche = 1;
+			}
+			if (Keyboard.GetState()[Keys.Down] == KeyState.Down)
+			{
+				touche = 2;
+			}
 			if (Keyboard.GetState()[Keys.Right] == KeyState.Down)
 			{
-				 cameraPosition = new Vector3(500, 0, 1000);
-				 cameraTagetPosition = new Vector3(500, 0, 0);
-				 View = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
-
-
+				touche = 3;
 			}
 			if (Keyboard.GetState()[Keys.Left] == KeyState.Down)
 			{
-				cameraPosition = new Vector3(0, 0, 0);
-				cameraTagetPosition = new Vector3(1000, 0, 0);
-				View = Matrix.CreateLookAt(cameraPosition, cameraTagetPosition, Vector3.Up);
+				touche = 4;
+			}
+
+			if (touche != 0)
+			{
+				Vector3 direction = Vector3.Normalize(cameraTargetPosition - cameraPosition);
+				switch (touche)
+				{
+					case 1:
+						cameraPosition += time * direction;
+						break;
+					case 2:
+						cameraPosition -= time * direction;
+						break;
+					case 3:
+						direction = Vector3.Transform(direction, Matrix.CreateFromAxisAngle(Vector3.Up, -0.01f));
+						break;
+					case 4:
+						direction = Vector3.Transform(direction, Matrix.CreateFromAxisAngle(Vector3.Up, 0.01f));
+						break;
+				}
+
+				cameraTargetPosition = cameraPosition + cameraTargetOffset * direction;
+				View = Matrix.CreateLookAt(cameraPosition, cameraTargetPosition, Vector3.Up);
+
 
 			}
-			
+
+
+			myEffect.Parameters["rotation"].SetValue(new Vector3(0,0,1));
+
 			
 			//courbe += inc_courbe;
 			//if (Math.Abs(courbe) >= 0.005) inc_courbe = -inc_courbe;
