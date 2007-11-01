@@ -24,9 +24,9 @@ namespace Xe.GameScreen
 		Vector3 modelPosition = new Vector3(0, 0, 0);
 
 		//Position of the Camera in world space, for our view matrix
-		Vector3 cameraPosition = new Vector3(0, 0, 0);
-		float cameraTargetOffset = 100;
-		Vector3 cameraTargetPosition = new Vector3(100, 0, 0);
+		Vector3 cameraPosition = new Vector3(400, 400, 1200);
+		float cameraTargetOffset = 1000;
+		Vector3 cameraTargetPosition = new Vector3(400, 400, 200);
 
 		private Matrix projection;
 		private Matrix view;
@@ -304,8 +304,7 @@ namespace Xe.GameScreen
 
 			}
 
-
-			myEffect.Parameters["rotation"].SetValue(new Vector3(0,0,1));
+			myEffect.Parameters["rotation"].SetValue(new Vector3(0,0,1f));
 
 			
 			//courbe += inc_courbe;

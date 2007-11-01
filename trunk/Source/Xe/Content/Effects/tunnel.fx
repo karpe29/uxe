@@ -155,20 +155,20 @@ vertexOutput MrWiggleVS(appdata IN) {
     Po.y = Po.y*(1+bourrelet);
     Po.z = Po.z*(1+bourrelet);
    
-   float4 quat;
+    float4 quat;
     float4x4 orient;
     
-    float yaw=Po.x/longueur*rotation.y;
-   float pitch=Po.x/longueur*rotation.x;
-   float roll=Po.x/longueur*rotation.z;
+   float yaw=Po.x*rotation.y/longueur;
+   float pitch=Po.x*rotation.x/longueur;
+   float roll=Po.x*rotation.z/longueur;
     
-    float num9 = roll * 0.5f;
+    float num9 = roll * 0.5;
     float num6 = sin(num9);
     float num5 = cos(num9);
-    float num8 = pitch * 0.5f;
+    float num8 = pitch * 0.5;
     float num4 = sin( num8);
     float num3 = cos( num8);
-    float num7 = yaw * 0.5f;
+    float num7 = yaw * 0.5;
     float num2 = sin( num7);
     float num = cos( num7);
     
