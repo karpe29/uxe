@@ -37,6 +37,7 @@ float4x4 WorldIT : WorldInverseTranspose < string UIWidget="None"; >;
 float4x4 WorldViewProj : WorldViewProjection < string UIWidget="None"; >;
 float4x4 World : World < string UIWidget="None"; >;
 float4x4 ViewI : ViewInverse < string UIWidget="None"; >;
+float3 rotation < > ;
 
 float Timer : Time < string UIWidget="None"; >;
 
@@ -66,6 +67,7 @@ float Vertical <
     float UIMax = 10.0;
     float UIStep = 0.1;
 > = 0.5;
+
 
 
 float3 LightPos : Position <
@@ -148,11 +150,67 @@ vertexOutput MrWiggleVS(appdata IN) {
     {
     bourrelet=(cos(diff)+1)/5;
     }
-    
+
     //Po.x = Po.x;
     Po.y = Po.y*(1+bourrelet);
     Po.z = Po.z*(1+bourrelet);
    
+   float4 quat;
+    float4x4 orient;
+    
+    float yaw=Po.x/longueur*rotation.y;
+   float pitch=Po.x/longueur*rotation.x;
+   float roll=Po.x/longueur*rotation.z;
+    
+    float num9 = roll * 0.5f;
+    float num6 = sin(num9);
+    float num5 = cos(num9);
+    float num8 = pitch * 0.5f;
+    float num4 = sin( num8);
+    float num3 = cos( num8);
+    float num7 = yaw * 0.5f;
+    float num2 = sin( num7);
+    float num = cos( num7);
+    
+    quat.x = ((num * num4) * num5) + ((num2 * num3) * num6);
+    quat.y = ((num2 * num3) * num5) - ((num * num4) * num6);
+    quat.z = ((num * num3) * num6) - ((num2 * num4) * num5);
+    quat.w = ((num * num3) * num5) + ((num2 * num4) * num6);
+
+    
+    num9 = quat.x * quat.x;
+    num8 = quat.y * quat.y;
+    num7 = quat.z * quat.z;
+    num6 = quat.x * quat.y;
+    num5 = quat.z * quat.w;
+    num4 = quat.z * quat.x;
+    num3 = quat.y * quat.w;
+    num2 = quat.y * quat.z;
+    num = quat.x * quat.w;
+    
+    orient._11 = 1 - (2 * (num8 + num7));
+    orient._12 = 2 * (num6 + num5);
+    orient._13 = 2 * (num4 - num3);
+    orient._14 = 0;
+    orient._21 = 2 * (num6 - num5);
+    orient._22 = 1 - (2 * (num7 + num9));
+    orient._23 = 2 * (num2 + num);
+    orient._24 = 0;
+    orient._31 = 2 * (num4 + num3);
+    orient._32 = 2 * (num2 - num);
+    orient._33 = 1 - (2 * (num8 + num9));
+    orient._34 = 0;
+    orient._41 = 0;
+    orient._42 = 0;
+    orient._43 = 0;
+    orient._44 = 1;
+
+    
+    
+
+    Po=mul(Po,orient);
+    
+    
     
     OUT.HPosition = mul(Po, WorldViewProj);
     float3 Pw = mul(Po, World).xyz;
@@ -192,7 +250,7 @@ technique Untextured <
     pass p0 <
 	string Script = "Draw=geometry;";
 > {		
-		VertexShader = compile vs_1_1 MrWiggleVS();
+		VertexShader = compile vs_2_0 MrWiggleVS();
 		ZEnable = true;
 		ZWriteEnable = true;
 		//CullMode = None;
@@ -212,7 +270,7 @@ technique Textured <
     pass p0 <
 	string Script = "Draw=geometry;";
 > {		
-		VertexShader = compile vs_1_1 MrWiggleVS();
+		VertexShader = compile vs_2_0 MrWiggleVS();
 		ZEnable = true;
 		ZWriteEnable = true;
 		//CullMode = None;
