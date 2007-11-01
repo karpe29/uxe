@@ -140,8 +140,9 @@ namespace Xe.GameScreen
 			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 0, 0));
 			myEffect.Parameters["AmbiColor"].SetValue(new Vector3(.5f, .5f, .5f));
 			myEffect.Parameters["SurfColor"].SetValue(new Vector3(1, 1, 1));
-			
+
 			myEffect.Parameters["longueur"].SetValue(tunnel.longueur);
+			myEffect.Parameters["nbCercles"].SetValue(tunnel.nb_cercles);
 
 			
 			/*((BasicEffect)myEffect).World = Matrix.Identity;

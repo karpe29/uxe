@@ -43,7 +43,8 @@ float Timer : Time < string UIWidget="None"; >;
 
 float TunnelOffset < > = 100.0f;
 	
-float longueur : longueur < > =100.0f;
+float longueur < > =100.0f;
+int nbCercles  < > =10;
 
 
 float TimeScale <
@@ -155,6 +156,9 @@ vertexOutput MrWiggleVS(appdata IN) {
     Po.y = Po.y*(1+bourrelet);
     Po.z = Po.z*(1+bourrelet);
    
+    float4 tmpPos=Po;
+    tmpPos.x=0;
+    
     float4 quat;
     float4x4 orient;
     
@@ -206,9 +210,19 @@ vertexOutput MrWiggleVS(appdata IN) {
     orient._44 = 1;
 
     
+    float4 posCentre={0,0,0,0};
+    
+    float step=longueur/nbCercles;
+    
+    for (int i=0;i<=nbCercles;i++)
+    {
+    posCentre.x+=step*cos(i*pitch)*cos(i*roll);
+    posCentre.y+=step*sin(i*pitch);
+    posCentre.z+=step*sin(i*roll);
+    }
     
 
-    Po=mul(Po,orient);
+    Po=posCentre+mul(tmpPos,orient);
     
     
     
