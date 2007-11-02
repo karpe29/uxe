@@ -39,6 +39,7 @@ float4x4 World : World < string UIWidget="None"; >;
 float4x4 ViewI : ViewInverse < string UIWidget="None"; >;
 float3 rotationAxis < > ;
 float rotationAngle < > ;
+float4x4 rotationMatrix < > ;
 
 float Timer : Time < string UIWidget="None"; >;
 
@@ -153,7 +154,7 @@ vertexOutput MrWiggleVS(appdata IN) {
     bourrelet=(cos(diff)+1)/5;
     }
 
-    //Po.x = Po.x;
+
     Po.y = Po.y*(1+bourrelet);
     Po.z = Po.z*(1+bourrelet);
    
@@ -164,6 +165,7 @@ vertexOutput MrWiggleVS(appdata IN) {
     float4 tmpPos=Po;
     tmpPos.x=0;
     
+    /*
     float4x4 orient;
     
     
@@ -198,7 +200,7 @@ vertexOutput MrWiggleVS(appdata IN) {
     orient._43 = 0;
     orient._44 = 1;
 
-    
+    */
     
     
     
@@ -254,19 +256,20 @@ vertexOutput MrWiggleVS(appdata IN) {
 
  */
     float4 posCentre={0,0,0,0};
-    float4 VectStep={step,0,0,0};
  
     
-    for(int i=0;i<=currentCercle;i++)
+    for(int i=1;i<=currentCercle;i++)
     {
-        posCentre.x+=cos(i*rotationAxis.y*angle)*cos(i*rotationAxis.z*angle);
-        posCentre.y+=sin(i*rotationAxis.z*angle);
-        posCentre.z+=sin(i*rotationAxis.y*angle);
-
-    }
+    float4 VectStep={step,0,0,0};
+		for (int j=1;j<=i;j++)
+		{
+			VectStep=mul(VectStep,rotationMatrix);
+		}
+        posCentre+=VectStep;
+        tmpPos=mul(tmpPos,rotationMatrix);
+	}
     
-	posCentre*=step;
-    Po=posCentre+mul(tmpPos,orient);
+    Po=posCentre+tmpPos;
     
     
     

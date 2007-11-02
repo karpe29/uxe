@@ -178,7 +178,7 @@ namespace Xe.GameScreen
 
 			//XeGame.Stats.AddModelPolygonsCount(myModel);
 
-			this.GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;
+			this.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
 			//this.GraphicsDevice.RenderState.TwoSidedStencilMode = true;
 
 
@@ -326,10 +326,14 @@ namespace Xe.GameScreen
 			Projection = player.m_camera.Projection;
 			View = player.m_camera.View;
 			 */
-			myEffect.Parameters["rotationAxis"].SetValue(Vector3.Transform(Vector3.UnitY, Matrix.CreateFromAxisAngle(Vector3.UnitX, (float)(gameTime.TotalGameTime.TotalSeconds) / 2)));
-			myEffect.Parameters["rotationAngle"].SetValue(MathHelper.Pi);
+			Vector3 axe= Vector3.Transform(Vector3.UnitY,Matrix.CreateFromAxisAngle(Vector3.UnitX,(float)(gameTime.TotalGameTime.TotalSeconds)/5));
 			
-			
+
+			myEffect.Parameters["rotationMatrix"].SetValue(Matrix.CreateFromAxisAngle(axe, MathHelper.Pi / (float)tunnel.nb_cercles));
+
+			//myEffect.Parameters["rotationAngle"].SetValue(MathHelper.TwoPi);
+			//myEffect.Parameters["rotationAxis"].SetValue(Vector3.Transform(Vector3.UnitY, Matrix.CreateFromAxisAngle(Vector3.UnitX, (float)(gameTime.TotalGameTime.TotalSeconds) / 2)));
+	
 			//courbe += inc_courbe;
 			//if (Math.Abs(courbe) >= 0.005) inc_courbe = -inc_courbe;
 			
