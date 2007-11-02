@@ -44,7 +44,7 @@ float Timer : Time < string UIWidget="None"; >;
 float TunnelOffset < > = 100.0f;
 	
 float longueur < > =100.0f;
-int nbCercles  < > =10;
+float nbCercles  < > =10.0f;
 
 
 float TimeScale <
@@ -156,23 +156,27 @@ vertexOutput MrWiggleVS(appdata IN) {
     Po.y = Po.y*(1+bourrelet);
     Po.z = Po.z*(1+bourrelet);
    
+    
+    float step=longueur/nbCercles;
+    int currentCercle=Po.x/step;
+
     float4 tmpPos=Po;
     tmpPos.x=0;
     
     float4 quat;
     float4x4 orient;
     
-   float yaw=Po.x*rotation.y/longueur;
-   float pitch=Po.x*rotation.x/longueur;
-   float roll=Po.x*rotation.z/longueur;
+   float yaw=rotation.y/nbCercles;
+   float pitch=rotation.x/nbCercles;
+   float roll=rotation.z/nbCercles;
     
-    float num9 = roll * 0.5;
+    float num9 = currentCercle*roll * 0.5;
     float num6 = sin(num9);
     float num5 = cos(num9);
-    float num8 = pitch * 0.5;
+    float num8 = currentCercle*pitch * 0.5;
     float num4 = sin( num8);
     float num3 = cos( num8);
-    float num7 = yaw * 0.5;
+    float num7 = currentCercle*yaw * 0.5;
     float num2 = sin( num7);
     float num = cos( num7);
     
@@ -209,18 +213,18 @@ vertexOutput MrWiggleVS(appdata IN) {
     orient._43 = 0;
     orient._44 = 1;
 
-    
+ 
     float4 posCentre={0,0,0,0};
     
-    float step=longueur/nbCercles;
+ 
     
-    for (int i=0;i<=nbCercles;i++)
+    for(int i=0;i<=currentCercle;i++)
     {
-    posCentre.x+=step*cos(i*pitch)*cos(i*roll);
-    posCentre.y+=step*sin(i*pitch);
-    posCentre.z+=step*sin(i*roll);
+        posCentre.x+=cos(i*yaw)*cos(i*roll);
+        posCentre.y+=sin(i*roll);
+        posCentre.z+=sin(i*yaw);
     }
-    
+    posCentre*=step;
 
     Po=posCentre+mul(tmpPos,orient);
     
@@ -264,7 +268,7 @@ technique Untextured <
     pass p0 <
 	string Script = "Draw=geometry;";
 > {		
-		VertexShader = compile vs_2_0 MrWiggleVS();
+		VertexShader = compile vs_3_0 MrWiggleVS();
 		ZEnable = true;
 		ZWriteEnable = true;
 		//CullMode = None;
@@ -284,7 +288,7 @@ technique Textured <
     pass p0 <
 	string Script = "Draw=geometry;";
 > {		
-		VertexShader = compile vs_2_0 MrWiggleVS();
+		VertexShader = compile vs_3_0 MrWiggleVS();
 		ZEnable = true;
 		ZWriteEnable = true;
 		//CullMode = None;

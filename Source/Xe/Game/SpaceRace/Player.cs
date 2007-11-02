@@ -22,7 +22,7 @@ namespace Xe.SpaceRace
 
 		GameScreenManager m_gameScreenManager;
 
-		SpaceRaceScreen m_raceScreen;
+		MainBackgroundScreen m_raceScreen;
 
 		Race m_race;
 
@@ -39,7 +39,7 @@ namespace Xe.SpaceRace
 		{
 			m_gameScreenManager = gameScreenManager;
 
-			m_raceScreen = (SpaceRaceScreen)gameScreenManager.CurrentGameScreen;
+			m_raceScreen = (MainBackgroundScreen)gameScreenManager.CurrentGameScreen;
 
 			m_race = m_raceScreen.Race;
 
