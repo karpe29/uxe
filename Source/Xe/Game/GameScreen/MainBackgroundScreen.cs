@@ -31,9 +31,9 @@ namespace Xe.GameScreen
 		Vector3 modelPosition = new Vector3(0, 0, 0);
 
 		//Position of the Camera in world space, for our view matrix
-		Vector3 cameraPosition = new Vector3(0, 0, 0);
+		Vector3 cameraPosition = new Vector3(00, 800, 300);
 		float cameraTargetOffset = 100;
-		Vector3 cameraTargetPosition = new Vector3(100, 0, 0);
+		Vector3 cameraTargetPosition = new Vector3(0, 0, 300);
 
 		private Matrix projection;
 		private Matrix view;
@@ -90,11 +90,13 @@ namespace Xe.GameScreen
 		public MainBackgroundScreen(GameScreenManager gameScreenManager)
 			: base(gameScreenManager, true)
 		{
-			InitDatas = new SpaceRaceInitDatas(1, 0);
+			/*InitDatas = new SpaceRaceInitDatas(1, 0);
 			InitDatas.ShipTypes.Add(ShipType.Types[0]);
 			InitDatas.GamePadIndexes.Add(0);
 			Race = new Race(gameScreenManager, InitDatas.DifficultyPercent);
 			player = new Player(gameScreenManager, InitDatas.ShipTypes[0], (PlayerIndex)0, InitDatas.GamePadIndexes[0]);
+		
+			 */
 		}
 
 		public void AddEffectToModel(Model thisModel, Effect thisEffect)
@@ -145,7 +147,7 @@ namespace Xe.GameScreen
 
 			Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 500000.0f);
 			World = Matrix.Identity;
-			View = Matrix.CreateLookAt(cameraPosition, cameraTargetPosition, Vector3.Up);
+			View = Matrix.CreateLookAt(cameraPosition, cameraTargetPosition, Vector3.Forward);
 
 			myEffect.Parameters["LightPos"].SetValue(new Vector3(20, 49.9f, 0));
 			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 0, 0));
@@ -176,7 +178,7 @@ namespace Xe.GameScreen
 
 			//XeGame.Stats.AddModelPolygonsCount(myModel);
 
-			this.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
+			this.GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;
 			//this.GraphicsDevice.RenderState.TwoSidedStencilMode = true;
 
 
@@ -243,7 +245,7 @@ namespace Xe.GameScreen
 
 
 
-			player.Draw(gameTime);
+			//player.Draw(gameTime);
 
 			
 				myEffect.Begin();
@@ -274,8 +276,8 @@ namespace Xe.GameScreen
 			long time = (long)(gameTime.ElapsedGameTime.Milliseconds);
 			myEffect.Parameters["Timer"].SetValue((float)(gameTime.TotalGameTime.TotalSeconds));
 
-			player.Update(gameTime);
-			/*
+			//player.Update(gameTime);
+			
 			int touche = 0;
 
 			if (Keyboard.GetState()[Keys.Up] == KeyState.Down)
@@ -319,11 +321,13 @@ namespace Xe.GameScreen
 
 
 			}
-			*/
+			
+			/*
 			Projection = player.m_camera.Projection;
 			View = player.m_camera.View;
-			myEffect.Parameters["rotation"].SetValue(new Vector3(0, MathHelper.Pi,0));
-
+			 */
+			myEffect.Parameters["rotation"].SetValue(new Vector3(0,MathHelper.Pi, 0 ));
+			
 			
 			//courbe += inc_courbe;
 			//if (Math.Abs(courbe) >= 0.005) inc_courbe = -inc_courbe;
@@ -362,7 +366,7 @@ namespace Xe.GameScreen
 
 		public class tunnel
 		{
-			public static int nb_cotes = 60, nb_cercles = 200;
+			public static int nb_cotes = 60, nb_cercles = 50;
 			public static float longueur = 1000,rayon=50;
 			private List<tube> les_tubes = new List<tube>();
 			private List<cercle> les_cercles = new List<cercle>();
