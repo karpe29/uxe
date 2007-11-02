@@ -14,7 +14,7 @@ namespace Xe.SpaceRace
 	{
 		public enum Names
 		{
-			None = 0,
+			//None = 0,
 			Deimos = 600,
 			Phobos = 960,
 			Pluto = 2306,
