@@ -37,7 +37,8 @@ float4x4 WorldIT : WorldInverseTranspose < string UIWidget="None"; >;
 float4x4 WorldViewProj : WorldViewProjection < string UIWidget="None"; >;
 float4x4 World : World < string UIWidget="None"; >;
 float4x4 ViewI : ViewInverse < string UIWidget="None"; >;
-float3 rotation < > ;
+float3 rotationAxis < > ;
+float rotationAngle < > ;
 
 float Timer : Time < string UIWidget="None"; >;
 
@@ -158,13 +159,51 @@ vertexOutput MrWiggleVS(appdata IN) {
    
     
     float step=longueur/nbCercles;
-    int currentCercle=Po.x/step;
+    float currentCercle=Po.x/step;
 
     float4 tmpPos=Po;
     tmpPos.x=0;
     
-    float4 quat;
     float4x4 orient;
+    
+    
+     rotationAxis=normalize( rotationAxis);
+    float x = rotationAxis.x;
+    float y = rotationAxis.y;
+    float z = rotationAxis.z;
+    float angle = rotationAngle/nbCercles;
+    
+    float num2 = sin( angle*currentCercle);
+    float num = cos( angle*currentCercle);
+    float num11 = x * x;
+    float num10 = y * y;
+    float num9 = z * z;
+    float num8 = x * y;
+    float num7 = x * z;
+    float num6 = y * z;
+    orient._11 = num11 + (num * (1 - num11));
+    orient._12 = (num8 - (num * num8)) + (num2 * z);
+    orient._13 = (num7 - (num * num7)) - (num2 * y);
+    orient._14 = 0;
+    orient._21 = (num8 - (num * num8)) - (num2 * z);
+    orient._22 = num10 + (num * (1 - num10));
+    orient._23 = (num6 - (num * num6)) + (num2 * x);
+    orient._24 = 0;
+    orient._31 = (num7 - (num * num7)) + (num2 * y);
+    orient._32 = (num6 - (num * num6)) - (num2 * x);
+    orient._33 = num9 + (num * (1 - num9));
+    orient._34 = 0;
+    orient._41 = 0;
+    orient._42 = 0;
+    orient._43 = 0;
+    orient._44 = 1;
+
+    
+    
+    
+    
+    /*
+    float4 quat;
     
    float yaw=rotation.y/nbCercles;
    float pitch=rotation.x/nbCercles;
@@ -213,19 +252,20 @@ vertexOutput MrWiggleVS(appdata IN) {
     orient._43 = 0;
     orient._44 = 1;
 
- 
+ */
     float4 posCentre={0,0,0,0};
-    
+    float4 VectStep={step,0,0,0};
  
     
     for(int i=0;i<=currentCercle;i++)
     {
-        posCentre.x+=cos(i*yaw)*cos(i*roll);
-        posCentre.y+=sin(i*roll);
-        posCentre.z+=sin(i*yaw);
-    }
-    posCentre*=step;
+        posCentre.x+=cos(i*rotationAxis.y*angle)*cos(i*rotationAxis.z*angle);
+        posCentre.y+=sin(i*rotationAxis.z*angle);
+        posCentre.z+=sin(i*rotationAxis.y*angle);
 
+    }
+    
+	posCentre*=step;
     Po=posCentre+mul(tmpPos,orient);
     
     
