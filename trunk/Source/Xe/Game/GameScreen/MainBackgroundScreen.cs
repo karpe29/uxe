@@ -31,9 +31,9 @@ namespace Xe.GameScreen
 		Vector3 modelPosition = new Vector3(0, 0, 0);
 
 		//Position of the Camera in world space, for our view matrix
-		Vector3 cameraPosition = new Vector3(00, 800, 300);
+		Vector3 cameraPosition = new Vector3(-2000, 0, 0);
 		float cameraTargetOffset = 100;
-		Vector3 cameraTargetPosition = new Vector3(0, 0, 300);
+		Vector3 cameraTargetPosition = new Vector3(0,0, 0);
 
 		private Matrix projection;
 		private Matrix view;
@@ -147,7 +147,7 @@ namespace Xe.GameScreen
 
 			Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), aspectRatio, 1.0f, 500000.0f);
 			World = Matrix.Identity;
-			View = Matrix.CreateLookAt(cameraPosition, cameraTargetPosition, Vector3.Forward);
+			View = Matrix.CreateLookAt(cameraPosition, cameraTargetPosition, Vector3.Up);
 
 			myEffect.Parameters["LightPos"].SetValue(new Vector3(20, 49.9f, 0));
 			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 0, 0));
@@ -326,7 +326,8 @@ namespace Xe.GameScreen
 			Projection = player.m_camera.Projection;
 			View = player.m_camera.View;
 			 */
-			myEffect.Parameters["rotation"].SetValue(new Vector3(0,MathHelper.Pi, 0 ));
+			myEffect.Parameters["rotationAxis"].SetValue(Vector3.Transform(Vector3.UnitY, Matrix.CreateFromAxisAngle(Vector3.UnitX, (float)(gameTime.TotalGameTime.TotalSeconds) / 2)));
+			myEffect.Parameters["rotationAngle"].SetValue(MathHelper.Pi);
 			
 			
 			//courbe += inc_courbe;
