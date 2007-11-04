@@ -40,6 +40,9 @@ float4x4 ViewI : ViewInverse < string UIWidget="None"; >;
 float3 rotationAxis < > ;
 float rotationAngle < > ;
 float4x4 rotationMatrix < > ;
+float4 PosCentres[216] < >;
+
+
 
 float Timer : Time < string UIWidget="None"; >;
 
@@ -149,7 +152,7 @@ vertexOutput MrWiggleVS(appdata IN) {
     float currPos=longueur-(timeNow*100)%longueur;
     float diff=(currPos-Po.x)/10;
     
-    if (abs(diff)<=3.14)
+    if (abs(diff)<=3.14 )
     {
     bourrelet=(cos(diff)+1)/5;
     }
@@ -159,13 +162,14 @@ vertexOutput MrWiggleVS(appdata IN) {
     Po.z = Po.z*(1+bourrelet);
    
     
+
     float step=longueur/nbCercles;
-    float currentCercle=Po.x/step;
+    int currentCercle=Po.x/step;
 
     float4 tmpPos=Po;
     tmpPos.x=0;
     
-    /*
+    
     float4x4 orient;
     
     
@@ -200,7 +204,7 @@ vertexOutput MrWiggleVS(appdata IN) {
     orient._43 = 0;
     orient._44 = 1;
 
-    */
+    
     
     
     
@@ -255,9 +259,12 @@ vertexOutput MrWiggleVS(appdata IN) {
     orient._44 = 1;
 
  */
-    float4 posCentre={0,0,0,0};
- 
     
+    
+    
+ /*
+       float4 posCentre={0,0,0,0};
+ 
     for(int i=1;i<=currentCercle;i++)
     {
     float4 VectStep={step,0,0,0};
@@ -268,9 +275,13 @@ vertexOutput MrWiggleVS(appdata IN) {
         posCentre+=VectStep;
         tmpPos=mul(tmpPos,rotationMatrix);
 	}
+        Po=posCentre+tmpPos;
+
+   */
+     
     
-    Po=posCentre+tmpPos;
-    
+      Po=PosCentres[currentCercle]+mul(tmpPos,orient);
+
     
     
     OUT.HPosition = mul(Po, WorldViewProj);
