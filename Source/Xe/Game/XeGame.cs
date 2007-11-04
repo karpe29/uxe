@@ -198,7 +198,7 @@ namespace Xe
 
 		protected override bool BeginDraw()
 		{
-			m_graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+			m_graphics.GraphicsDevice.Clear(Color.Black);
 			return base.BeginDraw();
 		}
 
