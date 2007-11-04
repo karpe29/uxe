@@ -17,8 +17,6 @@ namespace Xe.GameScreen
 	class MainBackgroundScreen : IGameScreen
 	{
 		//Model myModel;
-		Effect myEffect;
-		Texture2D myTexture;
 
 		tunnel myTunnel=new tunnel();
 	
@@ -31,9 +29,9 @@ namespace Xe.GameScreen
 		Vector3 modelPosition = new Vector3(0, 0, 0);
 
 		//Position of the Camera in world space, for our view matrix
-		Vector3 cameraPosition = new Vector3(-2000, 0, 0);
+		Vector3 cameraPosition = new Vector3(0, 0, 0);
 		float cameraTargetOffset = 100;
-		Vector3 cameraTargetPosition = new Vector3(0,0, 0);
+		Vector3 cameraTargetPosition = new Vector3(100,0, 0);
 
 		private Matrix projection;
 		private Matrix view;
@@ -65,8 +63,8 @@ namespace Xe.GameScreen
 			set
 			{
 				view = value;
-				myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(view));
-				myEffect.Parameters["WorldViewProj"].SetValue(World * view * Projection);
+				myTunnel.myEffect.Parameters["ViewI"].SetValue(Matrix.Invert(view));
+				myTunnel.myEffect.Parameters["WorldViewProj"].SetValue(World * view * Projection);
 			}
 		}
 
@@ -80,8 +78,8 @@ namespace Xe.GameScreen
 			set
 			{
 				world = value;
-			myEffect.Parameters["WorldIT"].SetValue(Matrix.Invert(Matrix.Transpose( world)));
-			myEffect.Parameters["World"].SetValue(world);
+				myTunnel.myEffect.Parameters["WorldIT"].SetValue(Matrix.Invert(Matrix.Transpose(world)));
+				myTunnel.myEffect.Parameters["World"].SetValue(world);
 		}
 		}
 
@@ -119,9 +117,6 @@ namespace Xe.GameScreen
 			//myModel = XeGame.ContentManager.Load<Model>(@"Content\Models\MenuTunnel");
 			
 			//myEffect = new BasicEffect(XeGame.Device,null);
-			myEffect = XeGame.ContentManager.Load<Effect>(@"Content\Effects\tunnel");
-
-			myEffect.CurrentTechnique = myEffect.Techniques[1];
 			//((BasicEffect)myEffect).VertexColorEnabled = true;
 			/*((BasicEffect)myEffect).LightingEnabled = true;
 			((BasicEffect)myEffect).DirectionalLight0.Enabled = true;
@@ -137,9 +132,7 @@ namespace Xe.GameScreen
 			foreach (EffectParameter p in myEffect.Parameters)
 				Console.WriteLine(p.Name);
 			*/
-			myTexture = XeGame.ContentManager.Load<Texture2D>(@"Content\Textures\team");
 
-			myEffect.Parameters["colorTexture"].SetValue(myTexture);
 
 			//Aspect ratio to use for the projection matrix
 			aspectRatio = aspectRatio = (float)this.GraphicsDevice.PresentationParameters.BackBufferWidth / (float)this.GraphicsDevice.PresentationParameters.BackBufferHeight;
@@ -149,13 +142,6 @@ namespace Xe.GameScreen
 			World = Matrix.Identity;
 			View = Matrix.CreateLookAt(cameraPosition, cameraTargetPosition, Vector3.Up);
 
-			myEffect.Parameters["LightPos"].SetValue(new Vector3(20, 49.9f, 0));
-			myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 0, 0));
-			myEffect.Parameters["AmbiColor"].SetValue(new Vector3(.5f, .5f, .5f));
-			myEffect.Parameters["SurfColor"].SetValue(new Vector3(1, 1, 1));
-
-			myEffect.Parameters["longueur"].SetValue(tunnel.longueur);
-			myEffect.Parameters["nbCercles"].SetValue(tunnel.nb_cercles);
 
 			
 			/*((BasicEffect)myEffect).World = Matrix.Identity;
@@ -248,13 +234,8 @@ namespace Xe.GameScreen
 			//player.Draw(gameTime);
 
 			
-				myEffect.Begin();
-		
-				foreach (EffectPass pass in myEffect.CurrentTechnique.Passes)
-				{
-					pass.Begin();
 					//Draw the mesh, will use the effects set above.*/
-					myTunnel.draw();
+			myTunnel.Draw(gameTime);
 					/*foreach (ModelMeshPart part in myModel.Meshes[i].MeshParts)
 					{
 						this.GraphicsDevice.VertexDeclaration = part.VertexDeclaration;
@@ -263,18 +244,12 @@ namespace Xe.GameScreen
 						this.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.BaseVertex, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
 					}
 					//myModel.Meshes[i].Draw();*/
-					pass.End();
-				}
-
-				myEffect.End();
-
 			
 		}
 
 		public override void Update(GameTime gameTime)
 		{
 			long time = (long)(gameTime.ElapsedGameTime.Milliseconds);
-			myEffect.Parameters["Timer"].SetValue((float)(gameTime.TotalGameTime.TotalSeconds));
 
 			//player.Update(gameTime);
 			
@@ -321,18 +296,18 @@ namespace Xe.GameScreen
 
 
 			}
-			
+			myTunnel.Update(gameTime);
+		
 			/*
 			Projection = player.m_camera.Projection;
 			View = player.m_camera.View;
 			 */
-			Vector3 axe= Vector3.Transform(Vector3.UnitY,Matrix.CreateFromAxisAngle(Vector3.UnitX,(float)(gameTime.TotalGameTime.TotalSeconds)/5));
+
 			
 
-			myEffect.Parameters["rotationMatrix"].SetValue(Matrix.CreateFromAxisAngle(axe, MathHelper.Pi / (float)tunnel.nb_cercles));
 
-			//myEffect.Parameters["rotationAngle"].SetValue(MathHelper.TwoPi);
-			//myEffect.Parameters["rotationAxis"].SetValue(Vector3.Transform(Vector3.UnitY, Matrix.CreateFromAxisAngle(Vector3.UnitX, (float)(gameTime.TotalGameTime.TotalSeconds) / 2)));
+
+			//myEffect.Parameters["rotationMatrix"].SetValue(Matrix.CreateFromAxisAngle(axe, MathHelper.Pi / (float)tunnel.nb_cercles));
 	
 			//courbe += inc_courbe;
 			//if (Math.Abs(courbe) >= 0.005) inc_courbe = -inc_courbe;
@@ -371,7 +346,10 @@ namespace Xe.GameScreen
 
 		public class tunnel
 		{
-			public static int nb_cotes = 60, nb_cercles = 50;
+			public Effect myEffect;
+			Texture2D myTexture;
+
+			public static int nb_cotes = 60, nb_cercles = 200;
 			public static float longueur = 1000,rayon=50;
 			private List<tube> les_tubes = new List<tube>();
 			private List<cercle> les_cercles = new List<cercle>();
@@ -391,15 +369,75 @@ namespace Xe.GameScreen
 					les_tubes.Add(new tube(XeGame.Device, nb_cotes, les_cercles[i], les_cercles[i + 1]));
 				}
 
+				myEffect = XeGame.ContentManager.Load<Effect>(@"Content\Effects\tunnel");
+
+				myEffect.CurrentTechnique = myEffect.Techniques[1];
+
+				myTexture = XeGame.ContentManager.Load<Texture2D>(@"Content\Textures\team");
+
+				myEffect.Parameters["colorTexture"].SetValue(myTexture);
+
+				myEffect.Parameters["LightPos"].SetValue(new Vector3(20, 49.9f, 0));
+				myEffect.Parameters["LightColor"].SetValue(new Vector3(1, 0, 0));
+				myEffect.Parameters["AmbiColor"].SetValue(new Vector3(.5f, .5f, .5f));
+				myEffect.Parameters["SurfColor"].SetValue(new Vector3(1, 1, 1));
+
+				myEffect.Parameters["longueur"].SetValue(longueur);
+				myEffect.Parameters["nbCercles"].SetValue(nb_cercles);
+
+
+
 			}
 
-			public void draw()
+			public void Update(GameTime gameTime)
+			{
+				myEffect.Parameters["Timer"].SetValue((float)(gameTime.TotalGameTime.TotalSeconds));
+				
+				
+				// params a définir pour la flexion du tunnel
+				Vector3 axe = Vector3.Transform(Vector3.UnitY, Matrix.CreateFromAxisAngle(Vector3.UnitX, (float)(gameTime.TotalGameTime.TotalSeconds) / 5));
+				float angle = .7f;
+
+
+
+				axe = Vector3.Normalize(axe);
+				Vector4[] PosCentres = new Vector4[nb_cercles + 1];
+				Vector3 step = new Vector3(longueur / nb_cercles, 0, 0);
+				Vector3 currentPos = Vector3.Zero;
+				for (int i = 0; i <= nb_cercles; i++)
+				{
+					if (i > 0) currentPos += Vector3.Transform(step, Matrix.CreateFromAxisAngle(axe, i*angle / nb_cercles));
+					PosCentres[i].X = currentPos.X;
+					PosCentres[i].Y = currentPos.Y;
+					PosCentres[i].Z = currentPos.Z;
+					PosCentres[i].W = 0;
+				}
+
+				myEffect.Parameters["PosCentres"].SetValue(PosCentres);
+				myEffect.Parameters["rotationAngle"].SetValue(angle);
+				myEffect.Parameters["rotationAxis"].SetValue(axe);
+			}
+
+			public void Draw(GameTime gameTime)
 			{
 
-				for (int k = 0; k < les_tubes.Count; k++)
+
+				myEffect.Begin();
+
+				foreach (EffectPass pass in myEffect.CurrentTechnique.Passes)
 				{
-					les_tubes[k].draw();
+					pass.Begin();
+
+					for (int k = 0; k < les_tubes.Count; k++)
+					{
+						les_tubes[k].draw();
+					}
+					pass.End();
 				}
+
+				myEffect.End();
+
+
 			}
 
 
