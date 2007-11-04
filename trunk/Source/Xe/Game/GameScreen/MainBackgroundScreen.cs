@@ -38,7 +38,6 @@ namespace Xe.GameScreen
 		private Matrix world;
 		private float aspectRatio;
 
-		Random r = new Random();
 
 
 		public Matrix Projection
@@ -350,11 +349,14 @@ namespace Xe.GameScreen
 			Texture2D myTexture;
 
 			public static int nb_cotes = 60, nb_cercles = 200;
-			public static float longueur = 1000,rayon=50;
+			public static float longueur = 2000,rayon=50;
 			private List<tube> les_tubes = new List<tube>();
 			private List<cercle> les_cercles = new List<cercle>();
 			private Vector3 pos;
 			private Matrix orient=Matrix.Identity;
+			Random r = new Random();
+			float objectiveTime = 0, currentTime = 0,refTime=0, stepTime = 0,objectiveAngle=0,currentAngle=0,stepAngle=0;
+			Vector3 objectiveAxe = Vector3.Zero, currentAxe = Vector3.UnitY, stepAxe = Vector3.Zero;
 
 			public tunnel()
 			{
@@ -385,37 +387,66 @@ namespace Xe.GameScreen
 				myEffect.Parameters["longueur"].SetValue(longueur);
 				myEffect.Parameters["nbCercles"].SetValue(nb_cercles);
 
+				myEffect.Parameters["SpeedBourrelet"].SetValue(200);
+				myEffect.Parameters["SpeedTexture"].SetValue(100);
+
 
 
 			}
 
 			public void Update(GameTime gameTime)
 			{
-				myEffect.Parameters["Timer"].SetValue((float)(gameTime.TotalGameTime.TotalSeconds));
-				
+				currentTime = (float)(gameTime.TotalGameTime.TotalSeconds)-refTime;
+				float time=(float)(gameTime.ElapsedGameTime.TotalSeconds);
+
+				if (currentTime >= objectiveTime)
+				{
+					refTime = (float)(gameTime.TotalGameTime.TotalSeconds);
+					objectiveTime = (float)(r.NextDouble() * 7 + 3);
+					stepTime = (float)(r.NextDouble() * (objectiveTime - 4) + 2);
+
+					objectiveAngle = (float)r.NextDouble();
+					objectiveAxe = Vector3.Transform(Vector3.UnitY, Matrix.CreateFromAxisAngle(Vector3.UnitX, (float)(r.NextDouble() * MathHelper.TwoPi)));
+
+					stepAngle = (objectiveAngle-currentAngle) / stepTime;
+					stepAxe = (objectiveAxe-currentAxe) / stepTime;
+				}
+				else
+				{
+					if (currentTime >= stepTime)
+					{
+					}
+					else
+					{
+						currentAngle += stepAngle * time;
+						currentAxe += stepAxe * time;
+					}
+				}
+
 				
 				// params a définir pour la flexion du tunnel
-				Vector3 axe = Vector3.Transform(Vector3.UnitY, Matrix.CreateFromAxisAngle(Vector3.UnitX, (float)(gameTime.TotalGameTime.TotalSeconds) / 5));
-				float angle = .7f;
+				//Vector3 axe = Vector3.Transform(Vector3.UnitY, Matrix.CreateFromAxisAngle(Vector3.UnitX, (float)(gameTime.TotalGameTime.TotalSeconds) / 5));
+				//float angle = .7f;
 
 
 
-				axe = Vector3.Normalize(axe);
+				//currentAxe = Vector3.Normalize(currentAxe);
 				Vector4[] PosCentres = new Vector4[nb_cercles + 1];
 				Vector3 step = new Vector3(longueur / nb_cercles, 0, 0);
 				Vector3 currentPos = Vector3.Zero;
 				for (int i = 0; i <= nb_cercles; i++)
 				{
-					if (i > 0) currentPos += Vector3.Transform(step, Matrix.CreateFromAxisAngle(axe, i*angle / nb_cercles));
+					if (i > 0) currentPos += Vector3.Transform(step, Matrix.CreateFromAxisAngle(currentAxe, i*currentAngle / nb_cercles));
 					PosCentres[i].X = currentPos.X;
 					PosCentres[i].Y = currentPos.Y;
 					PosCentres[i].Z = currentPos.Z;
 					PosCentres[i].W = 0;
 				}
 
+				myEffect.Parameters["Timer"].SetValue(currentTime+refTime);
 				myEffect.Parameters["PosCentres"].SetValue(PosCentres);
-				myEffect.Parameters["rotationAngle"].SetValue(angle);
-				myEffect.Parameters["rotationAxis"].SetValue(axe);
+				myEffect.Parameters["rotationAngle"].SetValue(currentAngle);
+				myEffect.Parameters["rotationAxis"].SetValue(currentAxe);
 			}
 
 			public void Draw(GameTime gameTime)

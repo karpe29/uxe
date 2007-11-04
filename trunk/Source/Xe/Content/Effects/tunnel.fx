@@ -60,19 +60,19 @@ float TimeScale <
     float UIStep = .1;
 > = 4.0f;
 
-float Horizontal <
+float SpeedBourrelet <
     string UIWidget = "slider";
-    float UIMin = 0.001;
-    float UIMax = 10;
-    float UIStep = 0.01;
-> = 0.5f;
+    float UIMin = 1;
+    float UIMax = 1000;
+    float UIStep = 1;
+> = 1;
 
-float Vertical <
+float SpeedTexture <
     string UIWidget = "slider";
-    float UIMin = 0.001;
-    float UIMax = 10.0;
-    float UIStep = 0.1;
-> = 0.5;
+    float UIMin = 1;
+    float UIMax = 1000;
+    float UIStep = 1;
+> = 1;
 
 
 
@@ -141,15 +141,12 @@ vertexOutput MrWiggleVS(appdata IN) {
     float3 Nn = normalize(mul(IN.Normal, WorldIT).xyz);
     float timeNow = Timer*TimeScale;
     float4 Po = IN.Position;
-    /*float iny = Po.y * Vertical + timeNow;
-    float wiggleX = sin(iny) * Horizontal;
-    float wiggleY = cos(iny) * Horizontal; // deriv
-    //Nn.y = Nn.y + wiggleY;*/
+
     Nn = normalize(Nn);
     
     
     float bourrelet=0;
-    float currPos=longueur-(timeNow*100)%longueur;
+    float currPos=longueur-(timeNow*SpeedBourrelet)%longueur;
     float diff=(currPos-Po.x)/10;
     
     if (abs(diff)<=3.14 )
@@ -292,7 +289,10 @@ vertexOutput MrWiggleVS(appdata IN) {
     float3 diffContrib = SurfColor * ( diffComp * LightColor + AmbiColor);
     OUT.diffCol = float4(diffContrib,1);
     OUT.TexCoord0=IN.UV;
-    OUT.TexCoord0.y = (IN.UV.y+timeNow/50)%longueur;
+    
+    
+    OUT.TexCoord0.y = (IN.UV.y+timeNow/longueur*SpeedTexture)%longueur;
+ 
  
     //OUT.TexCoord0.x = IN.UV.x + TunnelOffset;
     //OUT.TexCoord0.y = IN.UV.y + TunneOffset;
