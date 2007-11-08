@@ -196,8 +196,8 @@ namespace Xe.Graphics2D
         #region void DrawLine2D(Vector3 p0, Vector3 p1)
         public void DrawLine2D(Vector3 p0, Vector3 p1)
         {
-            DrawLine((int)p0.X, (int)p0.Y, (int)p1.X, (int)p1.Y);
-
+			//Console.WriteLine("draw line 2D " + p0 + " " + p1);
+		    DrawLine((int)p0.X, (int)p0.Y, (int)p1.X, (int)p1.Y);
         } 
         #endregion
 

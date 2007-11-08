@@ -162,5 +162,10 @@ namespace Xe.Gui
 					m_label.Text = m_labelText;
 			}
 		}
+
+		public override void Draw(GameTime gameTime)
+		{
+			base.Draw(gameTime);
+		}
 	}
 }

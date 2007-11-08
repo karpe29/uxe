@@ -99,7 +99,7 @@ namespace Xe
 		private ConsoleScreen m_consoleScreen;
 		private IntroScreen m_introScreen;
 
-		private GuiManager<SpriteRenderer> m_guiManager;
+		private GuiManager<VertexRenderer> m_guiManager;
 
 		private Reporter m_reporter;
 
@@ -157,7 +157,7 @@ namespace Xe
 			Components.Add(m_ebi);
 			ServiceHelper.Add<IEbiService>(m_ebi);
 
-			m_guiManager = new GuiManager<SpriteRenderer>(this, m_ebi);
+			m_guiManager = new GuiManager<VertexRenderer>(this, m_ebi);
 			m_guiManager.UpdateOrder = 9 * 1000;
 			m_guiManager.DrawOrder = 9 * 1000;
 			Components.Add(m_guiManager);
@@ -204,6 +204,7 @@ namespace Xe
 
 		protected override void Draw(GameTime gameTime)
 		{
+			//System.Console.WriteLine("--------- XeGame.Draw ----------");
 			base.Draw(gameTime);
 		}
 

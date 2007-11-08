@@ -29,18 +29,22 @@ VOUTPUT VS_TLine(VINPUT _IN)
     return OUT; 
 }
 
-float4 PS_Line(VOUTPUT _IN) : COLOR0 { return _IN.color; }
+float4 PS_Line(VOUTPUT _IN) : COLOR0 { return float4(_IN.color.xyz,1); }
 
 Technique T0 
 {
     Pass P0 
     { 
         VertexShader=compile vs_2_0 VS_Line(); 
+        ZEnable = false;
+		ZWriteEnable = false;
         PixelShader=compile ps_2_0 PS_Line(); 
     } 
     Pass P1 
     { 
-        VertexShader=compile vs_2_0 VS_TLine(); 
+        VertexShader=compile vs_2_0 VS_TLine();
+        ZEnable = false;
+        ZWriteEnable = false;
         PixelShader=compile ps_2_0 PS_Line(); 
     } 
 }

@@ -43,7 +43,8 @@ namespace Xe.Gui
 			this.m_index = 0;	
 			this.TextAlign = TextAlign.Center;
 			this.IsTextVisible = false;
-			this.ControlTag = "dummy";
+			this.m_text = "dummy";
+			this.ControlTag = "";
 
 			this.m_label = new Label(game, guiManager);
 			this.m_label.ControlTag = "label";
@@ -58,13 +59,17 @@ namespace Xe.Gui
 			if (m_type == SliderType.Vertical)
 			{
 				m_buttonPlus = new SliderUpButton(game, guiManager);
+				m_buttonPlus.Name = "SS_BUTTONPLUS";
 				m_buttonMinus = new SliderDownButton(game, guiManager);
+				m_buttonMinus.Name = "SS_BUTTONMINUS";
 			}
 
 			if (m_type == SliderType.Horizontal)
 			{
 				m_buttonPlus = new SliderRightButton(game, guiManager);
+				m_buttonPlus.Name = "SS_BUTTONPLUS";
 				m_buttonMinus = new SliderLeftButton(game, guiManager);
+				m_buttonMinus.Name = "SS_BUTTONMINUS";
 			}
 
 			this.m_buttonPlus.Click += new ClickHandler(buttonPlus_Click);
@@ -184,7 +189,7 @@ namespace Xe.Gui
 
 		public override void Draw(GameTime gameTime)
 		{
-			base.Draw(gameTime);
+			//base.Draw(gameTime);
 		}
 
 		public override void Update(GameTime gameTime)
