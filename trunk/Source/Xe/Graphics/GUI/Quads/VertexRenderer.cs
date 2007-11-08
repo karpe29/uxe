@@ -18,8 +18,6 @@ namespace Xe.Gui
 		Effect quadRenderEffect;
 
 		private Queue<QuadBase> m_quads = new Queue<QuadBase>();
-
-		private Vector2 m_vectorOne = new Vector2(1, 1);
 		#endregion
 
 		#region Constructors
@@ -111,6 +109,19 @@ namespace Xe.Gui
 			IGraphicsDeviceService graphicsService = (IGraphicsDeviceService)
 			   base.Game.Services.GetService(typeof(IGraphicsDeviceService));
 
+			float width = graphicsService.GraphicsDevice.PresentationParameters.BackBufferWidth;
+			float height = graphicsService.GraphicsDevice.PresentationParameters.BackBufferHeight;
+
+
+			bool AlphaEnable = graphicsService.GraphicsDevice.RenderState.AlphaBlendEnable;
+			Blend DestBlend = graphicsService.GraphicsDevice.RenderState.DestinationBlend;
+			Blend SourceBlend = graphicsService.GraphicsDevice.RenderState.SourceBlend;
+
+			//graphicsService.GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;
+			graphicsService.GraphicsDevice.RenderState.AlphaBlendEnable = true;
+			graphicsService.GraphicsDevice.RenderState.DestinationBlend = Blend.InverseSourceAlpha;
+			graphicsService.GraphicsDevice.RenderState.SourceBlend = Blend.SourceAlpha;
+
 			// Flush out the quads
 			quadRenderEffect.Begin();
 			quadRenderEffect.Techniques[0].Passes[0].Begin();
@@ -131,25 +142,43 @@ namespace Xe.Gui
 
 				quadRenderEffect.Parameters["colorTexture"].SetValue(_quad.Texture);
 
-				verts[0].Position.X = _quad.DestRect.Right;
-				verts[0].Position.Y = _quad.DestRect.Top;
+				verts[0].Position = new Vector3(((_quad.DestRect.Right / width) - 0.5f) * 2,
+												((_quad.DestRect.Bottom / -height) + 0.5f) * 2, 1);
 
-				verts[1].Position.X = _quad.DestRect.Left;
-				verts[1].Position.Y = _quad.DestRect.Top;
+				verts[1].Position = new Vector3(((_quad.DestRect.Left / width - 0.5f) * 2),
+												((_quad.DestRect.Bottom / -height) + 0.5f) * 2, 1);
 
-				verts[2].Position.X = _quad.DestRect.Left;
-				verts[2].Position.Y = _quad.DestRect.Bottom;
+				verts[2].Position = new Vector3(((_quad.DestRect.Left / width) - 0.5f) * 2,
+												((_quad.DestRect.Top / -height) + 0.5f) * 2, 1);
 
-				verts[3].Position.X = _quad.DestRect.Right;
-				verts[3].Position.Y = _quad.DestRect.Bottom;
+				verts[3].Position = new Vector3(((_quad.DestRect.Right / width) - 0.5f) * 2,
+												((_quad.DestRect.Top / -height) + 0.5f) * 2, 1);
 
-				device.DrawUserIndexedPrimitives<VertexPositionTexture>
-					(PrimitiveType.TriangleStrip, verts, 0, 4, ib, 0, 2);
+
+				verts[0].TextureCoordinate = new Vector2((float)_quad.SrcRect.Right / (float)_quad.Texture.Width,
+														(float)_quad.SrcRect.Bottom / (float)_quad.Texture.Height);
+
+				verts[1].TextureCoordinate = new Vector2((float)_quad.SrcRect.Left / (float)_quad.Texture.Width,
+														(float)_quad.SrcRect.Bottom / (float)_quad.Texture.Height);
+
+				verts[2].TextureCoordinate = new Vector2((float)_quad.SrcRect.Left / (float)_quad.Texture.Width,
+														(float)_quad.SrcRect.Top / (float)_quad.Texture.Height);
+
+				verts[3].TextureCoordinate = new Vector2((float)_quad.SrcRect.Right / (float)_quad.Texture.Width,
+														(float)_quad.SrcRect.Top / (float)_quad.Texture.Height);
+
+				device.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, verts, 0, 4, ib, 0, 2);
 			}
 
 			quadRenderEffect.Techniques[0].Passes[0].End();
 			quadRenderEffect.End();
+
+			graphicsService.GraphicsDevice.RenderState.AlphaBlendEnable = AlphaEnable;
+			graphicsService.GraphicsDevice.RenderState.DestinationBlend = DestBlend;
+			graphicsService.GraphicsDevice.RenderState.SourceBlend = SourceBlend;
+
 		}
+
 
 		#region Properties
 		protected Queue<QuadBase> Quads
@@ -165,7 +194,7 @@ namespace Xe.Gui
 		{
 			if (vertexDecl != null)
 				vertexDecl.Dispose();
-			
+
 			vertexDecl = null;
 		}
 

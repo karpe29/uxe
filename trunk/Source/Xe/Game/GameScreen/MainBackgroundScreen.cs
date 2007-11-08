@@ -159,7 +159,10 @@ namespace Xe.GameScreen
 
 		public override void Draw(GameTime gameTime)
 		{
-			//base.Draw(gameTime);
+
+			base.Draw(gameTime);
+
+			//System.Console.WriteLine("MainBackGroundScreen.Draw");
 
 			//XeGame.Stats.AddModelPolygonsCount(myModel);
 

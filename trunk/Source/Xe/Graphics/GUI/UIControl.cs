@@ -38,6 +38,8 @@ namespace Xe.Gui
 		private int m_tabOrder = 0;             // The order at which the control is tabbed to.
 		private int m_stockDrawOrder = 0;       // The original draw order.
 
+		private bool m_autoSize = true;
+
 		private ControlCollection m_controls;   // Collection of child controls.
 
 		private QuadRenderer m_renderer;        // The rendering core used to draw.
@@ -722,6 +724,7 @@ namespace Xe.Gui
 		#region Drawing
 		public override void Draw(GameTime gameTime)
 		{
+			//System.Console.WriteLine("uicontrol.draw : " + this.Name + " : " + this.m_text + " : " + this.m_tag);
 			base.Draw(gameTime);
 
 			if (m_needsUpdate)
@@ -730,8 +733,17 @@ namespace Xe.Gui
 
 				m_needsUpdate = false;
 			}
-
+			
 			RenderByState(m_curState, gameTime);
+
+#if DEBUG
+			XeGame.s_vectorRenderer.SetColor(Color.Red);
+
+			XeGame.s_vectorRenderer.DrawLine2D(new Vector3(m_vecPosition.X, m_vecPosition.Y, 0), new Vector3(m_vecPosition.X + m_vecSize.X, m_vecPosition.Y, 0));
+			XeGame.s_vectorRenderer.DrawLine2D(new Vector3(m_vecPosition.X, m_vecPosition.Y, 0), new Vector3(m_vecPosition.X, m_vecPosition.Y + m_vecSize.Y, 0));
+			XeGame.s_vectorRenderer.DrawLine2D(new Vector3(m_vecPosition.X, m_vecPosition.Y + m_vecSize.Y, 0), new Vector3(m_vecPosition.X + m_vecSize.X, m_vecPosition.Y + m_vecSize.Y, 0));
+			XeGame.s_vectorRenderer.DrawLine2D(new Vector3(m_vecPosition.X + m_vecSize.X, m_vecPosition.Y, 0), new Vector3(m_vecPosition.X + m_vecSize.X, m_vecPosition.Y + m_vecSize.Y, 0));
+#endif
 
 			if (m_isTextVisible)
 			{
@@ -753,7 +765,7 @@ namespace Xe.Gui
 					tempRect.Height = (int)m_vecSize.Y - this.GuiManager.CornerSize ;
 				}
 #if DEBUG
-				XeGame.s_vectorRenderer.SetColor(Color.White);
+				XeGame.s_vectorRenderer.SetColor(Color.LightGreen);
 
 				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X, tempRect.Y, 0), new Vector3(tempRect.X + tempRect.Width, tempRect.Y, 0));
 				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X, tempRect.Y, 0), new Vector3(tempRect.X, tempRect.Y + tempRect.Height, 0));
@@ -765,6 +777,8 @@ namespace Xe.Gui
 				else
 					m_font2d.DrawTextBox(m_guiManager.FontName, m_text, m_textAlign, m_textAlignVertical, m_breakStyle, tempRect, GuiManager.CornerSize, m_foreColor);
 			}
+
+
 		}
 
 		protected virtual void RenderByState(UIState state, GameTime gameTime)
@@ -833,6 +847,9 @@ namespace Xe.Gui
 
 		protected virtual void ResetQuads(bool fullReset)
 		{
+			if (String.IsNullOrEmpty(m_tag))
+				return;
+
 			m_vecPosition.X = m_x;
 			m_vecPosition.Y = m_y;
 

@@ -66,11 +66,13 @@ namespace Xe.GameScreen
 			sliderLevel.Height = 30;
 			sliderLevel.X = (int)(buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10));
 			sliderLevel.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderLevel.Height / 2;
-			//sliderLevel.MinValue = 0;
-			//sliderLevel.MaxValue = 3;
-			//sliderLevel.Step = 1;
-			//sliderLevel.Value = 2;
-			//sliderLevel.ValueChanged += new ValueChangedHandler(levelSlider_ValueChanged);
+			sliderLevel.Strings = new List<string>();
+			sliderLevel.Strings.Add("Easy");
+			sliderLevel.Strings.Add("Medium");
+			sliderLevel.Strings.Add("Hard");
+			sliderLevel.Strings.Add("GOD");
+			sliderLevel.Loopable = true;
+			sliderLevel.Index = 0;
 			XeGame.GuiManager.Controls.Add(sliderLevel);
 
 			sliderPlayerCount = new SliderString(GameScreenManager.Game, XeGame.GuiManager);
@@ -78,11 +80,13 @@ namespace Xe.GameScreen
 			sliderPlayerCount.Height = 30;
 			sliderPlayerCount.X = (int)(buttonBack.X + buttonBack.Width + ((buttonPlaySpaceRace.X - buttonBack.X - buttonBack.Width) * 1 / 10));
 			sliderPlayerCount.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 4 / 5 - sliderLevel.Height / 2;
-			//sliderPlayerCount.MinValue = 0;
-			//sliderPlayerCount.MaxValue = 3;
-			//sliderPlayerCount.Step = 1;
-			//sliderPlayerCount.Value = 0;
-			//sliderPlayerCount.ValueChanged += new ValueChangedHandler(levelPlayerCount_ValueChanged);
+			sliderPlayerCount.Strings = new List<string>();
+			sliderPlayerCount.Strings.Add("1 Player");
+			sliderPlayerCount.Strings.Add("2 Players");
+			sliderPlayerCount.Strings.Add("3 Players");
+			sliderPlayerCount.Strings.Add("4 Players");
+			sliderPlayerCount.Loopable = true;
+			sliderPlayerCount.Index = 0; 
 			XeGame.GuiManager.Controls.Add(sliderPlayerCount);
 
 		}
@@ -90,7 +94,7 @@ namespace Xe.GameScreen
 		void buttonPlaySpaceRace_Click(object sender, MouseEventArgs args)
 		{
 			// save difficulty level as levelSlider won't exists after Cleanup();
-			//SpaceRaceInitDatas datas = new SpaceRaceInitDatas(sliderLevel.ValuePercent, (int)sliderPlayerCount.Value);
+			SpaceRaceInitDatas datas = new SpaceRaceInitDatas(sliderLevel.Index/sliderLevel.Strings.Count, sliderPlayerCount.Index + 1);
 		
 			ExitScreen();
 

@@ -27,12 +27,10 @@ namespace Xe.GameScreen
 		{
 			// if we don't already have a backgroundScreen, create one
 			
-			/*if (this.GameScreenManager.CurrentGameScreen.GetType() != BackgroundScreenType)
+			if (this.GameScreenManager.CurrentGameScreen.GetType() != BackgroundScreenType)
 				if (BackgroundScreenType.BaseType == typeof(IGameScreen))
 					Activator.CreateInstance(BackgroundScreenType, this.GameScreenManager);
-			*/
-			MainBackgroundScreen mbgs = new MainBackgroundScreen(this.GameScreenManager);
-
+			
 			// add it to the list of GameScreens
 			this.GameScreenManager.AddGameScreen(this);
 
@@ -41,7 +39,7 @@ namespace Xe.GameScreen
 			buttonNewGame.TextAlignVertical = TextAlignVertical.Center;
 			buttonNewGame.IsDraggable = false;
 			buttonNewGame.Width = 120;
-			buttonNewGame.Height = 120;
+			buttonNewGame.Height = 32;
 			buttonNewGame.X = XeGame.WitdhPercent(0.25f) - buttonNewGame.Width / 2;
 			buttonNewGame.Y = XeGame.HeightPercent(0.75f) - buttonNewGame.Height / 2;
 			buttonNewGame.Click += new ClickHandler(buttonNewGame_Click);
@@ -64,31 +62,6 @@ namespace Xe.GameScreen
 			buttonQuit.Y = XeGame.HeightPercent(0.75f) - buttonQuit.Height / 2;
 			buttonQuit.Click += new ClickHandler(buttonQuit_Click);
 			XeGame.GuiManager.Controls.Add(buttonQuit);
-
-			SliderString n = new SliderString(gameScreenManager.Game, XeGame.GuiManager, SliderType.Horizontal);
-			n.X = 100;
-			n.Y = 100;
-			List<string> l = new List<string>();
-			l.Add("One player 1");
-			l.Add("Two Players 2");
-			l.Add("Three Players 3");
-			n.Strings = l;
-			n.Loopable = true;
-			n.Width = 400;
-			n.Index = 0;
-			//n.IsDraggable = false;
-			//n.Height = 50;
-			XeGame.GuiManager.Controls.Add(n);
-
-			CheckBox c = new CheckBox(gameScreenManager.Game, XeGame.GuiManager);
-			c.Text = "cccc";
-			c.TextAlign = TextAlign.Center;
-			c.X = 100;
-			c.Y = 200;
-			c.Label.Width = 100;
-			//c.Height = 30;
-			XeGame.GuiManager.Controls.Add(c);
-
 		}
 
 		void buttonOptions_Click(object sender, MouseEventArgs args)
@@ -155,12 +128,13 @@ namespace Xe.GameScreen
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
-
+/*
 			if (InputHelper.Keyboard.IsKeyDown(Keys.Add))
 				this.buttonNewGame.Height++;
 
 			if (InputHelper.Keyboard.IsKeyDown(Keys.Subtract))
 				this.buttonNewGame.Height--;
+*/
 		}
 	}
 }

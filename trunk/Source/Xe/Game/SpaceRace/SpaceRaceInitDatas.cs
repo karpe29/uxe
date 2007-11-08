@@ -26,7 +26,7 @@ namespace Xe.SpaceRace
 
 		private int m_totalPlayerCount;
 		/// <summary>
-		/// Total player count (start @ 0)
+		/// Total player count
 		/// </summary>
 		public int TotalPlayerCount
 		{

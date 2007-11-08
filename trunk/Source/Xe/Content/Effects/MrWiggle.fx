@@ -199,9 +199,9 @@ technique Textured <
 	string Script = "Draw=geometry;";
 > {		
 		VertexShader = compile vs_1_1 MrWiggleVS();
-		ZEnable = true;
+		//ZEnable = true;
 		ZWriteEnable = true;
-		//CullMode = None;
+		CullMode = None;
 		PixelShader = compile ps_1_1 MrWigglePS_t();
     }
 }
