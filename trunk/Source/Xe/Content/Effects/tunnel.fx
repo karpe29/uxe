@@ -155,17 +155,23 @@ vertexOutput MrWiggleVS(appdata IN) {
     }
 
 
-    Po.y = Po.y*(1+bourrelet);
-    Po.z = Po.z*(1+bourrelet);
-   
+    Po.y *= (1+bourrelet);
+    Po.z *= (1+bourrelet);
     
 
     float step=longueur/nbCercles;
     int currentCercle=Po.x/step;
 
+    
+    
+    Po.y*=1-currentCercle/nbCercles;
+    Po.z*=1-currentCercle/nbCercles;
+
+
+
     float4 tmpPos=Po;
     tmpPos.x=0;
-    
+   
     
     float4x4 orient;
     

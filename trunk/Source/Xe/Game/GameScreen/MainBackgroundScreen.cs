@@ -359,7 +359,7 @@ namespace Xe.GameScreen
 			private Matrix orient=Matrix.Identity;
 			Random r = new Random();
 			float objectiveTime = 0, currentTime = 0,refTime=0, stepTime = 0,objectiveAngle=0,currentAngle=0,stepAngle=0;
-			Vector3 objectiveAxe = Vector3.Zero, currentAxe = Vector3.UnitY, stepAxe = Vector3.Zero;
+			Vector3 objectiveAxe = Vector3.Zero, currentAxe = Vector3.UnitY,currentAxeNorm, stepAxe = Vector3.Zero;
 
 			public tunnel()
 			{
@@ -421,6 +421,7 @@ namespace Xe.GameScreen
 					}
 					else
 					{
+
 						currentAngle += stepAngle * time;
 						currentAxe += stepAxe * time;
 					}
@@ -433,13 +434,13 @@ namespace Xe.GameScreen
 
 
 
-				//currentAxe = Vector3.Normalize(currentAxe);
+				currentAxeNorm =currentAxe;
 				Vector4[] PosCentres = new Vector4[nb_cercles + 1];
 				Vector3 step = new Vector3(longueur / nb_cercles, 0, 0);
 				Vector3 currentPos = Vector3.Zero;
 				for (int i = 0; i <= nb_cercles; i++)
 				{
-					if (i > 0) currentPos += Vector3.Transform(step, Matrix.CreateFromAxisAngle(currentAxe, i*currentAngle / nb_cercles));
+					if (i > 0) currentPos += Vector3.Transform(step, Matrix.CreateFromAxisAngle(currentAxeNorm, i*currentAngle / nb_cercles));
 					PosCentres[i].X = currentPos.X;
 					PosCentres[i].Y = currentPos.Y;
 					PosCentres[i].Z = currentPos.Z;
@@ -449,7 +450,7 @@ namespace Xe.GameScreen
 				myEffect.Parameters["Timer"].SetValue(currentTime+refTime);
 				myEffect.Parameters["PosCentres"].SetValue(PosCentres);
 				myEffect.Parameters["rotationAngle"].SetValue(currentAngle);
-				myEffect.Parameters["rotationAxis"].SetValue(currentAxe);
+				myEffect.Parameters["rotationAxis"].SetValue(currentAxeNorm);
 			}
 
 			public void Draw(GameTime gameTime)
