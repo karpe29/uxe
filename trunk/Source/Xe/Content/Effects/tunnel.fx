@@ -151,7 +151,7 @@ vertexOutput MrWiggleVS(appdata IN) {
     
     if (abs(diff)<=3.14 )
     {
-    bourrelet=(cos(diff)+1)/5;
+    //bourrelet=(cos(diff)+1)/5;
     }
 
 
@@ -297,7 +297,7 @@ vertexOutput MrWiggleVS(appdata IN) {
     OUT.TexCoord0=IN.UV;
     
     
-    OUT.TexCoord0.y = (IN.UV.y+timeNow/longueur*SpeedTexture)%longueur;
+    //OUT.TexCoord0.y = (IN.UV.y+timeNow/longueur*SpeedTexture)%longueur;
  
  
     //OUT.TexCoord0.x = IN.UV.x + TunnelOffset;

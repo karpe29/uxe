@@ -358,11 +358,14 @@ namespace Xe.GameScreen
 			private Vector3 pos;
 			private Matrix orient=Matrix.Identity;
 			Random r = new Random();
-			float objectiveTime = 0, currentTime = 0,refTime=0, stepTime = 0,objectiveAngle=0,currentAngle=0,stepAngle=0;
-			Vector3 objectiveAxe = Vector3.Zero, currentAxe = Vector3.UnitY,currentAxeNorm, stepAxe = Vector3.Zero;
+			float objectiveTime = 0, currentTime = 0,refTime=0, stepTime = 0,rotationAngle=0,stepAngle;
+			Vector3 objectiveAxe,currentAxe=Vector3.UnitX,rotationAxe,stepAxe;
+			Vector4 Vect4;
+
 
 			public tunnel()
 			{
+
 
 				for (int i = 0; i <= nb_cercles; i++)
 				{
@@ -397,6 +400,20 @@ namespace Xe.GameScreen
 
 			}
 
+			private Vector4 CalculRotation(Vector3 vect1, Vector3 vect2)
+			{
+				Vector3 axe = Vector3.Cross(vect1, vect2);
+				float angle = (float)Math.Asin(axe.Length() / (vect1.Length() * vect2.Length()));
+				return new Vector4(axe, angle);
+			}
+
+			private Vector3 Vect4toVect3(Vector4 Vect4)
+			{
+				return new Vector3(Vect4.X, Vect4.Y, Vect4.Z);
+			}
+
+
+
 			public void Update(GameTime gameTime)
 			{
 				currentTime = (float)(gameTime.TotalGameTime.TotalSeconds)-refTime;
@@ -408,11 +425,15 @@ namespace Xe.GameScreen
 					objectiveTime = (float)(r.NextDouble() * 7 + 3);
 					stepTime = (float)(r.NextDouble() * (objectiveTime - 4) + 2);
 
-					objectiveAngle = (float)r.NextDouble();
-					objectiveAxe = Vector3.Transform(Vector3.UnitY, Matrix.CreateFromAxisAngle(Vector3.UnitX, (float)(r.NextDouble() * MathHelper.TwoPi)));
+					
+					objectiveAxe = Vector3.Transform(Vector3.UnitX, Matrix.CreateFromYawPitchRoll((float)(r.NextDouble()*6-3),0,(float)(r.NextDouble()*6-3) ));
 
-					stepAngle = (objectiveAngle-currentAngle) / stepTime;
-					stepAxe = (objectiveAxe-currentAxe) / stepTime;
+					Vect4 = CalculRotation(currentAxe, objectiveAxe);
+					stepAxe = Vect4toVect3(Vect4);
+					stepAngle = Vect4.W/stepTime;
+
+
+					  
 				}
 				else
 				{
@@ -422,35 +443,50 @@ namespace Xe.GameScreen
 					else
 					{
 
-						currentAngle += stepAngle * time;
-						currentAxe += stepAxe * time;
+						currentAxe =Vector3.Transform(currentAxe,Matrix.CreateFromAxisAngle(stepAxe,stepAngle*time));
 					}
 				}
 
 				
+
+
 				// params a définir pour la flexion du tunnel
 				//Vector3 axe = Vector3.Transform(Vector3.UnitY, Matrix.CreateFromAxisAngle(Vector3.UnitX, (float)(gameTime.TotalGameTime.TotalSeconds) / 5));
 				//float angle = .7f;
 
+				Vect4=CalculRotation(Vector3.UnitX,currentAxe);
+				rotationAxe = Vect4toVect3(Vect4);
+				rotationAngle = Vect4.W;
 
 
-				currentAxeNorm =currentAxe;
 				Vector4[] PosCentres = new Vector4[nb_cercles + 1];
 				Vector3 step = new Vector3(longueur / nb_cercles, 0, 0);
 				Vector3 currentPos = Vector3.Zero;
 				for (int i = 0; i <= nb_cercles; i++)
 				{
-					if (i > 0) currentPos += Vector3.Transform(step, Matrix.CreateFromAxisAngle(currentAxeNorm, i*currentAngle / nb_cercles));
+					if (i > 0) currentPos += Vector3.Transform(step, Matrix.CreateFromAxisAngle(rotationAxe, i*rotationAngle / nb_cercles));
 					PosCentres[i].X = currentPos.X;
 					PosCentres[i].Y = currentPos.Y;
 					PosCentres[i].Z = currentPos.Z;
 					PosCentres[i].W = 0;
 				}
 
+				XeGame.Stats.AddDebugString("");
+				XeGame.Stats.AddDebugString("objectiveTime : " + objectiveTime);
+				XeGame.Stats.AddDebugString("stepTime : " + stepTime);
+				XeGame.Stats.AddDebugString("currentTime : " + currentTime);
+				XeGame.Stats.AddDebugString("");
+				XeGame.Stats.AddDebugString("objectiveAxe : " + objectiveAxe);
+				XeGame.Stats.AddDebugString("currentAxe : " + currentAxe);
+				XeGame.Stats.AddDebugString("currentAxe Length : " + currentAxe.Length());
+				XeGame.Stats.AddDebugString("");
+
+
+
 				myEffect.Parameters["Timer"].SetValue(currentTime+refTime);
 				myEffect.Parameters["PosCentres"].SetValue(PosCentres);
-				myEffect.Parameters["rotationAngle"].SetValue(currentAngle);
-				myEffect.Parameters["rotationAxis"].SetValue(currentAxeNorm);
+				myEffect.Parameters["rotationAngle"].SetValue(rotationAngle);
+				myEffect.Parameters["rotationAxis"].SetValue(rotationAxe);
 			}
 
 			public void Draw(GameTime gameTime)
