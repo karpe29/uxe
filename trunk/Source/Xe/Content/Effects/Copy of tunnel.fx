@@ -37,19 +37,13 @@ float4x4 WorldIT : WorldInverseTranspose < string UIWidget="None"; >;
 float4x4 WorldViewProj : WorldViewProjection < string UIWidget="None"; >;
 float4x4 World : World < string UIWidget="None"; >;
 float4x4 ViewI : ViewInverse < string UIWidget="None"; >;
-float3 rotationAxis < > ;
-float rotationAngle < > ;
-float4x4 rotationMatrix < > ;
-float4 PosCentres[216] < >;
-
-
+float3 rotation < > ;
 
 float Timer : Time < string UIWidget="None"; >;
 
 float TunnelOffset < > = 100.0f;
 	
-float longueur < > =100.0f;
-float nbCercles  < > =10.0f;
+float longueur : longueur < > =100.0f;
 
 
 float TimeScale <
@@ -60,19 +54,19 @@ float TimeScale <
     float UIStep = .1;
 > = 4.0f;
 
-float SpeedBourrelet <
+float Horizontal <
     string UIWidget = "slider";
-    float UIMin = 1;
-    float UIMax = 1000;
-    float UIStep = 1;
-> = 1;
+    float UIMin = 0.001;
+    float UIMax = 10;
+    float UIStep = 0.01;
+> = 0.5f;
 
-float SpeedTexture <
+float Vertical <
     string UIWidget = "slider";
-    float UIMin = 1;
-    float UIMax = 1000;
-    float UIStep = 1;
-> = 1;
+    float UIMin = 0.001;
+    float UIMax = 10.0;
+    float UIStep = 0.1;
+> = 0.5;
 
 
 
@@ -141,90 +135,40 @@ vertexOutput MrWiggleVS(appdata IN) {
     float3 Nn = normalize(mul(IN.Normal, WorldIT).xyz);
     float timeNow = Timer*TimeScale;
     float4 Po = IN.Position;
-
+    /*float iny = Po.y * Vertical + timeNow;
+    float wiggleX = sin(iny) * Horizontal;
+    float wiggleY = cos(iny) * Horizontal; // deriv
+    //Nn.y = Nn.y + wiggleY;*/
     Nn = normalize(Nn);
     
     
     float bourrelet=0;
-    float currPos=longueur-(timeNow*SpeedBourrelet)%longueur;
+    float currPos=longueur-(timeNow*100)%longueur;
     float diff=(currPos-Po.x)/10;
     
-    if (abs(diff)<=3.14 )
+    if (abs(diff)<=3.14)
     {
     bourrelet=(cos(diff)+1)/5;
     }
 
-
-    Po.y *= (1+bourrelet);
-    Po.z *= (1+bourrelet);
-    
-
-    float step=longueur/nbCercles;
-    int currentCercle=Po.x/step;
-
-    
-    
-    Po.y*=1-currentCercle/nbCercles;
-    Po.z*=1-currentCercle/nbCercles;
-
-
-
-    float4 tmpPos=Po;
-    tmpPos.x=0;
+    //Po.x = Po.x;
+    Po.y = Po.y*(1+bourrelet);
+    Po.z = Po.z*(1+bourrelet);
    
-    
+    float4 quat;
     float4x4 orient;
     
+   float yaw=Po.x*rotation.y/longueur;
+   float pitch=Po.x*rotation.x/longueur;
+   float roll=Po.x*rotation.z/longueur;
     
-     rotationAxis=normalize( rotationAxis);
-    float x = rotationAxis.x;
-    float y = rotationAxis.y;
-    float z = rotationAxis.z;
-    float angle = rotationAngle/nbCercles;
-    
-    float num2 = sin( angle*currentCercle);
-    float num = cos( angle*currentCercle);
-    float num11 = x * x;
-    float num10 = y * y;
-    float num9 = z * z;
-    float num8 = x * y;
-    float num7 = x * z;
-    float num6 = y * z;
-    orient._11 = num11 + (num * (1 - num11));
-    orient._12 = (num8 - (num * num8)) + (num2 * z);
-    orient._13 = (num7 - (num * num7)) - (num2 * y);
-    orient._14 = 0;
-    orient._21 = (num8 - (num * num8)) - (num2 * z);
-    orient._22 = num10 + (num * (1 - num10));
-    orient._23 = (num6 - (num * num6)) + (num2 * x);
-    orient._24 = 0;
-    orient._31 = (num7 - (num * num7)) + (num2 * y);
-    orient._32 = (num6 - (num * num6)) - (num2 * x);
-    orient._33 = num9 + (num * (1 - num9));
-    orient._34 = 0;
-    orient._41 = 0;
-    orient._42 = 0;
-    orient._43 = 0;
-    orient._44 = 1;
-
-    
-    
-    
-    
-    /*
-    float4 quat;
-    
-   float yaw=rotation.y/nbCercles;
-   float pitch=rotation.x/nbCercles;
-   float roll=rotation.z/nbCercles;
-    
-    float num9 = currentCercle*roll * 0.5;
+    float num9 = roll * 0.5;
     float num6 = sin(num9);
     float num5 = cos(num9);
-    float num8 = currentCercle*pitch * 0.5;
+    float num8 = pitch * 0.5;
     float num4 = sin( num8);
     float num3 = cos( num8);
-    float num7 = currentCercle*yaw * 0.5;
+    float num7 = yaw * 0.5;
     float num2 = sin( num7);
     float num = cos( num7);
     
@@ -261,30 +205,11 @@ vertexOutput MrWiggleVS(appdata IN) {
     orient._43 = 0;
     orient._44 = 1;
 
- */
     
     
-    
- /*
-       float4 posCentre={0,0,0,0};
- 
-    for(int i=1;i<=currentCercle;i++)
-    {
-    float4 VectStep={step,0,0,0};
-		for (int j=1;j<=i;j++)
-		{
-			VectStep=mul(VectStep,rotationMatrix);
-		}
-        posCentre+=VectStep;
-        tmpPos=mul(tmpPos,rotationMatrix);
-	}
-        Po=posCentre+tmpPos;
 
-   */
-     
+    Po=mul(Po,orient);
     
-      Po=PosCentres[currentCercle]+mul(tmpPos,orient);
-
     
     
     OUT.HPosition = mul(Po, WorldViewProj);
@@ -295,10 +220,7 @@ vertexOutput MrWiggleVS(appdata IN) {
     float3 diffContrib = SurfColor * ( diffComp * LightColor + AmbiColor);
     OUT.diffCol = float4(diffContrib,1);
     OUT.TexCoord0=IN.UV;
-    
-    
-    OUT.TexCoord0.y = (IN.UV.y+timeNow/longueur*SpeedTexture)%longueur;
- 
+    OUT.TexCoord0.y = (IN.UV.y+timeNow/50)%longueur;
  
     //OUT.TexCoord0.x = IN.UV.x + TunnelOffset;
     //OUT.TexCoord0.y = IN.UV.y + TunneOffset;
@@ -328,7 +250,7 @@ technique Untextured <
     pass p0 <
 	string Script = "Draw=geometry;";
 > {		
-		VertexShader = compile vs_3_0 MrWiggleVS();
+		VertexShader = compile vs_2_0 MrWiggleVS();
 		ZEnable = true;
 		ZWriteEnable = true;
 		//CullMode = None;
@@ -348,7 +270,7 @@ technique Textured <
     pass p0 <
 	string Script = "Draw=geometry;";
 > {		
-		VertexShader = compile vs_3_0 MrWiggleVS();
+		VertexShader = compile vs_2_0 MrWiggleVS();
 		ZEnable = true;
 		ZWriteEnable = true;
 		//CullMode = None;

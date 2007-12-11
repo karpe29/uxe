@@ -1351,6 +1351,12 @@
       <Processor>EffectProcessor</Processor>
       <Name>tunnel</Name>
     </Content>
+    <Content Include="Content\Textures\water.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>water</Name>
+    </Content>
     <None Include="XeBinary.pfx">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>XeBinary</Name>

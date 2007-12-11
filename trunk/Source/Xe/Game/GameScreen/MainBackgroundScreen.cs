@@ -381,7 +381,7 @@ namespace Xe.GameScreen
 
 				myEffect.CurrentTechnique = myEffect.Techniques[1];
 
-				myTexture = XeGame.ContentManager.Load<Texture2D>(@"Content\Textures\team");
+				myTexture = XeGame.ContentManager.Load<Texture2D>(@"Content\Textures\water");
 
 				myEffect.Parameters["colorTexture"].SetValue(myTexture);
 
@@ -407,9 +407,9 @@ namespace Xe.GameScreen
 				return new Vector4(axe, angle);
 			}
 
-			private Vector3 Vect4toVect3(Vector4 Vect4)
+			private Vector3 Vect4toVect3Norm(Vector4 Vect4)
 			{
-				return new Vector3(Vect4.X, Vect4.Y, Vect4.Z);
+				return Vector3.Normalize(new Vector3(Vect4.X, Vect4.Y, Vect4.Z));
 			}
 
 
@@ -425,11 +425,12 @@ namespace Xe.GameScreen
 					objectiveTime = (float)(r.NextDouble() * 7 + 3);
 					stepTime = (float)(r.NextDouble() * (objectiveTime - 4) + 2);
 
-					
-					objectiveAxe = Vector3.Transform(Vector3.UnitX, Matrix.CreateFromYawPitchRoll((float)(r.NextDouble()*6-3),0,(float)(r.NextDouble()*6-3) ));
+					Vector3 tmpAxe=Vector3.Transform(Vector3.UnitY,Matrix.CreateFromAxisAngle(Vector3.UnitX,(float)(r.NextDouble()*MathHelper.TwoPi)));
+					float tmpAngle = (float)(r.NextDouble()*2 / nb_cercles);
+					objectiveAxe = Vector3.Transform(Vector3.UnitX,Matrix.CreateFromAxisAngle(tmpAxe,tmpAngle));
 
 					Vect4 = CalculRotation(currentAxe, objectiveAxe);
-					stepAxe = Vect4toVect3(Vect4);
+					stepAxe =  Vect4toVect3Norm(Vect4);
 					stepAngle = Vect4.W/stepTime;
 
 
@@ -437,13 +438,13 @@ namespace Xe.GameScreen
 				}
 				else
 				{
-					if (currentTime >= stepTime)
+					if (currentTime > stepTime)
 					{
 					}
 					else
 					{
 
-						currentAxe =Vector3.Transform(currentAxe,Matrix.CreateFromAxisAngle(stepAxe,stepAngle*time));
+						currentAxe =Vector3.Normalize(Vector3.Transform(currentAxe,Matrix.CreateFromAxisAngle(stepAxe,stepAngle*time)));
 					}
 				}
 
@@ -455,8 +456,8 @@ namespace Xe.GameScreen
 				//float angle = .7f;
 
 				Vect4=CalculRotation(Vector3.UnitX,currentAxe);
-				rotationAxe = Vect4toVect3(Vect4);
-				rotationAngle = Vect4.W;
+				rotationAxe = Vect4toVect3Norm(Vect4);
+				rotationAngle = Vect4.W*nb_cercles;
 
 
 				Vector4[] PosCentres = new Vector4[nb_cercles + 1];
@@ -477,7 +478,7 @@ namespace Xe.GameScreen
 				XeGame.Stats.AddDebugString("currentTime : " + currentTime);
 				XeGame.Stats.AddDebugString("");
 				XeGame.Stats.AddDebugString("objectiveAxe : " + objectiveAxe);
-				XeGame.Stats.AddDebugString("currentAxe : " + currentAxe);
+				XeGame.Stats.AddDebugString("currentAxe :   " + currentAxe);
 				XeGame.Stats.AddDebugString("currentAxe Length : " + currentAxe.Length());
 				XeGame.Stats.AddDebugString("");
 
