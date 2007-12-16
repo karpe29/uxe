@@ -57,6 +57,14 @@ namespace Xe.GameScreen
 			}
 		}
 
+		public List<IGameScreen> GameScreens
+		{
+			get
+			{
+				return m_activeGameScreens;
+			}
+		}
+
 		#region Add/Remove
 		public bool AddGameScreen(IGameScreen gameScreen)
 		{

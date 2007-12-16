@@ -5,7 +5,7 @@ using Xe.Tools;
 
 namespace Xe.SpaceRace
 {
-	class SpaceRaceInitDatas
+	public class SpaceRaceInitDatas
 	{
 		private float m_difficultyPercent;
 		/// <summary>
@@ -39,7 +39,7 @@ namespace Xe.SpaceRace
 
 		private int m_currentPlayerNumber;
 		/// <summary>
-		/// Only used for ShipSelectionScreens (start @ 0)
+		/// Only used for ShipSelectionScreens
 		/// </summary>
 		public int CurrentPlayerNumber
 		{
@@ -56,7 +56,7 @@ namespace Xe.SpaceRace
 		
 		private List<ShipType> m_shipTypes = new List<ShipType>();
 		/// <summary>
-		/// Store selected shipTypes (player one ShipType is ShipTypes[0])
+		/// Store selected shipTypes
 		/// </summary>
 		public List<ShipType> ShipTypes
 		{
@@ -78,6 +78,7 @@ namespace Xe.SpaceRace
 		{
 			m_difficultyPercent = difficulty;
 			m_totalPlayerCount = playerCount;
+			m_currentPlayerNumber = 1;
 
 			m_gamePadIndexes = new List<int>(playerCount);
 		}

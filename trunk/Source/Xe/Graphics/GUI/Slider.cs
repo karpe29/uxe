@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Xe;
 using Xe.Tools;
 using Xe.Graphics2D;
-using Xe.GUI;
+using Xe.Gui;
 
 
 using Microsoft.Xna.Framework;
@@ -20,7 +20,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 #endregion
 
-namespace Xe.GUI
+namespace Xe.Gui
 {
 	public delegate void ValueChangedHandler(object sender, float value);
 
@@ -152,7 +152,7 @@ namespace Xe.GUI
 			get { return base.Text; }
 		}
 
-		public Slider(Game game, IGUIManager guiManager)
+		public Slider(Game game, IGuiManager guiManager)
 			: base(game, guiManager)
 		{
 			base.Text = "";
@@ -307,7 +307,7 @@ namespace Xe.GUI
 
 		Slider m_slider;
 
-		public SliderLine(Game game, IGUIManager guiManager, Slider slider)
+		public SliderLine(Game game, IGuiManager guiManager, Slider slider)
 			: base(game, guiManager)
 		{
 			m_slider = slider;
@@ -374,7 +374,7 @@ namespace Xe.GUI
 	{
 		Slider m_slider;
 
-		public SliderArrow(Game game, IGUIManager guiManager, Slider slider)
+		public SliderArrow(Game game, IGuiManager guiManager, Slider slider)
 			: base(game, guiManager)
 		{
 			m_slider = slider;

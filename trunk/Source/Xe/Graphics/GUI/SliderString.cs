@@ -78,6 +78,10 @@ namespace Xe.Gui
 
 		}
 
+		public delegate void IndexChangedHandler(EventArgs e);
+
+		public event IndexChangedHandler IndexChanged;
+
 		public override void Initialize()
 		{
 			//this.ClippingOffset = new Rect(100,100,100,100);
@@ -176,6 +180,9 @@ namespace Xe.Gui
 					m_index = (int)MathHelper.Clamp(value, 0, m_strings.Count - 1);
 				else
 					m_index = -1;
+
+				if (IndexChanged != null)
+					IndexChanged.Invoke(new EventArgs());
 
 				ResetText();
 			}
