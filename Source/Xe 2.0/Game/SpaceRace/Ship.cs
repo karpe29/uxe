@@ -17,21 +17,24 @@ namespace Xe.SpaceRace
 	public class ShipType : PhysicalType
 	{
 		string m_model = "";
+		string m_name = "";
 
 		List<Vector3> m_reactors = new List<Vector3>();
 
 		#region properties
 
 		public string ModelAsset { get { return m_model; } }
+		public string Name { get { return m_name; } }
 		public List<Vector3> Reactors { get { return m_reactors; } }
 
 
 		#endregion
 
-		public ShipType(string model, float handling, float acceleration, float maxSpeed, float resistance, float gFactor, Vector3 [] reactors)
-			:base (handling,acceleration,maxSpeed,resistance,gFactor)
+		public ShipType(string model, string name, float handling, float acceleration, float maxSpeed, float resistance, float gFactor, Vector3[] reactors)
+			: base(handling, acceleration, maxSpeed, resistance, gFactor)
 		{
 			m_model = model;
+			m_name = name;
 
 			foreach (Vector3 v in reactors)
 				m_reactors.Add(v);
@@ -39,12 +42,12 @@ namespace Xe.SpaceRace
 
 
 
-		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f,  new Vector3[] { new Vector3(8,0,30), new Vector3(-8,0,30) } ), 
-											new ShipType(@"Content\Models\StarChaser2", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f,  new Vector3[] { new Vector3(3.25f,0.3f,42f), new Vector3(-3.25f,0.3f,42f), new Vector3(2f,-4.75f,42f),new Vector3(-2f,-4.75f,42f), new Vector3(6.5f,-3.75f,42f),new Vector3(-6.5f,-3.75f,42f) } ), 
-											new ShipType(@"Content\Models\StarChaser3", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f,  new Vector3[] { new Vector3(0,7.5f,38f),new Vector3(3f,9.5f,38f),new Vector3(-3f,9.5f,38f),new Vector3(2f,4.5f,38f), new Vector3(-2f,4.5f,38f) } ), 
-											new ShipType(@"Content\Models\StarChaser4", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f,  new Vector3[] { new Vector3(-3.75f,-3.25f,58f),new Vector3(3.75f,-3.25f,58f),new Vector3(-9.75f,-4.75f,57f), new Vector3(9.75f,-4.75f,57f) } ) };
+		static public ShipType[] Types = {	new ShipType(@"Content\Models\StarChaser1", "Eagle", 1.3f, 1.2f, 1.0f, 0.8f, 1.1f,  new Vector3[] { new Vector3(8,0,30), new Vector3(-8,0,30) } ), 
+											new ShipType(@"Content\Models\StarChaser2", "Goose", 0.8f, 1.3f, 1.1f, 1.2f, 1.0f,  new Vector3[] { new Vector3(3.25f,0.3f,42f), new Vector3(-3.25f,0.3f,42f), new Vector3(2f,-4.75f,42f),new Vector3(-2f,-4.75f,42f), new Vector3(6.5f,-3.75f,42f),new Vector3(-6.5f,-3.75f,42f) } ), 
+											new ShipType(@"Content\Models\StarChaser3", "Colibri", 1.2f, 1.1f, 1.0f, 0.8f, 1.3f,  new Vector3[] { new Vector3(0,7.5f,38f),new Vector3(3f,9.5f,38f),new Vector3(-3f,9.5f,38f),new Vector3(2f,4.5f,38f), new Vector3(-2f,4.5f,38f) } ), 
+											new ShipType(@"Content\Models\StarChaser4", "Duck", 1.0f, 0.8f, 1.2f, 1.3f, 1.1f,  new Vector3[] { new Vector3(-3.75f,-3.25f,58f),new Vector3(3.75f,-3.25f,58f),new Vector3(-9.75f,-4.75f,57f), new Vector3(9.75f,-4.75f,57f) } ) };
 	}
-	
+
 	/// <summary>
 	/// Take care of rendering and managing the ship
 	/// </summary>
@@ -57,15 +60,15 @@ namespace Xe.SpaceRace
 		BasicModel3D m_model;
 
 		public float count = 0,
-			ratioParticles=12;
+			ratioParticles = 12;
 
 		public BasicModel3D Model { get { return m_model; } }
 
 		private Vector3 m_reactorLength = new Vector3(0, 0, 50),
-			particlePos,particleSpeed,particleGravity;
+			particlePos, particleSpeed, particleGravity;
 		private Stats m_stats;
 
-		private Matrix m_ParticlesView=Matrix.Identity;
+		private Matrix m_ParticlesView = Matrix.Identity;
 
 		public void setParticlesView(Matrix matrix)
 		{
@@ -80,7 +83,7 @@ namespace Xe.SpaceRace
 		{
 			m_stats = (Stats)gameScreenManager.Game.Services.GetService(typeof(Stats));
 
-			m_gameScreen = gameScreenManager.CurrentGameScreen ;
+			m_gameScreen = gameScreenManager.CurrentGameScreen;
 			m_shipType = type;
 
 			fireParticles = new ShipFireParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
@@ -89,14 +92,14 @@ namespace Xe.SpaceRace
 
 			smokePlumeParticles = new ShipSmokePlumeParticleSystem(gameScreenManager.Game, XeGame.ContentManager);
 			smokePlumeParticles.Initialize();
-			
+
 			this.Initialize();
 		}
 
 		protected override void LoadGraphicsContent(bool loadAllContent)
 		{
 			base.LoadGraphicsContent(loadAllContent);
-			
+
 			if (loadAllContent)
 			{
 				m_model = new BasicModel3D(m_gameScreen.GameScreenManager, m_shipType.ModelAsset);
@@ -111,12 +114,12 @@ namespace Xe.SpaceRace
 
 			m_model.World = DrawOrientation * Matrix.CreateTranslation(Position);
 
-			float inc= -ratioParticles * Speed.Z / m_maxSpeed;
-			count += 1+inc;
+			float inc = -ratioParticles * Speed.Z / m_maxSpeed;
+			count += 1 + inc;
 			if (count > ratioParticles)
 			{
-				float orientY = -RotationSpeed.Y / m_handling /2;
-				float orientX =  -RotationSpeed.X / m_handling / 2;
+				float orientY = -RotationSpeed.Y / m_handling / 2;
+				float orientX = -RotationSpeed.X / m_handling / 2;
 				Matrix orientParticles = Matrix.CreateFromYawPitchRoll(orientY, orientX, 0);
 				particleSpeed = new Vector3(0, 0, 8) * (2 + inc);
 				foreach (Vector3 reactor in m_shipType.Reactors)
@@ -167,7 +170,7 @@ namespace Xe.SpaceRace
 			*/
 
 		}
-			
+
 
 		public override void Draw(GameTime gameTime)
 		{
@@ -178,9 +181,9 @@ namespace Xe.SpaceRace
 			smokePlumeParticles.SetCamera(m_ParticlesView, m_model.Projection);
 			smokePlumeParticles.Draw(gameTime);
 
-			fireParticles.SetCamera( m_ParticlesView,m_model.Projection);
+			fireParticles.SetCamera(m_ParticlesView, m_model.Projection);
 			fireParticles.Draw(gameTime);
-			
+
 			base.Draw(gameTime);
 		}
 

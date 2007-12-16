@@ -6,7 +6,7 @@ using Xe.GameScreen;
 
 namespace Xe.SpaceRace
 {
-	class Universe : DrawableGameComponent
+	public class Universe : DrawableGameComponent
 	{
 		SolarSystem m_solarSystem,m_ss2;
 
