@@ -102,10 +102,10 @@ namespace Xe.Graphics3D
                 if (!String.IsNullOrEmpty(m_effectSrc))
                     m_effect = m_conManager.Load<Effect>(m_effectSrc);
 
-                m_iBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_ib.Length, ResourceUsage.None, ResourceManagementMode.Automatic);
+				m_iBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_ib.Length, BufferUsage.None);
                 m_iBuffer.SetData<short>(m_ib);
 
-                m_vBuffer = new VertexBuffer(this.GraphicsDevice, m_verts.Length * VertexPositionTexture.SizeInBytes, ResourceUsage.None);
+				m_vBuffer = new VertexBuffer(this.GraphicsDevice, m_verts.Length * VertexPositionTexture.SizeInBytes, BufferUsage.None);
                 m_vBuffer.SetData<VertexPositionTexture>(m_verts);
             }
 
@@ -154,7 +154,7 @@ namespace Xe.Graphics3D
                     m_sceneItems[i].Draw(gameTime);
 
             // Resolve the RenderTarget
-            this.GraphicsDevice.ResolveRenderTarget(0);
+            this.GraphicsDevice.GetRenderTarget(0);
 
             // Get the Texture from the RenderTarget
             Texture2D _texRTT = m_renderTarget.GetTexture();

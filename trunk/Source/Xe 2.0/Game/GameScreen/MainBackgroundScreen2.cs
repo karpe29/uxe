@@ -172,8 +172,8 @@ namespace Xe.GameScreen
 				}
 				myEffect.End();
 			}
-			
-			this.GraphicsDevice.ResolveRenderTarget(0);
+
+			this.GraphicsDevice.GetRenderTarget(0);
 
 			this.GraphicsDevice.SetRenderTarget(0, null);
 

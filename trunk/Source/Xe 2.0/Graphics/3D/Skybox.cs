@@ -100,7 +100,7 @@ namespace Xe.Graphics3D
 			vertices = new VertexBuffer(graphicsService.GraphicsDevice,
 								typeof(VertexPositionTexture),
 								4 * 6,
-								ResourceUsage.WriteOnly);
+								BufferUsage.WriteOnly);
 
 			VertexPositionTexture[] data = new VertexPositionTexture[4 * 6];
 
@@ -172,7 +172,7 @@ namespace Xe.Graphics3D
 
 			indices = new IndexBuffer(graphicsService.GraphicsDevice,
 								typeof(short), 6 * 6,
-								ResourceUsage.WriteOnly);
+								BufferUsage.WriteOnly);
 
 			short[] ib = new short[6 * 6];
 

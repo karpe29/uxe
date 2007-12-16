@@ -594,11 +594,11 @@ namespace Xe.GameScreen
 						indices[i * 6 + 4] = (short)(nb_cotes + 1 + i);
 					}
 
-					this.indexBuffer = new IndexBuffer(graph, typeof(short), indices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
+					this.indexBuffer = new IndexBuffer(graph, typeof(short), indices.Length, BufferUsage.WriteOnly);
 					this.indexBuffer.SetData(indices);
 
 					vertices = new VertexPositionTexture[(nb_cotes + 1) * 2];
-					this.vertexBuffer = new VertexBuffer(graph, typeof(VertexPositionTexture), vertices.Length, ResourceUsage.WriteOnly, ResourceManagementMode.Automatic);
+					this.vertexBuffer = new VertexBuffer(graph, typeof(VertexPositionTexture), vertices.Length, BufferUsage.WriteOnly);
 
 
 

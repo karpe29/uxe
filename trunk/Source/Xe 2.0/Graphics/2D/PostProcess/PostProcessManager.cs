@@ -30,7 +30,7 @@ namespace Xe.Graphics2D.PostProcess
 		private ContentManager m_contentManager = null;
 
 		private Texture2D m_heatHazeMap = null;
-		private Texture2D m_resolveTarget = null;
+		private ResolveTexture2D m_resolveTarget = null;
 
 		private SpriteBatch m_spriteBatch = null;
 		private RenderTarget2D m_renderTarget1 = null;
@@ -144,7 +144,8 @@ namespace Xe.Graphics2D.PostProcess
 
 		public Texture2D ResolveRenderTarget()
 		{
-			m_device.ResolveRenderTarget(0);
+			m_device.GetRenderTarget(0);
+			
 			m_resolveTarget = m_renderTargetcurrent.GetTexture();
 
 			return m_resolveTarget;
@@ -161,7 +162,7 @@ namespace Xe.Graphics2D.PostProcess
 			}
 			else
 			{
-				m_device.ResolveRenderTarget(0);
+				m_device.GetRenderTarget(0);
 				return new PostProcessResult(rt.GetTexture());
 			}
 		}

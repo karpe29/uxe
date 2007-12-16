@@ -136,13 +136,13 @@ namespace Xe.Graphics3D
                     _rGroup.Draw(gameTime);
                 }
                 if(m_postProcess)
-                    this.GraphicsDevice.ResolveRenderTarget(0);
+					this.GraphicsDevice.GetRenderTarget(0);
             }
 
             if (m_postProcess && m_texture != null)
             {
                 //this.GraphicsDevice.ResolveBackBuffer(m_texture);
-                this.GraphicsDevice.ResolveRenderTarget(0);
+				this.GraphicsDevice.GetRenderTarget(0);
                 m_texture = m_renderTarget.GetTexture();
 
                 if (_save)
@@ -210,11 +210,11 @@ namespace Xe.Graphics3D
                 }
 
                 // Load and Set the Index Buffer
-                m_iBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_ib.Length, ResourceUsage.None, ResourceManagementMode.Automatic);
+				m_iBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_ib.Length, BufferUsage.None);
                 m_iBuffer.SetData<short>(m_ib);
 
                 // Load and Set the Vertex Buffer
-                m_vBuffer = new VertexBuffer(this.GraphicsDevice, m_verts.Length * VertexPositionTexture.SizeInBytes, ResourceUsage.None);
+				m_vBuffer = new VertexBuffer(this.GraphicsDevice, m_verts.Length * VertexPositionTexture.SizeInBytes, BufferUsage.None);
                 m_vBuffer.SetData<VertexPositionTexture>(m_verts);
             }
 
