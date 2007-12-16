@@ -1,0 +1,531 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{19196012-d451-407e-8fe3-da41741c8f82}</ProjectGuid>
+    <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Xe</RootNamespace>
+    <AssemblyName>Xe</AssemblyName>
+    <XnaFrameworkVersion>v2.0</XnaFrameworkVersion>
+    <XnaPlatform Condition=" '$(Platform)' == 'Xbox 360' ">Xbox 360</XnaPlatform>
+    <XnaPlatform Condition=" '$(Platform)' == 'x86' ">Windows</XnaPlatform>
+    <StartupObject>
+    </StartupObject>
+    <ApplicationIcon>Game.ico</ApplicationIcon>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>XeBinary.pfx</AssemblyOriginatorKeyFile>
+    <Thumbnail>
+    </Thumbnail>
+    <XnaCrossPlatformGroupID>{9d81330f-e6a1-4cb5-81d8-8680159d947d}</XnaCrossPlatformGroupID>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\x86\Debug</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Game\SpaceRace\Player.cs">
+      <Name>Player</Name>
+    </Compile>
+    <Compile Include="Game\XeGame.cs">
+      <Name>XeGame</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRaceScreen.cs">
+      <Name>SpaceRaceScreen</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\Ship.cs">
+      <Name>Ship</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\WormHole.cs">
+      <Name>WormHole</Name>
+    </Compile>
+    <Compile Include="Game\TimeTimeScreen.cs">
+      <Name>TimeTimeScreen</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\EventManager.cs">
+      <Name>EventManager</Name>
+    </Compile>
+    <Compile Include="Program.cs">
+      <Name>Program</Name>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <Name>AssemblyInfo</Name>
+    </Compile>
+    <Compile Include="Tools\ConfigXml.cs">
+      <Name>ConfigXml</Name>
+    </Compile>
+    <Compile Include="Tools\Exception.cs">
+      <Name>Exception</Name>
+    </Compile>
+    <Compile Include="Tools\XeFile.cs">
+      <Name>XeFile</Name>
+    </Compile>
+    <Compile Include="Tools\IniFile.cs">
+      <Name>IniFile</Name>
+    </Compile>
+    <Compile Include="Tools\LogFile.cs">
+      <Name>LogFile</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Stats.cs">
+      <Name>Stats</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\XML\Log.xslt">
+      <Name>Log</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Game.ico">
+      <Name>Game</Name>
+    </Content>
+    <Content Include="Libs\Microsoft.ExceptionMessageBox.dll">
+      <Name>Microsoft.ExceptionMessageBox</Name>
+    </Content>
+    <Content Include="Libs\XNAVideo\Win\Scurvy.Media.Video.dll">
+      <Name>Scurvy.Media.Video</Name>
+    </Content>
+    <Content Include="Libs\XNAVideo\Win\Scurvy.Media.Video.Pipeline.dll">
+      <Name>Scurvy.Media.Video.Pipeline</Name>
+    </Content>
+    <Content Include="Libs\XNAVideo\XBox360\Scurvy.Media.Video.dll">
+      <Name>Scurvy.Media.Video</Name>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\GameScreen\ConsoleScreen.cs">
+      <Name>ConsoleScreen</Name>
+    </Compile>
+    <Compile Include="Game\GameScreen\CreditsScreen.cs">
+      <Name>CreditsScreen</Name>
+    </Compile>
+    <Compile Include="Game\GameScreen\GameScreenManager.cs">
+      <Name>GameScreenManager</Name>
+    </Compile>
+    <Compile Include="Game\GameScreen\IGameScreen.cs">
+      <Name>IGameScreen</Name>
+    </Compile>
+    <Compile Include="Game\GameScreen\IntroScreen.cs">
+      <Name>IntroScreen</Name>
+    </Compile>
+    <Compile Include="Game\GameScreen\LevelSelectionScreen.cs">
+      <Name>LevelSelectionScreen</Name>
+    </Compile>
+    <Compile Include="Game\GameScreen\MainBackgroundScreen.cs">
+      <Name>MainBackgroundScreen</Name>
+    </Compile>
+    <Compile Include="Game\GameScreen\MainBackgroundScreen2.cs">
+      <Name>MainBackgroundScreen2</Name>
+    </Compile>
+    <Compile Include="Game\GameScreen\MainMenuScreen.cs">
+      <Name>MainMenuScreen</Name>
+    </Compile>
+    <Compile Include="Game\GameScreen\OptionScreen.cs">
+      <Name>OptionScreen</Name>
+    </Compile>
+    <Compile Include="Game\GameScreen\PauseScreen.cs">
+      <Name>PauseScreen</Name>
+    </Compile>
+    <Compile Include="Game\GameScreen\StatScreen.cs">
+      <Name>StatScreen</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\ShipSelectionScreen.cs">
+      <Name>ShipSelectionScreen</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\SolarSystem.cs">
+      <Name>SolarSystem</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\SpaceRaceHudScreen.cs">
+      <Name>SpaceRaceHudScreen</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\SpaceRaceInitDatas.cs">
+      <Name>SpaceRaceInitDatas</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\Asteroid.cs">
+      <Name>Asteroid</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\AsteroidField.cs">
+      <Name>AsteroidField</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\CheckPoint.cs">
+      <SubType>Code</SubType>
+      <Name>CheckPoint</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\Planet.cs">
+      <SubType>Code</SubType>
+      <Name>Planet</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\Race.cs">
+      <Name>Race</Name>
+    </Compile>
+    <Compile Include="Game\SpaceRace\Universe.cs">
+      <Name>Universe</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\Event.cs">
+      <Name>Event</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\EventFilter.cs">
+      <Name>EventFilter</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\IEventFilter.cs">
+      <Name>IEventFilter</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\IEventListener.cs">
+      <Name>IEventListener</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\IEventManager.cs">
+      <Name>IEventManager</Name>
+    </Compile>
+    <Compile Include="Game\TimeTime\Events\ScheduledEventInfo.cs">
+      <Name>ScheduledEventInfo</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\Animation2D.cs">
+      <Name>Animation2D</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\PostProcess\AdvancedColorTone.cs">
+      <Name>AdvancedColorTone</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\PostProcess\AdvancedCombine.cs">
+      <Name>AdvancedCombine</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\PostProcess\AdvancedGaussianBlur.cs">
+      <Name>AdvancedGaussianBlur</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\PostProcess\AdvancedSmartBlur.cs">
+      <Name>AdvancedSmartBlur</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\PostProcess\PostProcessEffect.cs">
+      <Name>PostProcessEffect</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\PostProcess\PostProcessManager.cs">
+      <Name>PostProcessManager</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\PostProcess\AdvancedRadialBlur.cs">
+      <Name>AdvancedRadialBlur</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\PostProcess\AdvancedToneMapping.cs">
+      <Name>AdvancedToneMapping</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\PostProcess\PostProcessResult.cs">
+      <Name>PostProcessResult</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\SafeArea.cs">
+      <Name>SafeArea</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\BasicModel3D.cs">
+      <Name>BasicModel3D</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\BumpModel3D.cs">
+      <Name>BumpModel3D</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Camera.cs">
+      <Name>Camera</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\CustomParticleEmitter.cs">
+      <Name>CustomParticleEmitter</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleSystemManager.cs">
+      <Name>ParticleSystemManager</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleSystems\SunFireParticleSystem.cs">
+      <Name>SunFireParticleSystem</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Collections\ControlCollection.cs">
+      <Name>ControlCollection</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Collections\DrawComparer.cs">
+      <Name>DrawComparer</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Collections\TabComparer.cs">
+      <Name>TabComparer</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Collections\UpdateComparer.cs">
+      <Name>UpdateComparer</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Cursor.cs">
+      <Name>Cursor</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Font2D.cs">
+      <Name>Font2D</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\GUIQuad.cs">
+      <Name>GUIQuad</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\AnimatedQuad.cs">
+      <Name>AnimatedQuad</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\VertexRenderer.cs">
+      <Name>VertexRenderer</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\Frame.cs">
+      <Name>Frame</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\IMoveable.cs">
+      <Name>IMoveable</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\Path.cs">
+      <Name>Path</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\QuadBase.cs">
+      <Name>QuadBase</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\QuadRenderer.cs">
+      <Name>QuadRenderer</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Quads\SpriteRenderer.cs">
+      <Name>SpriteRenderer</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\SlidePanel.cs">
+      <Name>SlidePanel</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Slider.cs">
+      <Name>Slider</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\SliderButton.cs">
+      <Name>SliderButton</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\SliderCombo.cs">
+      <Name>SliderCombo</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\SliderString.cs">
+      <Name>SliderString</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\TextBoxText.cs">
+      <Name>TextBoxText</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\UIControl.cs">
+      <SubType>Code</SubType>
+      <Name>UIControl</Name>
+    </Compile>
+    <Compile Include="Input\Controllers\ControllerBase.cs">
+      <Name>ControllerBase</Name>
+    </Compile>
+    <Compile Include="Input\Controllers\GamePadController.cs">
+      <Name>GamePadController</Name>
+    </Compile>
+    <Compile Include="Input\Controllers\MKController.cs">
+      <Name>MKController</Name>
+    </Compile>
+    <Compile Include="Input\Ebi.cs">
+      <Name>Ebi</Name>
+    </Compile>
+    <Compile Include="Input\IEbiService.cs">
+      <Name>IEbiService</Name>
+    </Compile>
+    <Compile Include="Input\IFocusable.cs">
+      <Name>IFocusable</Name>
+    </Compile>
+    <Compile Include="Input\InputHelper.cs">
+      <Name>InputHelper</Name>
+    </Compile>
+    <Compile Include="Tools\CameraInput.cs">
+      <Name>CameraInput</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\ChaseCamera.cs">
+      <Name>ChaseCamera</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Grid3D.cs">
+      <Name>Grid3D</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Helper3D.cs">
+      <Name>Helper3D</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\HexGrid.cs">
+      <Name>HexGrid</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Model3D.cs">
+      <Name>Model3D</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleEmitter.cs">
+      <Name>ParticleEmitter</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleSettings.cs">
+      <Name>ParticleSettings</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleSystem.cs">
+      <Name>ParticleSystem</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleSystems\ExplosionParticleSystem.cs">
+      <Name>ExplosionParticleSystem</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleSystems\ExplosionSmokeParticleSystem.cs">
+      <Name>ExplosionSmokeParticleSystem</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleSystems\ShipFireParticleSystem.cs">
+      <Name>ShipFireParticleSystem</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleSystems\ProjectileTrailParticleSystem.cs">
+      <Name>ProjectileTrailParticleSystem</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleSystems\ShipSmokePlumeParticleSystem.cs">
+      <Name>ShipSmokePlumeParticleSystem</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\ParticleVertex.cs">
+      <Name>ParticleVertex</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Particles\Projectile.cs">
+      <Name>Projectile</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\RenderGroup.cs">
+      <Name>RenderGroup</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\SceneManager.cs">
+      <Name>SceneManager</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Skybox.cs">
+      <Name>Skybox</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\Tesselate.cs">
+      <Name>Tesselate</Name>
+    </Compile>
+    <Compile Include="Graphics\3D\TexQuad.cs">
+      <Name>TexQuad</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Button.cs">
+      <Name>Button</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\CheckBox.cs">
+      <Name>CheckBox</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Enums.cs">
+      <Name>Enums</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\GUIManager.cs">
+      <Name>GUIManager</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Label.cs">
+      <Name>Label</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\RadioButton.cs">
+      <Name>RadioButton</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\TextBox.cs">
+      <Name>TextBox</Name>
+    </Compile>
+    <Compile Include="Physics\3D\IPhysical3D.cs">
+      <Name>IPhysical3D</Name>
+    </Compile>
+    <Compile Include="Physics\3D\IPlanetPhysical.cs">
+      <Name>IPlanetPhysical</Name>
+    </Compile>
+    <Compile Include="Physics\3D\IShipPhysical.cs">
+      <Name>IShipPhysical</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Console.cs">
+      <Name>Console</Name>
+    </Compile>
+    <Compile Include="Tools\Helper.cs">
+      <Name>Helper</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\LineRenderer.cs">
+      <Name>LineRenderer</Name>
+    </Compile>
+    <Compile Include="Tools\ManagedThread.cs">
+      <Name>ManagedThread</Name>
+    </Compile>
+    <Compile Include="Tools\Map.cs">
+      <Name>Map</Name>
+    </Compile>
+    <Compile Include="Tools\Message.cs">
+      <Name>Message</Name>
+    </Compile>
+    <Compile Include="Tools\Parser.cs">
+      <Name>Parser</Name>
+    </Compile>
+    <Compile Include="Tools\Reporter.cs">
+      <Name>Reporter</Name>
+    </Compile>
+    <Compile Include="Tools\ServiceHelper.cs">
+      <Name>ServiceHelper</Name>
+    </Compile>
+    <Compile Include="Tools\TextLogger.cs">
+      <Name>TextLogger</Name>
+    </Compile>
+    <Compile Include="Tools\Tokenizer.cs">
+      <Name>Tokenizer</Name>
+    </Compile>
+    <Compile Include="Graphics\2D\VectorRenderer.cs">
+      <Name>VectorRenderer</Name>
+    </Compile>
+    <Compile Include="Tools\XmlLoader.cs">
+      <Name>XmlLoader</Name>
+    </Compile>
+    <Compile Include="Tools\XmlLogger.cs">
+      <Name>XmlLogger</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\XML\Xe_GUI.xml">
+      <Name>Xe_GUI</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XeBinary.pfx">
+      <Name>XeBinary</Name>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Physics\2D\" />
+  </ItemGroup>
+  <ItemGroup>
+    <NestedContentProject Include="Content\Content.contentproj">
+      <Project>{c4a448cc-e30d-4701-bddc-36e0aef3d89f}</Project>
+      <Visible>False</Visible>
+    </NestedContentProject>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ExceptionMessageBox" />
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Scurvy.Media.Video" />
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.XML">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v2.0\Microsoft.Xna.GameStudio.Common.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v2.0\Microsoft.Xna.GameStudio.NestedContent.targets" />
+</Project>

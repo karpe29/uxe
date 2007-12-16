@@ -6,38 +6,57 @@ using Microsoft.Xna.Framework;
 
 namespace Xe.SpaceRace
 {
-	class Race : DrawableGameComponent
+	public class Race : DrawableGameComponent
 	{
-		float m_difficultyPercent;
+		SpaceRaceInitDatas m_datas;
+
+		public SpaceRaceInitDatas Datas
+		{ get { return m_datas; } }
 
 		//List<CheckPoint> m_checkPoints;
 		//List<WormHole> m_wormHoles;
 
+		List<Player> m_players;
+
 		Universe m_universe;
 
-		public Race(GameScreenManager gameScreenManager, float difficultyPercent)
+		public Universe Universe
+		{ get { return m_universe; } }
+
+
+		public Race(GameScreenManager gameScreenManager, SpaceRaceInitDatas datas)
 			: base(gameScreenManager.Game)
 		{
-			m_difficultyPercent = difficultyPercent;
+			m_datas = datas;
+
+
+
+			m_players = new List<Player>(m_datas.TotalPlayerCount);
+
+			for (int i = 0; i < m_datas.TotalPlayerCount; i++)
+			{
+				m_players.Add(new Player(gameScreenManager, this, m_datas.ShipTypes[i], (PlayerIndex)i, m_datas.GamePadIndexes[i]));
+			}
 
 			m_universe = new Universe(gameScreenManager);
 		}
 
-		public void SetCamera(Matrix view, Matrix projection)
-		{
-			m_universe.SetCamera(view, projection);
-		}
-
 		public override void Update(GameTime gameTime)
 		{
-			m_universe.Update(gameTime);
+			for (int i = 0; i < m_datas.TotalPlayerCount; i++)
+			{
+				m_players[i].Update(gameTime);
+			}
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
-			m_universe.Draw(gameTime);
+			for (int i = 0; i < m_datas.TotalPlayerCount; i++)
+			{
+				m_players[i].Draw(gameTime);
+			}
 		}
 
-		
+
 	}
 }
