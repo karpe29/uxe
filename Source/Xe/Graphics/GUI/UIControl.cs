@@ -737,12 +737,14 @@ namespace Xe.Gui
 			RenderByState(m_curState, gameTime);
 
 #if DEBUG
+			/*
 			XeGame.s_vectorRenderer.SetColor(Color.Red);
 
 			XeGame.s_vectorRenderer.DrawLine2D(new Vector3(m_vecPosition.X, m_vecPosition.Y, 0), new Vector3(m_vecPosition.X + m_vecSize.X, m_vecPosition.Y, 0));
 			XeGame.s_vectorRenderer.DrawLine2D(new Vector3(m_vecPosition.X, m_vecPosition.Y, 0), new Vector3(m_vecPosition.X, m_vecPosition.Y + m_vecSize.Y, 0));
 			XeGame.s_vectorRenderer.DrawLine2D(new Vector3(m_vecPosition.X, m_vecPosition.Y + m_vecSize.Y, 0), new Vector3(m_vecPosition.X + m_vecSize.X, m_vecPosition.Y + m_vecSize.Y, 0));
 			XeGame.s_vectorRenderer.DrawLine2D(new Vector3(m_vecPosition.X + m_vecSize.X, m_vecPosition.Y, 0), new Vector3(m_vecPosition.X + m_vecSize.X, m_vecPosition.Y + m_vecSize.Y, 0));
+			*/
 #endif
 
 			if (m_isTextVisible)
@@ -765,12 +767,14 @@ namespace Xe.Gui
 					tempRect.Height = (int)m_vecSize.Y - this.GuiManager.CornerSize ;
 				}
 #if DEBUG
+				/*
 				XeGame.s_vectorRenderer.SetColor(Color.LightGreen);
 
 				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X, tempRect.Y, 0), new Vector3(tempRect.X + tempRect.Width, tempRect.Y, 0));
 				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X, tempRect.Y, 0), new Vector3(tempRect.X, tempRect.Y + tempRect.Height, 0));
 				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X, tempRect.Y + tempRect.Height, 0), new Vector3(tempRect.X + tempRect.Width, tempRect.Y + tempRect.Height, 0));
 				XeGame.s_vectorRenderer.DrawLine2D(new Vector3(tempRect.X + tempRect.Width, tempRect.Y, 0), new Vector3(tempRect.X + tempRect.Width, tempRect.Y + tempRect.Height, 0));
+				*/
 #endif
 				if (m_curState == UIState.Over)
 					m_font2d.DrawTextBox(m_guiManager.FontName, m_text, m_textAlign, m_textAlignVertical, m_breakStyle, tempRect, GuiManager.CornerSize, m_foreColorHover);

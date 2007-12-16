@@ -22,8 +22,6 @@ namespace Xe.SpaceRace
 
 		GameScreenManager m_gameScreenManager;
 
-		MainBackgroundScreen m_raceScreen;
-
 		Race m_race;
 
 		private Ship m_ship;
@@ -34,14 +32,12 @@ namespace Xe.SpaceRace
 
 		GamePadState m_gamePadState;
 
-		public Player(GameScreenManager gameScreenManager, ShipType type, PlayerIndex playerIndex, int gamePadIndex)
+		public Player(GameScreenManager gameScreenManager, Race race, ShipType type, PlayerIndex playerIndex, int gamePadIndex)
 			: base(gameScreenManager.Game)
 		{
 			m_gameScreenManager = gameScreenManager;
 
-			m_raceScreen = (MainBackgroundScreen)gameScreenManager.CurrentGameScreen;
-
-			m_race = m_raceScreen.Race;
+			m_race = race;
 
 			m_playerIndex = playerIndex;
 			m_gamePadIndex = gamePadIndex;
@@ -116,9 +112,7 @@ namespace Xe.SpaceRace
 
 			s.Update(gameTime);
 
-			m_race.SetCamera(m_camera.View, m_camera.Projection);
-
-			m_race.Update(gameTime);
+			m_race.Universe.SetCamera(m_camera.View, m_camera.Projection);
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -133,7 +127,7 @@ namespace Xe.SpaceRace
 			XeGame.Device.RenderState.DepthBufferEnable = true;
 			XeGame.Device.RenderState.DepthBufferWriteEnable = true;
 
-			m_race.Draw(gameTime);
+			m_race.Universe.Draw(gameTime);
 
 			XeGame.Device.RenderState.AlphaSourceBlend = Blend.Zero;
 			XeGame.Device.RenderState.AlphaBlendEnable = false;
@@ -141,6 +135,7 @@ namespace Xe.SpaceRace
 			XeGame.Device.RenderState.DepthBufferWriteEnable = true;
 
 			m_ship.setParticlesView(m_camera.ViewParticles);
+			
 			m_ship.Draw(gameTime);
 
 
@@ -151,7 +146,7 @@ namespace Xe.SpaceRace
 		private void SetupViewport()
 		{
 			// 1 player
-			if (m_raceScreen.InitDatas.TotalPlayerCount == 0) 
+			if (m_race.Datas.TotalPlayerCount == 1) 
 				return; // don't touch viewport, we're obviously the only player :)
 			
 			Viewport v = new Viewport();
@@ -161,7 +156,7 @@ namespace Xe.SpaceRace
 			v.Height = XeGame.Device.PresentationParameters.BackBufferHeight;
 
 			#region 2 players
-			if (m_raceScreen.InitDatas.TotalPlayerCount == 1) // 2 player
+			if (m_race.Datas.TotalPlayerCount == 2) // 2 player
 			{
 				if (v.Height > v.Width) // cut height in 2
 				{
@@ -195,7 +190,7 @@ namespace Xe.SpaceRace
 			#endregion
 
 			#region 3 players
-			if (m_raceScreen.InitDatas.TotalPlayerCount == 2) // 3 player
+			if (m_race.Datas.TotalPlayerCount == 3) // 3 player
 			{
 				if (v.Height > v.Width)
 				{
@@ -237,7 +232,7 @@ namespace Xe.SpaceRace
 			#endregion
 
 			#region 4 players
-			if (m_raceScreen.InitDatas.TotalPlayerCount == 3) // 4 player
+			if (m_race.Datas.TotalPlayerCount == 4) // 4 player
 			{
 				if (v.Height > v.Width)
 				{

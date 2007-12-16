@@ -98,7 +98,7 @@ namespace Xe.GameScreen
 		
 			ExitScreen();
 
-			//ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager, datas);
+			ShipSelectionScreen screen = new ShipSelectionScreen(this.GameScreenManager, datas);
 		}
 
 		void buttonPlayTimeTime_Click(object sender, MouseEventArgs args)

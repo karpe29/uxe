@@ -80,7 +80,6 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
@@ -568,6 +567,10 @@
     <Compile Include="Graphics\GUI\SlidePanel.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SlidePanel</Name>
+    </Compile>
+    <Compile Include="Graphics\GUI\Slider.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Slider</Name>
     </Compile>
     <Compile Include="Graphics\GUI\SliderButton.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -1350,6 +1353,18 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Name>tunnel</Name>
+    </Content>
+    <Content Include="Content\Textures\reacteur.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>reacteur</Name>
+    </Content>
+    <Content Include="Content\Textures\red_black.JPG">
+      <XNAUseContentPipeline>true</XNAUseContentPipeline>
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>red_black</Name>
     </Content>
     <Content Include="Content\Textures\water.JPG">
       <XNAUseContentPipeline>true</XNAUseContentPipeline>

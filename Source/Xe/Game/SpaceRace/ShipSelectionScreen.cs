@@ -39,7 +39,7 @@ namespace Xe.SpaceRace
 
 			labelPlayer = new Label(GameScreenManager.Game, XeGame.GuiManager);
 			labelPlayer.TextAlign = TextAlign.Center;
-			labelPlayer.Text = "Player " + (m_datas.CurrentPlayerNumber + 1).ToString() + " Ship";
+			labelPlayer.Text = "Player " + (m_datas.CurrentPlayerNumber).ToString() + " Ship";
 			labelPlayer.Width = 120;
 			labelPlayer.Height = 30;
 			labelPlayer.X = this.GraphicsDevice.PresentationParameters.BackBufferWidth / 4 - labelPlayer.Width / 2;
@@ -63,23 +63,37 @@ namespace Xe.SpaceRace
 			buttonAccept.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - buttonAccept.Height / 2;
 			buttonAccept.Click += new ClickHandler(buttonAccept_Click);
 			XeGame.GuiManager.Controls.Add(buttonAccept);
-			/*
-			sliderShip = new Slider(GameScreenManager.Game, XeGame.GuiManager);
+			
+			sliderShip = new SliderString(GameScreenManager.Game, XeGame.GuiManager);
 			sliderShip.Width = (int) ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 4 / 5);
 			sliderShip.Height = 30;
 			sliderShip.X = (int) (buttonBack.X + buttonBack.Width + ((buttonAccept.X - buttonBack.X - buttonBack.Width) * 1 / 10));
 			sliderShip.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderShip.Height / 2;
-			sliderShip.MinValue = 0;
-			sliderShip.MaxValue = ShipType.Types.Length - 1;
-			sliderShip.Step = 1;
-			sliderShip.Value = 0;
-			sliderShip.ValueChanged += new ValueChangedHandler(sliderShip_ValueChanged);
+
+			sliderShip.Strings = new List<string>();
+			foreach(ShipType type in ShipType.Types)
+			{
+				sliderShip.Strings.Add(type.Name);
+			}
+			sliderShip.Index = 0;
+			sliderShip.Loopable = true;
+
+			sliderShip.IndexChanged += new SliderString.IndexChangedHandler(sliderShip_IndexChanged);
+
 			XeGame.GuiManager.Controls.Add(sliderShip);
-*/
-			//m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
-			//m_ship.ratioParticles = 2;
+
+			m_ship = new Ship(this.GameScreenManager, ShipType.Types[sliderShip.Index]);
+			m_ship.ratioParticles = 2;
 
 			ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1.0f, 1, viewDistance * 2.0f);
+		}
+
+		void sliderShip_IndexChanged(EventArgs e)
+		{
+			m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Index]);
+			m_ship.ratioParticles = 2;
+
+			
 		}
 
 		private void DetermineNextPlayerIndex()
@@ -87,7 +101,7 @@ namespace Xe.SpaceRace
 			m_datas.GamePadIndexes.Add(-1);
 
 			// seek for a non taken gamepad slot
-			for (int i = (int)PlayerIndex.Four /* max player index value*/; i >= 0 ; i--)
+			for (int i = (int)PlayerIndex.Four /* max player index value*/; i > 0 ; i--)
 			{
 				if (InputHelper.GamePad[i].IsConnected == false)
 				{
@@ -96,32 +110,27 @@ namespace Xe.SpaceRace
 				else
 				{
 					if (!m_datas.GamePadIndexes.Contains(i))
-						m_datas.GamePadIndexes[m_datas.CurrentPlayerNumber] = i;
+						m_datas.GamePadIndexes[m_datas.CurrentPlayerNumber -1] = i;
 				}
 			}
 
 			// no free gamepad found, set it to gamepad 0;
 			// can be useful for testing with different ships
-			if (m_datas.GamePadIndexes[m_datas.CurrentPlayerNumber] == -1)
-				m_datas.GamePadIndexes[m_datas.CurrentPlayerNumber] = 0;
+			if (m_datas.GamePadIndexes[m_datas.CurrentPlayerNumber-1] == -1)
+				m_datas.GamePadIndexes[m_datas.CurrentPlayerNumber-1] = 0;
 
-		}
-
-		void sliderShip_ValueChanged(object sender, float value)
-		{
-			//m_ship = new Ship(this.GameScreenManager, ShipType.Types[(int)sliderShip.Value]);
-			//m_ship.ratioParticles = 2;
 		}
 
 		void buttonAccept_Click(object sender, MouseEventArgs args)
 		{
 			ExitScreen();
 
-			//m_datas.ShipTypes.Add(ShipType.Types[(int)sliderShip.Value]);
+			m_datas.ShipTypes.Add(ShipType.Types[sliderShip.Index]);
 
 			// dernier joueur ?
-			if (m_datas.CurrentPlayerNumber++ < m_datas.TotalPlayerCount)
+			if (m_datas.CurrentPlayerNumber < m_datas.TotalPlayerCount)
 			{// non
+				m_datas.CurrentPlayerNumber++;
 				ShipSelectionScreen s = new ShipSelectionScreen(this.GameScreenManager, m_datas);
 			}
 			else
@@ -164,16 +173,18 @@ namespace Xe.SpaceRace
 				sliderShip.Y = this.GraphicsDevice.PresentationParameters.BackBufferHeight * 3 / 4 - sliderShip.Height / 2;
 			}
 
-			//if (sliderShip != null)
-			//{
-			//    m_selectedShip = m_ships[(int)sliderShip.Value];
-			//    //m_selectedModel = m_shipModels[(int)sliderShip.Value];
-			//}
-			//else
-			//{
-			//    m_selectedShip = m_ships[0];
-			//    //m_selectedModel = m_shipModels[0];
-			//}
+			/*
+			if (sliderShip != null)
+			{
+				m_selectedShip = m_ships[(int)sliderShip.Value];
+				//m_selectedModel = m_shipModels[(int)sliderShip.Value];
+			}
+			else
+			{
+				m_selectedShip = m_ships[0];
+				//m_selectedModel = m_shipModels[0];
+			}
+			 * */
 		}
 
 
