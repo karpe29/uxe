@@ -139,8 +139,7 @@ namespace Xe.Graphics3D
         {
             if (m_verts != null && m_verts.Length > 0)
             {
-                m_vBuffer = new VertexBuffer(this.GraphicsDevice, VertexPositionColor.SizeInBytes * m_verts.Length,
-                                            ResourceUsage.None, ResourceManagementMode.Automatic);
+				m_vBuffer = new VertexBuffer(this.GraphicsDevice, VertexPositionColor.SizeInBytes * m_verts.Length, BufferUsage.None);
 
                 m_vBuffer.SetData<VertexPositionColor>(m_verts);
             }
@@ -234,8 +233,7 @@ namespace Xe.Graphics3D
 
             //Console.WriteLine("Grid's Total Vert Count: " + m_totalVerts.ToString());
 
-            m_vBuffer = new VertexBuffer(this.GraphicsDevice, VertexPositionColor.SizeInBytes * m_verts.Length,
-                                        ResourceUsage.None, ResourceManagementMode.Automatic);
+			m_vBuffer = new VertexBuffer(this.GraphicsDevice, VertexPositionColor.SizeInBytes * m_verts.Length, BufferUsage.None);
 
             m_vBuffer.SetData<VertexPositionColor>(m_verts);
 

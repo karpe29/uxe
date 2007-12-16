@@ -261,11 +261,11 @@ namespace Xe.Graphics2D
                 indices[iIndexBase + iIndex++] = (short)(iVertexBase + iPrim + 2);
             }
 
-            vb = new VertexBuffer(device, numVertices * bytesPerVertex, ResourceUsage.None, ResourceManagementMode.Automatic);
+            vb = new VertexBuffer(device, numVertices * bytesPerVertex, BufferUsage.None);
             vb.SetData<VertexPositionNormalTexture>(tri);
             vdecl = new VertexDeclaration(device, VertexPositionNormalTexture.VertexElements);
 
-            ib = new IndexBuffer(device, numIndices * 2, ResourceUsage.None, ResourceManagementMode.Automatic, IndexElementSize.SixteenBits);
+            ib = new IndexBuffer(device, numIndices * 2, BufferUsage.None, IndexElementSize.SixteenBits);
             ib.SetData<short>(indices);
         }
 

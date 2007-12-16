@@ -210,14 +210,12 @@ namespace Xe.Graphics3D.Particles
             }
 
             // Create a dynamic vertex buffer.
-            ResourceUsage usage = ResourceUsage.Dynamic |
-                                  ResourceUsage.WriteOnly |
-                                  ResourceUsage.Points;
+            BufferUsage usage = BufferUsage.WriteOnly |
+                                BufferUsage.Points;
 
             int size = ParticleVertex.SizeInBytes * particles.Length;
 
-            vertexBuffer = new VertexBuffer(GraphicsDevice, size, usage,
-                                            ResourceManagementMode.Manual);
+			vertexBuffer = new VertexBuffer(GraphicsDevice, size, usage);
 
             // Initialize the vertex buffer contents. This is necessary in order
             // to correctly restore any existing particles after a lost device.
@@ -482,7 +480,7 @@ namespace Xe.Graphics3D.Particles
                 vertexBuffer.SetData(firstNewParticle * stride, particlesToDraw,
                                      firstNewParticle,
                                      firstFreeParticle - firstNewParticle,
-                                     stride, SetDataOptions.NoOverwrite);
+                                     stride);
             }
             else
             {
@@ -491,13 +489,13 @@ namespace Xe.Graphics3D.Particles
                 vertexBuffer.SetData(firstNewParticle * stride, particlesToDraw,
                                      firstNewParticle,
                                      particles.Length - firstNewParticle,
-                                     stride, SetDataOptions.NoOverwrite);
+                                     stride);
 
                 if (firstFreeParticle > 0)
                 {
                     vertexBuffer.SetData(0, particlesToDraw,
                                          0, firstFreeParticle,
-                                         stride, SetDataOptions.NoOverwrite);
+                                         stride);
                 }
             }
 

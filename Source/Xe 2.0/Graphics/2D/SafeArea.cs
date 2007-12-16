@@ -48,7 +48,7 @@ namespace Xe.Graphics2D
             base.LoadGraphicsContent(loadAllContent);
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            tex = new Texture2D(GraphicsDevice, 1, 1, 1, ResourceUsage.None, SurfaceFormat.Color);
+            tex = new Texture2D(GraphicsDevice, 1, 1, 1, TextureUsage.None, SurfaceFormat.Color);
             Color[] texData = new Color[1];
             texData[0] = Color.White;
             tex.SetData<Color>(texData);

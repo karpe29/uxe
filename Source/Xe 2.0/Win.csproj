@@ -1,6 +1,6 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{19196012-d451-407e-8fe3-da41741c8f82}</ProjectGuid>
+    <ProjectGuid>{19196012-D451-407E-8FE3-DA41741C8F82}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -15,7 +15,8 @@
     </StartupObject>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>XeBinary.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
     <Thumbnail>
     </Thumbnail>
     <XnaCrossPlatformGroupID>{9d81330f-e6a1-4cb5-81d8-8680159d947d}</XnaCrossPlatformGroupID>
@@ -482,14 +483,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="XeBinary.pfx">
-      <Name>XeBinary</Name>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Physics\2D\" />
-  </ItemGroup>
-  <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
       <Project>{c4a448cc-e30d-4701-bddc-36e0aef3d89f}</Project>
       <Visible>False</Visible>
@@ -513,6 +506,9 @@
     <Reference Include="System.XML">
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Physics\2D\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

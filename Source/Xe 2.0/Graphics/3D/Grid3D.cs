@@ -63,8 +63,7 @@ namespace Xe.Graphics3D
 
                 m_vDec = new VertexDeclaration(this.GraphicsDevice, VertexPositionColor.VertexElements);
 
-                m_vBuffer = new VertexBuffer(this.GraphicsDevice, VertexPositionColor.SizeInBytes * m_verts.Length,
-                                             ResourceUsage.None, ResourceManagementMode.Automatic);
+                m_vBuffer = new VertexBuffer(this.GraphicsDevice, VertexPositionColor.SizeInBytes * m_verts.Length, BufferUsage.None);
 
                 m_vBuffer.SetData<VertexPositionColor>(m_verts);
 
