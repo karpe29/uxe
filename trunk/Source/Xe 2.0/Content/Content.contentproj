@@ -1,0 +1,675 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{C4A448CC-E30D-4701-BDDC-36E0AEF3D89F}</ProjectGuid>
+    <ProjectTypeGuids>{96E2B04D-8817-42c6-938A-82C39BA4D311};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Xbox 360</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Xe</RootNamespace>
+    <AssemblyName>Xe</AssemblyName>
+    <XnaFrameworkVersion>v2.0</XnaFrameworkVersion>
+    <StartupObject>
+    </StartupObject>
+    <ApplicationIcon>Game.ico</ApplicationIcon>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>XeBinary.pfx</AssemblyOriginatorKeyFile>
+    <OutputPath>bin\$(Platform)\$(Configuration)</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Xbox 360' ">
+    <XnaPlatform>Xbox 360</XnaPlatform>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Xbox 360' ">
+    <XnaPlatform>Xbox 360</XnaPlatform>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="logo.avi">
+      <Name>logo</Name>
+    </Compile>
+    <Compile Include="Textures\blank.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>blank</Name>
+    </Compile>
+    <Compile Include="Textures\console.bmp">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>console</Name>
+    </Compile>
+    <Compile Include="Textures\FireGrade.bmp">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>FireGrade</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\MrWiggle.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>MrWiggle</Name>
+    </Compile>
+    <Compile Include="Effects\vbomb.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>vbomb</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Skybox\bryce_back.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>bryce_back</Name>
+    </Compile>
+    <Compile Include="Skybox\bryce_bottom.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>bryce_bottom</Name>
+    </Compile>
+    <Compile Include="Skybox\bryce_front.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>bryce_front</Name>
+    </Compile>
+    <Compile Include="Skybox\bryce_left.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>bryce_left</Name>
+    </Compile>
+    <Compile Include="Skybox\bryce_right.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>bryce_right</Name>
+    </Compile>
+    <Compile Include="Skybox\bryce_top.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>bryce_top</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Skybox\bryce_effect.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>bryce_effect</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\CheckPoint.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>CheckPoint</Name>
+    </Compile>
+    <Compile Include="Models\MenuTunnel.fbx">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>MenuTunnel</Name>
+    </Compile>
+    <Compile Include="Models\StarChaser1.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>StarChaser1</Name>
+    </Compile>
+    <Compile Include="Models\StarChaser2.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>StarChaser2</Name>
+    </Compile>
+    <Compile Include="Models\StarChaser3.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>StarChaser3</Name>
+    </Compile>
+    <Compile Include="Models\StarChaser4.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>StarChaser4</Name>
+    </Compile>
+    <Compile Include="Models\TestWedge.fbx">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>TestWedge</Name>
+    </Compile>
+    <Compile Include="Models\WormHole.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>WormHole</Name>
+    </Compile>
+    <Compile Include="Particles\explosion.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>explosion</Name>
+    </Compile>
+    <Compile Include="Particles\fire.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>fire</Name>
+    </Compile>
+    <Compile Include="Particles\smoke.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>smoke</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Particles\ParticleEffect.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>ParticleEffect</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\NormalMapping.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>NormalMapping</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Asteroids\Asteroid1.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Asteroid1</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Asteroids\Asteroid2.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Asteroid2</Name>
+    </Compile>
+    <Compile Include="Models\Asteroids\Asteroid3.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Asteroid3</Name>
+    </Compile>
+    <Compile Include="Models\Asteroids\Asteroid4.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Asteroid4</Name>
+    </Compile>
+    <Compile Include="Models\Asteroids\SmallAsteroid1.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>SmallAsteroid1</Name>
+    </Compile>
+    <Compile Include="Models\Asteroids\SmallAsteroid2.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>SmallAsteroid2</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Planets\Deimos.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Deimos</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Earth.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Earth</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Jupiter.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Jupiter</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Jupiter2.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Jupiter2</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Mars.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Mars</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Mercury.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Mercury</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Moon.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Moon</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Neptune.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Neptune</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Phobos.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Phobos</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Pluto.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Pluto</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Saturn.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Saturn</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Uranus.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Uranus</Name>
+    </Compile>
+    <Compile Include="Models\Planets\Venus.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Venus</Name>
+    </Compile>
+    <Compile Include="Textures\Asteroids\Asteroid1_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>Asteroid1_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Asteroids\Asteroid2_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>Asteroid2_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Asteroids\Asteroid3_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>Asteroid3_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Asteroids\Asteroid4_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>Asteroid4_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\deimos_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>deimos_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\earth_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>earth_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\jupiter2_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>jupiter2_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\jupiter_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>jupiter_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\mars_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>mars_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\mercury_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>mercury_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\moon_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>moon_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\neptune_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>neptune_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\phobos_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>phobos_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\pluto_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>pluto_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\saturn_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>saturn_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\sun_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>sun_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\uranus_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>uranus_bump</Name>
+    </Compile>
+    <Compile Include="Textures\Planets\venus_bump.jpg">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>venus_bump</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Planets\Sun.FBX">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>Sun</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fonts\BatmanForeverAlternate.spritefont">
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>BatmanForeverAlternate</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fonts\Control Freak.spritefont">
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>Control Freak</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fonts\Helsinki.spritefont">
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>Helsinki</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fonts\Kickflip BRK.spritefont">
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>Kickflip BRK</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fonts\Perspective Sans.spritefont">
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>Perspective Sans</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fonts\White Rabbit.spritefont">
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Name>White Rabbit</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\Vector.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Vector</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\Line.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Line</Name>
+    </Compile>
+    <Compile Include="Textures\GUI.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>GUI</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\PostProcess\AdvancedCombine.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>AdvancedCombine</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\AdvancedGaussianBlur.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>AdvancedGaussianBlur</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\AdvancedRadialBlur.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>AdvancedRadialBlur</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\AdvancedToneMapping.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>AdvancedToneMapping</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\Blur.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Blur</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\Bright.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Bright</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\ColorInverse.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>ColorInverse</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\DepthOfField.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>DepthOfField</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\DownSample.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>DownSample</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\EdgeDetect.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>EdgeDetect</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\Embossed.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Embossed</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\GreyScale.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>GreyScale</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\GreyScaleAroundCenter.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>GreyScaleAroundCenter</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\GreyScaleHalfScreen.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>GreyScaleHalfScreen</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\NightTime.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>NightTime</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\Sharpen.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Sharpen</Name>
+    </Compile>
+    <Compile Include="Effects\PostProcess\UnderWater.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>UnderWater</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\wedge_p1_diff_v1.tga">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>wedge_p1_diff_v1</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\PostProcess\AdvancedColorTone.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>AdvancedColorTone</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\PostProcess\AdvancedSmartBlur.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>AdvancedSmartBlur</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\PostProcess\BrightExtract.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>BrightExtract</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\PostScreenGlow.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>PostScreenGlow</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\PostScreenMenu.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>PostScreenMenu</Name>
+    </Compile>
+    <Compile Include="Effects\PostScreenShadowBlur.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>PostScreenShadowBlur</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\VertexRenderer.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>VertexRenderer</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\PostProcess\Shockwave.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>Shockwave</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\PostProcess\BlurBloom.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>BlurBloom</Name>
+    </Compile>
+    <Compile Include="Textures\team.JPG">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>team</Name>
+    </Compile>
+    <Compile Include="Textures\cube.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>cube</Name>
+    </Compile>
+    <Compile Include="Textures\cube_rusty.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>cube_rusty</Name>
+    </Compile>
+    <Compile Include="Textures\cube_xna.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>cube_xna</Name>
+    </Compile>
+    <Compile Include="Textures\cube_ziggyware.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>cube_ziggyware</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\cube.fbx">
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Name>cube</Name>
+    </Compile>
+    <Compile Include="Effects\tunnel.fx">
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Name>tunnel</Name>
+    </Compile>
+    <Compile Include="Textures\reacteur.JPG">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>reacteur</Name>
+    </Compile>
+    <Compile Include="Textures\red_black.JPG">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>red_black</Name>
+    </Compile>
+    <Compile Include="Textures\water.JPG">
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Name>water</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.EffectImporter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.FBXImporter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.TextureImporter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.XImporter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Scurvy.Media.Pipeline, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\XNAVideo\Win\Scurvy.Media.Pipeline.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XML\Log.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>Log</Name>
+    </None>
+    <Content Include="XML\Xe_GUI.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>Xe_GUI</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Content>
+  </ItemGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v2.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
+</Project>

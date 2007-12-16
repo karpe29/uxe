@@ -1,12 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Scurvy.Media;
+
+using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Input;
+
 using Xe.Tools;
+
+
+using Scurvy.Media;
 
 
 namespace Xe.GameScreen
@@ -26,7 +32,7 @@ namespace Xe.GameScreen
 
 			this.Initialize();
 
-			VideoContentManager v = new VideoContentManager(ServiceHelper.Services);
+			ContentManager v = new VideoContentManager(ServiceHelper.Services);
 			
 
 			m_spriteBatch = new SpriteBatch(this.GraphicsDevice);
@@ -86,12 +92,12 @@ namespace Xe.GameScreen
 
 		public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
 		{
-			if (m_introVideo.IsPlaying)
+			/*if (m_introVideo.IsPlaying)
 			{
 				m_spriteBatch.Begin();
 				m_spriteBatch.Draw(m_introVideo.CurrentTexture, new Rectangle(0, 0, this.GraphicsDevice.PresentationParameters.BackBufferWidth, this.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
 				m_spriteBatch.End();
-			}
+			}*/
 			base.Draw(gameTime);
 		}
 	}

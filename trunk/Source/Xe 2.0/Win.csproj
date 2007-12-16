@@ -44,6 +44,13 @@
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Xbox 360' ">
+    <DefineConstants>TRACE;DEBUG;XBOX;XBOX360</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Xbox 360' ">
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;XBOX;XBOX360</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game\SpaceRace\Player.cs">
       <Name>Player</Name>
@@ -90,12 +97,6 @@
     <Compile Include="Graphics\GUI\Stats.cs">
       <Name>Stats</Name>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\XML\Log.xslt">
-      <Name>Log</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico">
@@ -475,12 +476,6 @@
     <Compile Include="Tools\XmlLogger.cs">
       <Name>XmlLogger</Name>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\XML\Xe_GUI.xml">
-      <Name>Xe_GUI</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
